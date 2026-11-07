@@ -1,6 +1,6 @@
 {
-  "schema_version": 5,
-  "date": "2026-11-07T08:14:49.167966+00:00",
+  "schema_version": 6,
+  "date": "2026-11-07T08:51:31.200008+00:00",
   "metric": "direct CV of 50um collected-brightness pixels",
   "metric_definition": "100 * std(I_50um, ddof=0) / mean(I_50um)",
   "input_files": {
@@ -349,11 +349,11 @@
     "report_bytes": 23733784
   },
   "tests": {
-    "discovered": 20,
-    "passed": 20,
+    "discovered": 23,
+    "passed": 23,
     "skipped": 0,
     "failed": 0,
-    "log": "test-results/logs/validation-height1um.log"
+    "log": "test-results/logs/validation-wsl.log"
   },
   "comparison": {
     "metric_definition": "100 * std(I_ROI, ddof=0) / mean(I_ROI)",
@@ -413,7 +413,1811 @@
   "artifacts": {
     "html_report": "test-results/report.html",
     "results_directory": "test-results/oled-1mm-height1um-50um",
-    "comparison_figure": "test-results/brightness-comparison-height1um-50um.png"
+    "comparison_figure": "test-results/brightness-comparison-height1um-50um.png",
+    "chromatix_wsl_bridge": "test-results/chromatix-wsl-bridge/validation.json"
   },
-  "scope": "1mm square field; height 1000x1000 at 1um from existing height data; emission 500x500 at 2um; all 400 collected 50um pixels directly enter CV"
+  "scope": "1mm square field; height 1000x1000 at 1um from existing height data; emission 500x500 at 2um; all 400 collected 50um pixels directly enter CV",
+  "windows_chromatix_wsl": {
+    "status": "passed",
+    "validated_at_utc": "2026-11-07T08:49:46.189046+00:00",
+    "routing": {
+      "windows": "WSL CUDA worker",
+      "linux": "local JAX",
+      "cpu_fallback": false,
+      "distribution_env": "SPARKLE_WSL_DISTRO",
+      "python_env": "SPARKLE_WSL_PYTHON"
+    },
+    "tests": {
+      "discovered": 23,
+      "passed": 23,
+      "skipped": 0,
+      "failed": 0,
+      "log": "test-results/logs/validation-wsl.log",
+      "covers": [
+        "WSL GPU despite parent JAX_PLATFORMS=cpu",
+        "spaces and Unicode in script/output paths",
+        "failed worker produces failed run without CPU fallback",
+        "mixed-runtime all-backend wave comparison",
+        "actual remote environment in report"
+      ]
+    },
+    "full_run": {
+      "command": "C:\\Projects\\oled-sparkle\\.venv\\Scripts\\python.exe C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\scripts\\sparkle_multibackend.py --height C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-height1um\\heightfield.png --height-pitch-um 1 --height-range-um .5 --emission C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm\\emission.png --emission-pitch-um 2 --gamma-decode --wavelength-nm 530 --gap-um 500 --n-stack 1.5 --n-out 1 --na .08 --source-samples 1 --max-sources 100000 --pad-px 140 --batch 16 --device cpu --backend chromatix --backend-workers 1 --mitsuba-variant cuda_ad_rgb --ray-radial 24 --ray-angular 64 --analysis-pitch-um 50 --roi-margin-um 0 --progress-every 200 --out test-results\\chromatix-wsl-bridge\\full",
+      "parameters": {
+        "height": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-height1um\\heightfield.png",
+        "height_pitch_um": 1.0,
+        "height_range_um": 0.5,
+        "emission": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm\\emission.png",
+        "emission_pitch_um": 2.0,
+        "analysis_pitch_um": 50.0,
+        "emission_channel": "luma",
+        "gamma_decode": true,
+        "emission_offset_x_um": 0.0,
+        "emission_offset_y_um": 0.0,
+        "gap_um": 500.0,
+        "wavelength_nm": 530.0,
+        "n_stack": 1.5,
+        "n_out": 1.0,
+        "na": 0.08,
+        "source_samples": 1,
+        "emission_threshold": 0.001,
+        "source_margin_um": 0.0,
+        "max_sources": 100000,
+        "pad_px": 140,
+        "batch": 16,
+        "backend": "chromatix",
+        "backend_workers": 1,
+        "device": "cpu",
+        "ray_radial": 24,
+        "ray_angular": 64,
+        "ray_chunk": 65536,
+        "mesh_stride": 1,
+        "mitsuba_variant": "cuda_ad_rgb",
+        "roi_margin_um": 0.0,
+        "progress_every": 200,
+        "out": "test-results\\chromatix-wsl-bridge\\full",
+        "skip_unavailable": false,
+        "dry_run": false
+      },
+      "input_sha256": {
+        "height": "7a191c0e7c2cf04c0d8defa409590c2929bea7b7500f6fb4c5e4c90292ff941c",
+        "emission": "687904186157df14f628adacb85c04d286ebc44b703ee851ecc2ee2d16b65670"
+      },
+      "solver_seconds_including_bridge": 61.392568,
+      "wall_seconds": 61.744543,
+      "source_modes": 76550,
+      "sparkle_cv_percent": 206.27007423776234,
+      "execution_context": {
+        "backend": "chromatix",
+        "devices": [
+          "cuda:0"
+        ],
+        "x64_enabled": false,
+        "default_backend": "gpu",
+        "gpu_names": [
+          "NVIDIA GeForce RTX 3090 Ti"
+        ],
+        "environment": {
+          "python": "3.12.12 (main, Dec  5 2025, 20:21:41) [Clang 21.1.4 ]",
+          "executable": "/home/oxyflour/.venvs/oled-sparkle-chromatix/bin/python",
+          "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+          "processor": "x86_64",
+          "logical_cpus": 12,
+          "versions": {
+            "numpy": "2.5.4",
+            "Pillow": "13.0.0",
+            "torch": null,
+            "torchoptics": null,
+            "jax": "0.12.0.1",
+            "jaxlib": "0.12.0.1",
+            "jax-cuda13-plugin": "0.12.0.1",
+            "jax-cuda13-pjrt": "0.12.0.1",
+            "chromatix": "0.6.0",
+            "mitsuba": null,
+            "drjit": null
+          },
+          "environment_settings": {
+            "PYTHONPATH": null,
+            "OMP_NUM_THREADS": null,
+            "MKL_NUM_THREADS": null,
+            "JAX_PLATFORMS": "cuda",
+            "JAX_ENABLE_X64": null,
+            "DRJIT_LIBLLVM_PATH": null,
+            "SPARKLE_WSL_DISTRO": null,
+            "SPARKLE_WSL_PYTHON": null,
+            "XLA_PYTHON_CLIENT_PREALLOCATE": "false",
+            "XLA_PYTHON_CLIENT_MEM_FRACTION": "0.10"
+          }
+        },
+        "worker_solver_elapsed_seconds": 58.757408623816445,
+        "runtime": "wsl",
+        "wsl_distribution": "Ubuntu-22.04",
+        "worker_script": "/mnt/c/Projects/oled-sparkle/oled-ag-sparkle/scripts/chromatix_wsl.py",
+        "worker_command": [
+          "wsl.exe",
+          "--distribution",
+          "Ubuntu-22.04",
+          "--exec",
+          "env",
+          "-u",
+          "PYTHONPATH",
+          "-u",
+          "LD_LIBRARY_PATH",
+          "JAX_PLATFORMS=cuda",
+          "XLA_PYTHON_CLIENT_PREALLOCATE=false",
+          "XLA_PYTHON_CLIENT_MEM_FRACTION=0.10",
+          "PYTHONUNBUFFERED=1",
+          "/home/oxyflour/.venvs/oled-sparkle-chromatix/bin/python",
+          "/mnt/c/Projects/oled-sparkle/oled-ag-sparkle/scripts/chromatix_wsl.py",
+          "--request-dir",
+          "/mnt/c/Users/oxyfl/AppData/Local/Temp/chromatix-wsl-zax1vpgw"
+        ]
+      },
+      "reference_comparison": {
+        "brightness.npy": {
+          "shape": [
+            1000,
+            1000
+          ],
+          "relative_l2_error": 1.4271305399132262e-06,
+          "max_error_divided_by_reference_peak": 1.0521465562385486e-05,
+          "tolerance": 0.001,
+          "passed": true
+        },
+        "analysis_brightness.npy": {
+          "shape": [
+            20,
+            20
+          ],
+          "relative_l2_error": 4.921723776936194e-07,
+          "max_error_divided_by_reference_peak": 5.337482177462666e-07,
+          "tolerance": 0.001,
+          "passed": true
+        }
+      },
+      "postprocessing_matches_saved_float_image": true,
+      "report_contains_wsl_runtime": true,
+      "report": "test-results/chromatix-wsl-bridge/full/report.html",
+      "log": "test-results/logs/chromatix-wsl-bridge-full.log"
+    },
+    "historical_reference": "test-results/oled-1mm-height1um-50um/chromatix; saved Windows CPU result, unchanged"
+  },
+  "reference_run_started_at_utc": "2026-11-07T07:46:13.254833+00:00",
+  "reference_run_note": "Top-level multi-backend images and timings retain the recorded reference run. Current Windows Chromatix routing and bridge measurements are in windows_chromatix_wsl.",
+  "current_example": "random_circular_pits_3to5um_diameter_50pct_coverage_periodic_cell",
+  "latest_experiment_at_utc": "2026-11-07T11:04:18.704725+00:00",
+  "random_circular_pits": {
+    "generated_at_utc": "2026-11-07T11:03:35.430034+00:00",
+    "baseline_results": "C:\\Projects\\oled-sparkle\\test-results\\oled-1mm-original-periodic-50um",
+    "new_results": "C:\\Projects\\oled-sparkle\\test-results\\oled-1mm-pits3to5um-periodic-50um",
+    "emission_field_construction": {
+      "title": "Samsung Display Diamond Pixel OLED subpixel distribution",
+      "source_page": "https://global.samsungdisplay.com/29043/",
+      "source_image": "https://global.samsungdisplay.com/wp-content/uploads/2021/11/pixel.png",
+      "copyright": "Samsung Display; source attribution retained for this local research report.",
+      "original_sha256": "f28b44acffee08e21b5ecff76eb1c0d9108ef16f316805d7a16e75f17e7a8789",
+      "original_size_px": [
+        820,
+        461
+      ],
+      "crop_xyxy": [
+        8,
+        0,
+        392,
+        384
+      ],
+      "resized_to_px": [
+        128,
+        128
+      ],
+      "resampling": "none during field expansion; source tile retains its original BOX resampling",
+      "assigned_emission_texel_um": 2.0,
+      "assigned_field_um": [
+        1000,
+        1000
+      ],
+      "intensity_model": "sRGB decoded to linear RGB, then photopic luma weights 0.2126/0.7152/0.0722; single effective wavelength 530nm",
+      "scale_note": "Original 2um/texel example assumption retained, not measured panel calibration. Increasing the field changes tile count, not emitter dimensions or spacing.",
+      "source_texture": "assets/oled-diamond/emission.png",
+      "source_texture_sha256": "b753ba45e3407bd06e495d1c896b1595cc5955d704c16c9433ece9f15e9d454b",
+      "source_texture_size_px": [
+        128,
+        128
+      ],
+      "source_texture_field_um": [
+        256.0,
+        256.0
+      ],
+      "cell_crop_xyxy_in_source_texture": [
+        26,
+        58,
+        96,
+        128
+      ],
+      "period_detection": {
+        "x": {
+          "period_texels": 70,
+          "translation_mse": 0.0008333236664059358,
+          "search_range_inclusive": [
+            32,
+            96
+          ]
+        },
+        "y": {
+          "period_texels": 70,
+          "translation_mse": 0.0007689667877518372,
+          "search_range_inclusive": [
+            32,
+            96
+          ]
+        }
+      },
+      "crop_selection": "Minimize boundary RGB energy plus opposite-edge neighbor jump at the detected periods",
+      "cell_boundary_statistics": {
+        "x_wrap_mse": 0.0008959191519745153,
+        "y_wrap_mse": 0.0007662986763332784,
+        "x_interior_neighbor_mse": 0.005634586050011555,
+        "y_interior_neighbor_mse": 0.005596694375391532,
+        "edge_rgb_energy": 0.0006505922630490105,
+        "edge_max_srgb": 0.3254901960784314
+      },
+      "source_tile": "assets/oled-1mm-periodic/periodic-cell.png",
+      "source_tile_sha256": "c2d278aa4f8f12abfb7624bcee3171d3246fc8f9fae51457f2d69ad06cf2953a",
+      "source_tile_size_px": [
+        70,
+        70
+      ],
+      "source_tile_field_um": [
+        140.0,
+        140.0
+      ],
+      "source_tile_provenance": {
+        "title": "Samsung Display Diamond Pixel OLED subpixel distribution",
+        "source_page": "https://global.samsungdisplay.com/29043/",
+        "source_image": "https://global.samsungdisplay.com/wp-content/uploads/2021/11/pixel.png",
+        "copyright": "Samsung Display; source attribution retained for this local research report.",
+        "original_sha256": "f28b44acffee08e21b5ecff76eb1c0d9108ef16f316805d7a16e75f17e7a8789",
+        "original_size_px": [
+          820,
+          461
+        ],
+        "crop_xyxy": [
+          8,
+          0,
+          392,
+          384
+        ],
+        "resized_to_px": [
+          128,
+          128
+        ],
+        "resampling": "area average (Pillow BOX)",
+        "assigned_emission_texel_um": 2,
+        "assigned_field_um": [
+          256,
+          256
+        ],
+        "intensity_model": "sRGB decoded to linear RGB, then photopic luma weights 0.2126/0.7152/0.0722; single effective wavelength 530nm",
+        "scale_note": "Physical scale is an explicit example assumption; web illustration is not a radiometrically calibrated panel measurement."
+      },
+      "expansion_method": "crop one complete repeat cell, integer tile, then top-left field crop; no resizing or interpolation",
+      "tile_repeats_xy": [
+        8,
+        8
+      ],
+      "tiled_canvas_size_px": [
+        560,
+        560
+      ],
+      "field_crop_xyxy": [
+        0,
+        0,
+        500,
+        500
+      ],
+      "output_size_px": [
+        500,
+        500
+      ],
+      "pixel_scale_changed": false,
+      "tile_boundary_note": "One 70x70 repeat cell is cropped before tiling. Wrap-neighbor jumps are smaller than ordinary within-cell neighbor variation in both axes. No seam blending, pixel repainting or procedural emitter reconstruction is applied.",
+      "emission_png_sha256": "adaf09b5d4054d17cd74ad2a93b1138a3c8ba4ace08581ecc930a380e0619b3f"
+    },
+    "supersedes_stretched_emission_comparison": true,
+    "supersedes_uncropped_tile_comparison": true,
+    "baseline_input_files": {
+      "height": {
+        "path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-height1um\\heightfield.png",
+        "pitch_um_per_texel": 1.0,
+        "sha256": "7a191c0e7c2cf04c0d8defa409590c2929bea7b7500f6fb4c5e4c90292ff941c",
+        "file_bytes": 1322408,
+        "format": "PNG",
+        "mode": "I;16",
+        "width_px": 1000,
+        "height_px": 1000,
+        "array_shape": [
+          1000,
+          1000
+        ],
+        "dtype": "uint16",
+        "raw_min": 201.0,
+        "raw_max": 65432.0,
+        "raw_std": 8691.241383520823,
+        "physical_width_um": 1000.0,
+        "physical_height_um": 1000.0,
+        "provenance": {
+          "source": "existing assets/oled-1mm/heightfield.png",
+          "original_sha256": "74fdb8f0b79f80be74f81d2f4e89619e61fac0b0eb99590d25e4403b3f86e3ec",
+          "original_size_px": [
+            500,
+            500
+          ],
+          "resized_to_px": [
+            1000,
+            1000
+          ],
+          "resampling": "bilinear interpolation of existing 16-bit height values; no new measured detail",
+          "assigned_field_um": [
+            1000,
+            1000
+          ],
+          "assigned_texel_um": 1,
+          "height_range_um": 0.5
+        },
+        "png_bits_per_channel": 16,
+        "png_color_type": 0
+      },
+      "emission": {
+        "path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-periodic\\emission.png",
+        "pitch_um_per_texel": 2.0,
+        "sha256": "adaf09b5d4054d17cd74ad2a93b1138a3c8ba4ace08581ecc930a380e0619b3f",
+        "file_bytes": 48593,
+        "format": "PNG",
+        "mode": "RGB",
+        "width_px": 500,
+        "height_px": 500,
+        "array_shape": [
+          500,
+          500,
+          3
+        ],
+        "dtype": "uint8",
+        "raw_min": 0.0,
+        "raw_max": 255.0,
+        "raw_std": 61.376032885776596,
+        "physical_width_um": 1000.0,
+        "physical_height_um": 1000.0,
+        "provenance": {
+          "title": "Samsung Display Diamond Pixel OLED subpixel distribution",
+          "source_page": "https://global.samsungdisplay.com/29043/",
+          "source_image": "https://global.samsungdisplay.com/wp-content/uploads/2021/11/pixel.png",
+          "copyright": "Samsung Display; source attribution retained for this local research report.",
+          "original_sha256": "f28b44acffee08e21b5ecff76eb1c0d9108ef16f316805d7a16e75f17e7a8789",
+          "original_size_px": [
+            820,
+            461
+          ],
+          "crop_xyxy": [
+            8,
+            0,
+            392,
+            384
+          ],
+          "resized_to_px": [
+            128,
+            128
+          ],
+          "resampling": "none during field expansion; source tile retains its original BOX resampling",
+          "assigned_emission_texel_um": 2.0,
+          "assigned_field_um": [
+            1000,
+            1000
+          ],
+          "intensity_model": "sRGB decoded to linear RGB, then photopic luma weights 0.2126/0.7152/0.0722; single effective wavelength 530nm",
+          "scale_note": "Original 2um/texel example assumption retained, not measured panel calibration. Increasing the field changes tile count, not emitter dimensions or spacing.",
+          "source_texture": "assets/oled-diamond/emission.png",
+          "source_texture_sha256": "b753ba45e3407bd06e495d1c896b1595cc5955d704c16c9433ece9f15e9d454b",
+          "source_texture_size_px": [
+            128,
+            128
+          ],
+          "source_texture_field_um": [
+            256.0,
+            256.0
+          ],
+          "cell_crop_xyxy_in_source_texture": [
+            26,
+            58,
+            96,
+            128
+          ],
+          "period_detection": {
+            "x": {
+              "period_texels": 70,
+              "translation_mse": 0.0008333236664059358,
+              "search_range_inclusive": [
+                32,
+                96
+              ]
+            },
+            "y": {
+              "period_texels": 70,
+              "translation_mse": 0.0007689667877518372,
+              "search_range_inclusive": [
+                32,
+                96
+              ]
+            }
+          },
+          "crop_selection": "Minimize boundary RGB energy plus opposite-edge neighbor jump at the detected periods",
+          "cell_boundary_statistics": {
+            "x_wrap_mse": 0.0008959191519745153,
+            "y_wrap_mse": 0.0007662986763332784,
+            "x_interior_neighbor_mse": 0.005634586050011555,
+            "y_interior_neighbor_mse": 0.005596694375391532,
+            "edge_rgb_energy": 0.0006505922630490105,
+            "edge_max_srgb": 0.3254901960784314
+          },
+          "source_tile": "assets/oled-1mm-periodic/periodic-cell.png",
+          "source_tile_sha256": "c2d278aa4f8f12abfb7624bcee3171d3246fc8f9fae51457f2d69ad06cf2953a",
+          "source_tile_size_px": [
+            70,
+            70
+          ],
+          "source_tile_field_um": [
+            140.0,
+            140.0
+          ],
+          "source_tile_provenance": {
+            "title": "Samsung Display Diamond Pixel OLED subpixel distribution",
+            "source_page": "https://global.samsungdisplay.com/29043/",
+            "source_image": "https://global.samsungdisplay.com/wp-content/uploads/2021/11/pixel.png",
+            "copyright": "Samsung Display; source attribution retained for this local research report.",
+            "original_sha256": "f28b44acffee08e21b5ecff76eb1c0d9108ef16f316805d7a16e75f17e7a8789",
+            "original_size_px": [
+              820,
+              461
+            ],
+            "crop_xyxy": [
+              8,
+              0,
+              392,
+              384
+            ],
+            "resized_to_px": [
+              128,
+              128
+            ],
+            "resampling": "area average (Pillow BOX)",
+            "assigned_emission_texel_um": 2,
+            "assigned_field_um": [
+              256,
+              256
+            ],
+            "intensity_model": "sRGB decoded to linear RGB, then photopic luma weights 0.2126/0.7152/0.0722; single effective wavelength 530nm",
+            "scale_note": "Physical scale is an explicit example assumption; web illustration is not a radiometrically calibrated panel measurement."
+          },
+          "expansion_method": "crop one complete repeat cell, integer tile, then top-left field crop; no resizing or interpolation",
+          "tile_repeats_xy": [
+            8,
+            8
+          ],
+          "tiled_canvas_size_px": [
+            560,
+            560
+          ],
+          "field_crop_xyxy": [
+            0,
+            0,
+            500,
+            500
+          ],
+          "output_size_px": [
+            500,
+            500
+          ],
+          "pixel_scale_changed": false,
+          "tile_boundary_note": "One 70x70 repeat cell is cropped before tiling. Wrap-neighbor jumps are smaller than ordinary within-cell neighbor variation in both axes. No seam blending, pixel repainting or procedural emitter reconstruction is applied.",
+          "emission_png_sha256": "adaf09b5d4054d17cd74ad2a93b1138a3c8ba4ace08581ecc930a380e0619b3f"
+        },
+        "png_bits_per_channel": 8,
+        "png_color_type": 2
+      }
+    },
+    "baseline_effective_model": {
+      "height_grid": [
+        1000,
+        1000
+      ],
+      "fft_grid": [
+        1280,
+        1280
+      ],
+      "field_width_um": 1000.0,
+      "field_height_um": 1000.0,
+      "analysis_pixel_pitch_um": 49.99999999999999,
+      "wave_source_modes": 76769,
+      "wave_source_node_pitch_um": 2.0,
+      "one_complex64_field_mib": 12.5,
+      "ray_queries": 1536000000,
+      "pupil_nodes": 1536,
+      "height_min_um": 0.0015335317002609372,
+      "height_max_um": 0.49921420216560364,
+      "height_rms_about_mean_um": 0.06630992144346237,
+      "linear_emission_min": 0.0,
+      "linear_emission_max": 0.7410348057746887,
+      "active_emission_texels": 76769,
+      "resolved_torch_device_setting": "cuda"
+    },
+    "height_rms_original_um": 0.06630992144346237,
+    "height_rms_pits_um": 0.1343747079372406,
+    "metric": "100 * std(all 400 area-averaged 50um brightness pixels, ddof=0) / mean",
+    "geometry": {
+      "metadata": {
+        "source": "synthetic analytic random circular pits; scripts/prepare_random_pits.py",
+        "assigned_field_um": [
+          1000.0,
+          1000.0
+        ],
+        "assigned_texel_um": 1.0,
+        "height_range_um": 0.5,
+        "pit_depth_um": 0.5,
+        "diameter_distribution": "uniform on [3, 5] um; diameter drawn once per accepted pit",
+        "diameter_um_min_max": [
+          3.000069981282719,
+          4.999998145456507
+        ],
+        "diameter_um_mean": 3.9966587506844324,
+        "placement": "largest-first sequential placement at random positions; nonoverlapping, whole circles inside field",
+        "rng": "numpy.default_rng / PCG64",
+        "seed": 20261107,
+        "target_coverage": 0.5,
+        "analytic_coverage": 0.5000011976891807,
+        "sampled_footprint_coverage": 0.498844,
+        "pit_count": 39048,
+        "position_trials": 467709,
+        "profile": "h = depth * [1 - (1 - (r/R)^2)^2] for r < R; h = depth outside",
+        "profile_note": "smooth bowl with zero slope at center and rim; black is pit bottom",
+        "sampling": "analytic height at texel centers; 16-bit PNG; no height renormalization",
+        "grid_size_px": [
+          1000,
+          1000
+        ],
+        "sampled_height_min_max_um": [
+          0.0,
+          0.5
+        ],
+        "sampled_height_rms_about_mean_um": 0.13437470637809426,
+        "geometry_file": "pits.csv",
+        "geometry_sha256": "bf457573bdf673121ecba4a6f8028ab4fd7c81ece758fe5e72680507f62e3b6d",
+        "height_png_sha256": "eeb0f85a8f651fdc897171c36ba2146417fc835a15001b5c8f20bcd4752e712a",
+        "generation_elapsed_seconds": 5.7722444999963045,
+        "scale_note": "synthetic geometry assumptions, not a measured surface"
+      },
+      "independent_coverage": 0.5000011976891807,
+      "minimum_edge_separation_um": 4.3702381940846635e-05,
+      "all_circles_inside_field": true,
+      "no_overlapping_circles": true,
+      "fine_grid_geometry_identical": true
+    },
+    "comparison": [
+      {
+        "backend": "torch",
+        "old_cv_percent": 39.05122762602681,
+        "new_cv_percent": 22.625526379286484,
+        "delta_percentage_points": -16.425701246740324,
+        "relative_change_percent": -42.061933120363534,
+        "old_brightness_mean": 0.001117339105178448,
+        "new_brightness_mean": 0.0010963224301898048,
+        "mean_brightness_relative_change_percent": -1.88095761539524,
+        "new_solver_seconds": 391.676975,
+        "new_execution_context": {
+          "backend": "torch",
+          "device": "cuda",
+          "threads": 2,
+          "gpu_name": "NVIDIA GeForce RTX 3090 Ti"
+        }
+      },
+      {
+        "backend": "torchoptics",
+        "old_cv_percent": 39.05122122422077,
+        "new_cv_percent": 22.625523375129948,
+        "delta_percentage_points": -16.42569784909082,
+        "relative_change_percent": -42.06193131523144,
+        "old_brightness_mean": 0.001117339018249604,
+        "new_brightness_mean": 0.0010963222906091618,
+        "mean_brightness_relative_change_percent": -1.880962473982739,
+        "new_solver_seconds": 392.645128,
+        "new_execution_context": {
+          "backend": "torchoptics",
+          "device": "cuda",
+          "threads": 2,
+          "gpu_name": "NVIDIA GeForce RTX 3090 Ti"
+        }
+      },
+      {
+        "backend": "chromatix",
+        "old_cv_percent": 39.05145797810526,
+        "new_cv_percent": 22.62569747569076,
+        "delta_percentage_points": -16.4257605024145,
+        "relative_change_percent": -42.061836747872086,
+        "old_brightness_mean": 0.001117350149592259,
+        "new_brightness_mean": 0.0010963278879020768,
+        "mean_brightness_relative_change_percent": -1.8814390187224306,
+        "new_solver_seconds": 228.243076,
+        "new_execution_context": {
+          "backend": "chromatix",
+          "devices": [
+            "cuda:0"
+          ],
+          "x64_enabled": false,
+          "default_backend": "gpu",
+          "gpu_names": [
+            "NVIDIA GeForce RTX 3090 Ti"
+          ],
+          "environment": {
+            "python": "3.12.12 (main, Dec  5 2025, 20:21:41) [Clang 21.1.4 ]",
+            "executable": "/home/oxyflour/.venvs/oled-sparkle-chromatix/bin/python",
+            "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+            "processor": "x86_64",
+            "logical_cpus": 12,
+            "versions": {
+              "numpy": "2.5.4",
+              "Pillow": "13.0.0",
+              "torch": null,
+              "torchoptics": null,
+              "jax": "0.12.0.1",
+              "jaxlib": "0.12.0.1",
+              "jax-cuda13-plugin": "0.12.0.1",
+              "jax-cuda13-pjrt": "0.12.0.1",
+              "chromatix": "0.6.0",
+              "mitsuba": null,
+              "drjit": null
+            },
+            "environment_settings": {
+              "PYTHONPATH": null,
+              "OMP_NUM_THREADS": null,
+              "MKL_NUM_THREADS": null,
+              "JAX_PLATFORMS": "cuda",
+              "JAX_ENABLE_X64": null,
+              "DRJIT_LIBLLVM_PATH": null,
+              "SPARKLE_WSL_DISTRO": null,
+              "SPARKLE_WSL_PYTHON": null,
+              "XLA_PYTHON_CLIENT_PREALLOCATE": "false",
+              "XLA_PYTHON_CLIENT_MEM_FRACTION": "0.10"
+            }
+          },
+          "worker_solver_elapsed_seconds": 224.04107513604686,
+          "runtime": "wsl",
+          "wsl_distribution": "Ubuntu-22.04",
+          "worker_script": "/mnt/c/Projects/oled-sparkle/oled-ag-sparkle/scripts/chromatix_wsl.py",
+          "worker_command": [
+            "wsl.exe",
+            "--distribution",
+            "Ubuntu-22.04",
+            "--exec",
+            "env",
+            "-u",
+            "PYTHONPATH",
+            "-u",
+            "LD_LIBRARY_PATH",
+            "JAX_PLATFORMS=cuda",
+            "XLA_PYTHON_CLIENT_PREALLOCATE=false",
+            "XLA_PYTHON_CLIENT_MEM_FRACTION=0.10",
+            "PYTHONUNBUFFERED=1",
+            "/home/oxyflour/.venvs/oled-sparkle-chromatix/bin/python",
+            "/mnt/c/Projects/oled-sparkle/oled-ag-sparkle/scripts/chromatix_wsl.py",
+            "--request-dir",
+            "/mnt/c/Users/oxyfl/AppData/Local/Temp/chromatix-wsl-hpzbps3t"
+          ]
+        }
+      },
+      {
+        "backend": "mitsuba",
+        "old_cv_percent": 42.34711913241075,
+        "new_cv_percent": 21.055430932211657,
+        "delta_percentage_points": -21.29168820019909,
+        "relative_change_percent": -50.278953176541606,
+        "old_brightness_mean": 0.058543760891967465,
+        "new_brightness_mean": 0.057343675072127044,
+        "mean_brightness_relative_change_percent": -2.049895328820739,
+        "new_solver_seconds": 620.799194,
+        "new_execution_context": {
+          "backend": "mitsuba",
+          "variant": "cuda_ad_rgb"
+        }
+      }
+    ],
+    "sampling_check": {
+      "optical_pitch_um": 0.5,
+      "measurement_pitch_um": 50,
+      "original_cv_percent": 39.238626002688925,
+      "pits_cv_percent": 22.793447252759943,
+      "fine_comparison": {
+        "old_cv_percent": 39.238626002688925,
+        "new_cv_percent": 22.793447252759943,
+        "delta_percentage_points": -16.44517874992898,
+        "relative_change_percent": -41.91068960672077
+      },
+      "coarse_to_fine_original_cv_change_pp": 0.18739837666211656,
+      "coarse_to_fine_pits_cv_change_pp": 0.1679208734734594,
+      "note": "Two grid levels measure sensitivity; they do not establish full convergence. Original height is bilinearly refined from its 1um samples; pits are analytically resampled. Physical FFT padding remains 140um per edge; emission-source positions follow solver grid quantization."
+    },
+    "wave_backend_relative_l2_brightness_50um": {
+      "torchoptics": 3.5025714223112493e-07,
+      "chromatix": 7.66436337907906e-06
+    },
+    "audit": {
+      "all_metrics_recomputed_from_saved_floats": true,
+      "measurement_pixels_match_independent_area_average": true,
+      "emission_bytes_unchanged": true,
+      "optical_parameters_unchanged": true,
+      "emission_expansion_preserves_repeat_cell_texels_and_scale": true,
+      "all_four_backends_complete": true
+    },
+    "new_run_wall_seconds": 854.328182,
+    "figures": [
+      "C:\\Projects\\oled-sparkle\\test-results\\emission-periodic-crop.png",
+      "C:\\Projects\\oled-sparkle\\test-results\\random-pit-periodic-height-comparison.png",
+      "C:\\Projects\\oled-sparkle\\test-results\\random-pit-periodic-brightness-comparison.png",
+      "C:\\Projects\\oled-sparkle\\test-results\\random-pit-periodic-cv-comparison.png"
+    ],
+    "report_integrity": {
+      "display_images": 10,
+      "original_input_downloads": 2,
+      "raw_float_downloads": 8,
+      "all_downloads_identical_to_saved_files": true,
+      "report": "test-results/oled-1mm-pits3to5um-periodic-50um/report.html",
+      "report_sha256": "5f0a7656b05bdc377de77087cffd5dcfacb79bd70d152f58a8fdadd4f62f2a04"
+    },
+    "tests": {
+      "passed": 28,
+      "skipped": 0,
+      "failed": 0,
+      "log": "test-results/logs/validation-periodic.log",
+      "focused_input_checks": {
+        "passed": 3,
+        "log": "test-results/logs/validation-periodic-input.log"
+      }
+    },
+    "superseded_report_annotations": [
+      {
+        "report": "test-results/oled-1mm-height1um-50um/report.html",
+        "sha256_before_notice": "ba3325f5832679dd1eb6c3b67c93b3f113dff8c8bec3aefec48c0f5412cc31df",
+        "sha256_after_notice": "57e9ee99a7b99f0122e94ce9369c3d05f6ebc29569e5eecccae62ed0d9b54578"
+      },
+      {
+        "report": "test-results/oled-1mm-pits3to5um-50um/report.html",
+        "sha256_before_notice": "9cdf70147fe38a8d5b77d88c9357caf2fe48ef4013ab607522b309f1aa210a4c",
+        "sha256_after_notice": "3ab2799ae029573d96423ac44c08ac18426e3f93470a80526503fc361c5f1f27"
+      },
+      {
+        "report": "test-results/oled-1mm-original-tiled-50um/report.html",
+        "sha256_before_notice": "e1c60d04fdc620799250869b1b40b89b9dbd53c974e7cc8232bb4d3ee3bc73dd",
+        "sha256_after_notice": "bebc33d4cff4a68a63cd7a5e698b3e70209bc9f0ea2d648efad3318341533232"
+      },
+      {
+        "report": "test-results/oled-1mm-pits3to5um-tiled-50um/report.html",
+        "sha256_before_notice": "a8bd0270b413970577f42b734c0459e0cb0f0112a879dde9be74d823e0d30eba",
+        "sha256_after_notice": "9e1d8f2db90108a14fa6e9c922c2804854a6416ac20b5a0757e15fc0b4a51c0e"
+      }
+    ]
+  },
+  "latest_tests": {
+    "passed": 28,
+    "skipped": 0,
+    "failed": 0,
+    "log": "test-results/logs/validation-periodic.log",
+    "focused_input_checks": {
+      "passed": 3,
+      "log": "test-results/logs/validation-periodic-input.log"
+    }
+  },
+  "latest_results_report": "test-results/oled-1mm-pits3to5um-periodic-50um/report.html",
+  "emission_scale_correction": {
+    "previous_layout": "same illustrated content stretched from 256um to 1000um",
+    "previous_linear_enlargement": 3.90625,
+    "current_layout": "crop repeat cell [26,58,96,128], keep 2um/texel, repeat 70x70 cell 8x8, crop to 500x500",
+    "previous_cv_comparison_superseded": true,
+    "historical_top_level_fields": "Original reference measurements retained; current results are in random_circular_pits."
+  },
+  "superseded_stretched_emission_random_pits": {
+    "generated_at_utc": "2026-11-07T09:10:39.577488+00:00",
+    "baseline_results": "C:\\Projects\\oled-sparkle\\test-results\\oled-1mm-height1um-50um",
+    "new_results": "C:\\Projects\\oled-sparkle\\test-results\\oled-1mm-pits3to5um-50um",
+    "baseline_input_files": {
+      "height": {
+        "path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-height1um\\heightfield.png",
+        "pitch_um_per_texel": 1.0,
+        "sha256": "7a191c0e7c2cf04c0d8defa409590c2929bea7b7500f6fb4c5e4c90292ff941c",
+        "file_bytes": 1322408,
+        "format": "PNG",
+        "mode": "I;16",
+        "width_px": 1000,
+        "height_px": 1000,
+        "array_shape": [
+          1000,
+          1000
+        ],
+        "dtype": "uint16",
+        "raw_min": 201.0,
+        "raw_max": 65432.0,
+        "raw_std": 8691.241383520823,
+        "physical_width_um": 1000.0,
+        "physical_height_um": 1000.0,
+        "provenance": {
+          "source": "existing assets/oled-1mm/heightfield.png",
+          "original_sha256": "74fdb8f0b79f80be74f81d2f4e89619e61fac0b0eb99590d25e4403b3f86e3ec",
+          "original_size_px": [
+            500,
+            500
+          ],
+          "resized_to_px": [
+            1000,
+            1000
+          ],
+          "resampling": "bilinear interpolation of existing 16-bit height values; no new measured detail",
+          "assigned_field_um": [
+            1000,
+            1000
+          ],
+          "assigned_texel_um": 1,
+          "height_range_um": 0.5
+        },
+        "png_bits_per_channel": 16,
+        "png_color_type": 0
+      },
+      "emission": {
+        "path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm\\emission.png",
+        "pitch_um_per_texel": 2.0,
+        "sha256": "687904186157df14f628adacb85c04d286ebc44b703ee851ecc2ee2d16b65670",
+        "file_bytes": 137793,
+        "format": "PNG",
+        "mode": "RGBA",
+        "width_px": 500,
+        "height_px": 500,
+        "array_shape": [
+          500,
+          500,
+          4
+        ],
+        "dtype": "uint8",
+        "raw_min": 0.0,
+        "raw_max": 255.0,
+        "raw_std": 113.91840521893411,
+        "physical_width_um": 1000.0,
+        "physical_height_um": 1000.0,
+        "provenance": {
+          "title": "Samsung Display Diamond Pixel OLED subpixel distribution",
+          "source_page": "https://global.samsungdisplay.com/29043/",
+          "source_image": "https://global.samsungdisplay.com/wp-content/uploads/2021/11/pixel.png",
+          "copyright": "Samsung Display; source attribution retained for this local research report.",
+          "original_sha256": "f28b44acffee08e21b5ecff76eb1c0d9108ef16f316805d7a16e75f17e7a8789",
+          "original_size_px": [
+            820,
+            461
+          ],
+          "crop_xyxy": [
+            8,
+            0,
+            392,
+            384
+          ],
+          "resized_to_px": [
+            500,
+            500
+          ],
+          "resampling": "area average (Pillow BOX)",
+          "assigned_emission_texel_um": 2,
+          "assigned_field_um": [
+            1000,
+            1000
+          ],
+          "intensity_model": "sRGB decoded to linear RGB, then photopic luma weights 0.2126/0.7152/0.0722; single effective wavelength 530nm",
+          "scale_note": "Physical scale is an explicit example assumption; web illustration is not a radiometrically calibrated panel measurement."
+        },
+        "png_bits_per_channel": 8,
+        "png_color_type": 6
+      }
+    },
+    "baseline_effective_model": {
+      "height_grid": [
+        1000,
+        1000
+      ],
+      "fft_grid": [
+        1280,
+        1280
+      ],
+      "field_width_um": 1000.0,
+      "field_height_um": 1000.0,
+      "analysis_pixel_pitch_um": 49.99999999999999,
+      "wave_source_modes": 76550,
+      "wave_source_node_pitch_um": 2.0,
+      "one_complex64_field_mib": 12.5,
+      "ray_queries": 1536000000,
+      "pupil_nodes": 1536,
+      "height_min_um": 0.0015335317002609372,
+      "height_max_um": 0.49921420216560364,
+      "height_rms_about_mean_um": 0.06630992144346237,
+      "linear_emission_min": 0.0,
+      "linear_emission_max": 0.7646600604057312,
+      "active_emission_texels": 76550,
+      "resolved_torch_device_setting": "cuda"
+    },
+    "height_rms_original_um": 0.06630992144346237,
+    "height_rms_pits_um": 0.1343747079372406,
+    "metric": "100 * std(all 400 area-averaged 50um brightness pixels, ddof=0) / mean",
+    "geometry": {
+      "metadata": {
+        "source": "synthetic analytic random circular pits; scripts/prepare_random_pits.py",
+        "assigned_field_um": [
+          1000.0,
+          1000.0
+        ],
+        "assigned_texel_um": 1.0,
+        "height_range_um": 0.5,
+        "pit_depth_um": 0.5,
+        "diameter_distribution": "uniform on [3, 5] um; diameter drawn once per accepted pit",
+        "diameter_um_min_max": [
+          3.000069981282719,
+          4.999998145456507
+        ],
+        "diameter_um_mean": 3.9966587506844324,
+        "placement": "largest-first sequential placement at random positions; nonoverlapping, whole circles inside field",
+        "rng": "numpy.default_rng / PCG64",
+        "seed": 20261107,
+        "target_coverage": 0.5,
+        "analytic_coverage": 0.5000011976891807,
+        "sampled_footprint_coverage": 0.498844,
+        "pit_count": 39048,
+        "position_trials": 467709,
+        "profile": "h = depth * [1 - (1 - (r/R)^2)^2] for r < R; h = depth outside",
+        "profile_note": "smooth bowl with zero slope at center and rim; black is pit bottom",
+        "sampling": "analytic height at texel centers; 16-bit PNG; no height renormalization",
+        "grid_size_px": [
+          1000,
+          1000
+        ],
+        "sampled_height_min_max_um": [
+          0.0,
+          0.5
+        ],
+        "sampled_height_rms_about_mean_um": 0.13437470637809426,
+        "geometry_file": "pits.csv",
+        "geometry_sha256": "bf457573bdf673121ecba4a6f8028ab4fd7c81ece758fe5e72680507f62e3b6d",
+        "height_png_sha256": "eeb0f85a8f651fdc897171c36ba2146417fc835a15001b5c8f20bcd4752e712a",
+        "generation_elapsed_seconds": 5.7722444999963045,
+        "scale_note": "synthetic geometry assumptions, not a measured surface"
+      },
+      "independent_coverage": 0.5000011976891807,
+      "minimum_edge_separation_um": 4.3702381940846635e-05,
+      "all_circles_inside_field": true,
+      "no_overlapping_circles": true,
+      "fine_grid_geometry_identical": true
+    },
+    "comparison": [
+      {
+        "backend": "torch",
+        "old_cv_percent": 206.26954142500585,
+        "new_cv_percent": 158.9585780503089,
+        "delta_percentage_points": -47.31096337469697,
+        "relative_change_percent": -22.93647576266028,
+        "old_brightness_mean": 0.0010552786705941624,
+        "new_brightness_mean": 0.0010385374074343128,
+        "mean_brightness_relative_change_percent": -1.5864305444952875,
+        "new_solver_seconds": 189.668924,
+        "new_execution_context": {
+          "backend": "torch",
+          "device": "cuda",
+          "threads": 2,
+          "gpu_name": "NVIDIA GeForce RTX 3090 Ti"
+        }
+      },
+      {
+        "backend": "torchoptics",
+        "old_cv_percent": 206.26951176098882,
+        "new_cv_percent": 158.95855469841277,
+        "delta_percentage_points": -47.31095706257605,
+        "relative_change_percent": -22.93647600106641,
+        "old_brightness_mean": 0.0010552785878929763,
+        "new_brightness_mean": 0.0010385372808826216,
+        "mean_brightness_relative_change_percent": -1.5864348241710458,
+        "new_solver_seconds": 191.181722,
+        "new_execution_context": {
+          "backend": "torchoptics",
+          "device": "cuda",
+          "threads": 2,
+          "gpu_name": "NVIDIA GeForce RTX 3090 Ti"
+        }
+      },
+      {
+        "backend": "chromatix",
+        "old_cv_percent": 206.27007576316177,
+        "new_cv_percent": 158.95958707668777,
+        "delta_percentage_points": -47.310488686474,
+        "relative_change_percent": -22.936186216751896,
+        "old_brightness_mean": 0.001055290566769253,
+        "new_brightness_mean": 0.0010385477067197948,
+        "mean_brightness_relative_change_percent": -1.5865639831043055,
+        "new_solver_seconds": 135.253973,
+        "new_execution_context": {
+          "backend": "chromatix",
+          "devices": [
+            "cuda:0"
+          ],
+          "x64_enabled": false,
+          "default_backend": "gpu",
+          "gpu_names": [
+            "NVIDIA GeForce RTX 3090 Ti"
+          ],
+          "environment": {
+            "python": "3.12.12 (main, Dec  5 2025, 20:21:41) [Clang 21.1.4 ]",
+            "executable": "/home/oxyflour/.venvs/oled-sparkle-chromatix/bin/python",
+            "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+            "processor": "x86_64",
+            "logical_cpus": 12,
+            "versions": {
+              "numpy": "2.5.4",
+              "Pillow": "13.0.0",
+              "torch": null,
+              "torchoptics": null,
+              "jax": "0.12.0.1",
+              "jaxlib": "0.12.0.1",
+              "jax-cuda13-plugin": "0.12.0.1",
+              "jax-cuda13-pjrt": "0.12.0.1",
+              "chromatix": "0.6.0",
+              "mitsuba": null,
+              "drjit": null
+            },
+            "environment_settings": {
+              "PYTHONPATH": null,
+              "OMP_NUM_THREADS": null,
+              "MKL_NUM_THREADS": null,
+              "JAX_PLATFORMS": "cuda",
+              "JAX_ENABLE_X64": null,
+              "DRJIT_LIBLLVM_PATH": null,
+              "SPARKLE_WSL_DISTRO": null,
+              "SPARKLE_WSL_PYTHON": null,
+              "XLA_PYTHON_CLIENT_PREALLOCATE": "false",
+              "XLA_PYTHON_CLIENT_MEM_FRACTION": "0.10"
+            }
+          },
+          "worker_solver_elapsed_seconds": 131.25390056194738,
+          "runtime": "wsl",
+          "wsl_distribution": "Ubuntu-22.04",
+          "worker_script": "/mnt/c/Projects/oled-sparkle/oled-ag-sparkle/scripts/chromatix_wsl.py",
+          "worker_command": [
+            "wsl.exe",
+            "--distribution",
+            "Ubuntu-22.04",
+            "--exec",
+            "env",
+            "-u",
+            "PYTHONPATH",
+            "-u",
+            "LD_LIBRARY_PATH",
+            "JAX_PLATFORMS=cuda",
+            "XLA_PYTHON_CLIENT_PREALLOCATE=false",
+            "XLA_PYTHON_CLIENT_MEM_FRACTION=0.10",
+            "PYTHONUNBUFFERED=1",
+            "/home/oxyflour/.venvs/oled-sparkle-chromatix/bin/python",
+            "/mnt/c/Projects/oled-sparkle/oled-ag-sparkle/scripts/chromatix_wsl.py",
+            "--request-dir",
+            "/mnt/c/Users/oxyfl/AppData/Local/Temp/chromatix-wsl-a6kdswar"
+          ]
+        }
+      },
+      {
+        "backend": "mitsuba",
+        "old_cv_percent": 210.15357956913968,
+        "new_cv_percent": 159.47473321631563,
+        "delta_percentage_points": -50.67884635282405,
+        "relative_change_percent": -24.115147815576897,
+        "old_brightness_mean": 0.055828872087118044,
+        "new_brightness_mean": 0.05478526402229278,
+        "mean_brightness_relative_change_percent": -1.8692981351956517,
+        "new_solver_seconds": 481.438056,
+        "new_execution_context": {
+          "backend": "mitsuba",
+          "variant": "cuda_ad_rgb"
+        }
+      }
+    ],
+    "sampling_check": {
+      "optical_pitch_um": 0.5,
+      "measurement_pitch_um": 50,
+      "original_cv_percent": 206.31471604739946,
+      "pits_cv_percent": 158.78914806180225,
+      "fine_comparison": {
+        "old_cv_percent": 206.31471604739946,
+        "new_cv_percent": 158.78914806180225,
+        "delta_percentage_points": -47.525567985597206,
+        "relative_change_percent": -23.03547167943101
+      },
+      "coarse_to_fine_original_cv_change_pp": 0.045174622393602704,
+      "coarse_to_fine_pits_cv_change_pp": -0.1694299885066357,
+      "note": "Two grid levels measure sensitivity; they do not establish full convergence. Original height is bilinearly refined from its 1um samples; pits are analytically resampled. Physical FFT padding remains 140um per edge; emission-source positions follow solver grid quantization."
+    },
+    "wave_backend_relative_l2_brightness_50um": {
+      "torchoptics": 3.106551953447046e-07,
+      "chromatix": 1.711871358795135e-05
+    },
+    "audit": {
+      "all_metrics_recomputed_from_saved_floats": true,
+      "measurement_pixels_match_independent_area_average": true,
+      "emission_bytes_unchanged": true,
+      "optical_parameters_unchanged": true,
+      "all_four_backends_complete": true
+    },
+    "new_run_wall_seconds": 620.500605,
+    "figures": [
+      "C:\\Projects\\oled-sparkle\\test-results\\random-pit-height-comparison.png",
+      "C:\\Projects\\oled-sparkle\\test-results\\random-pit-brightness-comparison.png",
+      "C:\\Projects\\oled-sparkle\\test-results\\random-pit-cv-comparison.png"
+    ],
+    "report_integrity": {
+      "display_images": 9,
+      "original_input_downloads": 2,
+      "raw_float_downloads": 8,
+      "all_downloads_identical_to_saved_files": true,
+      "report": "test-results/oled-1mm-pits3to5um-50um/report.html",
+      "report_sha256": "d24c29ddc85a57ab75b9647435cdce7a36c393b73f7cdb01a61760f568b72cc0"
+    },
+    "tests": {
+      "passed": 25,
+      "skipped": 0,
+      "failed": 0,
+      "log": "test-results/logs/validation-pits.log"
+    }
+  },
+  "superseded_uncropped_tile_random_pits": {
+    "generated_at_utc": "2026-11-07T09:48:17.979228+00:00",
+    "baseline_results": "C:\\Projects\\oled-sparkle\\test-results\\oled-1mm-original-tiled-50um",
+    "new_results": "C:\\Projects\\oled-sparkle\\test-results\\oled-1mm-pits3to5um-tiled-50um",
+    "emission_field_construction": {
+      "title": "Samsung Display Diamond Pixel OLED subpixel distribution",
+      "source_page": "https://global.samsungdisplay.com/29043/",
+      "source_image": "https://global.samsungdisplay.com/wp-content/uploads/2021/11/pixel.png",
+      "copyright": "Samsung Display; source attribution retained for this local research report.",
+      "original_sha256": "f28b44acffee08e21b5ecff76eb1c0d9108ef16f316805d7a16e75f17e7a8789",
+      "original_size_px": [
+        820,
+        461
+      ],
+      "crop_xyxy": [
+        8,
+        0,
+        392,
+        384
+      ],
+      "resized_to_px": [
+        128,
+        128
+      ],
+      "resampling": "none during field expansion; source tile retains its original BOX resampling",
+      "assigned_emission_texel_um": 2.0,
+      "assigned_field_um": [
+        1000,
+        1000
+      ],
+      "intensity_model": "sRGB decoded to linear RGB, then photopic luma weights 0.2126/0.7152/0.0722; single effective wavelength 530nm",
+      "scale_note": "Original 2um/texel example assumption retained, not measured panel calibration. Increasing the field changes tile count, not emitter dimensions or spacing.",
+      "source_tile": "assets/oled-diamond/emission.png",
+      "source_tile_sha256": "b753ba45e3407bd06e495d1c896b1595cc5955d704c16c9433ece9f15e9d454b",
+      "source_tile_size_px": [
+        128,
+        128
+      ],
+      "source_tile_field_um": [
+        256.0,
+        256.0
+      ],
+      "source_tile_provenance": {
+        "title": "Samsung Display Diamond Pixel OLED subpixel distribution",
+        "source_page": "https://global.samsungdisplay.com/29043/",
+        "source_image": "https://global.samsungdisplay.com/wp-content/uploads/2021/11/pixel.png",
+        "copyright": "Samsung Display; source attribution retained for this local research report.",
+        "original_sha256": "f28b44acffee08e21b5ecff76eb1c0d9108ef16f316805d7a16e75f17e7a8789",
+        "original_size_px": [
+          820,
+          461
+        ],
+        "crop_xyxy": [
+          8,
+          0,
+          392,
+          384
+        ],
+        "resized_to_px": [
+          128,
+          128
+        ],
+        "resampling": "area average (Pillow BOX)",
+        "assigned_emission_texel_um": 2,
+        "assigned_field_um": [
+          256,
+          256
+        ],
+        "intensity_model": "sRGB decoded to linear RGB, then photopic luma weights 0.2126/0.7152/0.0722; single effective wavelength 530nm",
+        "scale_note": "Physical scale is an explicit example assumption; web illustration is not a radiometrically calibrated panel measurement."
+      },
+      "expansion_method": "integer texture tiling followed by top-left crop; no resizing or interpolation",
+      "tile_repeats_xy": [
+        4,
+        4
+      ],
+      "tiled_canvas_size_px": [
+        512,
+        512
+      ],
+      "field_crop_xyxy": [
+        0,
+        0,
+        500,
+        500
+      ],
+      "output_size_px": [
+        500,
+        500
+      ],
+      "pixel_scale_changed": false,
+      "tile_boundary_note": "The complete original illustrative tile repeats every 256um. Its crop is not a calibrated seamless primitive OLED lattice cell; no seam blending or inferred lattice reconstruction is applied.",
+      "emission_png_sha256": "f440eff0b79816aadb7cbc60292be898c6ea4e0dbac54a6264786b2538b8703d"
+    },
+    "supersedes_stretched_emission_comparison": true,
+    "baseline_input_files": {
+      "height": {
+        "path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-height1um\\heightfield.png",
+        "pitch_um_per_texel": 1.0,
+        "sha256": "7a191c0e7c2cf04c0d8defa409590c2929bea7b7500f6fb4c5e4c90292ff941c",
+        "file_bytes": 1322408,
+        "format": "PNG",
+        "mode": "I;16",
+        "width_px": 1000,
+        "height_px": 1000,
+        "array_shape": [
+          1000,
+          1000
+        ],
+        "dtype": "uint16",
+        "raw_min": 201.0,
+        "raw_max": 65432.0,
+        "raw_std": 8691.241383520823,
+        "physical_width_um": 1000.0,
+        "physical_height_um": 1000.0,
+        "provenance": {
+          "source": "existing assets/oled-1mm/heightfield.png",
+          "original_sha256": "74fdb8f0b79f80be74f81d2f4e89619e61fac0b0eb99590d25e4403b3f86e3ec",
+          "original_size_px": [
+            500,
+            500
+          ],
+          "resized_to_px": [
+            1000,
+            1000
+          ],
+          "resampling": "bilinear interpolation of existing 16-bit height values; no new measured detail",
+          "assigned_field_um": [
+            1000,
+            1000
+          ],
+          "assigned_texel_um": 1,
+          "height_range_um": 0.5
+        },
+        "png_bits_per_channel": 16,
+        "png_color_type": 0
+      },
+      "emission": {
+        "path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-tiled\\emission.png",
+        "pitch_um_per_texel": 2.0,
+        "sha256": "f440eff0b79816aadb7cbc60292be898c6ea4e0dbac54a6264786b2538b8703d",
+        "file_bytes": 82330,
+        "format": "PNG",
+        "mode": "RGB",
+        "width_px": 500,
+        "height_px": 500,
+        "array_shape": [
+          500,
+          500,
+          3
+        ],
+        "dtype": "uint8",
+        "raw_min": 0.0,
+        "raw_max": 255.0,
+        "raw_std": 61.685697950912186,
+        "physical_width_um": 1000.0,
+        "physical_height_um": 1000.0,
+        "provenance": {
+          "title": "Samsung Display Diamond Pixel OLED subpixel distribution",
+          "source_page": "https://global.samsungdisplay.com/29043/",
+          "source_image": "https://global.samsungdisplay.com/wp-content/uploads/2021/11/pixel.png",
+          "copyright": "Samsung Display; source attribution retained for this local research report.",
+          "original_sha256": "f28b44acffee08e21b5ecff76eb1c0d9108ef16f316805d7a16e75f17e7a8789",
+          "original_size_px": [
+            820,
+            461
+          ],
+          "crop_xyxy": [
+            8,
+            0,
+            392,
+            384
+          ],
+          "resized_to_px": [
+            128,
+            128
+          ],
+          "resampling": "none during field expansion; source tile retains its original BOX resampling",
+          "assigned_emission_texel_um": 2.0,
+          "assigned_field_um": [
+            1000,
+            1000
+          ],
+          "intensity_model": "sRGB decoded to linear RGB, then photopic luma weights 0.2126/0.7152/0.0722; single effective wavelength 530nm",
+          "scale_note": "Original 2um/texel example assumption retained, not measured panel calibration. Increasing the field changes tile count, not emitter dimensions or spacing.",
+          "source_tile": "assets/oled-diamond/emission.png",
+          "source_tile_sha256": "b753ba45e3407bd06e495d1c896b1595cc5955d704c16c9433ece9f15e9d454b",
+          "source_tile_size_px": [
+            128,
+            128
+          ],
+          "source_tile_field_um": [
+            256.0,
+            256.0
+          ],
+          "source_tile_provenance": {
+            "title": "Samsung Display Diamond Pixel OLED subpixel distribution",
+            "source_page": "https://global.samsungdisplay.com/29043/",
+            "source_image": "https://global.samsungdisplay.com/wp-content/uploads/2021/11/pixel.png",
+            "copyright": "Samsung Display; source attribution retained for this local research report.",
+            "original_sha256": "f28b44acffee08e21b5ecff76eb1c0d9108ef16f316805d7a16e75f17e7a8789",
+            "original_size_px": [
+              820,
+              461
+            ],
+            "crop_xyxy": [
+              8,
+              0,
+              392,
+              384
+            ],
+            "resized_to_px": [
+              128,
+              128
+            ],
+            "resampling": "area average (Pillow BOX)",
+            "assigned_emission_texel_um": 2,
+            "assigned_field_um": [
+              256,
+              256
+            ],
+            "intensity_model": "sRGB decoded to linear RGB, then photopic luma weights 0.2126/0.7152/0.0722; single effective wavelength 530nm",
+            "scale_note": "Physical scale is an explicit example assumption; web illustration is not a radiometrically calibrated panel measurement."
+          },
+          "expansion_method": "integer texture tiling followed by top-left crop; no resizing or interpolation",
+          "tile_repeats_xy": [
+            4,
+            4
+          ],
+          "tiled_canvas_size_px": [
+            512,
+            512
+          ],
+          "field_crop_xyxy": [
+            0,
+            0,
+            500,
+            500
+          ],
+          "output_size_px": [
+            500,
+            500
+          ],
+          "pixel_scale_changed": false,
+          "tile_boundary_note": "The complete original illustrative tile repeats every 256um. Its crop is not a calibrated seamless primitive OLED lattice cell; no seam blending or inferred lattice reconstruction is applied.",
+          "emission_png_sha256": "f440eff0b79816aadb7cbc60292be898c6ea4e0dbac54a6264786b2538b8703d"
+        },
+        "png_bits_per_channel": 8,
+        "png_color_type": 2
+      }
+    },
+    "baseline_effective_model": {
+      "height_grid": [
+        1000,
+        1000
+      ],
+      "fft_grid": [
+        1280,
+        1280
+      ],
+      "field_width_um": 1000.0,
+      "field_height_um": 1000.0,
+      "analysis_pixel_pitch_um": 49.99999999999999,
+      "wave_source_modes": 77676,
+      "wave_source_node_pitch_um": 2.0,
+      "one_complex64_field_mib": 12.5,
+      "ray_queries": 1536000000,
+      "pupil_nodes": 1536,
+      "height_min_um": 0.0015335317002609372,
+      "height_max_um": 0.49921420216560364,
+      "height_rms_about_mean_um": 0.06630992144346237,
+      "linear_emission_min": 0.0,
+      "linear_emission_max": 0.7410348057746887,
+      "active_emission_texels": 77676,
+      "resolved_torch_device_setting": "cuda"
+    },
+    "height_rms_original_um": 0.06630992144346237,
+    "height_rms_pits_um": 0.1343747079372406,
+    "metric": "100 * std(all 400 area-averaged 50um brightness pixels, ddof=0) / mean",
+    "geometry": {
+      "metadata": {
+        "source": "synthetic analytic random circular pits; scripts/prepare_random_pits.py",
+        "assigned_field_um": [
+          1000.0,
+          1000.0
+        ],
+        "assigned_texel_um": 1.0,
+        "height_range_um": 0.5,
+        "pit_depth_um": 0.5,
+        "diameter_distribution": "uniform on [3, 5] um; diameter drawn once per accepted pit",
+        "diameter_um_min_max": [
+          3.000069981282719,
+          4.999998145456507
+        ],
+        "diameter_um_mean": 3.9966587506844324,
+        "placement": "largest-first sequential placement at random positions; nonoverlapping, whole circles inside field",
+        "rng": "numpy.default_rng / PCG64",
+        "seed": 20261107,
+        "target_coverage": 0.5,
+        "analytic_coverage": 0.5000011976891807,
+        "sampled_footprint_coverage": 0.498844,
+        "pit_count": 39048,
+        "position_trials": 467709,
+        "profile": "h = depth * [1 - (1 - (r/R)^2)^2] for r < R; h = depth outside",
+        "profile_note": "smooth bowl with zero slope at center and rim; black is pit bottom",
+        "sampling": "analytic height at texel centers; 16-bit PNG; no height renormalization",
+        "grid_size_px": [
+          1000,
+          1000
+        ],
+        "sampled_height_min_max_um": [
+          0.0,
+          0.5
+        ],
+        "sampled_height_rms_about_mean_um": 0.13437470637809426,
+        "geometry_file": "pits.csv",
+        "geometry_sha256": "bf457573bdf673121ecba4a6f8028ab4fd7c81ece758fe5e72680507f62e3b6d",
+        "height_png_sha256": "eeb0f85a8f651fdc897171c36ba2146417fc835a15001b5c8f20bcd4752e712a",
+        "generation_elapsed_seconds": 5.7722444999963045,
+        "scale_note": "synthetic geometry assumptions, not a measured surface"
+      },
+      "independent_coverage": 0.5000011976891807,
+      "minimum_edge_separation_um": 4.3702381940846635e-05,
+      "all_circles_inside_field": true,
+      "no_overlapping_circles": true,
+      "fine_grid_geometry_identical": true
+    },
+    "comparison": [
+      {
+        "backend": "torch",
+        "old_cv_percent": 51.177415812673686,
+        "new_cv_percent": 32.125963892057165,
+        "delta_percentage_points": -19.051451920616522,
+        "relative_change_percent": -37.22628745138511,
+        "old_brightness_mean": 0.0010277672583774997,
+        "new_brightness_mean": 0.0010071319335119954,
+        "mean_brightness_relative_change_percent": -2.007781888097948,
+        "new_solver_seconds": 416.488348,
+        "new_execution_context": {
+          "backend": "torch",
+          "device": "cuda",
+          "threads": 2,
+          "gpu_name": "NVIDIA GeForce RTX 3090 Ti"
+        }
+      },
+      {
+        "backend": "torchoptics",
+        "old_cv_percent": 51.17740632198186,
+        "new_cv_percent": 32.125958843466755,
+        "delta_percentage_points": -19.051447478515108,
+        "relative_change_percent": -37.226285675075474,
+        "old_brightness_mean": 0.0010277671618518184,
+        "new_brightness_mean": 0.0010071318446493336,
+        "mean_brightness_relative_change_percent": -2.0077813310657167,
+        "new_solver_seconds": 417.636414,
+        "new_execution_context": {
+          "backend": "torchoptics",
+          "device": "cuda",
+          "threads": 2,
+          "gpu_name": "NVIDIA GeForce RTX 3090 Ti"
+        }
+      },
+      {
+        "backend": "chromatix",
+        "old_cv_percent": 51.17769751736747,
+        "new_cv_percent": 32.1261664638019,
+        "delta_percentage_points": -19.05153105356557,
+        "relative_change_percent": -37.22623716532052,
+        "old_brightness_mean": 0.0010277774640930386,
+        "new_brightness_mean": 0.0010071368504206025,
+        "mean_brightness_relative_change_percent": -2.008276537825282,
+        "new_solver_seconds": 239.972702,
+        "new_execution_context": {
+          "backend": "chromatix",
+          "devices": [
+            "cuda:0"
+          ],
+          "x64_enabled": false,
+          "default_backend": "gpu",
+          "gpu_names": [
+            "NVIDIA GeForce RTX 3090 Ti"
+          ],
+          "environment": {
+            "python": "3.12.12 (main, Dec  5 2025, 20:21:41) [Clang 21.1.4 ]",
+            "executable": "/home/oxyflour/.venvs/oled-sparkle-chromatix/bin/python",
+            "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+            "processor": "x86_64",
+            "logical_cpus": 12,
+            "versions": {
+              "numpy": "2.5.4",
+              "Pillow": "13.0.0",
+              "torch": null,
+              "torchoptics": null,
+              "jax": "0.12.0.1",
+              "jaxlib": "0.12.0.1",
+              "jax-cuda13-plugin": "0.12.0.1",
+              "jax-cuda13-pjrt": "0.12.0.1",
+              "chromatix": "0.6.0",
+              "mitsuba": null,
+              "drjit": null
+            },
+            "environment_settings": {
+              "PYTHONPATH": null,
+              "OMP_NUM_THREADS": null,
+              "MKL_NUM_THREADS": null,
+              "JAX_PLATFORMS": "cuda",
+              "JAX_ENABLE_X64": null,
+              "DRJIT_LIBLLVM_PATH": null,
+              "SPARKLE_WSL_DISTRO": null,
+              "SPARKLE_WSL_PYTHON": null,
+              "XLA_PYTHON_CLIENT_PREALLOCATE": "false",
+              "XLA_PYTHON_CLIENT_MEM_FRACTION": "0.10"
+            }
+          },
+          "worker_solver_elapsed_seconds": 236.29574760212563,
+          "runtime": "wsl",
+          "wsl_distribution": "Ubuntu-22.04",
+          "worker_script": "/mnt/c/Projects/oled-sparkle/oled-ag-sparkle/scripts/chromatix_wsl.py",
+          "worker_command": [
+            "wsl.exe",
+            "--distribution",
+            "Ubuntu-22.04",
+            "--exec",
+            "env",
+            "-u",
+            "PYTHONPATH",
+            "-u",
+            "LD_LIBRARY_PATH",
+            "JAX_PLATFORMS=cuda",
+            "XLA_PYTHON_CLIENT_PREALLOCATE=false",
+            "XLA_PYTHON_CLIENT_MEM_FRACTION=0.10",
+            "PYTHONUNBUFFERED=1",
+            "/home/oxyflour/.venvs/oled-sparkle-chromatix/bin/python",
+            "/mnt/c/Projects/oled-sparkle/oled-ag-sparkle/scripts/chromatix_wsl.py",
+            "--request-dir",
+            "/mnt/c/Users/oxyfl/AppData/Local/Temp/chromatix-wsl-skk3hsp5"
+          ]
+        }
+      },
+      {
+        "backend": "mitsuba",
+        "old_cv_percent": 55.4806411328335,
+        "new_cv_percent": 31.00998714767978,
+        "delta_percentage_points": -24.470653985153717,
+        "relative_change_percent": -44.106653213623304,
+        "old_brightness_mean": 0.0547852001532927,
+        "new_brightness_mean": 0.053612569028707126,
+        "mean_brightness_relative_change_percent": -2.1404158811220375,
+        "new_solver_seconds": 641.516806,
+        "new_execution_context": {
+          "backend": "mitsuba",
+          "variant": "cuda_ad_rgb"
+        }
+      }
+    ],
+    "sampling_check": {
+      "optical_pitch_um": 0.5,
+      "measurement_pitch_um": 50,
+      "original_cv_percent": 51.04746194509105,
+      "pits_cv_percent": 31.974052846168764,
+      "fine_comparison": {
+        "old_cv_percent": 51.04746194509105,
+        "new_cv_percent": 31.974052846168764,
+        "delta_percentage_points": -19.073409098922287,
+        "relative_change_percent": -37.364069382016496
+      },
+      "coarse_to_fine_original_cv_change_pp": -0.1299538675826355,
+      "coarse_to_fine_pits_cv_change_pp": -0.15191104588840076,
+      "note": "Two grid levels measure sensitivity; they do not establish full convergence. Original height is bilinearly refined from its 1um samples; pits are analytically resampled. Physical FFT padding remains 140um per edge; emission-source positions follow solver grid quantization."
+    },
+    "wave_backend_relative_l2_brightness_50um": {
+      "torchoptics": 3.295264740046836e-07,
+      "chromatix": 7.565939585488401e-06
+    },
+    "audit": {
+      "all_metrics_recomputed_from_saved_floats": true,
+      "measurement_pixels_match_independent_area_average": true,
+      "emission_bytes_unchanged": true,
+      "optical_parameters_unchanged": true,
+      "emission_expansion_preserves_all_source_texels_and_scale": true,
+      "all_four_backends_complete": true
+    },
+    "new_run_wall_seconds": 886.176056,
+    "figures": [
+      "C:\\Projects\\oled-sparkle\\test-results\\emission-tiling-comparison.png",
+      "C:\\Projects\\oled-sparkle\\test-results\\random-pit-tiled-height-comparison.png",
+      "C:\\Projects\\oled-sparkle\\test-results\\random-pit-tiled-brightness-comparison.png",
+      "C:\\Projects\\oled-sparkle\\test-results\\random-pit-tiled-cv-comparison.png"
+    ],
+    "report_integrity": {
+      "display_images": 10,
+      "original_input_downloads": 2,
+      "raw_float_downloads": 8,
+      "all_downloads_identical_to_saved_files": true,
+      "report": "test-results/oled-1mm-pits3to5um-tiled-50um/report.html",
+      "report_sha256": "a8bd0270b413970577f42b734c0459e0cb0f0112a879dde9be74d823e0d30eba"
+    },
+    "tests": {
+      "passed": 27,
+      "skipped": 0,
+      "failed": 0,
+      "log": "test-results/logs/validation-tiled.log"
+    },
+    "superseded_report_annotations": [
+      {
+        "report": "test-results/oled-1mm-height1um-50um/report.html",
+        "sha256_before_notice": "cd25111c65f2600ca27b55286a71db95fee54a9080171bc01062de17ea678746",
+        "sha256_after_notice": "ba3325f5832679dd1eb6c3b67c93b3f113dff8c8bec3aefec48c0f5412cc31df"
+      },
+      {
+        "report": "test-results/oled-1mm-pits3to5um-50um/report.html",
+        "sha256_before_notice": "d24c29ddc85a57ab75b9647435cdce7a36c393b73f7cdb01a61760f568b72cc0",
+        "sha256_after_notice": "9cdf70147fe38a8d5b77d88c9357caf2fe48ef4013ab607522b309f1aa210a4c"
+      }
+    ]
+  },
+  "emission_period_crop_correction": {
+    "title": "Samsung Display Diamond Pixel OLED subpixel distribution",
+    "source_page": "https://global.samsungdisplay.com/29043/",
+    "source_image": "https://global.samsungdisplay.com/wp-content/uploads/2021/11/pixel.png",
+    "copyright": "Samsung Display; source attribution retained for this local research report.",
+    "original_sha256": "f28b44acffee08e21b5ecff76eb1c0d9108ef16f316805d7a16e75f17e7a8789",
+    "original_size_px": [
+      820,
+      461
+    ],
+    "crop_xyxy": [
+      8,
+      0,
+      392,
+      384
+    ],
+    "resized_to_px": [
+      128,
+      128
+    ],
+    "resampling": "none during field expansion; source tile retains its original BOX resampling",
+    "assigned_emission_texel_um": 2.0,
+    "assigned_field_um": [
+      1000,
+      1000
+    ],
+    "intensity_model": "sRGB decoded to linear RGB, then photopic luma weights 0.2126/0.7152/0.0722; single effective wavelength 530nm",
+    "scale_note": "Original 2um/texel example assumption retained, not measured panel calibration. Increasing the field changes tile count, not emitter dimensions or spacing.",
+    "source_texture": "assets/oled-diamond/emission.png",
+    "source_texture_sha256": "b753ba45e3407bd06e495d1c896b1595cc5955d704c16c9433ece9f15e9d454b",
+    "source_texture_size_px": [
+      128,
+      128
+    ],
+    "source_texture_field_um": [
+      256.0,
+      256.0
+    ],
+    "cell_crop_xyxy_in_source_texture": [
+      26,
+      58,
+      96,
+      128
+    ],
+    "period_detection": {
+      "x": {
+        "period_texels": 70,
+        "translation_mse": 0.0008333236664059358,
+        "search_range_inclusive": [
+          32,
+          96
+        ]
+      },
+      "y": {
+        "period_texels": 70,
+        "translation_mse": 0.0007689667877518372,
+        "search_range_inclusive": [
+          32,
+          96
+        ]
+      }
+    },
+    "crop_selection": "Minimize boundary RGB energy plus opposite-edge neighbor jump at the detected periods",
+    "cell_boundary_statistics": {
+      "x_wrap_mse": 0.0008959191519745153,
+      "y_wrap_mse": 0.0007662986763332784,
+      "x_interior_neighbor_mse": 0.005634586050011555,
+      "y_interior_neighbor_mse": 0.005596694375391532,
+      "edge_rgb_energy": 0.0006505922630490105,
+      "edge_max_srgb": 0.3254901960784314
+    },
+    "source_tile": "assets/oled-1mm-periodic/periodic-cell.png",
+    "source_tile_sha256": "c2d278aa4f8f12abfb7624bcee3171d3246fc8f9fae51457f2d69ad06cf2953a",
+    "source_tile_size_px": [
+      70,
+      70
+    ],
+    "source_tile_field_um": [
+      140.0,
+      140.0
+    ],
+    "source_tile_provenance": {
+      "title": "Samsung Display Diamond Pixel OLED subpixel distribution",
+      "source_page": "https://global.samsungdisplay.com/29043/",
+      "source_image": "https://global.samsungdisplay.com/wp-content/uploads/2021/11/pixel.png",
+      "copyright": "Samsung Display; source attribution retained for this local research report.",
+      "original_sha256": "f28b44acffee08e21b5ecff76eb1c0d9108ef16f316805d7a16e75f17e7a8789",
+      "original_size_px": [
+        820,
+        461
+      ],
+      "crop_xyxy": [
+        8,
+        0,
+        392,
+        384
+      ],
+      "resized_to_px": [
+        128,
+        128
+      ],
+      "resampling": "area average (Pillow BOX)",
+      "assigned_emission_texel_um": 2,
+      "assigned_field_um": [
+        256,
+        256
+      ],
+      "intensity_model": "sRGB decoded to linear RGB, then photopic luma weights 0.2126/0.7152/0.0722; single effective wavelength 530nm",
+      "scale_note": "Physical scale is an explicit example assumption; web illustration is not a radiometrically calibrated panel measurement."
+    },
+    "expansion_method": "crop one complete repeat cell, integer tile, then top-left field crop; no resizing or interpolation",
+    "tile_repeats_xy": [
+      8,
+      8
+    ],
+    "tiled_canvas_size_px": [
+      560,
+      560
+    ],
+    "field_crop_xyxy": [
+      0,
+      0,
+      500,
+      500
+    ],
+    "output_size_px": [
+      500,
+      500
+    ],
+    "pixel_scale_changed": false,
+    "tile_boundary_note": "One 70x70 repeat cell is cropped before tiling. Wrap-neighbor jumps are smaller than ordinary within-cell neighbor variation in both axes. No seam blending, pixel repainting or procedural emitter reconstruction is applied.",
+    "emission_png_sha256": "adaf09b5d4054d17cd74ad2a93b1138a3c8ba4ace08581ecc930a380e0619b3f"
+  }
 }

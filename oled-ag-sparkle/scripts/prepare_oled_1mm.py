@@ -11,6 +11,8 @@ ROOT=Path(__file__).resolve().parents[1]
 
 def prepare(height_pitch_um=1.):
     if height_pitch_um not in (1.,2.): raise ValueError('Bundled height pitch must be 1 or 2 um')
+    from prepare_tiled_emission import prepare as prepare_emission
+    prepare_emission()
     if height_pitch_um==1.:
         base=ROOT/'assets/oled-1mm'
         if not (base/'heightfield.png').exists(): prepare(2.)
@@ -42,12 +44,6 @@ def prepare(height_pitch_um=1.):
         'resampling':'bilinear interpolation of 16-bit height values',
         'assigned_field_um':[1000,1000],'assigned_texel_um':2,
         'height_range_um':0.5},indent=2),encoding='utf-8')
-    provenance=json.loads((ROOT/'assets/oled-diamond/emission.source.json').read_text(encoding='utf-8'))
-    with Image.open(ROOT/'assets/oled-diamond/samsung-diamond-reference.png') as original:
-        original.crop(tuple(provenance['crop_xyxy'])).resize((500,500),Image.Resampling.BOX).save(output/'emission.png')
-    provenance.update(resized_to_px=[500,500],assigned_emission_texel_um=2,
-                      assigned_field_um=[1000,1000])
-    (output/'emission.source.json').write_text(json.dumps(provenance,ensure_ascii=False,indent=2),encoding='utf-8')
     return output
 
 

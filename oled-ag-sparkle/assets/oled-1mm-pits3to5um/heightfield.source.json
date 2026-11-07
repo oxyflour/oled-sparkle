@@ -1,0 +1,41 @@
+{
+  "source": "synthetic analytic random circular pits; scripts/prepare_random_pits.py",
+  "assigned_field_um": [
+    1000.0,
+    1000.0
+  ],
+  "assigned_texel_um": 1.0,
+  "height_range_um": 0.5,
+  "pit_depth_um": 0.5,
+  "diameter_distribution": "uniform on [3, 5] um; diameter drawn once per accepted pit",
+  "diameter_um_min_max": [
+    3.000069981282719,
+    4.999998145456507
+  ],
+  "diameter_um_mean": 3.9966587506844324,
+  "placement": "largest-first sequential placement at random positions; nonoverlapping, whole circles inside field",
+  "rng": "numpy.default_rng / PCG64",
+  "seed": 20261107,
+  "target_coverage": 0.5,
+  "analytic_coverage": 0.5000011976891807,
+  "sampled_footprint_coverage": 0.498844,
+  "pit_count": 39048,
+  "position_trials": 467709,
+  "profile": "h = depth * [1 - (1 - (r/R)^2)^2] for r < R; h = depth outside",
+  "profile_note": "smooth bowl with zero slope at center and rim; black is pit bottom",
+  "sampling": "analytic height at texel centers; 16-bit PNG; no height renormalization",
+  "grid_size_px": [
+    1000,
+    1000
+  ],
+  "sampled_height_min_max_um": [
+    0.0,
+    0.5
+  ],
+  "sampled_height_rms_about_mean_um": 0.13437470637809426,
+  "geometry_file": "pits.csv",
+  "geometry_sha256": "bf457573bdf673121ecba4a6f8028ab4fd7c81ece758fe5e72680507f62e3b6d",
+  "height_png_sha256": "eeb0f85a8f651fdc897171c36ba2146417fc835a15001b5c8f20bcd4752e712a",
+  "generation_elapsed_seconds": 5.7722444999963045,
+  "scale_note": "synthetic geometry assumptions, not a measured surface"
+}

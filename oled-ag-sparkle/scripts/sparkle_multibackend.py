@@ -100,7 +100,7 @@ def parse_args(argv=None):
     p.add_argument('--backend', choices=ALL_BACKENDS+('all',), default='torch')
     p.add_argument('--backend-workers',type=int,choices=(1,2,3,4),default=1,
                    help='independent backend computations to run concurrently')
-    p.add_argument('--device', choices=('auto','cpu','cuda'), default='auto', help='torch FFT device; JAX device via JAX_PLATFORMS')
+    p.add_argument('--device', choices=('auto','cpu','cuda'), default='auto', help='torch FFT device; Windows Chromatix uses WSL CUDA; native JAX device via JAX_PLATFORMS')
     p.add_argument('--ray-radial', type=int, default=3, help='Mitsuba fixed pupil radial nodes')
     p.add_argument('--ray-angular', type=int, default=8, help='Mitsuba fixed pupil azimuth nodes')
     p.add_argument('--ray-chunk', type=int, default=65536, help='Mitsuba ray queries per chunk')
@@ -267,6 +267,9 @@ def simulate_chromatix(m,max_sources):
     Uses micron units internally for numerical stability of Chromatix's
     complex64 wave propagation (e.g. spectrum=0.53, dx=0.5, gap=500).
     """
+    if sys.platform == 'win32':
+        from chromatix_wsl import simulate_chromatix_wsl
+        return simulate_chromatix_wsl(m, max_sources)
     try:
         import jax
         import jax.numpy as jnp

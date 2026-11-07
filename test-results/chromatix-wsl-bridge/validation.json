@@ -1,0 +1,165 @@
+{
+  "status": "passed",
+  "validated_at_utc": "2026-11-07T08:49:46.189046+00:00",
+  "routing": {
+    "windows": "WSL CUDA worker",
+    "linux": "local JAX",
+    "cpu_fallback": false,
+    "distribution_env": "SPARKLE_WSL_DISTRO",
+    "python_env": "SPARKLE_WSL_PYTHON"
+  },
+  "tests": {
+    "discovered": 23,
+    "passed": 23,
+    "skipped": 0,
+    "failed": 0,
+    "log": "test-results/logs/validation-wsl.log",
+    "covers": [
+      "WSL GPU despite parent JAX_PLATFORMS=cpu",
+      "spaces and Unicode in script/output paths",
+      "failed worker produces failed run without CPU fallback",
+      "mixed-runtime all-backend wave comparison",
+      "actual remote environment in report"
+    ]
+  },
+  "full_run": {
+    "command": "C:\\Projects\\oled-sparkle\\.venv\\Scripts\\python.exe C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\scripts\\sparkle_multibackend.py --height C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-height1um\\heightfield.png --height-pitch-um 1 --height-range-um .5 --emission C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm\\emission.png --emission-pitch-um 2 --gamma-decode --wavelength-nm 530 --gap-um 500 --n-stack 1.5 --n-out 1 --na .08 --source-samples 1 --max-sources 100000 --pad-px 140 --batch 16 --device cpu --backend chromatix --backend-workers 1 --mitsuba-variant cuda_ad_rgb --ray-radial 24 --ray-angular 64 --analysis-pitch-um 50 --roi-margin-um 0 --progress-every 200 --out test-results\\chromatix-wsl-bridge\\full",
+    "parameters": {
+      "height": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-height1um\\heightfield.png",
+      "height_pitch_um": 1.0,
+      "height_range_um": 0.5,
+      "emission": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm\\emission.png",
+      "emission_pitch_um": 2.0,
+      "analysis_pitch_um": 50.0,
+      "emission_channel": "luma",
+      "gamma_decode": true,
+      "emission_offset_x_um": 0.0,
+      "emission_offset_y_um": 0.0,
+      "gap_um": 500.0,
+      "wavelength_nm": 530.0,
+      "n_stack": 1.5,
+      "n_out": 1.0,
+      "na": 0.08,
+      "source_samples": 1,
+      "emission_threshold": 0.001,
+      "source_margin_um": 0.0,
+      "max_sources": 100000,
+      "pad_px": 140,
+      "batch": 16,
+      "backend": "chromatix",
+      "backend_workers": 1,
+      "device": "cpu",
+      "ray_radial": 24,
+      "ray_angular": 64,
+      "ray_chunk": 65536,
+      "mesh_stride": 1,
+      "mitsuba_variant": "cuda_ad_rgb",
+      "roi_margin_um": 0.0,
+      "progress_every": 200,
+      "out": "test-results\\chromatix-wsl-bridge\\full",
+      "skip_unavailable": false,
+      "dry_run": false
+    },
+    "input_sha256": {
+      "height": "7a191c0e7c2cf04c0d8defa409590c2929bea7b7500f6fb4c5e4c90292ff941c",
+      "emission": "687904186157df14f628adacb85c04d286ebc44b703ee851ecc2ee2d16b65670"
+    },
+    "solver_seconds_including_bridge": 61.392568,
+    "wall_seconds": 61.744543,
+    "source_modes": 76550,
+    "sparkle_cv_percent": 206.27007423776234,
+    "execution_context": {
+      "backend": "chromatix",
+      "devices": [
+        "cuda:0"
+      ],
+      "x64_enabled": false,
+      "default_backend": "gpu",
+      "gpu_names": [
+        "NVIDIA GeForce RTX 3090 Ti"
+      ],
+      "environment": {
+        "python": "3.12.12 (main, Dec  5 2025, 20:21:41) [Clang 21.1.4 ]",
+        "executable": "/home/oxyflour/.venvs/oled-sparkle-chromatix/bin/python",
+        "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+        "processor": "x86_64",
+        "logical_cpus": 12,
+        "versions": {
+          "numpy": "2.5.4",
+          "Pillow": "13.0.0",
+          "torch": null,
+          "torchoptics": null,
+          "jax": "0.12.0.1",
+          "jaxlib": "0.12.0.1",
+          "jax-cuda13-plugin": "0.12.0.1",
+          "jax-cuda13-pjrt": "0.12.0.1",
+          "chromatix": "0.6.0",
+          "mitsuba": null,
+          "drjit": null
+        },
+        "environment_settings": {
+          "PYTHONPATH": null,
+          "OMP_NUM_THREADS": null,
+          "MKL_NUM_THREADS": null,
+          "JAX_PLATFORMS": "cuda",
+          "JAX_ENABLE_X64": null,
+          "DRJIT_LIBLLVM_PATH": null,
+          "SPARKLE_WSL_DISTRO": null,
+          "SPARKLE_WSL_PYTHON": null,
+          "XLA_PYTHON_CLIENT_PREALLOCATE": "false",
+          "XLA_PYTHON_CLIENT_MEM_FRACTION": "0.10"
+        }
+      },
+      "worker_solver_elapsed_seconds": 58.757408623816445,
+      "runtime": "wsl",
+      "wsl_distribution": "Ubuntu-22.04",
+      "worker_script": "/mnt/c/Projects/oled-sparkle/oled-ag-sparkle/scripts/chromatix_wsl.py",
+      "worker_command": [
+        "wsl.exe",
+        "--distribution",
+        "Ubuntu-22.04",
+        "--exec",
+        "env",
+        "-u",
+        "PYTHONPATH",
+        "-u",
+        "LD_LIBRARY_PATH",
+        "JAX_PLATFORMS=cuda",
+        "XLA_PYTHON_CLIENT_PREALLOCATE=false",
+        "XLA_PYTHON_CLIENT_MEM_FRACTION=0.10",
+        "PYTHONUNBUFFERED=1",
+        "/home/oxyflour/.venvs/oled-sparkle-chromatix/bin/python",
+        "/mnt/c/Projects/oled-sparkle/oled-ag-sparkle/scripts/chromatix_wsl.py",
+        "--request-dir",
+        "/mnt/c/Users/oxyfl/AppData/Local/Temp/chromatix-wsl-zax1vpgw"
+      ]
+    },
+    "reference_comparison": {
+      "brightness.npy": {
+        "shape": [
+          1000,
+          1000
+        ],
+        "relative_l2_error": 1.4271305399132262e-06,
+        "max_error_divided_by_reference_peak": 1.0521465562385486e-05,
+        "tolerance": 0.001,
+        "passed": true
+      },
+      "analysis_brightness.npy": {
+        "shape": [
+          20,
+          20
+        ],
+        "relative_l2_error": 4.921723776936194e-07,
+        "max_error_divided_by_reference_peak": 5.337482177462666e-07,
+        "tolerance": 0.001,
+        "passed": true
+      }
+    },
+    "postprocessing_matches_saved_float_image": true,
+    "report_contains_wsl_runtime": true,
+    "report": "test-results/chromatix-wsl-bridge/full/report.html",
+    "log": "test-results/logs/chromatix-wsl-bridge-full.log"
+  },
+  "historical_reference": "test-results/oled-1mm-height1um-50um/chromatix; saved Windows CPU result, unchanged"
+}

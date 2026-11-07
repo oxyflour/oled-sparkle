@@ -8,9 +8,13 @@ description: Simulate collected OLED brightness with PyTorch FFT, TorchOptics, C
 ## Required result
 
 Use the supplied height map and a sourced, representative OLED emission image.
-For the bundled example, the emission image is cropped and resampled from Samsung
-Display's Diamond Pixel image. Attribution, crop, scale and intensity assumptions
-are recorded in `assets/oled-1mm/emission.source.json`.
+For the bundled example, start from the 128x128 crop of Samsung Display's Diamond
+Pixel image. This complete source patch is NOT a repeatable texture. Detect its
+70-texel horizontal/vertical periods and crop [26,58,96,128] to obtain a 70x70
+repeat cell. Keep 2um/texel: the cell covers 140um square. Repeat the cell 8x8,
+then crop the 560x560 canvas to 500x500 without resizing or interpolation.
+Attribution, source/cell hashes, period detection, crop, boundary checks, repeats
+and intensity assumptions are recorded in `assets/oled-1mm-periodic/emission.source.json`.
 
 The HTML report must visibly include:
 
@@ -42,10 +46,25 @@ pixel grid inside it and record the effective boundaries.
 
 Keep height texel pitch, black-to-white physical height range, emission texel
 pitch, and OLED-to-AG distance distinct. Record explicit assumptions for physical
-scale when a web illustration has no calibrated scale. The bundled data uses
+scale when a web illustration has no calibrated scale. Increasing the physical
+calculation area must preserve emitter dimensions and spacing: repeat an existing
+texture at its fixed texel pitch rather than resizing one texture to fill the new
+area. First crop a complete repeat cell: check lattice phase and boundary
+continuity, not merely equality under `np.tile`. The bundled cell contains two
+red, four green and two blue connected bright bodies; none intersects the cell
+border at a 0.4 sRGB threshold. Wrap-neighbor RGB jumps are lower than ordinary
+within-cell neighbor variation in both axes. Do not blend or repaint its edges.
+The physical scale remains an illustrative assumption, not panel calibration.
+The bundled data uses
 1000x1000 height texels at 1um and 500x500 emission texels at 2um, a 0.5um height
-range and a 1mm x 1mm field. Height values are interpolated from the previous
-500x500 map, with that sampling refinement recorded in the source metadata. Use
+range and a 1mm x 1mm field. The current height surface contains randomly placed,
+nonoverlapping circular pits with uniformly drawn **3-5um diameters**, **0.5um
+depth** and **50% footprint coverage** (39,048 pits, seed 20261107). Pits have a
+smooth bowl profile `h/depth = 1 - (1 - (r/R)^2)^2` within the radius; the plateau
+is white and the pit bottom is black. Diameters are drawn before placement;
+largest-first placement with random positions avoids overlap without redrawing
+the diameter population. Geometry and generation assumptions are recorded in
+`assets/oled-1mm-pits3to5um/heightfield.source.json` and `pits.csv`. Use
 50um measurement pixels (20x20, 400 total), zero ROI margin, a 500um gap,
 530nm effective wavelength and camera NA 0.08. RGB input is gamma-decoded and
 mapped to relative luma for this single-wavelength example.
@@ -58,15 +77,35 @@ checks as needed, without changing the requested direct pixel statistic.
 ## Run
 
 ```bash
-python scripts/run_oled_demo.py --backend all --out outputs/oled-1mm-height1um-50um
+python scripts/run_oled_demo.py --backend all --out outputs/oled-1mm-pits3to5um-periodic-50um
 ```
 
 The wrapper selects Torch's available device with `--device auto` and uses up to
-three independent backend workers. The measured Windows run uses CUDA Torch,
-CPU JAX and Mitsuba `cuda_ad_rgb`; actual versions, device and runtime paths are
-recorded in the report. Override `--device`, `--backend-workers` or
+three independent backend workers. On Windows, Chromatix automatically runs in a
+WSL2 CUDA worker; Torch/TorchOptics and Mitsuba run in the Windows process. Read
+[references/windows-wsl.md](references/windows-wsl.md) for the WSL environment,
+installation, and distribution/Python overrides. The WSL worker forces
+`JAX_PLATFORMS=cuda` and reports a failure if CUDA or WSL is unavailable.
+On Linux, Chromatix uses the local JAX installation. Actual versions, devices,
+and the WSL Python environment are recorded in each backend's execution context.
+Override `--device`, `--backend-workers` or
 `--mitsuba-variant` as needed. Each 50um measurement pixel averages 50x50 optical
 samples; emission remains at 2um during the height refinement.
+The 1um grid gives only 3-5 samples across a pit diameter. Check optical-grid
+sensitivity before treating small CV changes as resolved: regenerate the same
+geometry with the following command, keeping the physical FFT padding and
+emission sampling unchanged. Compare the original surface on the same refined
+grid too.
+
+```bash
+python scripts/prepare_random_pits.py --pitch-um .5 --out assets/oled-1mm-pits3to5um-pitch0p5
+```
+
+The original interpolated surface remains available with `--height-surface original`.
+Superseded layouts are available only for historical reproduction with
+`--emission-layout legacy-stretched` or `--emission-layout legacy-whole-tile`.
+Neither the stretched nor the uncropped-patch CV comparison describes the current
+cropped-cell example. The default `--emission-layout periodic` crops before tiling.
 For custom inputs use `python scripts/sparkle_multibackend.py --help`.
 Use `--dry-run` before large calculations; it writes a report marked uncomputed.
 
@@ -78,7 +117,7 @@ Failed, skipped and dry-run values must remain uncomputed, not zero.
 Regenerate HTML without optical recomputation:
 
 ```bash
-python scripts/generate_report.py --results outputs/oled-1mm-height1um-50um
+python scripts/generate_report.py --results outputs/oled-1mm-pits3to5um-periodic-50um
 ```
 
 `--recursive` combines saved runs; repeated `--figure path.png` embeds plots.

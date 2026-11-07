@@ -1,0 +1,90 @@
+{
+  "title": "Samsung Display Diamond Pixel OLED subpixel distribution",
+  "source_page": "https://global.samsungdisplay.com/29043/",
+  "source_image": "https://global.samsungdisplay.com/wp-content/uploads/2021/11/pixel.png",
+  "copyright": "Samsung Display; source attribution retained for this local research report.",
+  "original_sha256": "f28b44acffee08e21b5ecff76eb1c0d9108ef16f316805d7a16e75f17e7a8789",
+  "original_size_px": [
+    820,
+    461
+  ],
+  "crop_xyxy": [
+    8,
+    0,
+    392,
+    384
+  ],
+  "resized_to_px": [
+    128,
+    128
+  ],
+  "resampling": "none during field expansion; source tile retains its original BOX resampling",
+  "assigned_emission_texel_um": 2.0,
+  "assigned_field_um": [
+    1000,
+    1000
+  ],
+  "intensity_model": "sRGB decoded to linear RGB, then photopic luma weights 0.2126/0.7152/0.0722; single effective wavelength 530nm",
+  "scale_note": "Original 2um/texel example assumption retained, not measured panel calibration. Increasing the field changes tile count, not emitter dimensions or spacing.",
+  "source_tile": "assets/oled-diamond/emission.png",
+  "source_tile_sha256": "b753ba45e3407bd06e495d1c896b1595cc5955d704c16c9433ece9f15e9d454b",
+  "source_tile_size_px": [
+    128,
+    128
+  ],
+  "source_tile_field_um": [
+    256.0,
+    256.0
+  ],
+  "source_tile_provenance": {
+    "title": "Samsung Display Diamond Pixel OLED subpixel distribution",
+    "source_page": "https://global.samsungdisplay.com/29043/",
+    "source_image": "https://global.samsungdisplay.com/wp-content/uploads/2021/11/pixel.png",
+    "copyright": "Samsung Display; source attribution retained for this local research report.",
+    "original_sha256": "f28b44acffee08e21b5ecff76eb1c0d9108ef16f316805d7a16e75f17e7a8789",
+    "original_size_px": [
+      820,
+      461
+    ],
+    "crop_xyxy": [
+      8,
+      0,
+      392,
+      384
+    ],
+    "resized_to_px": [
+      128,
+      128
+    ],
+    "resampling": "area average (Pillow BOX)",
+    "assigned_emission_texel_um": 2,
+    "assigned_field_um": [
+      256,
+      256
+    ],
+    "intensity_model": "sRGB decoded to linear RGB, then photopic luma weights 0.2126/0.7152/0.0722; single effective wavelength 530nm",
+    "scale_note": "Physical scale is an explicit example assumption; web illustration is not a radiometrically calibrated panel measurement."
+  },
+  "expansion_method": "integer texture tiling followed by top-left crop; no resizing or interpolation",
+  "tile_repeats_xy": [
+    4,
+    4
+  ],
+  "tiled_canvas_size_px": [
+    512,
+    512
+  ],
+  "field_crop_xyxy": [
+    0,
+    0,
+    500,
+    500
+  ],
+  "output_size_px": [
+    500,
+    500
+  ],
+  "pixel_scale_changed": false,
+  "tile_boundary_note": "The complete original illustrative tile repeats every 256um. Its crop is not a calibrated seamless primitive OLED lattice cell; no seam blending or inferred lattice reconstruction is applied.",
+  "emission_png_sha256": "f440eff0b79816aadb7cbc60292be898c6ea4e0dbac54a6264786b2538b8703d"
+}

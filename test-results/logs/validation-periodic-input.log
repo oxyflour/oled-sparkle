@@ -1,0 +1,42 @@
+{
+  "output": "C:\\Users\\oxyfl\\AppData\\Local\\Temp\\tmpji5e7e_3\\emission.png",
+  "tile_size_px": [
+    70,
+    70
+  ],
+  "tile_field_um": [
+    140.0,
+    140.0
+  ],
+  "repeats_xy": [
+    8,
+    8
+  ],
+  "cell_crop_xyxy": [
+    26,
+    58,
+    96,
+    128
+  ],
+  "boundary_statistics": {
+    "x_wrap_mse": 0.0008959191519745153,
+    "y_wrap_mse": 0.0007662986763332784,
+    "x_interior_neighbor_mse": 0.005634586050011555,
+    "y_interior_neighbor_mse": 0.005596694375391532,
+    "edge_rgb_energy": 0.0006505922630490105,
+    "edge_max_srgb": 0.3254901960784314
+  },
+  "output_size_px": [
+    500,
+    500
+  ],
+  "pitch_um": 2.0
+}
+test_bundled_1mm_field_keeps_texel_pitch_after_period_crop (test_tiled_emission.TiledEmissionTest.test_bundled_1mm_field_keeps_texel_pitch_after_period_crop) ... ok
+test_cell_contains_complete_emitter_bodies_and_continuous_joins (test_tiled_emission.TiledEmissionTest.test_cell_contains_complete_emitter_bodies_and_continuous_joins) ... ok
+test_partial_edge_tiles_preserve_all_source_texels (test_tiled_emission.TiledEmissionTest.test_partial_edge_tiles_preserve_all_source_texels) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 1.252s
+
+OK

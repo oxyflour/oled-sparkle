@@ -16,7 +16,7 @@ from test_smoke import ReportDataParser
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'scripts'))
-from reporting import image_metadata, write_html_report
+from reporting import execution_context, image_metadata, write_html_report
 
 
 def payload(path):
@@ -26,6 +26,15 @@ def payload(path):
 
 
 class HtmlReportingTest(unittest.TestCase):
+    def test_remote_chromatix_context_does_not_require_parent_jax(self):
+        from types import SimpleNamespace
+        remote = {'backend': 'chromatix', 'runtime': 'wsl', 'devices': ['cuda:0'],
+                  'environment': {'executable': '/home/user/venv/bin/python'}}
+        model = SimpleNamespace(_chromatix_execution_context=remote)
+        result = execution_context('chromatix', model)
+        self.assertEqual(result, remote)
+        self.assertIsNot(result, remote)
+
     def test_report_shows_detector_pixels_and_keeps_both_float_grids(self):
         with tempfile.TemporaryDirectory() as directory:
             root=Path(directory); folder=root/'torch'; folder.mkdir()

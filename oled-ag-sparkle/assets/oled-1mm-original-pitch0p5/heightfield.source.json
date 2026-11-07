@@ -1,0 +1,11 @@
+{
+  "source": "existing assets/oled-1mm-height1um/heightfield.png",
+  "original_sha256": "7a191c0e7c2cf04c0d8defa409590c2929bea7b7500f6fb4c5e4c90292ff941c",
+  "resampling": "bilinear interpolation of existing 1um samples; no new measured detail",
+  "assigned_field_um": [
+    1000,
+    1000
+  ],
+  "assigned_texel_um": 0.5,
+  "height_range_um": 0.5
+}

@@ -36,9 +36,19 @@ class ReportParser(HTMLParser):
         if self.in_data: self.payload.append(value)
 
 
+def test_summary():
+    path=RESULTS/'logs/validation-wsl.log'
+    if not path.exists(): path=RESULTS/'logs/validation-height1um.log'
+    log=path.read_text(encoding='utf-8')
+    match=re.search(r'Ran (\d+) tests',log)
+    assert match and log.rstrip().endswith('OK'), 'All tests must pass without skips'
+    count=int(match.group(1))
+    return {'discovered':count,'passed':count,'skipped':0,'failed':0,
+            'log':path.relative_to(ROOT).as_posix()}
+
+
 def audit():
-    log=(RESULTS/'logs/validation-height1um.log').read_text(encoding='utf-8')
-    assert re.search(r'Ran 20 tests',log) and log.rstrip().endswith('OK'), 'Tests must pass'
+    test_summary()
     run=json.loads((DATA/'run.json').read_text(encoding='utf-8'))
     assert run['status']=='complete'
     assert set(run['backend_runs'])==set(NAMES)
@@ -117,20 +127,25 @@ def package(run,validation):
     if (RESULTS/'report.json').exists() and not (archive/'report.json').exists():
         shutil.copy2(RESULTS/'report.json',archive/'report.json')
     baseline=ROOT/'oled-ag-sparkle-skill.zip'
-    manifest={'schema_version':5,'date':datetime.now(timezone.utc).isoformat(),
+    manifest={'schema_version':6,'date':datetime.now(timezone.utc).isoformat(),
               'metric':'direct CV of 50um collected-brightness pixels',
               'metric_definition':validation['formula'],'input_files':run['input_files'],
               'parameters':run['parameters'],'effective_model':run['effective_model'],
               'environment':run['environment'],'run_wall_seconds':run['wall_elapsed_seconds'],
               'brightness_results':validation['records'],'validation':validation,
-              'tests':{'discovered':20,'passed':20,'skipped':0,'failed':0,
-                       'log':'test-results/logs/validation-height1um.log'},
+              'tests':test_summary(),
               'comparison':json.loads((DATA/'comparison.json').read_text(encoding='utf-8')),
               'original_zip_sha256':hashlib.sha256(baseline.read_bytes()).hexdigest(),
               'artifacts':{'html_report':'test-results/report.html',
                            'results_directory':'test-results/oled-1mm-height1um-50um',
                            'comparison_figure':'test-results/brightness-comparison-height1um-50um.png'},
               'scope':'1mm square field; height 1000x1000 at 1um from existing height data; emission 500x500 at 2um; all 400 collected 50um pixels directly enter CV'}
+    runtime_validation=RESULTS/'chromatix-wsl-bridge/validation.json'
+    if runtime_validation.exists():
+        manifest['windows_chromatix_wsl']=json.loads(runtime_validation.read_text(encoding='utf-8'))
+        manifest['reference_run_started_at_utc']=run['started_at_utc']
+        manifest['reference_run_note']='Top-level multi-backend images and timings retain the recorded reference run. Current Windows Chromatix routing and bridge measurements are in windows_chromatix_wsl.'
+        manifest['artifacts']['chromatix_wsl_bridge']='test-results/chromatix-wsl-bridge/validation.json'
     for path in (RESULTS/'report.json',SKILL/'VALIDATION.json'):
         path.write_text(json.dumps(manifest,ensure_ascii=False,indent=2),encoding='utf-8')
     shutil.copy2(DATA/'comparison.csv',RESULTS/'comparison-summary.csv')
@@ -154,10 +169,12 @@ def package(run,validation):
     with zipfile.ZipFile(target) as z:
         assert z.testzip() is None
         saved=json.loads(z.read('oled-ag-sparkle/VALIDATION.json'))
-        assert saved['schema_version']==5 and saved['tests']['passed']==20
+        assert saved['schema_version']==6 and saved['tests']==manifest['tests']
         assert 'oled-ag-sparkle/assets/oled-1mm-height1um/heightfield.png' in z.namelist()
+        assert 'oled-ag-sparkle/scripts/chromatix_wsl.py' in z.namelist()
+        assert 'oled-ag-sparkle/references/windows-wsl.md' in z.namelist()
     print(json.dumps({'report':str(RESULTS/'report.html'),'skill':str(target),
-                      'tests_passed':20,'results':validation['records']},ensure_ascii=False,indent=2))
+                      'tests_passed':manifest['tests']['passed'],'results':validation['records']},ensure_ascii=False,indent=2))
 
 
 if __name__=='__main__': package(*audit())

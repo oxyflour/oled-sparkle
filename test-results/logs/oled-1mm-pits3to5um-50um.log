@@ -1,0 +1,112 @@
+Height: 1000x1000 at 1um, emission: 500x500 at 2um
+Wave FFT: 1280x1280; source modes 76550; one complex64 field: 12.5 MiB
+Mitsuba rays: 1,536,000,000; mesh stride 1
+
+=== torch ===
+
+=== torchoptics ===
+
+=== chromatix ===
+  Chromatix WSL: Ubuntu-22.04, JAX_PLATFORMS=cuda
+  torch: 3200/76550 modes
+  torchoptics: 3200/76550 modes
+  torch: 6400/76550 modes
+  torchoptics: 6400/76550 modes
+  torch: 9600/76550 modes
+  torchoptics: 9600/76550 modes
+  chromatix: 3200/76550 modes
+  torch: 12800/76550 modes
+  chromatix: 6400/76550 modes
+  torchoptics: 12800/76550 modes
+  chromatix: 9600/76550 modes
+  torch: 16000/76550 modes
+  torchoptics: 16000/76550 modes
+  chromatix: 12800/76550 modes
+  torch: 19200/76550 modes
+  torchoptics: 19200/76550 modes
+  chromatix: 16000/76550 modes
+  torch: 22400/76550 modes
+  chromatix: 19200/76550 modes
+  torchoptics: 22400/76550 modes
+  chromatix: 22400/76550 modes
+  torch: 25600/76550 modes
+  torchoptics: 25600/76550 modes
+  chromatix: 25600/76550 modes
+  torch: 28800/76550 modes
+  chromatix: 28800/76550 modes
+  torchoptics: 28800/76550 modes
+  chromatix: 32000/76550 modes
+  torch: 32000/76550 modes
+  torchoptics: 32000/76550 modes
+  chromatix: 35200/76550 modes
+  torch: 35200/76550 modes
+  torchoptics: 35200/76550 modes
+  chromatix: 38400/76550 modes
+  torch: 38400/76550 modes
+  chromatix: 41600/76550 modes
+  torchoptics: 38400/76550 modes
+  chromatix: 44800/76550 modes
+  torch: 41600/76550 modes
+  torchoptics: 41600/76550 modes
+  chromatix: 48000/76550 modes
+  torch: 44800/76550 modes
+  torchoptics: 44800/76550 modes
+  chromatix: 51200/76550 modes
+  chromatix: 54400/76550 modes
+  torch: 48000/76550 modes
+  torchoptics: 48000/76550 modes
+  chromatix: 57600/76550 modes
+  chromatix: 60800/76550 modes
+  torch: 51200/76550 modes
+  torchoptics: 51200/76550 modes
+  chromatix: 64000/76550 modes
+  chromatix: 67200/76550 modes
+  torch: 54400/76550 modes
+  torchoptics: 54400/76550 modes
+  chromatix: 70400/76550 modes
+  chromatix: 73600/76550 modes
+  torch: 57600/76550 modes
+  torchoptics: 57600/76550 modes
+  chromatix: 76550/76550 modes
+  Sparkle CV: 158.95959%
+
+=== mitsuba ===
+jitc_llvm_init(): LLVM API initialization failed ..
+  Mitsuba variant=cuda_ad_rgb; measured height mesh stride=1
+  Mitsuba mesh: 1,000,000 vertices, 1,996,002 triangles
+  torch: 60800/76550 modes
+  torchoptics: 60800/76550 modes
+  torch: 64000/76550 modes
+  torchoptics: 64000/76550 modes
+  torch: 67200/76550 modes
+  torchoptics: 67200/76550 modes
+  torch: 70400/76550 modes
+  torchoptics: 70400/76550 modes
+  torch: 73600/76550 modes
+  torchoptics: 73600/76550 modes
+  torch: 76550/76550 modes
+  Sparkle CV: 158.95858%
+  torchoptics: 76550/76550 modes
+  Sparkle CV: 158.95855%
+  Mitsuba pupil nodes: 100/1536
+  Mitsuba pupil nodes: 200/1536
+  Mitsuba pupil nodes: 300/1536
+  Mitsuba pupil nodes: 400/1536
+  Mitsuba pupil nodes: 500/1536
+  Mitsuba pupil nodes: 600/1536
+  Mitsuba pupil nodes: 700/1536
+  Mitsuba pupil nodes: 800/1536
+  Mitsuba pupil nodes: 900/1536
+  Mitsuba pupil nodes: 1000/1536
+  Mitsuba pupil nodes: 1100/1536
+  Mitsuba pupil nodes: 1200/1536
+  Mitsuba pupil nodes: 1300/1536
+  Mitsuba pupil nodes: 1400/1536
+  Mitsuba pupil nodes: 1500/1536
+  Mitsuba pupil nodes: 1536/1536
+  Sparkle CV: 159.47473%
+torch: brightness CV = 158.958578%, solver = 189.669s
+torchoptics: brightness CV = 158.958555%, solver = 191.182s
+chromatix: brightness CV = 158.959587%, solver = 135.254s
+mitsuba: brightness CV = 159.474733%, solver = 481.438s
+HTML report: C:\Projects\oled-sparkle\test-results\oled-1mm-pits3to5um-50um\report.html

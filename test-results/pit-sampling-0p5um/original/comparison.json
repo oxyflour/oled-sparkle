@@ -1,0 +1,18 @@
+{
+  "metric_definition": "100 * std(I_ROI, ddof=0) / mean(I_ROI)",
+  "backends": [
+    {
+      "backend": "torch",
+      "physics": "scalar_wave",
+      "sparkle_cv_pct": 206.31471604739946,
+      "roi_pixels": 400,
+      "analysis_pixel_pitch_um": 49.99999999999999,
+      "analysis_rows": 20,
+      "analysis_columns": 20,
+      "mean_brightness": 6.593787858882646e-05,
+      "std_brightness": 0.00013603954697821632,
+      "elapsed_s": 309.18946
+    }
+  ],
+  "important": "Statistics use area-averaged floating-point brightness pixels at the requested physical pixel size, before PNG display scaling."
+}

@@ -1,0 +1,282 @@
+{
+  "schema_version": 1,
+  "run_id": "1f81d396fa3646919c64171f9e664d05",
+  "status": "complete",
+  "started_at_utc": "2026-11-07T09:05:38.652665+00:00",
+  "parameter_provenance": "captured_from_actual_cli_with_defaults",
+  "parameters": {
+    "height": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-pits3to5um-pitch0p5\\heightfield.png",
+    "height_pitch_um": 0.5,
+    "height_range_um": 0.5,
+    "emission": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm\\emission.png",
+    "emission_pitch_um": 2.0,
+    "analysis_pitch_um": 50.0,
+    "emission_channel": "luma",
+    "gamma_decode": true,
+    "emission_offset_x_um": 0.0,
+    "emission_offset_y_um": 0.0,
+    "gap_um": 500.0,
+    "wavelength_nm": 530.0,
+    "n_stack": 1.5,
+    "n_out": 1.0,
+    "na": 0.08,
+    "source_samples": 1,
+    "emission_threshold": 0.001,
+    "source_margin_um": 0.0,
+    "max_sources": 100000,
+    "pad_px": 280,
+    "batch": 8,
+    "backend": "torch",
+    "backend_workers": 1,
+    "device": "cuda",
+    "ray_radial": 24,
+    "ray_angular": 64,
+    "ray_chunk": 65536,
+    "mesh_stride": 1,
+    "mitsuba_variant": "cuda_ad_rgb",
+    "roi_margin_um": 0.0,
+    "progress_every": 400,
+    "out": "C:\\Projects\\oled-sparkle\\test-results\\pit-sampling-0p5um\\pits",
+    "skip_unavailable": false,
+    "dry_run": false
+  },
+  "argv": [
+    "--height",
+    "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-pits3to5um-pitch0p5\\heightfield.png",
+    "--height-pitch-um",
+    ".5",
+    "--height-range-um",
+    ".5",
+    "--emission",
+    "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm\\emission.png",
+    "--emission-pitch-um",
+    "2",
+    "--gamma-decode",
+    "--wavelength-nm",
+    "530",
+    "--gap-um",
+    "500",
+    "--n-stack",
+    "1.5",
+    "--n-out",
+    "1",
+    "--na",
+    ".08",
+    "--source-samples",
+    "1",
+    "--max-sources",
+    "100000",
+    "--pad-px",
+    "280",
+    "--batch",
+    "8",
+    "--device",
+    "cuda",
+    "--backend",
+    "torch",
+    "--ray-radial",
+    "24",
+    "--ray-angular",
+    "64",
+    "--mitsuba-variant",
+    "cuda_ad_rgb",
+    "--analysis-pitch-um",
+    "50",
+    "--roi-margin-um",
+    "0",
+    "--progress-every",
+    "400",
+    "--out",
+    "C:\\Projects\\oled-sparkle\\test-results\\pit-sampling-0p5um\\pits"
+  ],
+  "command_display": "C:\\Projects\\oled-sparkle\\.venv\\Scripts\\python.exe C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\scripts\\sparkle_multibackend.py --height C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-pits3to5um-pitch0p5\\heightfield.png --height-pitch-um .5 --height-range-um .5 --emission C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm\\emission.png --emission-pitch-um 2 --gamma-decode --wavelength-nm 530 --gap-um 500 --n-stack 1.5 --n-out 1 --na .08 --source-samples 1 --max-sources 100000 --pad-px 280 --batch 8 --device cuda --backend torch --ray-radial 24 --ray-angular 64 --mitsuba-variant cuda_ad_rgb --analysis-pitch-um 50 --roi-margin-um 0 --progress-every 400 --out C:\\Projects\\oled-sparkle\\test-results\\pit-sampling-0p5um\\pits",
+  "solver": {
+    "path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\scripts\\sparkle_multibackend.py",
+    "sha256": "19ca0cad5de67636876d1d469a6297151185cda04d118b908257dd5dc72f589b"
+  },
+  "input_files": {
+    "height": {
+      "path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-pits3to5um-pitch0p5\\heightfield.png",
+      "pitch_um_per_texel": 0.5,
+      "sha256": "768b0f1f174561676f1f91807bbaefa6bd0b54980f04e048f83b2c28f5ce0ebd",
+      "file_bytes": 5205572,
+      "format": "PNG",
+      "mode": "I;16",
+      "width_px": 2000,
+      "height_px": 2000,
+      "array_shape": [
+        2000,
+        2000
+      ],
+      "dtype": "uint16",
+      "raw_min": 0.0,
+      "raw_max": 65535.0,
+      "raw_std": 17611.99159182604,
+      "physical_width_um": 1000.0,
+      "physical_height_um": 1000.0,
+      "provenance": {
+        "source": "synthetic analytic random circular pits; scripts/prepare_random_pits.py",
+        "assigned_field_um": [
+          1000.0,
+          1000.0
+        ],
+        "assigned_texel_um": 0.5,
+        "height_range_um": 0.5,
+        "pit_depth_um": 0.5,
+        "diameter_distribution": "uniform on [3, 5] um; diameter drawn once per accepted pit",
+        "diameter_um_min_max": [
+          3.000069981282719,
+          4.999998145456507
+        ],
+        "diameter_um_mean": 3.9966587506844324,
+        "placement": "largest-first sequential placement at random positions; nonoverlapping, whole circles inside field",
+        "rng": "numpy.default_rng / PCG64",
+        "seed": 20261107,
+        "target_coverage": 0.5,
+        "analytic_coverage": 0.5000011976891807,
+        "sampled_footprint_coverage": 0.49857275,
+        "pit_count": 39048,
+        "position_trials": 467709,
+        "profile": "h = depth * [1 - (1 - (r/R)^2)^2] for r < R; h = depth outside",
+        "profile_note": "smooth bowl with zero slope at center and rim; black is pit bottom",
+        "sampling": "analytic height at texel centers; 16-bit PNG; no height renormalization",
+        "grid_size_px": [
+          2000,
+          2000
+        ],
+        "sampled_height_min_max_um": [
+          0.0,
+          0.5
+        ],
+        "sampled_height_rms_about_mean_um": 0.1343708826720534,
+        "geometry_file": "pits.csv",
+        "geometry_sha256": "bf457573bdf673121ecba4a6f8028ab4fd7c81ece758fe5e72680507f62e3b6d",
+        "height_png_sha256": "768b0f1f174561676f1f91807bbaefa6bd0b54980f04e048f83b2c28f5ce0ebd",
+        "generation_elapsed_seconds": 8.046914999838918,
+        "scale_note": "synthetic geometry assumptions, not a measured surface"
+      },
+      "png_bits_per_channel": 16,
+      "png_color_type": 0
+    },
+    "emission": {
+      "path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm\\emission.png",
+      "pitch_um_per_texel": 2.0,
+      "sha256": "687904186157df14f628adacb85c04d286ebc44b703ee851ecc2ee2d16b65670",
+      "file_bytes": 137793,
+      "format": "PNG",
+      "mode": "RGBA",
+      "width_px": 500,
+      "height_px": 500,
+      "array_shape": [
+        500,
+        500,
+        4
+      ],
+      "dtype": "uint8",
+      "raw_min": 0.0,
+      "raw_max": 255.0,
+      "raw_std": 113.91840521893411,
+      "physical_width_um": 1000.0,
+      "physical_height_um": 1000.0,
+      "provenance": {
+        "title": "Samsung Display Diamond Pixel OLED subpixel distribution",
+        "source_page": "https://global.samsungdisplay.com/29043/",
+        "source_image": "https://global.samsungdisplay.com/wp-content/uploads/2021/11/pixel.png",
+        "copyright": "Samsung Display; source attribution retained for this local research report.",
+        "original_sha256": "f28b44acffee08e21b5ecff76eb1c0d9108ef16f316805d7a16e75f17e7a8789",
+        "original_size_px": [
+          820,
+          461
+        ],
+        "crop_xyxy": [
+          8,
+          0,
+          392,
+          384
+        ],
+        "resized_to_px": [
+          500,
+          500
+        ],
+        "resampling": "area average (Pillow BOX)",
+        "assigned_emission_texel_um": 2,
+        "assigned_field_um": [
+          1000,
+          1000
+        ],
+        "intensity_model": "sRGB decoded to linear RGB, then photopic luma weights 0.2126/0.7152/0.0722; single effective wavelength 530nm",
+        "scale_note": "Physical scale is an explicit example assumption; web illustration is not a radiometrically calibrated panel measurement."
+      },
+      "png_bits_per_channel": 8,
+      "png_color_type": 6
+    }
+  },
+  "environment": {
+    "python": "3.12.12 (main, Dec  9 2025, 19:02:55) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Projects\\oled-sparkle\\.venv\\Scripts\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "processor": "Intel64 Family 6 Model 158 Stepping 10, GenuineIntel",
+    "logical_cpus": 12,
+    "versions": {
+      "numpy": "2.5.4",
+      "Pillow": "13.0.0",
+      "torch": "2.13.0+cu130",
+      "torchoptics": "1.0.2",
+      "jax": "0.12.0.1",
+      "jaxlib": "0.12.0.1",
+      "jax-cuda13-plugin": null,
+      "jax-cuda13-pjrt": null,
+      "chromatix": "0.6.0",
+      "mitsuba": "3.9.1",
+      "drjit": "1.5.0"
+    },
+    "environment_settings": {
+      "PYTHONPATH": "C:\\Users\\oxyfl\\AppData\\Local\\uv\\cache\\archive-v0\\4WYk6cbWPUV3KB3ITqhyH",
+      "OMP_NUM_THREADS": "2",
+      "MKL_NUM_THREADS": "2",
+      "JAX_PLATFORMS": null,
+      "JAX_ENABLE_X64": null,
+      "DRJIT_LIBLLVM_PATH": null,
+      "SPARKLE_WSL_DISTRO": null,
+      "SPARKLE_WSL_PYTHON": null,
+      "XLA_PYTHON_CLIENT_PREALLOCATE": null,
+      "XLA_PYTHON_CLIENT_MEM_FRACTION": null
+    }
+  },
+  "backend_runs": {
+    "torch": {
+      "status": "complete",
+      "solver_elapsed_seconds": 238.81848669983447
+    }
+  },
+  "timing_definition": "Solver elapsed includes any library/JIT/device setup occurring inside the solver; excludes postprocessing and HTML writing. Run wall time is measured up to report generation.",
+  "results_directory": "C:\\Projects\\oled-sparkle\\test-results\\pit-sampling-0p5um\\pits",
+  "comparison_written": true,
+  "effective_model": {
+    "height_grid": [
+      2000,
+      2000
+    ],
+    "fft_grid": [
+      2560,
+      2560
+    ],
+    "field_width_um": 1000.0,
+    "field_height_um": 1000.0,
+    "analysis_pixel_pitch_um": 49.99999999999999,
+    "wave_source_modes": 76550,
+    "wave_source_node_pitch_um": 2.0,
+    "one_complex64_field_mib": 50.0,
+    "ray_queries": 6144000000,
+    "pupil_nodes": 1536,
+    "height_min_um": 0.0,
+    "height_max_um": 0.5,
+    "height_rms_about_mean_um": 0.13437087833881378,
+    "linear_emission_min": 0.0,
+    "linear_emission_max": 0.7646600604057312,
+    "active_emission_texels": 76550,
+    "resolved_torch_device_setting": "cuda"
+  },
+  "finished_at_utc": "2026-11-07T09:09:38.130533+00:00",
+  "wall_elapsed_seconds": 239.4818
+}

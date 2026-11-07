@@ -21,7 +21,7 @@ from PIL import Image
 
 
 PACKAGES = ('numpy', 'Pillow', 'torch', 'torchoptics', 'jax', 'jaxlib',
-            'chromatix', 'mitsuba', 'drjit')
+            'jax-cuda13-plugin', 'jax-cuda13-pjrt', 'chromatix', 'mitsuba', 'drjit')
 LABELS = {
     'height': '高度图路径', 'height_pitch_um': '高度图横向采样 [µm/texel]',
     'height_range_um': '灰度黑至白的高度差 [µm]', 'emission': '发光强度图路径',
@@ -86,7 +86,9 @@ def environment_snapshot():
             'processor': platform.processor(), 'logical_cpus': os.cpu_count(), 'versions': versions,
             'environment_settings': {key: os.environ.get(key) for key in
                                      ('PYTHONPATH','OMP_NUM_THREADS', 'MKL_NUM_THREADS', 'JAX_PLATFORMS',
-                                      'JAX_ENABLE_X64', 'DRJIT_LIBLLVM_PATH')}}
+                                      'JAX_ENABLE_X64', 'DRJIT_LIBLLVM_PATH',
+                                      'SPARKLE_WSL_DISTRO', 'SPARKLE_WSL_PYTHON',
+                                      'XLA_PYTHON_CLIENT_PREALLOCATE', 'XLA_PYTHON_CLIENT_MEM_FRACTION')}}
 
 
 def image_metadata(path, pitch_um):
@@ -155,6 +157,9 @@ def execution_context(backend, model):
         if model.device == 'cuda':
             context['gpu_name'] = torch.cuda.get_device_name()
     elif backend == 'chromatix':
+        remote_context = getattr(model, '_chromatix_execution_context', None)
+        if remote_context is not None:
+            return dict(remote_context)
         jax = sys.modules['jax']
         context.update({'devices': [str(device) for device in jax.devices()],
                         'x64_enabled': bool(jax.config.jax_enable_x64)})

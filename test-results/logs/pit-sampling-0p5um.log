@@ -1,0 +1,66 @@
+RUN original
+Height: 2000x2000 at 0.5um, emission: 500x500 at 2um
+Wave FFT: 2560x2560; source modes 76550; one complex64 field: 50.0 MiB
+Mitsuba rays: 6,144,000,000; mesh stride 1
+
+=== torch ===
+  torch: 3200/76550 modes
+  torch: 6400/76550 modes
+  torch: 9600/76550 modes
+  torch: 12800/76550 modes
+  torch: 16000/76550 modes
+  torch: 19200/76550 modes
+  torch: 22400/76550 modes
+  torch: 25600/76550 modes
+  torch: 28800/76550 modes
+  torch: 32000/76550 modes
+  torch: 35200/76550 modes
+  torch: 38400/76550 modes
+  torch: 41600/76550 modes
+  torch: 44800/76550 modes
+  torch: 48000/76550 modes
+  torch: 51200/76550 modes
+  torch: 54400/76550 modes
+  torch: 57600/76550 modes
+  torch: 60800/76550 modes
+  torch: 64000/76550 modes
+  torch: 67200/76550 modes
+  torch: 70400/76550 modes
+  torch: 73600/76550 modes
+  torch: 76550/76550 modes
+  Sparkle CV: 206.31472%
+torch: brightness CV = 206.314716%, solver = 309.189s
+HTML report: C:\Projects\oled-sparkle\test-results\pit-sampling-0p5um\original\report.html
+RUN pits
+Height: 2000x2000 at 0.5um, emission: 500x500 at 2um
+Wave FFT: 2560x2560; source modes 76550; one complex64 field: 50.0 MiB
+Mitsuba rays: 6,144,000,000; mesh stride 1
+
+=== torch ===
+  torch: 3200/76550 modes
+  torch: 6400/76550 modes
+  torch: 9600/76550 modes
+  torch: 12800/76550 modes
+  torch: 16000/76550 modes
+  torch: 19200/76550 modes
+  torch: 22400/76550 modes
+  torch: 25600/76550 modes
+  torch: 28800/76550 modes
+  torch: 32000/76550 modes
+  torch: 35200/76550 modes
+  torch: 38400/76550 modes
+  torch: 41600/76550 modes
+  torch: 44800/76550 modes
+  torch: 48000/76550 modes
+  torch: 51200/76550 modes
+  torch: 54400/76550 modes
+  torch: 57600/76550 modes
+  torch: 60800/76550 modes
+  torch: 64000/76550 modes
+  torch: 67200/76550 modes
+  torch: 70400/76550 modes
+  torch: 73600/76550 modes
+  torch: 76550/76550 modes
+  Sparkle CV: 158.78915%
+torch: brightness CV = 158.789148%, solver = 238.818s
+HTML report: C:\Projects\oled-sparkle\test-results\pit-sampling-0p5um\pits\report.html

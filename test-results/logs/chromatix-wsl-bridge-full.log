@@ -1,0 +1,33 @@
+Height: 1000x1000 at 1um, emission: 500x500 at 2um
+Wave FFT: 1280x1280; source modes 76550; one complex64 field: 12.5 MiB
+Mitsuba rays: 1,536,000,000; mesh stride 1
+
+=== chromatix ===
+  Chromatix WSL: Ubuntu-22.04, JAX_PLATFORMS=cuda
+  chromatix: 3200/76550 modes
+  chromatix: 6400/76550 modes
+  chromatix: 9600/76550 modes
+  chromatix: 12800/76550 modes
+  chromatix: 16000/76550 modes
+  chromatix: 19200/76550 modes
+  chromatix: 22400/76550 modes
+  chromatix: 25600/76550 modes
+  chromatix: 28800/76550 modes
+  chromatix: 32000/76550 modes
+  chromatix: 35200/76550 modes
+  chromatix: 38400/76550 modes
+  chromatix: 41600/76550 modes
+  chromatix: 44800/76550 modes
+  chromatix: 48000/76550 modes
+  chromatix: 51200/76550 modes
+  chromatix: 54400/76550 modes
+  chromatix: 57600/76550 modes
+  chromatix: 60800/76550 modes
+  chromatix: 64000/76550 modes
+  chromatix: 67200/76550 modes
+  chromatix: 70400/76550 modes
+  chromatix: 73600/76550 modes
+  chromatix: 76550/76550 modes
+  Sparkle CV: 206.27007%
+chromatix: brightness CV = 206.270074%, solver = 61.393s
+HTML report: C:\Projects\oled-sparkle\test-results\chromatix-wsl-bridge\full\report.html

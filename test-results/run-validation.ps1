@@ -6,7 +6,6 @@ $taskPython = Join-Path $taskRoot '.venv\Scripts\python.exe'
 $taskSkill = Join-Path $taskRoot 'oled-ag-sparkle'
 $env:OMP_NUM_THREADS = '2'
 $env:MKL_NUM_THREADS = '2'
-$env:JAX_PLATFORMS = 'cpu'
 $env:SPARKLE_TEST_OPTIONAL = if ($IncludeChromatix) { '1' } else { '0' }
 $env:SPARKLE_TEST_MITSUBA_VARIANT = 'cuda_ad_rgb'
 
