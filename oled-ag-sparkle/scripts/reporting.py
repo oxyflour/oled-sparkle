@@ -165,6 +165,8 @@ def execution_context(backend, model):
                         'x64_enabled': bool(jax.config.jax_enable_x64)})
     elif backend == 'mitsuba':
         context['variant'] = sys.modules['mitsuba'].variant()
+        context['integrator'] = ('drjit_resident' if context['variant'].startswith('cuda')
+                                 else 'numpy')
     return context
 
 

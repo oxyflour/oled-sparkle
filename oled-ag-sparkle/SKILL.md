@@ -77,6 +77,10 @@ The first three backends implement scalar ASM + phase-screen imaging. Mitsuba
 uses geometric refraction and pupil quadrature. Their brightness maps are the
 outputs to compare; the models remain distinct. Use source-sampling and grid
 checks as needed, without changing the requested direct pixel statistic.
+CUDA Mitsuba executes the complete ray/refraction/emission integration on the
+GPU with a symbolic pupil loop, respecting `--ray-chunk` and preserving the
+mesh/pupil sampling. It downloads only the final brightness image. Non-CUDA
+variants retain the NumPy integrator; reports record the integrator used.
 
 ## Run
 

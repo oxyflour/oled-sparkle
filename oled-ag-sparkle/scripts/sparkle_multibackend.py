@@ -404,6 +404,88 @@ def simulate_mitsuba(m):
     mesh,nverts,nfaces=create_mitsuba_mesh(mi,m)
     scene=mi.load_dict({'type':'scene','ag_surface':mesh})
     print(f'  Mitsuba mesh: {nverts:,} vertices, {nfaces:,} triangles',flush=True)
+    if variant.startswith('cuda'):
+        return _simulate_mitsuba_resident(mi,dr,scene,m)
+    return _simulate_mitsuba_numpy(mi,scene,m)
+
+
+def _simulate_mitsuba_resident(mi,dr,scene,m):
+    """Trace, refract, sample and accumulate on CUDA; download only the image.
+
+    Keep the original pupil order, piecewise-constant emission, FP32 optical
+    arithmetic and FP64 accumulation. FP64 ray origins preserve the original
+    NumPy coordinate calculation before conversion to Mitsuba's FP32 rays.
+    The symbolic pupil loop bounds live ray storage by ``ray_chunk`` without
+    tracing a separate Python program or reading hits back for every query.
+    """
+    ny,nx=m.shape
+    N=ny*nx
+    gap=m.gap_m*1e6
+    dx=m.dx_m*1e6
+    hmax=(float(np.max(m.h_m))-float(np.mean(m.h_m)))*1e6
+    ztop=gap+hmax+4*dx
+    clearance=ztop-gap
+    eta=m.n_out/m.n_stack
+    pupil=list(pupil_nodes(m.ray_radial,m.ray_angular,m.na,m.n_out))
+    directions=np.array([(tx,ty,-math.sqrt(1-tx*tx-ty*ty),
+                          -math.sqrt(1-eta*eta*(tx*tx+ty*ty)))
+                         for tx,ty in pupil],dtype=np.float64)
+    directions=[mi.Float64(column.copy()) for column in directions.T]
+    emission=mi.Float(m.emission.ravel())
+    ey,ex=m.emission.shape
+    em_pitch=m.em_dx_m*1e6
+    img=dr.zeros(mi.Float64,N)
+    dr.eval(emission,*directions,img)
+    for start in range(0,N,m.ray_chunk):
+        end=min(N,start+m.ray_chunk)
+        idx=dr.arange(mi.UInt,end-start)+start
+        xx=(mi.Float64(idx%nx)-(nx-1)/2)*dx
+        yy=(mi.Float64(idx//nx)-(ny-1)/2)*dx
+        dr.eval(xx,yy)
+
+        def integrate(pidx,acc):
+            tx64,ty64,airz64,internalz64=[dr.gather(mi.Float64,d,pidx) for d in directions]
+            xorigin=mi.Float(xx-gap*(eta*tx64)/(-internalz64)-clearance*tx64/(-airz64))
+            yorigin=mi.Float(yy-gap*(eta*ty64)/(-internalz64)-clearance*ty64/(-airz64))
+            tx,ty,airz=mi.Float(tx64),mi.Float(ty64),mi.Float(airz64)
+            si=scene.ray_intersect(mi.Ray3f(mi.Point3f(xorigin,yorigin,ztop),
+                                          mi.Vector3f(tx,ty,airz)),
+                                   ray_flags=mi.RayFlags.Minimal,coherent=False)
+            normal=si.n/dr.sqrt(si.n.x**2+si.n.y**2+si.n.z**2)
+            cosi=-(tx*normal.x+ty*normal.y+airz*normal.z)
+            side=cosi>0
+            cosi=dr.maximum(cosi,0)
+            ct2=1-eta**2*(1-cosi**2)
+            cost=dr.sqrt(dr.maximum(ct2,0))
+            txs=eta*tx+(eta*cosi-cost)*normal.x
+            tys=eta*ty+(eta*cosi-cost)*normal.y
+            tzs=eta*airz+(eta*cosi-cost)*normal.z
+            valid=si.is_valid() & side & (ct2>0) & (tzs < -1e-6)
+            ztravel=-si.p.z/dr.select(valid,tzs,-1.)
+            px=si.p.x+ztravel*txs
+            py=si.p.y+ztravel*tys
+            col=mi.Int(dr.floor(px/em_pitch+ex/2))
+            row=mi.Int(dr.floor(py/em_pitch+ey/2))
+            valid &= (col>=0) & (col<ex) & (row>=0) & (row<ey)
+            rad=dr.gather(mi.Float,emission,mi.UInt(row*ex+col),active=valid)
+            rs=((m.n_out*cosi-m.n_stack*cost)/(m.n_out*cosi+m.n_stack*cost+1e-15))**2
+            rp=((m.n_stack*cosi-m.n_out*cost)/(m.n_stack*cosi+m.n_out*cost+1e-15))**2
+            power=dr.maximum(0,1-.5*(rs+rp))
+            return pidx+1,acc+mi.Float64(dr.select(valid,rad*power,0.)/len(pupil))
+
+        _,acc=dr.while_loop(state=(mi.UInt(0),dr.zeros(mi.Float64,end-start)),
+                            cond=lambda pidx,acc:pidx<len(pupil),body=integrate,
+                            mode='symbolic',labels=('pupil_node','brightness'))
+        dr.scatter(img,acc,idx)
+        dr.eval(img)
+        if m.progress_every and (end==N or (start//m.ray_chunk+1)%max(1,m.progress_every//2)==0):
+            print(f'  Mitsuba pixels: {end:,}/{N:,}; pupil nodes {len(pupil)}',flush=True)
+    # NumPy conversion waits for queued work, so solver timing includes execution.
+    return np.asarray(img).astype(np.float32).reshape(ny,nx),N*len(pupil)
+
+
+def _simulate_mitsuba_numpy(mi,scene,m):
+    """Original host-side integrator retained for non-CUDA Mitsuba variants."""
     ny,nx=m.shape
     img=np.zeros((ny*nx,),dtype=np.float64)
     gap=m.gap_m*1e6

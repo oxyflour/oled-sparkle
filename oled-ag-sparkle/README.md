@@ -112,10 +112,35 @@ Solver time includes any library loading/JIT/device setup occurring inside the
 solver, and excludes postprocessing/report writing. The total run time is recorded
 up to HTML generation. Missing/failed values are not replaced with zero.
 
+CUDA Mitsuba keeps intersections, Snell refraction, Fresnel transmission,
+piecewise-constant emission lookup and brightness accumulation on the GPU.
+A Dr.Jit symbolic loop integrates every pupil node within each spatial chunk;
+`--ray-chunk` still bounds the number of live ray queries. Only the completed
+brightness image is downloaded. Ray-origin calculations and accumulation use FP64
+precision, with FP32 Mitsuba rays/optical arithmetic. Mesh stride, pupil nodes,
+physical parameters and detector integration are unchanged. Non-CUDA Mitsuba
+variants retain the original NumPy integrator. The execution context records
+`integrator: drjit_resident` or `numpy`.
+
 ```bash
 python scripts/generate_report.py --results outputs/oled-1mm-pits3to5um-periodic-50um
 python -m unittest discover -s tests -v
 ```
+
+Set `SPARKLE_TEST_MITSUBA=1` to enable five CUDA checks against the retained
+NumPy integrator, including flat Fresnel transmission, rough surfaces, total
+internal reflection, missed/zero emission and chunk/mesh-stride behavior.
+From the repository root, replay all four saved full-pupil reference cases with:
+
+```bash
+python test-results/benchmark-mitsuba-resident.py --with-legacy-baseline
+```
+
+The script predeclares accuracy limits, preserves original input hashes and all
+physical/sampling parameters, writes new reports under
+`test-results/mitsuba-resident-regression/`, and times one complete legacy solve
+for an isolated performance comparison. Omitting `--with-legacy-baseline` skips
+that several-minute timing step. Historical result directories stay untouched.
 
 Set `SPARKLE_TEST_OPTIONAL=1` and `SPARKLE_TEST_MITSUBA_VARIANT=cuda_ad_rgb` to
 include all-backend integration tests. The historic reference-normalized outputs

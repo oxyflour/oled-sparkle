@@ -6,6 +6,8 @@
 
 直接查看已提交的[闪点简报](test-results/oled-sms-reference/sparkle.html)。完整离线报告含输入原图和浮点下载，可按下文命令生成，输出到 `test-results/oled-sms-reference/sparkle-report.html`。
 
+Mitsuba CUDA 求解器现已采用 GPU 常驻积分，保留原有物理模型、全部瞳孔/网格采样和 `ray_chunk` 上限。RTX 3090 Ti 上，完整随机坑算例由 **223.33 秒降至 0.41–0.75 秒**，按两次新实现耗时中位数约快 **387 倍**。四组完整算例的统计亮度图最大相对 L2 误差为 **7.74×10⁻⁷**，CV 最大变化为 **0.000006 个百分点**；42 项回归测试全部通过。[精度与性能记录](test-results/mitsuba-resident-regression/validation.json)、[复现脚本](test-results/benchmark-mitsuba-resident.py)和[详细验证清单](oled-ag-sparkle/VALIDATION.json)已保存。
+
 ### 1. 准备环境
 
 从仓库根目录执行以下 PowerShell 命令。完整光学复算需要 Python 3.12、`uv`、支持 CUDA 的 NVIDIA GPU，以及 Windows 下的 WSL2 Chromatix CUDA 环境。

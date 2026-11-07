@@ -2302,5 +2302,153 @@
       "MWA_difference_percentage_points": -0.1558801879325049
     },
     "scope": "SMS-inspired reference implementation. Different methods have different retained bandwidths; equality is not expected. Agreement with target in one method is not measurement calibration."
+  },
+  "mitsuba_resident": {
+    "date": "2026-11-07T13:28:44.227156+00:00",
+    "implementation": "CUDA Dr.Jit symbolic pupil loop; ray_chunk respected; final image download only",
+    "protocol": "test-results/mitsuba-resident-regression/protocol.json",
+    "regression": "test-results/mitsuba-resident-regression/validation.json",
+    "implementation_audit": "test-results/mitsuba-resident-regression/implementation-audit.json",
+    "reproduce": "python test-results/benchmark-mitsuba-resident.py --with-legacy-baseline",
+    "solver_sha256": "dca27c3005679ba7c2cdf65f3028f2689bdc4f446391b1fe40e2d4f6ba4770a4",
+    "gpu": "NVIDIA GeForce RTX 3090 Ti, 596.49",
+    "versions": {
+      "mitsuba": "3.9.1",
+      "drjit": "1.5.0"
+    },
+    "tests": {
+      "total": 42,
+      "passed": 42,
+      "skipped": 0,
+      "elapsed_seconds": 45.952,
+      "log": "test-results/mitsuba-resident-regression/tests.log",
+      "environment": {
+        "SPARKLE_TEST_OPTIONAL": "1",
+        "SPARKLE_TEST_MITSUBA": "1",
+        "SPARKLE_TEST_MITSUBA_VARIANT": "cuda_ad_rgb",
+        "SPARKLE_TEST_TORCH_DEVICE": "cpu"
+      }
+    },
+    "legacy_baseline": {
+      "case": "pits",
+      "solver_seconds": 223.33381650038064,
+      "rays": 1536000000,
+      "bitwise_equal_to_saved": true
+    },
+    "accuracy_limits": {
+      "optical_relative_l2": 0.0001,
+      "measurement_relative_l2": 1e-05,
+      "cv_difference_percentage_points": 0.001
+    },
+    "max_optical_relative_l2": 2.5876708154475053e-05,
+    "max_measurement_relative_l2": 7.742294069040418e-07,
+    "max_cv_difference_percentage_points": 6.015595602093526e-06,
+    "cases": [
+      {
+        "case": "pits",
+        "solver_seconds": [
+          0.7452,
+          0.40877180034294724
+        ],
+        "rays": 1536000000,
+        "grid": [
+          1000,
+          1000
+        ],
+        "pupil_nodes": 1536,
+        "ray_chunk": 65536,
+        "mesh_stride": 1,
+        "optical_relative_l2": 2.5876708154475053e-05,
+        "measurement_relative_l2": 7.742294069040418e-07,
+        "max_optical_absolute_error": 0.00037175416946411133,
+        "cv_percent": 21.05543694780726,
+        "reference_cv_percent": 21.055430932211657,
+        "cv_difference_percentage_points": 6.015595602093526e-06,
+        "input_hashes_unchanged": true,
+        "physical_and_sampling_parameters_unchanged": true,
+        "repeat_bitwise_equal": true,
+        "saved_analysis_and_cv_verified": true,
+        "controlled_speedup": 387.0697991649508
+      },
+      {
+        "case": "original",
+        "solver_seconds": [
+          1.185226,
+          0.48902179999276996
+        ],
+        "rays": 1536000000,
+        "grid": [
+          1000,
+          1000
+        ],
+        "pupil_nodes": 1536,
+        "ray_chunk": 65536,
+        "mesh_stride": 1,
+        "optical_relative_l2": 1.1182566802278443e-05,
+        "measurement_relative_l2": 5.95527213389818e-07,
+        "max_optical_absolute_error": 0.00037175416946411133,
+        "cv_percent": 42.347117603262475,
+        "reference_cv_percent": 42.34711913241075,
+        "cv_difference_percentage_points": 1.5291482711177196e-06,
+        "input_hashes_unchanged": true,
+        "physical_and_sampling_parameters_unchanged": true,
+        "repeat_bitwise_equal": true,
+        "saved_analysis_and_cv_verified": true
+      },
+      {
+        "case": "etched",
+        "solver_seconds": [
+          1.187523,
+          0.40766739984974265
+        ],
+        "rays": 1536000000,
+        "grid": [
+          1000,
+          1000
+        ],
+        "pupil_nodes": 1536,
+        "ray_chunk": 65536,
+        "mesh_stride": 1,
+        "optical_relative_l2": 1.2680509702673428e-05,
+        "measurement_relative_l2": 5.652126920691562e-07,
+        "max_optical_absolute_error": 0.00034731626510620117,
+        "cv_percent": 38.234669360231976,
+        "reference_cv_percent": 38.234671553187404,
+        "cv_difference_percentage_points": 2.1929554279154218e-06,
+        "input_hashes_unchanged": true,
+        "physical_and_sampling_parameters_unchanged": true,
+        "repeat_bitwise_equal": true,
+        "saved_analysis_and_cv_verified": true
+      },
+      {
+        "case": "sms-green",
+        "solver_seconds": [
+          0.409048,
+          0.4138815999031067
+        ],
+        "rays": 1536000000,
+        "grid": [
+          1000,
+          1000
+        ],
+        "pupil_nodes": 1536,
+        "ray_chunk": 65536,
+        "mesh_stride": 1,
+        "optical_relative_l2": 6.214751756994684e-06,
+        "measurement_relative_l2": 5.142135706320105e-07,
+        "max_optical_absolute_error": 0.0004975795745849609,
+        "cv_percent": 166.53250270279193,
+        "reference_cv_percent": 166.5325012755858,
+        "cv_difference_percentage_points": 1.4272061434894567e-06,
+        "input_hashes_unchanged": true,
+        "physical_and_sampling_parameters_unchanged": true,
+        "repeat_bitwise_equal": true,
+        "saved_analysis_and_cv_verified": true
+      }
+    ],
+    "physical_and_sampling_parameters_unchanged": true,
+    "cpu_integrator_body_unchanged": true,
+    "historical_results_untouched": true,
+    "precision_note": "Same physical model and pupil/mesh sampling; small FP arithmetic differences at piecewise-constant emission boundaries remain."
   }
 }

@@ -26,6 +26,13 @@ htmlcov/
 
 # Retain current reproducibility scripts and measured results
 /test-results/*
+!/test-results/benchmark-mitsuba-resident.py
+!/test-results/mitsuba-resident-regression/
+/test-results/mitsuba-resident-regression/*
+!/test-results/mitsuba-resident-regression/protocol.json
+!/test-results/mitsuba-resident-regression/validation.json
+!/test-results/mitsuba-resident-regression/implementation-audit.json
+!/test-results/mitsuba-resident-regression/tests.log
 !/test-results/run-comparison.ps1
 !/test-results/run-pit-comparison.ps1
 !/test-results/run-etched-ag.ps1

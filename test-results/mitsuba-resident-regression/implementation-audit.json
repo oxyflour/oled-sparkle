@@ -1,0 +1,9 @@
+{
+  "legacy_integrator_body_unchanged": true,
+  "create_mitsuba_mesh_unchanged": true,
+  "pupil_nodes_unchanged": true,
+  "emission_lookup_unchanged": true,
+  "collect_analysis_pixels_unchanged": true,
+  "parse_args_unchanged": true,
+  "model_from_args_unchanged": true
+}
