@@ -1,0 +1,19 @@
+{
+  "source": "existing synthetic demo_quick/heightfield.png",
+  "original_sha256": "177029badb36f9a695b1c767434d75e85b953f6f9daa680106eec49c9c120a34",
+  "original_size_px": [
+    128,
+    128
+  ],
+  "resized_to_px": [
+    500,
+    500
+  ],
+  "resampling": "bilinear interpolation of 16-bit height values",
+  "assigned_field_um": [
+    1000,
+    1000
+  ],
+  "assigned_texel_um": 2,
+  "height_range_um": 0.5
+}

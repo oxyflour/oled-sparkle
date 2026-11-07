@@ -1,0 +1,25 @@
+test_help_and_demo_dry_run_under_gbk (test_cli_encoding.CliEncodingTest.test_help_and_demo_dry_run_under_gbk) ... ok
+test_1mm_field_collects_exactly_400_pixels_of_50um (test_direct_metric.DirectBrightnessMetricTest.test_1mm_field_collects_exactly_400_pixels_of_50um) ... ok
+test_1um_height_grid_collects_50_by_50_samples_per_pixel (test_direct_metric.DirectBrightnessMetricTest.test_1um_height_grid_collects_50_by_50_samples_per_pixel) ... ok
+test_dark_pixels_and_scale_invariance (test_direct_metric.DirectBrightnessMetricTest.test_dark_pixels_and_scale_invariance) ... ok
+test_detector_pixel_averages_brightness_before_cv (test_direct_metric.DirectBrightnessMetricTest.test_detector_pixel_averages_brightness_before_cv) ... ok
+test_fractional_overlap_and_centered_full_pixels (test_direct_metric.DirectBrightnessMetricTest.test_fractional_overlap_and_centered_full_pixels) ... ok
+test_roi_depends_only_on_geometry (test_direct_metric.DirectBrightnessMetricTest.test_roi_depends_only_on_geometry) ... ok
+test_all_metrics_equal_the_saved_brightness_cv (test_optional_backends.OptionalBackendsTest.test_all_metrics_equal_the_saved_brightness_cv) ... ok
+test_wave_backends_agree (test_optional_backends.OptionalBackendsTest.test_wave_backends_agree) ... ok
+test_1mm_geometry_and_encoding (test_package.PackageAssetsTest.test_1mm_geometry_and_encoding) ... ok
+test_refined_height_keeps_1mm_extent_and_existing_height_data (test_package.PackageAssetsTest.test_refined_height_keeps_1mm_extent_and_existing_height_data) ... ok
+test_skill_header_and_scripts (test_package.PackageAssetsTest.test_skill_header_and_scripts) ... ok
+test_sourced_oled_1mm_inputs (test_package.PackageAssetsTest.test_sourced_oled_1mm_inputs) ... ok
+test_escape_and_missing_values_round_trip (test_reporting.HtmlReportingTest.test_escape_and_missing_values_round_trip) ... ok
+test_failed_solver_still_writes_input_snapshot_and_html (test_reporting.HtmlReportingTest.test_failed_solver_still_writes_input_snapshot_and_html) ... ok
+test_input_gallery_preserves_originals_is_visible_and_deduplicated (test_reporting.HtmlReportingTest.test_input_gallery_preserves_originals_is_visible_and_deduplicated) ... ok
+test_report_shows_detector_pixels_and_keeps_both_float_grids (test_reporting.HtmlReportingTest.test_report_shows_detector_pixels_and_keeps_both_float_grids) ... ok
+test_stale_and_skipped_outputs_are_excluded (test_reporting.HtmlReportingTest.test_stale_and_skipped_outputs_are_excluded) ... ok
+test_constant_height_uses_direct_image_metric (test_smoke.SmokeTest.test_constant_height_uses_direct_image_metric) ... ok
+test_random_height_uses_direct_image_metric (test_smoke.SmokeTest.test_random_height_uses_direct_image_metric) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 66.389s
+
+OK

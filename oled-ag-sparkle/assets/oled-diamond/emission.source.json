@@ -1,0 +1,29 @@
+{
+  "title": "Samsung Display Diamond Pixel OLED subpixel distribution",
+  "source_page": "https://global.samsungdisplay.com/29043/",
+  "source_image": "https://global.samsungdisplay.com/wp-content/uploads/2021/11/pixel.png",
+  "copyright": "Samsung Display; source attribution retained for this local research report.",
+  "original_sha256": "f28b44acffee08e21b5ecff76eb1c0d9108ef16f316805d7a16e75f17e7a8789",
+  "original_size_px": [
+    820,
+    461
+  ],
+  "crop_xyxy": [
+    8,
+    0,
+    392,
+    384
+  ],
+  "resized_to_px": [
+    128,
+    128
+  ],
+  "resampling": "area average (Pillow BOX)",
+  "assigned_emission_texel_um": 2,
+  "assigned_field_um": [
+    256,
+    256
+  ],
+  "intensity_model": "sRGB decoded to linear RGB, then photopic luma weights 0.2126/0.7152/0.0722; single effective wavelength 530nm",
+  "scale_note": "Physical scale is an explicit example assumption; web illustration is not a radiometrically calibrated panel measurement."
+}

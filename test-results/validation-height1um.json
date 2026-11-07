@@ -1,0 +1,104 @@
+{
+  "physical_field_mm": [
+    1,
+    1
+  ],
+  "optical_grid": [
+    1000,
+    1000
+  ],
+  "optical_pitch_um": 1,
+  "emission_grid": [
+    500,
+    500
+  ],
+  "emission_pitch_um": 2,
+  "emission_bytes_unchanged": true,
+  "measurement_grid": [
+    20,
+    20
+  ],
+  "measurement_pixel_um": [
+    50,
+    50
+  ],
+  "optical_samples_per_measurement_pixel": [
+    50,
+    50
+  ],
+  "roi_pixels_per_backend": 400,
+  "inputs": 2,
+  "brightness_outputs": 4,
+  "display_images": 6,
+  "float_downloads": 8,
+  "input_downloads": 2,
+  "area_average_matches_independent_reshape": true,
+  "full_field_mean_preserved": true,
+  "metrics_recomputed_from_400_pixels": true,
+  "raw_downloads_match_saved_arrays": true,
+  "input_downloads_match_source_pngs": true,
+  "wave_backend_relative_l2_brightness_50um": {
+    "torchoptics": 2.260980876575894e-07,
+    "chromatix": 1.5390513248618634e-05
+  },
+  "formula": "100 * std(I_50um, ddof=0) / mean(I_50um)",
+  "records": [
+    {
+      "backend": "torch",
+      "sparkle_cv_percent": 206.26954142500585,
+      "solver_seconds": 85.571115,
+      "postprocess_seconds": 0.119295,
+      "mean": 0.0010552786705941624,
+      "std": 0.002176718474590477,
+      "analysis_grid": [
+        20,
+        20
+      ],
+      "analysis_pixel_um": 50,
+      "roi_pixels": 400
+    },
+    {
+      "backend": "torchoptics",
+      "sparkle_cv_percent": 206.26951176098882,
+      "solver_seconds": 85.662601,
+      "postprocess_seconds": 0.266388,
+      "mean": 0.0010552785878929763,
+      "std": 0.0021767179909650994,
+      "analysis_grid": [
+        20,
+        20
+      ],
+      "analysis_pixel_um": 50,
+      "roi_pixels": 400
+    },
+    {
+      "backend": "chromatix",
+      "sparkle_cv_percent": 206.27007576316177,
+      "solver_seconds": 1653.456675,
+      "postprocess_seconds": 0.085144,
+      "mean": 0.001055290566769253,
+      "std": 0.0021767486515964374,
+      "analysis_grid": [
+        20,
+        20
+      ],
+      "analysis_pixel_um": 50,
+      "roi_pixels": 400
+    },
+    {
+      "backend": "mitsuba",
+      "sparkle_cv_percent": 210.15357956913968,
+      "solver_seconds": 823.768279,
+      "postprocess_seconds": 0.16373,
+      "mean": 0.055828872087118044,
+      "std": 0.11732637312415482,
+      "analysis_grid": [
+        20,
+        20
+      ],
+      "analysis_pixel_um": 50,
+      "roi_pixels": 400
+    }
+  ],
+  "report_bytes": 23733784
+}

@@ -1,0 +1,27 @@
+{
+  "provenance": "existing synthetic numerical regression case, NOT physical measurement",
+  "heightfield": {
+    "shape": [
+      128,
+      128
+    ],
+    "image_pitch_um": 2.0,
+    "height_range_um": 0.5
+  },
+  "emission": {
+    "shape": [
+      4,
+      4
+    ],
+    "image_pitch_um": 64.0,
+    "analysis_pitch_um": 64.0
+  },
+  "default_parameters": {
+    "gap_um": 500,
+    "wavelength_nm": 530,
+    "n_stack": 1.5,
+    "n_out": 1.0,
+    "na": 0.08,
+    "roi_margin_um": 0
+  }
+}

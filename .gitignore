@@ -1,0 +1,47 @@
+# Local Python environments and caches
+.venv/
+.venv-*/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+.env
+.env.*
+!.env.example
+.idea/
+.vscode/
+
+# Rebuilt distribution; retain the original input archive used by the packager
+/*.zip
+!/oled-ag-sparkle-skill.zip
+/oled-ag-sparkle/outputs/
+
+# Retain current reproducibility scripts and measured results
+/test-results/*
+!/test-results/run-comparison.ps1
+!/test-results/run-validation.ps1
+!/test-results/comparison-benchmark.py
+!/test-results/plot-backend-comparison.py
+!/test-results/plot-direct-oled.py
+!/test-results/finalize-1mm-50um.py
+!/test-results/benchmark-height1um-batch.py
+!/test-results/report.json
+!/test-results/validation-height1um.json
+!/test-results/comparison-summary.csv
+!/test-results/brightness-comparison-height1um-50um.png
+!/test-results/oled-1mm-height1um-50um/
+
+# Previous input snapshot is used to check that the emission input is unchanged
+!/test-results/oled-1mm-50um/
+/test-results/oled-1mm-50um/*
+!/test-results/oled-1mm-50um/run.json
+
+# Current simulation and validation logs
+!/test-results/logs/
+/test-results/logs/*
+!/test-results/logs/validation-height1um.log
+!/test-results/logs/oled-1mm-height1um-50um.log

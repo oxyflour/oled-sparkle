@@ -1,0 +1,53 @@
+{
+  "provenance": "synthetic correlated roughness, reproducible; NOT a measured or calibrated surface",
+  "heightfield": {
+    "filename": "heightfield.png",
+    "shape": [
+      2000,
+      2000
+    ],
+    "image_pitch_um": 0.5,
+    "height_range_um": 2.0,
+    "physical_field_mm": [
+      1.0,
+      1.0
+    ],
+    "pixel_encoding": "16-bit 0..65535 maps to physical 0..2 um; center height automatically subtracted in solver"
+  },
+  "height_flat": {
+    "filename": "height_flat.png",
+    "shape": [
+      2000,
+      2000
+    ]
+  },
+  "emission": {
+    "filename": "emission.png",
+    "shape": [
+      20,
+      20
+    ],
+    "image_pitch_um": 50.0,
+    "display_cell_pitch_um": 50.0,
+    "description": "green ON, one 50µm image texel per full pixel; fastest 1mm example"
+  },
+  "emission_subpixel": {
+    "filename": "emission_subpixel.png",
+    "shape": [
+      100,
+      100
+    ],
+    "image_pitch_um": 10.0,
+    "display_cell_pitch_um": 50.0,
+    "description": "synthetic green aperture 10µm wide x 30µm tall per 50µm pixel"
+  },
+  "default_parameters": {
+    "gap_um": 500,
+    "wavelength_nm": 530,
+    "n_stack": 1.5,
+    "n_out": 1.0,
+    "na": 0.08,
+    "roi_margin_um": 100
+  },
+  "warning": "Example is for software validation and cost estimation, not realistic display sparkle prediction."
+}

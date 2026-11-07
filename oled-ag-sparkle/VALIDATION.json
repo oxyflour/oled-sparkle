@@ -1,0 +1,419 @@
+{
+  "schema_version": 5,
+  "date": "2026-11-07T08:14:49.167966+00:00",
+  "metric": "direct CV of 50um collected-brightness pixels",
+  "metric_definition": "100 * std(I_50um, ddof=0) / mean(I_50um)",
+  "input_files": {
+    "height": {
+      "path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-height1um\\heightfield.png",
+      "pitch_um_per_texel": 1.0,
+      "sha256": "7a191c0e7c2cf04c0d8defa409590c2929bea7b7500f6fb4c5e4c90292ff941c",
+      "file_bytes": 1322408,
+      "format": "PNG",
+      "mode": "I;16",
+      "width_px": 1000,
+      "height_px": 1000,
+      "array_shape": [
+        1000,
+        1000
+      ],
+      "dtype": "uint16",
+      "raw_min": 201.0,
+      "raw_max": 65432.0,
+      "raw_std": 8691.241383520823,
+      "physical_width_um": 1000.0,
+      "physical_height_um": 1000.0,
+      "provenance": {
+        "source": "existing assets/oled-1mm/heightfield.png",
+        "original_sha256": "74fdb8f0b79f80be74f81d2f4e89619e61fac0b0eb99590d25e4403b3f86e3ec",
+        "original_size_px": [
+          500,
+          500
+        ],
+        "resized_to_px": [
+          1000,
+          1000
+        ],
+        "resampling": "bilinear interpolation of existing 16-bit height values; no new measured detail",
+        "assigned_field_um": [
+          1000,
+          1000
+        ],
+        "assigned_texel_um": 1,
+        "height_range_um": 0.5
+      },
+      "png_bits_per_channel": 16,
+      "png_color_type": 0
+    },
+    "emission": {
+      "path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm\\emission.png",
+      "pitch_um_per_texel": 2.0,
+      "sha256": "687904186157df14f628adacb85c04d286ebc44b703ee851ecc2ee2d16b65670",
+      "file_bytes": 137793,
+      "format": "PNG",
+      "mode": "RGBA",
+      "width_px": 500,
+      "height_px": 500,
+      "array_shape": [
+        500,
+        500,
+        4
+      ],
+      "dtype": "uint8",
+      "raw_min": 0.0,
+      "raw_max": 255.0,
+      "raw_std": 113.91840521893411,
+      "physical_width_um": 1000.0,
+      "physical_height_um": 1000.0,
+      "provenance": {
+        "title": "Samsung Display Diamond Pixel OLED subpixel distribution",
+        "source_page": "https://global.samsungdisplay.com/29043/",
+        "source_image": "https://global.samsungdisplay.com/wp-content/uploads/2021/11/pixel.png",
+        "copyright": "Samsung Display; source attribution retained for this local research report.",
+        "original_sha256": "f28b44acffee08e21b5ecff76eb1c0d9108ef16f316805d7a16e75f17e7a8789",
+        "original_size_px": [
+          820,
+          461
+        ],
+        "crop_xyxy": [
+          8,
+          0,
+          392,
+          384
+        ],
+        "resized_to_px": [
+          500,
+          500
+        ],
+        "resampling": "area average (Pillow BOX)",
+        "assigned_emission_texel_um": 2,
+        "assigned_field_um": [
+          1000,
+          1000
+        ],
+        "intensity_model": "sRGB decoded to linear RGB, then photopic luma weights 0.2126/0.7152/0.0722; single effective wavelength 530nm",
+        "scale_note": "Physical scale is an explicit example assumption; web illustration is not a radiometrically calibrated panel measurement."
+      },
+      "png_bits_per_channel": 8,
+      "png_color_type": 6
+    }
+  },
+  "parameters": {
+    "height": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-height1um\\heightfield.png",
+    "height_pitch_um": 1.0,
+    "height_range_um": 0.5,
+    "emission": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm\\emission.png",
+    "emission_pitch_um": 2.0,
+    "analysis_pitch_um": 50.0,
+    "emission_channel": "luma",
+    "gamma_decode": true,
+    "emission_offset_x_um": 0.0,
+    "emission_offset_y_um": 0.0,
+    "gap_um": 500.0,
+    "wavelength_nm": 530.0,
+    "n_stack": 1.5,
+    "n_out": 1.0,
+    "na": 0.08,
+    "source_samples": 1,
+    "emission_threshold": 0.001,
+    "source_margin_um": 0.0,
+    "max_sources": 100000,
+    "pad_px": 140,
+    "batch": 16,
+    "backend": "all",
+    "backend_workers": 3,
+    "device": "cuda",
+    "ray_radial": 24,
+    "ray_angular": 64,
+    "ray_chunk": 65536,
+    "mesh_stride": 1,
+    "mitsuba_variant": "cuda_ad_rgb",
+    "roi_margin_um": 0.0,
+    "progress_every": 200,
+    "out": "test-results\\oled-1mm-height1um-50um",
+    "skip_unavailable": false,
+    "dry_run": false
+  },
+  "effective_model": {
+    "height_grid": [
+      1000,
+      1000
+    ],
+    "fft_grid": [
+      1280,
+      1280
+    ],
+    "field_width_um": 1000.0,
+    "field_height_um": 1000.0,
+    "analysis_pixel_pitch_um": 49.99999999999999,
+    "wave_source_modes": 76550,
+    "wave_source_node_pitch_um": 2.0,
+    "one_complex64_field_mib": 12.5,
+    "ray_queries": 1536000000,
+    "pupil_nodes": 1536,
+    "height_min_um": 0.0015335317002609372,
+    "height_max_um": 0.49921420216560364,
+    "height_rms_about_mean_um": 0.06630992144346237,
+    "linear_emission_min": 0.0,
+    "linear_emission_max": 0.7646600604057312,
+    "active_emission_texels": 76550,
+    "resolved_torch_device_setting": "cuda"
+  },
+  "environment": {
+    "python": "3.12.12 (main, Dec  9 2025, 19:02:55) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Projects\\oled-sparkle\\.venv\\Scripts\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "processor": "Intel64 Family 6 Model 158 Stepping 10, GenuineIntel",
+    "logical_cpus": 12,
+    "versions": {
+      "numpy": "2.5.4",
+      "Pillow": "13.0.0",
+      "torch": "2.13.0+cu130",
+      "torchoptics": "1.0.2",
+      "jax": "0.12.0.1",
+      "jaxlib": "0.12.0.1",
+      "chromatix": "0.6.0",
+      "mitsuba": "3.9.1",
+      "drjit": "1.5.0"
+    },
+    "environment_settings": {
+      "PYTHONPATH": "C:\\Users\\oxyfl\\AppData\\Local\\uv\\cache\\archive-v0\\4WYk6cbWPUV3KB3ITqhyH",
+      "OMP_NUM_THREADS": "2",
+      "MKL_NUM_THREADS": "2",
+      "JAX_PLATFORMS": "cpu",
+      "JAX_ENABLE_X64": null,
+      "DRJIT_LIBLLVM_PATH": null
+    }
+  },
+  "run_wall_seconds": 1653.907354,
+  "brightness_results": [
+    {
+      "backend": "torch",
+      "sparkle_cv_percent": 206.26954142500585,
+      "solver_seconds": 85.571115,
+      "postprocess_seconds": 0.119295,
+      "mean": 0.0010552786705941624,
+      "std": 0.002176718474590477,
+      "analysis_grid": [
+        20,
+        20
+      ],
+      "analysis_pixel_um": 50,
+      "roi_pixels": 400
+    },
+    {
+      "backend": "torchoptics",
+      "sparkle_cv_percent": 206.26951176098882,
+      "solver_seconds": 85.662601,
+      "postprocess_seconds": 0.266388,
+      "mean": 0.0010552785878929763,
+      "std": 0.0021767179909650994,
+      "analysis_grid": [
+        20,
+        20
+      ],
+      "analysis_pixel_um": 50,
+      "roi_pixels": 400
+    },
+    {
+      "backend": "chromatix",
+      "sparkle_cv_percent": 206.27007576316177,
+      "solver_seconds": 1653.456675,
+      "postprocess_seconds": 0.085144,
+      "mean": 0.001055290566769253,
+      "std": 0.0021767486515964374,
+      "analysis_grid": [
+        20,
+        20
+      ],
+      "analysis_pixel_um": 50,
+      "roi_pixels": 400
+    },
+    {
+      "backend": "mitsuba",
+      "sparkle_cv_percent": 210.15357956913968,
+      "solver_seconds": 823.768279,
+      "postprocess_seconds": 0.16373,
+      "mean": 0.055828872087118044,
+      "std": 0.11732637312415482,
+      "analysis_grid": [
+        20,
+        20
+      ],
+      "analysis_pixel_um": 50,
+      "roi_pixels": 400
+    }
+  ],
+  "validation": {
+    "physical_field_mm": [
+      1,
+      1
+    ],
+    "optical_grid": [
+      1000,
+      1000
+    ],
+    "optical_pitch_um": 1,
+    "emission_grid": [
+      500,
+      500
+    ],
+    "emission_pitch_um": 2,
+    "emission_bytes_unchanged": true,
+    "measurement_grid": [
+      20,
+      20
+    ],
+    "measurement_pixel_um": [
+      50,
+      50
+    ],
+    "optical_samples_per_measurement_pixel": [
+      50,
+      50
+    ],
+    "roi_pixels_per_backend": 400,
+    "inputs": 2,
+    "brightness_outputs": 4,
+    "display_images": 6,
+    "float_downloads": 8,
+    "input_downloads": 2,
+    "area_average_matches_independent_reshape": true,
+    "full_field_mean_preserved": true,
+    "metrics_recomputed_from_400_pixels": true,
+    "raw_downloads_match_saved_arrays": true,
+    "input_downloads_match_source_pngs": true,
+    "wave_backend_relative_l2_brightness_50um": {
+      "torchoptics": 2.260980876575894e-07,
+      "chromatix": 1.5390513248618634e-05
+    },
+    "formula": "100 * std(I_50um, ddof=0) / mean(I_50um)",
+    "records": [
+      {
+        "backend": "torch",
+        "sparkle_cv_percent": 206.26954142500585,
+        "solver_seconds": 85.571115,
+        "postprocess_seconds": 0.119295,
+        "mean": 0.0010552786705941624,
+        "std": 0.002176718474590477,
+        "analysis_grid": [
+          20,
+          20
+        ],
+        "analysis_pixel_um": 50,
+        "roi_pixels": 400
+      },
+      {
+        "backend": "torchoptics",
+        "sparkle_cv_percent": 206.26951176098882,
+        "solver_seconds": 85.662601,
+        "postprocess_seconds": 0.266388,
+        "mean": 0.0010552785878929763,
+        "std": 0.0021767179909650994,
+        "analysis_grid": [
+          20,
+          20
+        ],
+        "analysis_pixel_um": 50,
+        "roi_pixels": 400
+      },
+      {
+        "backend": "chromatix",
+        "sparkle_cv_percent": 206.27007576316177,
+        "solver_seconds": 1653.456675,
+        "postprocess_seconds": 0.085144,
+        "mean": 0.001055290566769253,
+        "std": 0.0021767486515964374,
+        "analysis_grid": [
+          20,
+          20
+        ],
+        "analysis_pixel_um": 50,
+        "roi_pixels": 400
+      },
+      {
+        "backend": "mitsuba",
+        "sparkle_cv_percent": 210.15357956913968,
+        "solver_seconds": 823.768279,
+        "postprocess_seconds": 0.16373,
+        "mean": 0.055828872087118044,
+        "std": 0.11732637312415482,
+        "analysis_grid": [
+          20,
+          20
+        ],
+        "analysis_pixel_um": 50,
+        "roi_pixels": 400
+      }
+    ],
+    "report_bytes": 23733784
+  },
+  "tests": {
+    "discovered": 20,
+    "passed": 20,
+    "skipped": 0,
+    "failed": 0,
+    "log": "test-results/logs/validation-height1um.log"
+  },
+  "comparison": {
+    "metric_definition": "100 * std(I_ROI, ddof=0) / mean(I_ROI)",
+    "backends": [
+      {
+        "backend": "torch",
+        "physics": "scalar_wave",
+        "sparkle_cv_pct": 206.26954142500585,
+        "roi_pixels": 400,
+        "analysis_pixel_pitch_um": 49.99999999999999,
+        "analysis_rows": 20,
+        "analysis_columns": 20,
+        "mean_brightness": 0.0010552786705941624,
+        "std_brightness": 0.002176718474590477,
+        "elapsed_s": 85.571115
+      },
+      {
+        "backend": "torchoptics",
+        "physics": "scalar_wave",
+        "sparkle_cv_pct": 206.26951176098882,
+        "roi_pixels": 400,
+        "analysis_pixel_pitch_um": 49.99999999999999,
+        "analysis_rows": 20,
+        "analysis_columns": 20,
+        "mean_brightness": 0.0010552785878929763,
+        "std_brightness": 0.0021767179909650994,
+        "elapsed_s": 85.662601
+      },
+      {
+        "backend": "chromatix",
+        "physics": "scalar_wave",
+        "sparkle_cv_pct": 206.27007576316177,
+        "roi_pixels": 400,
+        "analysis_pixel_pitch_um": 49.99999999999999,
+        "analysis_rows": 20,
+        "analysis_columns": 20,
+        "mean_brightness": 0.001055290566769253,
+        "std_brightness": 0.0021767486515964374,
+        "elapsed_s": 1653.456675
+      },
+      {
+        "backend": "mitsuba",
+        "physics": "geometric_rays",
+        "sparkle_cv_pct": 210.15357956913968,
+        "roi_pixels": 400,
+        "analysis_pixel_pitch_um": 49.99999999999999,
+        "analysis_rows": 20,
+        "analysis_columns": 20,
+        "mean_brightness": 0.055828872087118044,
+        "std_brightness": 0.11732637312415482,
+        "elapsed_s": 823.768279
+      }
+    ],
+    "important": "Statistics use area-averaged floating-point brightness pixels at the requested physical pixel size, before PNG display scaling."
+  },
+  "original_zip_sha256": "1c4be7d8af739a0cda41e218b1386332c47cd5db942612c5643354195f852b0a",
+  "artifacts": {
+    "html_report": "test-results/report.html",
+    "results_directory": "test-results/oled-1mm-height1um-50um",
+    "comparison_figure": "test-results/brightness-comparison-height1um-50um.png"
+  },
+  "scope": "1mm square field; height 1000x1000 at 1um from existing height data; emission 500x500 at 2um; all 400 collected 50um pixels directly enter CV"
+}
