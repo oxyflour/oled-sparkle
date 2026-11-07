@@ -10,7 +10,7 @@ class PackageAssetsTest(unittest.TestCase):
     def test_skill_header_and_scripts(self):
         content=(ROOT/'SKILL.md').read_text(encoding='utf-8')
         self.assertIn('name: oled-ag-sparkle',content)
-        self.assertTrue((ROOT/'scripts/run_demo.py').is_file())
+        self.assertTrue((ROOT/'scripts/run_legacy_demo.py').is_file())
         self.assertTrue((ROOT/'scripts/sparkle_multibackend.py').is_file())
         self.assertTrue((ROOT/'scripts/reporting.py').is_file())
         self.assertTrue((ROOT/'scripts/generate_report.py').is_file())

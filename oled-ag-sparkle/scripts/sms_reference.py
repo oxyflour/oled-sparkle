@@ -159,3 +159,94 @@ def flat_wave_control(model):
     result = np.fft.ifft2(np.fft.fft2(sources) * np.fft.fft2(psf)).real
     h, w = model.shape
     return np.maximum(result[model.pad:model.pad+h, model.pad:model.pad+w], 0).astype(np.float32)
+
+
+def analyze_saved_runs(results):
+    """Reprocess the six saved reference runs and validate their float statistics."""
+    import hashlib
+    import json
+    from pathlib import Path
+    from datetime import datetime
+    from sparkle_multibackend import ALL_BACKENDS, model_from_args, parse_args
+
+    results = Path(results).expanduser().resolve()
+    read = lambda path: json.loads(path.read_text(encoding='utf-8'))
+    protocol = read(results / 'protocol.json')
+    execution = protocol['execution']
+    declared_at = datetime.fromisoformat(execution['created_at_utc'])
+    assert protocol['includes_LDF'] is False
+    assert execution['solver_sha256'] == hashlib.sha256(
+        Path(__file__).with_name('sparkle_multibackend.py').read_bytes()).hexdigest()
+    records = []
+    arrays = {}
+    source_hashes = set()
+    for grid, names, pitch in (('1um', ALL_BACKENDS, 1.), ('0p5um', ('torch',), .5),
+                                ('old-na-0p08', ('torch',), 1.)):
+        run = read(results / grid / 'run.json')
+        assert run['status'] == 'complete'
+        assert run['parameters']['emission_channel'] == 'green'
+        assert run['parameters']['backend_workers'] == execution['backend_workers']
+        assert run['solver']['sha256'] == execution['solver_sha256']
+        assert datetime.fromisoformat(run['started_at_utc']) >= declared_at
+        for role in ('height', 'emission'):
+            info = run['input_files'][role]
+            assert hashlib.sha256(Path(info['path']).read_bytes()).hexdigest() == info['sha256']
+            if role == 'emission':
+                source_hashes.add(info['sha256'])
+        for backend in names:
+            folder = results / grid / backend
+            raw = np.load(folder / 'brightness.npy')
+            assert np.isfinite(raw).all() and np.all(raw >= 0)
+            result = analyze(raw, pitch)
+            data = result['summary']
+            direct = read(folder / 'stats.json')
+            assert direct['run_id'] == run['run_id']
+            assert run['backend_runs'][backend]['status'] == 'complete'
+            assert datetime.fromisoformat(direct['started_at_utc']) >= declared_at
+            context = direct['execution_context']
+            if backend in ('torch', 'torchoptics'):
+                assert str(context['device']).startswith('cuda')
+            elif backend == 'chromatix':
+                assert context['default_backend'] == 'gpu' and context['runtime'] == 'wsl'
+            else:
+                assert context['variant'] == 'cuda_ad_rgb'
+            assert abs(data['direct_unseparated_camera_CV_percent'] - direct['sparkle_cv_percent']) < 1e-9
+            pixels = result['measurement_pixels']
+            cv = 100 * pixels.std(ddof=0) / pixels.mean()
+            assert abs(cv - data['primary']['sparkle_contrast_percent']) < 1e-10
+            mwa_pixels = result['mwa_measurement_pixels']
+            mwa_cv = 100 * mwa_pixels.std(ddof=0) / mwa_pixels.mean()
+            assert abs(mwa_cv-data['sensitivities'][2]['sparkle_contrast_percent']) < 1e-10
+            assert pixels.shape == (21, 21)
+            assert abs(data['primary_filter']['mean_preservation_error']) < 1e-12
+            for filename, values in (('sms_filtered_optical_roi.npy', result['separated']),
+                                     ('sms_measurement_pixels.npy', pixels),
+                                     ('sms_frequency_mask.npy', result['transfer']),
+                                     ('sms_mwa_optical_roi.npy', result['mwa_filtered_optical_roi']),
+                                     ('sms_mwa_measurement_pixels.npy', mwa_pixels)):
+                np.save(folder / filename, values)
+            data.update({'grid': grid, 'backend': backend, 'object_NA': run['parameters']['na'],
+                         'physics': direct['physics_group'], 'solver_seconds': direct['elapsed_seconds'],
+                         'batch_id': execution['batch_id'], 'run_id': run['run_id'],
+                         'solver_sha256': run['solver']['sha256'],
+                         'started_at_utc': direct['started_at_utc'],
+                         'finished_at_utc': direct['finished_at_utc'],
+                         'execution_context': context,
+                         'measured_ROI_global_um_xyxy': [-275.625, -275.625, 275.625, 275.625],
+                         'filtered_ROI_global_um_xyxy': [-280., -280., 280., 280.]})
+            (folder / 'sms_stats.json').write_text(json.dumps(data, indent=2), encoding='utf-8')
+            arrays[(grid, backend)] = result
+            records.append(data)
+    assert len(source_hashes) == 1
+    for grid in ('1um', 'old-na-0p08'):
+        run = read(results / grid / 'run.json')
+        model = model_from_args(parse_args(run['argv']))
+        control = flat_wave_control(model)
+        result = analyze(control, model.dx_m * 1e6)
+        folder = results / 'controls' / grid
+        folder.mkdir(parents=True, exist_ok=True)
+        np.save(folder / 'brightness.npy', control)
+        np.save(folder / 'sms_measurement_pixels.npy', result['measurement_pixels'])
+        (folder / 'sms_stats.json').write_text(json.dumps(result['summary'], indent=2), encoding='utf-8')
+        arrays[(grid, 'flat')] = result
+    return records, arrays

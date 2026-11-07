@@ -2,6 +2,9 @@
 from pathlib import Path
 import sys
 import unittest
+import hashlib
+import json
+import tempfile
 
 import numpy as np
 from PIL import Image
@@ -9,11 +12,57 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
 from sms_reference import (analyze, box_kernel, flat_wave_control, fourier_separate,
-                           measurement_statistics, moving_average)
+                           measurement_statistics, moving_average, analyze_saved_runs)
 from sparkle_multibackend import model_from_args, parse_args, simulate_torch_wave
+from run_sms_reference import CAMERA, command_for
+from run_oled_demo import build_command
 
 
 class SMSReferenceTests(unittest.TestCase):
+    def test_saved_report_rejects_a_run_before_its_declared_batch(self):
+        solver_sha = hashlib.sha256((ROOT / 'scripts/sparkle_multibackend.py').read_bytes()).hexdigest()
+        with tempfile.TemporaryDirectory() as folder:
+            base = Path(folder)
+            (base / '1um').mkdir()
+            (base / 'protocol.json').write_text(json.dumps({
+                'includes_LDF': False,
+                'execution': {'created_at_utc': '2026-11-07T12:00:00+00:00',
+                              'solver_sha256': solver_sha, 'backend_workers': 1}}), encoding='utf-8')
+            (base / '1um/run.json').write_text(json.dumps({
+                'status': 'complete', 'parameters': {'emission_channel': 'green', 'backend_workers': 1},
+                'solver': {'sha256': solver_sha}, 'started_at_utc': '2026-11-07T11:00:00+00:00'}), encoding='utf-8')
+            with self.assertRaises(AssertionError):
+                analyze_saved_runs(base)
+
+    def test_saved_report_rejects_a_different_solver_version(self):
+        with tempfile.TemporaryDirectory() as folder:
+            base = Path(folder)
+            (base / 'protocol.json').write_text(json.dumps({
+                'includes_LDF': False,
+                'execution': {'created_at_utc': '2026-11-07T12:00:00+00:00',
+                              'solver_sha256': 'old-solver-version'}}), encoding='utf-8')
+            with self.assertRaises(AssertionError):
+                analyze_saved_runs(base)
+
+    def test_shared_runner_preserves_distinct_green_measurement_conditions(self):
+        raw = parse_args(build_command(device='cpu')[2:])
+        for pitch, pad, batch in ((1., 140, 16), (.5, 280, 8)):
+            with self.subTest(pitch=pitch):
+                green = parse_args(command_for(ROOT / 'outputs/check', pitch=pitch)[2:])
+                self.assertEqual(green.emission_channel, 'green')
+                self.assertEqual(green.analysis_pitch_um, 26.25)
+                self.assertEqual(green.roi_margin_um, 220)
+                self.assertEqual(green.na, CAMERA['object_NA'])
+                self.assertEqual(green.height_pitch_um, pitch)
+                self.assertEqual(green.pad_px, pad)
+                self.assertEqual(green.batch, batch)
+                for key in ('gap_um', 'wavelength_nm', 'n_stack', 'n_out', 'emission_pitch_um',
+                            'height_range_um', 'ray_radial', 'ray_angular'):
+                    self.assertEqual(getattr(raw, key), getattr(green, key), key)
+        self.assertEqual(raw.analysis_pitch_um, 50)
+        self.assertEqual(raw.na, .08)
+        self.assertEqual(raw.emission_channel, 'luma')
+
     def test_lattice_rejected_and_random_off_lattice_retained(self):
         n = 560
         xx = np.arange(n)[None, :]

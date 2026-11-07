@@ -1,0 +1,135 @@
+2.13.0+cu130 CUDA: True
+{
+  "output": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-periodic\\emission.png",
+  "tile_size_px": [
+    70,
+    70
+  ],
+  "tile_field_um": [
+    140.0,
+    140.0
+  ],
+  "repeats_xy": [
+    8,
+    8
+  ],
+  "cell_crop_xyxy": [
+    26,
+    58,
+    96,
+    128
+  ],
+  "boundary_statistics": {
+    "x_wrap_mse": 0.0008959191519745153,
+    "y_wrap_mse": 0.0007662986763332784,
+    "x_interior_neighbor_mse": 0.005634586050011555,
+    "y_interior_neighbor_mse": 0.005596694375391532,
+    "edge_rgb_energy": 0.0006505922630490105,
+    "edge_max_srgb": 0.3254901960784314
+  },
+  "output_size_px": [
+    500,
+    500
+  ],
+  "pitch_um": 2.0
+}
+Height: 1000x1000 at 1um, emission: 500x500 at 2um
+Wave FFT: 1280x1280; source modes 54628; one complex64 field: 12.5 MiB
+Mitsuba rays: 1,536,000,000; mesh stride 1
+HTML report: C:\Projects\oled-sparkle\test-results\oled-sms-current\dry-run\report.html
+Height: 1000x1000 at 1um, emission: 500x500 at 2um
+Wave FFT: 1280x1280; source modes 54628; one complex64 field: 12.5 MiB
+Mitsuba rays: 1,536,000,000; mesh stride 1
+
+=== torch ===
+  torch: 6400/54628 modes
+  torch: 12800/54628 modes
+  torch: 19200/54628 modes
+  torch: 25600/54628 modes
+  torch: 32000/54628 modes
+  torch: 38400/54628 modes
+  torch: 44800/54628 modes
+  torch: 51200/54628 modes
+  torch: 54628/54628 modes
+  Sparkle CV: 57.67490%
+
+=== torchoptics ===
+  torchoptics: 6400/54628 modes
+  torchoptics: 12800/54628 modes
+  torchoptics: 19200/54628 modes
+  torchoptics: 25600/54628 modes
+  torchoptics: 32000/54628 modes
+  torchoptics: 38400/54628 modes
+  torchoptics: 44800/54628 modes
+  torchoptics: 51200/54628 modes
+  torchoptics: 54628/54628 modes
+  Sparkle CV: 57.67490%
+
+=== chromatix ===
+  Chromatix WSL: Ubuntu-22.04, JAX_PLATFORMS=cuda
+  chromatix: 6400/54628 modes
+  chromatix: 12800/54628 modes
+  chromatix: 19200/54628 modes
+  chromatix: 25600/54628 modes
+  chromatix: 32000/54628 modes
+  chromatix: 38400/54628 modes
+  chromatix: 44800/54628 modes
+  chromatix: 51200/54628 modes
+  chromatix: 54628/54628 modes
+  Sparkle CV: 57.67469%
+
+=== mitsuba ===
+jitc_llvm_init(): LLVM API initialization failed ..
+  Mitsuba variant=cuda_ad_rgb; measured height mesh stride=1
+  Mitsuba mesh: 1,000,000 vertices, 1,996,002 triangles
+  Mitsuba pixels: 1,000,000/1,000,000; pupil nodes 1536
+  Sparkle CV: 166.53250%
+torch: brightness CV = 57.674895%, solver = 28.454s
+torchoptics: brightness CV = 57.674903%, solver = 24.865s
+chromatix: brightness CV = 57.674687%, solver = 54.366s
+mitsuba: brightness CV = 166.532503%, solver = 1.538s
+HTML report: C:\Projects\oled-sparkle\test-results\oled-sms-current\1um\report.html
+Height: 2000x2000 at 0.5um, emission: 500x500 at 2um
+Wave FFT: 2560x2560; source modes 54628; one complex64 field: 50.0 MiB
+Mitsuba rays: 6,144,000,000; mesh stride 1
+
+=== torch ===
+  torch: 3200/54628 modes
+  torch: 6400/54628 modes
+  torch: 9600/54628 modes
+  torch: 12800/54628 modes
+  torch: 16000/54628 modes
+  torch: 19200/54628 modes
+  torch: 22400/54628 modes
+  torch: 25600/54628 modes
+  torch: 28800/54628 modes
+  torch: 32000/54628 modes
+  torch: 35200/54628 modes
+  torch: 38400/54628 modes
+  torch: 41600/54628 modes
+  torch: 44800/54628 modes
+  torch: 48000/54628 modes
+  torch: 51200/54628 modes
+  torch: 54400/54628 modes
+  torch: 54628/54628 modes
+  Sparkle CV: 57.77531%
+torch: brightness CV = 57.775313%, solver = 108.890s
+HTML report: C:\Projects\oled-sparkle\test-results\oled-sms-current\0p5um\report.html
+Height: 1000x1000 at 1um, emission: 500x500 at 2um
+Wave FFT: 1280x1280; source modes 54628; one complex64 field: 12.5 MiB
+Mitsuba rays: 1,536,000,000; mesh stride 1
+
+=== torch ===
+  torch: 6400/54628 modes
+  torch: 12800/54628 modes
+  torch: 19200/54628 modes
+  torch: 25600/54628 modes
+  torch: 32000/54628 modes
+  torch: 38400/54628 modes
+  torch: 44800/54628 modes
+  torch: 51200/54628 modes
+  torch: 54628/54628 modes
+  Sparkle CV: 147.78747%
+torch: brightness CV = 147.787467%, solver = 29.111s
+HTML report: C:\Projects\oled-sparkle\test-results\oled-sms-current\old-na-0p08\report.html
+HTML report: C:\Projects\oled-sparkle\test-results\report.html

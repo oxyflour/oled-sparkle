@@ -1893,18 +1893,39 @@
     "scipy": "1.18.1",
     "matplotlib": "3.11.2"
   },
+  "mitsuba_resident_replay": {
+    "source_directory": "C:\\Projects\\oled-sparkle\\test-results\\mitsuba-resident-regression",
+    "run_id": "0f02fb8c55b3428190db0d6adea2006a",
+    "archived_solver_seconds": 242.359101,
+    "integrator": "drjit_resident",
+    "solver_seconds": [
+      0.409048,
+      0.4138815999031067
+    ],
+    "timing_definition": "Sequential solves; includes mesh/scene creation, JIT and final host image; excludes postprocessing.",
+    "gpu": "NVIDIA GeForce RTX 3090 Ti, 596.49",
+    "rays": 1536000000,
+    "input_hashes_and_optical_sampling_match": true,
+    "optical_relative_l2": 6.214751756994525e-06,
+    "MWA_sparkle_percent": 5.409319411165781,
+    "MWA_difference_percentage_points": -1.281684222753654e-06,
+    "source_hashes": {
+      "protocol.json": "95a3a892ad2806113e7731866d2fe82a4501674120cc7d35bbcc3f9a5091f12a",
+      "validation.json": "5e37759fa07955ce48b7cbdf45e5e54a2d732e47071a009352c6a83a72153ec6"
+    }
+  },
   "processing_code": {
     "analysis": {
       "path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\scripts\\sms_reference.py",
-      "sha256": "6f4b20c56ee8c435ebdc2aae0b8438bc9dcdd552ad997043fd0443056a3619dc"
+      "sha256": "cdd780984b38604b974c3e168e0a0da51ca6bf358aa85a802c5d4a5d6d086e69"
     },
     "runner": {
       "path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\scripts\\run_sms_reference.py",
-      "sha256": "df786b2b2a39b996a54e50c42d5f8d5a81b745f6b8dbc6e7b038e1f8a0712522"
+      "sha256": "f659ca817c38cb23a6455f4b7e76c16479873a3f07acecff8235d1d13c9d710b"
     },
     "report": {
-      "path": "C:\\Projects\\oled-sparkle\\test-results\\report-sms-reference.py",
-      "sha256": "a7108573df998627fa8cc0289fdc3c4f3c992d7b0c9f4603f42ea1dd71beb8f2"
+      "path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\scripts\\reporting.py",
+      "sha256": "4811f4d94b4148e5109451625fd710b82d738c29cc910836d7eb9456e61aa82c"
     }
   },
   "wave_relative_L2_vs_torch": {
@@ -1913,9 +1934,9 @@
   },
   "regression_tests": {
     "status": "passed",
-    "run": 37,
-    "skipped": 4,
-    "passed": 33,
+    "run": 48,
+    "skipped": 9,
+    "passed": 39,
     "log": "C:\\Projects\\oled-sparkle\\test-results\\logs\\validation-sms-reference.log"
   }
 }

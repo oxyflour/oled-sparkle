@@ -134,7 +134,7 @@ class HtmlReportingTest(unittest.TestCase):
     def test_failed_solver_still_writes_input_snapshot_and_html(self):
         with tempfile.TemporaryDirectory() as directory:
             root=Path(directory)
-            command=[sys.executable,str(ROOT/'scripts/run_demo.py'),'--backend','torch',
+            command=[sys.executable,str(ROOT/'scripts/run_legacy_demo.py'),'--example','quick','--backend','torch',
                      '--device','cpu','--out',str(root),'--extra','--max-sources','1']
             result=subprocess.run(command,capture_output=True,text=True)
             self.assertNotEqual(result.returncode,0)

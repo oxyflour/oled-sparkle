@@ -1,0 +1,47 @@
+{
+  "status": "predeclared before computing green optical results",
+  "execution": {
+    "batch_id": "30ef6b2cac9c4acda85c13c9b523de0c",
+    "created_at_utc": "2026-11-07T15:37:32.086073+00:00",
+    "backend_workers": 1,
+    "solver_sha256": "dca27c3005679ba7c2cdf65f3028f2689bdc4f446391b1fe40e2d4f6ba4770a4",
+    "runner_sha256": "358e530175e5cbd6583ddc2f9551bb5c1a3059a0144f27348bbace6e09161f6d"
+  },
+  "camera": {
+    "focal_length_mm": 50.0,
+    "f_number": 8.0,
+    "object_distance_mm": 400.0,
+    "sensor_pitch_um": 3.75,
+    "object_pitch_um": 26.25,
+    "magnification": 0.14285714285714285,
+    "object_NA": 0.00781226159233428,
+    "geometric_green_pitch_um": 70.0,
+    "green_pixel_ISR": 2.6666666666666665
+  },
+  "height": "Existing etched-AG proxy unchanged, Sa = 0.10 um",
+  "includes_LDF": false,
+  "roi_width_um": 560.0,
+  "primary_filter": {
+    "method": "Fourier lattice notch, DC retained",
+    "full_supercell_um": 140.0,
+    "notch_guard_bins": 0,
+    "radial_cutoff_cycles_per_um": 0.014285714285714285
+  },
+  "sensitivity_cases": [
+    "notch guard 1 bin",
+    "0.8x band cutoff",
+    "three full-supercell 140 um MWA passes",
+    "original NA 0.08",
+    "0.5 um optical grid"
+  ],
+  "reference_comparison_percent": [
+    4.8,
+    6.0
+  ],
+  "comparison_status": "Scale check only. Cheng 2025 did not publish instrument settings; its Ra=0.25-0.35 um surfaces and panel are different.",
+  "sources": [
+    "https://www.display-messtechnik.de/fileadmin/template/main/docs/10-Years-SparkleMeasurement--edC-2021-V2.pdf",
+    "https://www.display-messtechnik.de/fileadmin/template/main/docs/SMS1000-05.2023-7.pdf",
+    "https://sid.org/Portals/sid/Files/SID-Digest/docs/68-2.pdf"
+  ]
+}

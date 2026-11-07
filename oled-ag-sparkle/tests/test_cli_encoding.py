@@ -16,8 +16,8 @@ class CliEncodingTest(unittest.TestCase):
         env = dict(os.environ, PYTHONIOENCODING='gbk')
         commands = [
             [sys.executable, str(ROOT / 'scripts/sparkle_multibackend.py'), '--help'],
-            [sys.executable, str(ROOT / 'scripts/run_demo.py'),
-             '--backend', 'all', '--device', 'cpu', '--dry-run'],
+            [sys.executable, str(ROOT / 'scripts/run_legacy_demo.py'),
+             '--example', 'quick', '--backend', 'all', '--device', 'cpu', '--dry-run'],
         ]
         with tempfile.TemporaryDirectory() as directory:
             commands[1] += ['--out',directory]

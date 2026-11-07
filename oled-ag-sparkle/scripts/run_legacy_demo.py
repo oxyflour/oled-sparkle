@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Run bundled example from ANY working directory, with consistent physical units."""
+"""Run legacy synthetic test fixtures (quick or 1mm), from any directory.
+
+For the current default OLED example use run_oled_demo.py.
+"""
 import argparse
 import subprocess
 import sys
@@ -10,7 +13,8 @@ SKILL_ROOT = Path(__file__).resolve().parents[1]
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument('--example', choices=['quick','1mm'], default='quick')
+    ap.add_argument('--example', choices=['quick','1mm'], required=True,
+                    help='Explicit test fixture; the current OLED example uses run_oled_demo.py')
     ap.add_argument('--emission-variant', choices=['basic','subpixel'], default='basic')
     ap.add_argument('--backend', choices=['torch','torchoptics','chromatix','mitsuba','all'], default='torch')
     ap.add_argument('--device', choices=['auto','cpu','cuda'], default='auto')

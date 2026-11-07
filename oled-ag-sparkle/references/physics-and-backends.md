@@ -18,11 +18,12 @@ spacing. The previous texture-to-field resize enlarged emitters by 3.90625;
 the following whole-patch tiling introduced phase breaks. Both are superseded.
 Verify repeat period, uncut bright bodies and low boundary-neighbor jumps before
 repeating an input patch. No edge blending is used. Physical scale remains an
-illustrative assumption. The current height is a synthetic random
-population of nonoverlapping circular pits, 3-5um in diameter, 0.5um deep, covering
-50% of the field. Their smooth bowl profile and random-placement assumptions are
-recorded in the input sidecar. Only 3-5 samples span a pit at 1um pitch; compare
-both the pit surface and original surface at a finer pitch to assess sensitivity.
+illustrative assumption. The default height is a synthetic etched-AG proxy with
+1,600 irregular Voronoi bowls, 25um nominal site spacing, variable depths and
+1.2um rim rounding, calibrated at areal Sa=0.10um. Its 16-bit PNG encoding range
+is 0.5361845861372564um, distinct from sampled Sz about 0.515um. The input sidecar
+records calibration and geometry. Compare the same geometry and scale on a 0.5um
+grid to assess sampling sensitivity. Circular pits remain an explicit legacy case.
 
 The statistic is directly `100 * std(I_ROI, ddof=0) / mean(I_ROI)` on the saved
 `analysis_brightness.npy` values. All full measurement pixels, including dark
@@ -35,6 +36,6 @@ quadrature affect the simulated images. Record them with source provenance,
 height mapping, wavelength, indices, gap, camera NA and actual computation times.
 PNG previews are only display representations; metrics use the saved float array.
 
-The bundled example uses the synthetic random-pit height map and a crop of Samsung
+The bundled example uses the synthetic etched-AG height map and a crop of Samsung
 Display's Diamond Pixel image. Physical scale and effective monochromatic luma
 interpretation are explicit example assumptions in the source metadata.

@@ -1,0 +1,131 @@
+{
+  "output": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-periodic\\emission.png",
+  "tile_size_px": [
+    70,
+    70
+  ],
+  "tile_field_um": [
+    140.0,
+    140.0
+  ],
+  "repeats_xy": [
+    8,
+    8
+  ],
+  "cell_crop_xyxy": [
+    26,
+    58,
+    96,
+    128
+  ],
+  "boundary_statistics": {
+    "x_wrap_mse": 0.0008959191519745153,
+    "y_wrap_mse": 0.0007662986763332784,
+    "x_interior_neighbor_mse": 0.005634586050011555,
+    "y_interior_neighbor_mse": 0.005596694375391532,
+    "edge_rgb_energy": 0.0006505922630490105,
+    "edge_max_srgb": 0.3254901960784314
+  },
+  "output_size_px": [
+    500,
+    500
+  ],
+  "pitch_um": 2.0
+}
+Height: 1000x1000 at 1um, emission: 500x500 at 2um
+Wave FFT: 1280x1280; source modes 76769; one complex64 field: 12.5 MiB
+Mitsuba rays: 1,536,000,000; mesh stride 1
+
+=== torch ===
+
+=== torchoptics ===
+
+=== chromatix ===
+  Chromatix WSL: Ubuntu-22.04, JAX_PLATFORMS=cuda
+  torch: 3200/76769 modes
+  torchoptics: 3200/76769 modes
+  torch: 6400/76769 modes
+  torchoptics: 6400/76769 modes
+  torch: 9600/76769 modes
+  torchoptics: 9600/76769 modes
+  chromatix: 3200/76769 modes
+  torch: 12800/76769 modes
+  chromatix: 6400/76769 modes
+  torchoptics: 12800/76769 modes
+  chromatix: 9600/76769 modes
+  torch: 16000/76769 modes
+  torchoptics: 16000/76769 modes
+  chromatix: 12800/76769 modes
+  torch: 19200/76769 modes
+  chromatix: 16000/76769 modes
+  torchoptics: 19200/76769 modes
+  chromatix: 19200/76769 modes
+  torch: 22400/76769 modes
+  torchoptics: 22400/76769 modes
+  chromatix: 22400/76769 modes
+  torch: 25600/76769 modes
+  torchoptics: 25600/76769 modes
+  chromatix: 25600/76769 modes
+  torch: 28800/76769 modes
+  chromatix: 28800/76769 modes
+  torchoptics: 28800/76769 modes
+  chromatix: 32000/76769 modes
+  torch: 32000/76769 modes
+  torchoptics: 32000/76769 modes
+  chromatix: 35200/76769 modes
+  torch: 35200/76769 modes
+  chromatix: 38400/76769 modes
+  torchoptics: 35200/76769 modes
+  chromatix: 41600/76769 modes
+  torch: 38400/76769 modes
+  torchoptics: 38400/76769 modes
+  chromatix: 44800/76769 modes
+  torch: 41600/76769 modes
+  torchoptics: 41600/76769 modes
+  chromatix: 48000/76769 modes
+  torch: 44800/76769 modes
+  chromatix: 51200/76769 modes
+  torchoptics: 44800/76769 modes
+  chromatix: 54400/76769 modes
+  torch: 48000/76769 modes
+  torchoptics: 48000/76769 modes
+  chromatix: 57600/76769 modes
+  torch: 51200/76769 modes
+  chromatix: 60800/76769 modes
+  torchoptics: 51200/76769 modes
+  chromatix: 64000/76769 modes
+  torch: 54400/76769 modes
+  torchoptics: 54400/76769 modes
+  chromatix: 67200/76769 modes
+  torch: 57600/76769 modes
+  torchoptics: 57600/76769 modes
+  chromatix: 70400/76769 modes
+  torch: 60800/76769 modes
+  chromatix: 73600/76769 modes
+  torchoptics: 60800/76769 modes
+  chromatix: 76769/76769 modes
+  torch: 64000/76769 modes
+  Sparkle CV: 35.65004%
+
+=== mitsuba ===
+jitc_llvm_init(): LLVM API initialization failed ..
+  Mitsuba variant=cuda_ad_rgb; measured height mesh stride=1
+  torchoptics: 64000/76769 modes
+  Mitsuba mesh: 1,000,000 vertices, 1,996,002 triangles
+  Mitsuba pixels: 1,000,000/1,000,000; pupil nodes 1536
+  Sparkle CV: 38.23467%
+  torch: 67200/76769 modes
+  torchoptics: 67200/76769 modes
+  torch: 70400/76769 modes
+  torchoptics: 70400/76769 modes
+  torch: 73600/76769 modes
+  torchoptics: 73600/76769 modes
+  torch: 76769/76769 modes
+  Sparkle CV: 35.64978%
+  torchoptics: 76769/76769 modes
+  Sparkle CV: 35.64978%
+torch: brightness CV = 35.649782%, solver = 126.876s
+torchoptics: brightness CV = 35.649779%, solver = 127.188s
+chromatix: brightness CV = 35.650040%, solver = 115.746s
+mitsuba: brightness CV = 38.234669%, solver = 1.137s
+HTML report: C:\Projects\oled-sparkle\test-results\oled-1mm-etched-ag-periodic-50um\report.html

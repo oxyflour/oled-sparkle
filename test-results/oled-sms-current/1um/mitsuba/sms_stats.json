@@ -1,0 +1,314 @@
+{
+  "primary": {
+    "sparkle_contrast_percent": 32.955577013653524,
+    "mean": 0.05999930937938692,
+    "std": 0.0197731186101841,
+    "ddof": 0,
+    "minimum": -0.009218628782691734,
+    "maximum": 0.1289854953242694,
+    "negative_filtered_measurement_pixels": 2,
+    "num_pixels": 441,
+    "analysis_grid": [
+      21,
+      21
+    ],
+    "analysis_pixel_pitch_um": 26.25,
+    "analysis_pixel_area_um2": 689.0625,
+    "analysis_extent_um_xyxy": [
+      -275.625,
+      -275.625,
+      275.625,
+      275.625
+    ],
+    "analysis_source_bounds_px_xyxy": [
+      4.375,
+      4.375,
+      555.625,
+      555.625
+    ],
+    "effective_roi_margin_um_xy": [
+      4.375,
+      4.375
+    ],
+    "analysis_resampling": "area-averaged linear brightness over square pixels",
+    "metric_source_file": "analysis_brightness.npy"
+  },
+  "primary_filter": {
+    "method": "Fourier lattice notches plus circular band limit; DC retained",
+    "supercell_um": 140.0,
+    "cutoff_cycles_per_um": 0.014285714285714285,
+    "cutoff_wavelength_um": 70.0,
+    "notch_radius_bins": 0,
+    "notched_lattice_bins_yx": [
+      [
+        -4,
+        -4
+      ],
+      [
+        -4,
+        0
+      ],
+      [
+        -4,
+        4
+      ],
+      [
+        0,
+        -4
+      ],
+      [
+        0,
+        4
+      ],
+      [
+        4,
+        -4
+      ],
+      [
+        4,
+        0
+      ],
+      [
+        4,
+        4
+      ]
+    ],
+    "retained_non_DC_bins": 184,
+    "removed_periodic_power_within_band": 3568831.3791377684,
+    "retained_random_power": 46434322.893460035,
+    "mean_preservation_error": 0.0
+  },
+  "direct_unseparated_camera_CV_percent": 166.53250270279187,
+  "sensitivities": [
+    {
+      "case": "notch_guard_1_bin",
+      "settings": {
+        "method": "Fourier lattice notches plus circular band limit; DC retained",
+        "supercell_um": 140.0,
+        "cutoff_cycles_per_um": 0.014285714285714285,
+        "cutoff_wavelength_um": 70.0,
+        "notch_radius_bins": 1,
+        "notched_lattice_bins_yx": [
+          [
+            -4,
+            -4
+          ],
+          [
+            -4,
+            0
+          ],
+          [
+            -4,
+            4
+          ],
+          [
+            0,
+            -4
+          ],
+          [
+            0,
+            4
+          ],
+          [
+            4,
+            -4
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            4,
+            4
+          ]
+        ],
+        "retained_non_DC_bins": 120,
+        "removed_periodic_power_within_band": 20615616.083708327,
+        "retained_random_power": 29387538.188889623,
+        "mean_preservation_error": 0.0
+      },
+      "sparkle_contrast_percent": 25.973991367908518,
+      "mean": 0.0597977243979859,
+      "std": 0.015531855773338583,
+      "ddof": 0,
+      "minimum": 0.0002529514287468483,
+      "maximum": 0.12081582501863712,
+      "negative_filtered_measurement_pixels": 0,
+      "num_pixels": 441,
+      "analysis_grid": [
+        21,
+        21
+      ],
+      "analysis_pixel_pitch_um": 26.25,
+      "analysis_pixel_area_um2": 689.0625,
+      "analysis_extent_um_xyxy": [
+        -275.625,
+        -275.625,
+        275.625,
+        275.625
+      ],
+      "analysis_source_bounds_px_xyxy": [
+        4.375,
+        4.375,
+        555.625,
+        555.625
+      ],
+      "effective_roi_margin_um_xy": [
+        4.375,
+        4.375
+      ],
+      "analysis_resampling": "area-averaged linear brightness over square pixels",
+      "metric_source_file": "analysis_brightness.npy"
+    },
+    {
+      "case": "cutoff_0p8_over_green_pitch",
+      "settings": {
+        "method": "Fourier lattice notches plus circular band limit; DC retained",
+        "supercell_um": 140.0,
+        "cutoff_cycles_per_um": 0.011428571428571429,
+        "cutoff_wavelength_um": 87.5,
+        "notch_radius_bins": 0,
+        "notched_lattice_bins_yx": [
+          [
+            -4,
+            -4
+          ],
+          [
+            -4,
+            0
+          ],
+          [
+            -4,
+            4
+          ],
+          [
+            0,
+            -4
+          ],
+          [
+            0,
+            4
+          ],
+          [
+            4,
+            -4
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            4,
+            4
+          ]
+        ],
+        "retained_non_DC_bins": 120,
+        "removed_periodic_power_within_band": 3568831.3791377684,
+        "retained_random_power": 31878336.962312102,
+        "mean_preservation_error": 0.0
+      },
+      "sparkle_contrast_percent": 28.215096950531652,
+      "mean": 0.06007065548651886,
+      "std": 0.01694899368434116,
+      "ddof": 0,
+      "minimum": 0.006909008272653701,
+      "maximum": 0.1101207959784377,
+      "negative_filtered_measurement_pixels": 0,
+      "num_pixels": 441,
+      "analysis_grid": [
+        21,
+        21
+      ],
+      "analysis_pixel_pitch_um": 26.25,
+      "analysis_pixel_area_um2": 689.0625,
+      "analysis_extent_um_xyxy": [
+        -275.625,
+        -275.625,
+        275.625,
+        275.625
+      ],
+      "analysis_source_bounds_px_xyxy": [
+        4.375,
+        4.375,
+        555.625,
+        555.625
+      ],
+      "effective_roi_margin_um_xy": [
+        4.375,
+        4.375
+      ],
+      "analysis_resampling": "area-averaged linear brightness over square pixels",
+      "metric_source_file": "analysis_brightness.npy"
+    },
+    {
+      "case": "three_MWA_full_supercells",
+      "settings": {
+        "width_um": 140.0,
+        "passes": 3,
+        "reason": "Complete exact 140 um source supercell; four nonidentical green bodies per cell."
+      },
+      "sparkle_contrast_percent": 5.409319411165781,
+      "mean": 0.06000643535893887,
+      "std": 0.0032459397558197273,
+      "ddof": 0,
+      "minimum": 0.051050595263868834,
+      "maximum": 0.06762609043066939,
+      "negative_filtered_measurement_pixels": 0,
+      "num_pixels": 441,
+      "analysis_grid": [
+        21,
+        21
+      ],
+      "analysis_pixel_pitch_um": 26.25,
+      "analysis_pixel_area_um2": 689.0625,
+      "analysis_extent_um_xyxy": [
+        -275.625,
+        -275.625,
+        275.625,
+        275.625
+      ],
+      "analysis_source_bounds_px_xyxy": [
+        4.375,
+        4.375,
+        555.625,
+        555.625
+      ],
+      "effective_roi_margin_um_xy": [
+        4.375,
+        4.375
+      ],
+      "analysis_resampling": "area-averaged linear brightness over square pixels",
+      "metric_source_file": "analysis_brightness.npy"
+    }
+  ],
+  "roi_width_um": 560.0,
+  "filter_order": "Optical-grid spectral separation, then virtual detector area integration. This omits pre-filter detector aliasing; not proprietary SMS software.",
+  "includes_LDF": false,
+  "grid": "1um",
+  "backend": "mitsuba",
+  "object_NA": 0.00781226159233428,
+  "physics": "geometric_rays",
+  "solver_seconds": 1.537723,
+  "batch_id": "30ef6b2cac9c4acda85c13c9b523de0c",
+  "run_id": "87e679353334459a9bedb168895129e3",
+  "solver_sha256": "dca27c3005679ba7c2cdf65f3028f2689bdc4f446391b1fe40e2d4f6ba4770a4",
+  "started_at_utc": "2026-11-07T15:39:22.796319+00:00",
+  "finished_at_utc": "2026-11-07T15:39:24.377544+00:00",
+  "execution_context": {
+    "backend": "mitsuba",
+    "variant": "cuda_ad_rgb",
+    "integrator": "drjit_resident"
+  },
+  "measured_ROI_global_um_xyxy": [
+    -275.625,
+    -275.625,
+    275.625,
+    275.625
+  ],
+  "filtered_ROI_global_um_xyxy": [
+    -280.0,
+    -280.0,
+    280.0,
+    280.0
+  ]
+}

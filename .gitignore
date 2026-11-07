@@ -38,14 +38,20 @@ htmlcov/
 !/test-results/run-etched-ag.ps1
 !/test-results/plot-etched-ag.py
 !/test-results/oled-etched-ag/
+!/test-results/oled-1mm-etched-ag-periodic-50um/
 !/test-results/run-sms-reference.ps1
-!/test-results/report-sms-reference.py
+!/test-results/default-example-validation.json
 !/test-results/oled-sms-reference/
+!/test-results/oled-sms-current/
 # Large self-contained reports are rebuilt from the retained floating-point data.
 /test-results/oled-sms-reference/report.html
 /test-results/oled-sms-reference/sparkle-report.html
 /test-results/oled-sms-reference/overview.html
 /test-results/oled-sms-reference/*/report.html
+/test-results/oled-sms-current/report.html
+/test-results/oled-sms-current/sparkle-report.html
+/test-results/oled-sms-current/overview.html
+/test-results/oled-sms-current/*/report.html
 !/test-results/check-pit-sampling.py
 !/test-results/compare-random-pits.py
 !/test-results/finalize-random-pits.py
@@ -111,7 +117,9 @@ htmlcov/
 !/test-results/logs/validation-etched-ag.log
 !/test-results/logs/etched-ag.log
 !/test-results/logs/sms-reference-report.log
+!/test-results/logs/sms-current-full.log
 !/test-results/logs/validation-sms-reference.log
+!/test-results/logs/default-etched-ag.log
 !/test-results/logs/validation-periodic-input.log
 !/test-results/logs/oled-1mm-original-periodic-50um.log
 !/test-results/logs/oled-1mm-pits3to5um-periodic-50um.log

@@ -32,21 +32,17 @@ try {
             & $taskPython -c 'import sys, torch; print(torch.__version__, "CUDA:", torch.cuda.is_available()); sys.exit(0 if torch.cuda.is_available() else 1)'
             if ($LASTEXITCODE -ne 0) { throw 'CUDA PyTorch unavailable. Install the cu130 build described in README.md.' }
         }
-        foreach ($taskPitch in @('1', '.5')) {
-            $taskAssetName = if ($taskPitch -eq '1') { 'oled-1mm-etched-ag' } else { 'oled-1mm-etched-ag-pitch0p5' }
-            & $taskPython (Join-Path $taskRoot 'oled-ag-sparkle\scripts\prepare_etched_ag.py') --pitch-um $taskPitch --out (Join-Path $taskRoot "oled-ag-sparkle\assets\$taskAssetName")
-            if ($LASTEXITCODE -ne 0) { throw "Height generation failed at pitch $taskPitch" }
-        }
         $taskRunner = Join-Path $taskRoot 'oled-ag-sparkle\scripts\run_sms_reference.py'
-        & $taskPython $taskRunner --stage prepare
+        $taskResults = Join-Path $PSScriptRoot 'oled-sms-current'
+        & $taskPython $taskRunner --stage prepare --out $taskResults
         if ($LASTEXITCODE -ne 0) { throw 'SMS reference preparation/dry-run failed' }
         if ($PrepareOnly) { return }
         foreach ($taskStage in @('main', 'fine', 'old-na')) {
-            & $taskPython $taskRunner --stage $taskStage
+            & $taskPython $taskRunner --stage $taskStage --out $taskResults
             if ($LASTEXITCODE -ne 0) { throw "SMS reference stage failed: $taskStage" }
         }
     }
-    & $taskPython (Join-Path $PSScriptRoot 'report-sms-reference.py')
+    & $taskPython (Join-Path $taskRoot 'oled-ag-sparkle\scripts\generate_report.py') --kind sms-reference --results (Join-Path $PSScriptRoot 'oled-sms-current') --out (Join-Path $PSScriptRoot 'report.html')
     if ($LASTEXITCODE -ne 0) { throw 'SMS reference analysis/report failed' }
 } finally {
     foreach ($taskKey in $taskOriginalEnvironment.Keys) {

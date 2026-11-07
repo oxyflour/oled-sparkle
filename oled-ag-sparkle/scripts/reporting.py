@@ -475,3 +475,469 @@ def write_html_report(root, output=None, recursive=False, title='OLED / AG 闪�
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(document, encoding='utf-8')
     return output
+
+
+# SMS reference presentation uses saved optical runs; importing this module does
+# not load Matplotlib or the SMS analysis/solver modules.
+_SMS_BACKENDS = ('torch', 'torchoptics', 'chromatix', 'mitsuba')
+_SMS_DISPLAY_NAMES = {'torch': 'PyTorch FFT', 'torchoptics': 'TorchOptics',
+                      'chromatix': 'Chromatix', 'mitsuba': 'Mitsuba'}
+
+
+
+def write_sms_report(results, output=None):
+    """Audit saved SMS-reference runs and rebuild the input-first comparison.
+
+    Writes sparkle.html, solver-comparison.html, sparkle-report.html, figures
+    and summary.json inside results. output optionally copies the overview to a
+    separate entry HTML, updating its relative links. Does not run optics,
+    prepare inputs, overwrite protocol.json, package files or edit skill metadata.
+    """
+    from sms_reference import analyze_saved_runs
+
+    results = Path(results).expanduser().resolve()
+    if output and Path(output).expanduser().resolve() == results / 'sparkle-report.html':
+        raise ValueError('--out is the overview destination; the full report is sparkle-report.html')
+    records, arrays = analyze_saved_runs(results)
+    plots = _sms_figures(results, records, arrays)
+    entry = _write_sms_report(results, records, arrays, plots)
+    if output:
+        destination = Path(output).expanduser().resolve()
+        if destination != entry:
+            document = entry.read_text(encoding='utf-8')
+            for name in ('sparkle-report.html', 'summary.json', 'protocol.json'):
+                relative = os.path.relpath(results / name, destination.parent).replace(os.sep, '/')
+                document = document.replace(f'href="{name}"', f'href="{escape(relative, quote=True)}"')
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_text(document, encoding='utf-8')
+        return destination
+    return entry
+
+
+
+def _sms_figures(results, records, arrays):
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    from matplotlib.patches import Rectangle
+    read = lambda path: json.loads(path.read_text(encoding='utf-8'))
+
+    inputs = read(results / '1um/run.json')['input_files']
+    measurement = arrays[('1um', 'torch')]['summary']['sensitivities'][2]
+    x0, y0, x1, y1 = measurement['analysis_extent_um_xyxy']
+    input_plots = []
+    for role in ('height', 'emission'):
+        info = inputs[role]
+        values = np.asarray(Image.open(info['path']))
+        width = info['physical_width_um']
+        height = info['physical_height_um']
+        fig, ax = plt.subplots(figsize=(6.2, 4.9), layout='constrained')
+        options = {'extent': (-width/2, width/2, height/2, -height/2),
+                   'interpolation': 'nearest'}
+        if role == 'height':
+            height_range = info['provenance']['height_range_um']
+            values = values.astype(np.float64) / 65535 * height_range
+            im = ax.imshow(values, cmap='viridis', vmin=0, vmax=height_range, **options)
+            fig.colorbar(im, ax=ax, label='Height [µm]', shrink=.88)
+        else:
+            ax.imshow(values, **options)
+        ax.add_patch(Rectangle((x0, y0), x1-x0, y1-y0, fill=False, edgecolor='white',
+                               linestyle='--', linewidth=1.6))
+        ax.set(xlabel='x [µm]', ylabel='y [µm]')
+        target = results / f'input-{role}.png'
+        fig.savefig(target, dpi=150)
+        plt.close(fig)
+        input_plots.append(target)
+
+    fig, axes = plt.subplots(3, 4, figsize=(15, 11), layout='constrained')
+    for column, backend in enumerate(_SMS_BACKENDS):
+        result = arrays[('1um', backend)]
+        data = result['summary']
+        raw = result['optical_roi']
+        im = axes[0, column].imshow(raw, extent=(-280, 280, 280, -280), cmap='gray', interpolation='nearest')
+        fig.colorbar(im, ax=axes[0, column], shrink=.7, format='%.2g')
+        axes[0, column].set(title=f'{backend}\ngreen-only optical ROI', xlabel='x [um]', ylabel='y [um]')
+        values = result['measurement_pixels']
+        deviation = 100 * (values / values.mean()-1)
+        limit = float(np.max(np.abs(deviation)))
+        im = axes[1, column].imshow(deviation, extent=(-275.625, 275.625, 275.625, -275.625),
+                                     cmap='RdBu_r', vmin=-limit, vmax=limit, interpolation='nearest')
+        fig.colorbar(im, ax=axes[1, column], shrink=.7, label='Deviation [%]')
+        axes[1, column].set(xlabel='x [um]', ylabel='y [um]')
+        axes[1, column].set_title(f"Fourier CV = {data['primary']['sparkle_contrast_percent']:.3f}%", fontsize=11)
+        values = result['mwa_measurement_pixels']
+        deviation = 100*(values/values.mean()-1)
+        limit = float(np.max(np.abs(deviation)))
+        im = axes[2, column].imshow(deviation, extent=(-275.625, 275.625, 275.625, -275.625),
+                                     cmap='RdBu_r', vmin=-limit, vmax=limit, interpolation='nearest')
+        fig.colorbar(im, ax=axes[2, column], shrink=.7, label='Deviation [%]')
+        axes[2, column].set(xlabel='x [um]', ylabel='y [um]')
+        axes[2, column].set_title(f"3x MWA CV = {data['sensitivities'][2]['sparkle_contrast_percent']:.3f}%", fontsize=11)
+    fig.suptitle('Green OLED + existing etched AG | no LDF | predeclared Fourier method', fontsize=16)
+    fig.supxlabel('F/8, 400 mm object distance, object NA 0.007812; virtual detector pitch 26.25 um. Independent scales per panel.', fontsize=10)
+    main = results / 'sms-brightness-comparison.png'
+    fig.savefig(main, dpi=160)
+    plt.close(fig)
+
+    wave = next(x for x in records if x['grid'] == '1um' and x['backend'] == 'torch')
+    labels = ['Fourier\nprimary', 'Fourier\nnotch guard', 'Fourier\n0.8x cutoff', '3x MWA\n140 um']
+    values = [wave['primary']['sparkle_contrast_percent'],
+              *[x['sparkle_contrast_percent'] for x in wave['sensitivities']]]
+    fig, axes = plt.subplots(1, 2, figsize=(11.5, 4.6), layout='constrained')
+    axes[0].axhspan(4.8, 6., color='#e9bc69', alpha=.35, label='Cheng 2025 no-LDF readings: 4.8-6.0')
+    bars = axes[0].bar(labels, values, color=['#187e99', '#639eaa', '#84b2b9', '#5d8561'])
+    axes[0].bar_label(bars, fmt='%.3f%%', padding=4)
+    axes[0].set(title='Same brightness, different evaluation bandwidths', ylabel='Sparkle contrast [%]', ylim=(0, max(values)*1.22))
+    axes[0].legend(fontsize=8, loc='upper right')
+    result = arrays[('1um', 'torch')]
+    transfer = np.fft.fftshift(result['transfer'])
+    n = transfer.shape[0]
+    c = n//2
+    axes[1].imshow(transfer[c-12:c+13, c-12:c+13], cmap='gray', origin='lower',
+                   extent=(-12.5/560, 12.5/560, -12.5/560, 12.5/560), interpolation='nearest')
+    axes[1].set(title='Predeclared mask: white = retained\nDC retained; 140 um lattice bins removed', xlabel='fx [cycles/um]', ylabel='fy [cycles/um]')
+    diagnostic = results / 'filter-sensitivity.png'
+    fig.savefig(diagnostic, dpi=160)
+    plt.close(fig)
+    fig, axes = plt.subplots(1, 4, figsize=(14, 3.8), layout='constrained')
+    deviations = [100*(arrays[('1um', name)]['mwa_measurement_pixels'] /
+                        arrays[('1um', name)]['mwa_measurement_pixels'].mean()-1) for name in _SMS_BACKENDS]
+    limit = max(float(np.max(np.abs(values))) for values in deviations)
+    for ax, name, values in zip(axes, _SMS_BACKENDS, deviations):
+        stat = arrays[('1um', name)]['summary']['sensitivities'][2]
+        x0, y0, x1, y1 = stat['analysis_extent_um_xyxy']
+        im = ax.imshow(values, extent=(x0, x1, y1, y0),
+                       cmap='RdBu_r', vmin=-limit, vmax=limit, interpolation='nearest')
+        ax.set(title=f"{_SMS_DISPLAY_NAMES[name]}\nSparkle {stat['sparkle_contrast_percent']:.3f}%", xlabel='x [µm]', ylabel='y [µm]')
+        ax.set_xticks([x0, 0, x1], [f'{x0:g}', '0', f'{x1:g}'])
+        ax.set_yticks([y0, 0, y1], [f'{y0:g}', '0', f'{y1:g}'])
+        ax.tick_params(labelsize=8)
+    fig.colorbar(im, ax=axes, shrink=.85, label='Random brightness deviation [%]')
+    fig.suptitle('Green OLED + AG, no LDF | 3 x 140 um moving averages', fontsize=14)
+    fig.supxlabel(f'Measurement ROI: {x1-x0:g} × {y1-y0:g} µm; 21 × 21 pixels at 26.25 µm. Origin: center of 1 mm field.', fontsize=10)
+    sparkle_plot = results / 'mwa-sparkle.png'
+    fig.savefig(sparkle_plot, dpi=150)
+    plt.close(fig)
+    return main, diagnostic, sparkle_plot, *input_plots
+
+
+def _sms_row_for(record):
+    mwa = record['sensitivities'][2]['sparkle_contrast_percent']
+    return f"<tr><td>{record['grid']}</td><td>{record['backend']}</td><td>{record['object_NA']:.7f}</td><td>{record['direct_unseparated_camera_CV_percent']:.6f}</td><td>{record['primary']['sparkle_contrast_percent']:.6f}</td><td>{mwa:.6f}</td></tr>"
+
+
+def _write_sms_report(results, records, arrays, plots):
+    import re
+    import sys
+    import scipy
+    import matplotlib
+    skill_root = Path(__file__).resolve().parents[1]
+    workspace = skill_root.parent
+    read = lambda path: json.loads(path.read_text(encoding='utf-8'))
+
+    coarse = next(x for x in records if x['grid'] == '1um' and x['backend'] == 'torch')
+    fine = next(x for x in records if x['grid'] == '0p5um')
+    flat = arrays[('1um', 'flat')]['summary']
+    baseline = flat['primary']['sparkle_contrast_percent']
+    baseline_mwa = flat['sensitivities'][2]['sparkle_contrast_percent']
+    summary = {'status': 'passed', 'protocol': read(results / 'protocol.json'),
+               'protocol_sha256': hashlib.sha256((results / 'protocol.json').read_bytes()).hexdigest(),
+               'records': records,
+               'flat_control': {'primary_Fourier_percent': baseline, 'three_MWA_percent': baseline_mwa,
+                                'not_used_for_division_or_subtraction': True},
+               'sampling_check': {'primary_difference_percentage_points': fine['primary']['sparkle_contrast_percent']-coarse['primary']['sparkle_contrast_percent'],
+                                  'MWA_difference_percentage_points': fine['sensitivities'][2]['sparkle_contrast_percent']-coarse['sensitivities'][2]['sparkle_contrast_percent']},
+               'scope': 'SMS-inspired reference implementation. Different methods have different retained bandwidths; equality is not expected. Agreement with target in one method is not measurement calibration.',
+               'verified': ['all six optical runs complete on GPU in this batch',
+                            'current solver SHA matches every run',
+                            'run and backend timestamps follow batch declaration',
+                            'same green G bytes and height hashes',
+                            'separated-image mean retained', '441 measurement pixels all included',
+                            'saved measurement floats independently reproduce CV',
+                            'fast flat limit independently tested against wave propagation']}
+    summary['processing_software'] = {'python': sys.version, 'executable': sys.executable,
+                                      'numpy': np.__version__, 'scipy': scipy.__version__,
+                                      'matplotlib': matplotlib.__version__}
+    summary['execution'] = summary['protocol']['execution']
+    assert {record['batch_id'] for record in records} == {summary['execution']['batch_id']}
+    assert {record['solver_sha256'] for record in records} == {summary['execution']['solver_sha256']}
+    started_at = min(record['started_at_utc'] for record in records)
+    finished_at = max(record['finished_at_utc'] for record in records)
+    summary['processing_code'] = {name: {'path': str(path), 'sha256': hashlib.sha256(path.read_bytes()).hexdigest()}
+                                  for name, path in [('analysis', skill_root / 'scripts/sms_reference.py'),
+                                                     ('runner', skill_root / 'scripts/run_sms_reference.py'),
+                                                     ('report', Path(__file__).resolve())]}
+    wave_reference = arrays[('1um', 'torch')]['measurement_pixels']
+    wave_errors = {}
+    for name in ('torchoptics', 'chromatix'):
+        measured = arrays[('1um', name)]['measurement_pixels']
+        error = float(np.linalg.norm(measured-wave_reference)/np.linalg.norm(wave_reference))
+        assert error < 1e-3
+        wave_errors[name] = error
+    summary['wave_relative_L2_vs_torch'] = wave_errors
+    log = results.parent / 'logs/validation-sms-reference.log'
+    if log.is_file():
+        data = log.read_bytes()
+        content = data.decode('utf-16' if data.startswith((b'\xff\xfe', b'\xfe\xff')) else 'utf-8-sig')
+        match = re.search(r'Ran (\d+) tests', content)
+        completed = re.search(r'^OK(?: \(skipped=(\d+)\))?\s*$', content, re.M)
+        if match and completed:
+            skipped = int(completed.group(1) or 0)
+            summary['regression_tests'] = {'status': 'passed', 'run': int(match.group(1)), 'skipped': skipped,
+                                           'passed': int(match.group(1))-skipped, 'log': str(log)}
+        elif 'FAILED' in content:
+            raise AssertionError('Regression test log reports a failure')
+        else:
+            summary['regression_tests'] = {'status': 'uncomputed_or_still_running', 'log': str(log)}
+    (results / 'summary.json').write_text(json.dumps(summary, indent=2), encoding='utf-8')
+    target = write_html_report(results, output=results / 'sparkle-report.html', recursive=True,
+                              title='Sparkle · 全绿 / 无 LDF', figures=plots[:2])
+    document = target.read_text(encoding='utf-8')
+    document = document.replace('id="inputs"', 'id="raw-input-parameters"').replace(
+        'href="#inputs"', 'href="#raw-input-parameters"')
+    document = document.replace('闪点值 CV (%)', '分离前总亮度 CV (%)').replace('闪点值：', '分离前 CV：')
+    document = document.replace('主指标直接由亮度图 ROI 像素计算：100 × std(I) / mean(I)，单位 %；',
+                                '本次分离后的 sparkle 见下方 SMS 参考测量；原始计算表另列分离前 CV。')
+    document = document.replace('四种算法收集到的亮度图 · 闪点统计像素', '原始光学计算 · 分离前测量像素')
+    document = document.replace('闪点值与计算时间', '原始计算 CV 与耗时')
+    header = f'''<section id="sms-reference"><h2>主结果：全绿、无 LDF、分离 OLED 周期调制</h2>
+    <p>计算前固定的主方案为频域分离：保留 DC，去除 140 µm 发光强度重复单元的离散周期频率，
+    再限制在绿色中心基频 1/70 µm⁻¹ 以下。使用中心 560 µm 方形区域，
+    随后按 26.25 µm 虚拟探测像素作面积平均，全部 21 × 21 = 441 个像素直接计算 100 σ/μ。</p>
+    <p><strong>主方案 Torch：{coarse['primary']['sparkle_contrast_percent']:.4f}%；
+    三次完整周期移动平均：{coarse['sensitivities'][2]['sparkle_contrast_percent']:.4f}%。</strong>
+    两种方法的随机信号频带不同；这里只报告比较，不以接近文献区间作为选取滤波器的依据。
+    原始计算块中的 CV 是分离前的总亮度 CV，与本节指标分列。</p>
+    <p>公开方法文献 3.4 节讨论三次 MWA，结论列出多次 MWA 且窗口 w=2/f₀ 的例子。
+    取绿色中心几何基频 f₀=1/70 µm⁻¹ 时，w=140 µm，亦等于本输入的完整强度重复周期。
+    三次 MWA 有 sinc 型平滑频响，其随机信号通带比本次频域主方案更窄；两者分离周期后仍可能给出不同 CV。</p>
+    <div class="scroll"><table><thead><tr><th>网格/工况</th><th>后端</th><th>物方 NA</th><th>分离前 CV (%)</th>
+    <th>频域主方案 (%)</th><th>三次 140 µm MWA (%)</th></tr></thead><tbody>
+    {''.join(_sms_row_for(x) for x in records)}</tbody></table></div>
+    <p>波动模型平面控制：频域 {baseline:.6f}%，MWA {baseline_mwa:.6f}%。
+    控制结果用于检查残余周期和边界影响，不用于除法、相减或改变 AG 测量像素。
+    同几何细网格变化：频域 {summary['sampling_check']['primary_difference_percentage_points']:+.6f} 个百分点，
+    MWA {summary['sampling_check']['MWA_difference_percentage_points']:+.6f} 个百分点。</p>
+    <h3>固定参考条件与公开方法的边界</h3>
+    <p>只保留原始发光图 G 通道，R/B 置零；G 像素逐字节保留。530 nm 单波长，OLED 到 AG 距离 500 µm，
+    高度图保持 Sa=0.10 µm、名义中心间距 25 µm，无 LDF。全绿强度的完整重复周期为 140 µm，
+    四个绿色主体的几何中心间距约 70 µm，但其形状不完全相同。</p>
+    <p>参考相机为 50 mm、F/8、400 mm 物距、3.75 µm 传感器像素；薄透镜近似给出倍率 1/7、
+    物方像素 26.25 µm、绿色像素 ISR≈2.667，物方 NA≈0.007812。
+    这些参数在计算前固定，属于公开范围内的参考选择，并非 Cheng 论文未公布的实际设置。
+    当前求解器使用理想物方孔径；频域处理发生在光学网格，再积分至探测像素，省略了滤波前传感器混叠。
+    Mitsuba 为无衍射的几何光线模型，小孔径下尤其需要与标量波动结果分别解读。</p>
+    <p>频域掩模是线性操作，不能保证分离后的信号始终非负。所有分离后样本均原样纳入面积积分和 CV，
+    不作截断或亮度选择；每组 sms_stats.json 记录负值像素数。实际原始光强仍要求全部非负。</p>
+    <p>Cheng 2025 无 LDF 读数 4.8–6.0 按 SMS 通常百分比标度解读；原表未明示百分号或算法设置。
+    其表面 Ra=0.25–0.35 µm、雾度 20–40%，与这里的合成 Sa=0.10 µm 不同。
+    1/70 截止、离散 notch 和三次 140 µm MWA 均为本次明确选择，未声称复现专有软件或满足 IEC 标准。</p>
+    <p>方法依据：<a href="https://www.display-messtechnik.de/fileadmin/template/main/docs/10-Years-SparkleMeasurement--edC-2021-V2.pdf">Becker 2021，3.3–3.5 节</a>；
+    相机范围：<a href="https://www.display-messtechnik.de/fileadmin/template/main/docs/SMS1000-05.2023-7.pdf">SMS-1000 公开规格</a>；
+    对比数据：<a href="https://sid.org/Portals/sid/Files/SID-Digest/docs/68-2.pdf">Cheng 2025，表 3</a>。</p>
+    <h3>滤波与带宽敏感性：Torch 1 µm</h3><div class="scroll"><table><thead><tr><th>方案</th><th>结果 (%)</th></tr></thead><tbody>
+    {''.join('<tr><td>'+escape(x['case'])+'</td><td>'+format(x['sparkle_contrast_percent'],'.6f')+'</td></tr>' for x in coarse['sensitivities'])}
+    </tbody></table></div><h3>分离后原始浮点下载</h3>'''
+    for record in records:
+        folder = results / record['grid'] / record['backend']
+        header += f"<p>{record['grid']} / {record['backend']}: "
+        for filename in ('sms_filtered_optical_roi.npy', 'sms_measurement_pixels.npy', 'sms_frequency_mask.npy',
+                         'sms_mwa_optical_roi.npy', 'sms_mwa_measurement_pixels.npy'):
+            payload = base64.b64encode((folder / filename).read_bytes()).decode('ascii')
+            header += f'<a href="data:application/octet-stream;base64,{payload}" download="{record["grid"]}-{record["backend"]}-{filename}">{filename}</a> · '
+        header += '</p>'
+    header += '</section>'
+    header += '<details class="group"><summary>分离后处理软件与代码哈希</summary><div class="content"><pre>'+escape(
+        json.dumps({'software': summary['processing_software'], 'code': summary['processing_code'],
+                    'protocol_sha256': summary['protocol_sha256']}, ensure_ascii=False, indent=2))+'</pre></div></details>'
+    mwa = coarse['sensitivities'][2]['sparkle_contrast_percent']
+    mwa_fine = fine['sensitivities'][2]['sparkle_contrast_percent']
+    measurement = coarse['sensitivities'][2]
+    x0, y0, x1, y1 = measurement['analysis_extent_um_xyxy']
+    roi_width = coarse['roi_width_um']
+    roi_margin = (roi_width-(x1-x0))/2
+    plot_data = base64.b64encode(plots[2].read_bytes()).decode('ascii')
+    solver_records = [x for x in records if x['grid']=='1um']
+    assert [x['backend'] for x in solver_records] == list(_SMS_BACKENDS)
+    cards, table_rows, optical_panels = [], [], []
+    for record in solver_records:
+        backend = record['backend']
+        label = _SMS_DISPLAY_NAMES[backend]
+        value = record['sensitivities'][2]['sparkle_contrast_percent']
+        physics = '几何光线' if backend=='mitsuba' else '标量波动'
+        cards.append(f'<div class="card" data-solver="{backend}"><h3>{label}</h3>'
+                     f'<strong>{value:.3f}<span class="unit"> %</span></strong>'
+                     f'<small>Sparkle · {physics}</small></div>')
+        table_rows.append(f'<tr data-solver-row="{backend}"><td>{label}</td><td>{physics}</td>'
+                          f'<td class="metric numeric">{value:.6f}</td><td class="numeric">{value-mwa:+.6f}</td>'
+                          f'<td class="numeric">{record["solver_seconds"]:.3f}</td></tr>')
+        brightness = results / '1um' / backend / 'brightness.png'
+        encoded = base64.b64encode(brightness.read_bytes()).decode('ascii')
+        optical_panels.append(f'<figure data-solver-image="{backend}"><img src="data:image/png;base64,{encoded}" '
+                              f'alt="{label} 全绿光学亮度图"><figcaption><strong>{label}</strong><br>'
+                              '1 mm × 1 mm 光学计算区域</figcaption></figure>')
+    run = read(results / '1um/run.json')
+    run_inputs = run['input_files']
+    parameters = run['parameters']
+    camera = summary['protocol']['camera']
+    input_panels = []
+    for role, label, preview in (('height', 'AG 表面高度图', plots[3]),
+                                  ('emission', 'OLED 全绿发光图', plots[4])):
+        info = run_inputs[role]
+        raw = Path(info['path']).read_bytes()
+        encoded = base64.b64encode(raw).decode('ascii')
+        preview_data = base64.b64encode(preview.read_bytes()).decode('ascii')
+        bits = info['png_bits_per_channel']
+        rows = [('物理范围', f'{info["physical_width_um"]:g} × {info["physical_height_um"]:g} µm'),
+                ('图像规格', f'{info["width_px"]} × {info["height_px"]} px · {bits} 位/通道'),
+                ('横向采样', f'{info["pitch_um_per_texel"]:g} µm/texel')]
+        provenance = info['provenance']
+        if role == 'height':
+            surface = provenance['measured_surface']
+            rows.extend([
+                ('表面形貌', f'{provenance["cell_count"]:,} 个不规则 Voronoi 浅坑；名义间距 {provenance["nominal_site_spacing_um"]:g} µm'),
+                ('面粗糙度', f'Sa = {surface["Sa_um"]:.4f} µm；Sq = {surface["Sq_um"]:.4f} µm'),
+                ('采样峰谷差 Sz', f'{surface["Sz_um"]:.6f} µm'),
+                ('高度编码范围', f'{provenance["height_range_um"]} µm（黑 → 白）')])
+            note = '合成蚀刻 AG 表面；色标为 PNG 编码对应的物理高度。'
+        else:
+            rows.extend([
+                ('发光通道', '保留原图 G 通道；R = B = 0'),
+                ('强度周期', f'{provenance["full_emission_supercell_um"]:g} µm；绿色几何中心间距约 {provenance["green_centers_geometric_pitch_um"]:g} µm'),
+                ('强度处理', 'sRGB 解码为线性强度；530 nm 单波长'),
+                ('来源', f'<a href="{escape(provenance["source_page"], quote=True)}">Samsung Display · Diamond Pixel</a>')])
+            note = '按原 texel 尺寸重复完整单元；物理尺寸采用示例假设。'
+        metadata = ''.join(f'<tr><th scope="row">{key}</th><td>{value}</td></tr>' for key, value in rows)
+        try:
+            local_path = Path(info['path']).relative_to(workspace).as_posix()
+        except ValueError:
+            local_path = str(info['path'])
+        input_panels.append(f'<figure class="report-input" data-input="{role}"><h3>{label}</h3>'
+                            f'<img src="data:image/png;base64,{preview_data}" alt="{label}，含物理坐标">'
+                            f'<figcaption><p class="muted">{note}</p><table class="input-spec">{metadata}</table>'
+                            f'<p class="input-file"><span>输入文件</span><code>{escape(local_path)}</code>'
+                            f'<span>SHA-256</span><code>{info["sha256"]}</code></p>'
+                            f'<a class="original-download" href="data:image/png;base64,{encoded}" '
+                            f'download="{role}-original.png">下载原始 PNG · {bits} 位/通道</a>'
+                            '</figcaption></figure>')
+    front = f'''<nav class="report-nav" aria-label="报告目录"><a href="#inputs">01 输入</a>
+    <a href="#measurement">02 计算与测量条件</a><a href="#sparkle-result">03 四求解器结果</a>
+    <a href="#validation">04 验证与参考范围</a><a href="#methods">方法与复现附录</a></nav>
+    <section id="inputs"><h2><span class="section-number">01</span> 输入与表面参数</h2>
+    <p class="section-intro">四个求解器使用相同的高度图、发光图和物理尺度。计算区域为 1 mm × 1 mm，不含 LDF。</p>
+    <div class="report-inputs">{''.join(input_panels)}</div>
+    <p class="muted">图 1 · 共同输入。高度预览以物理高度着色；下载链接保留原始 PNG 字节和位深。
+    白色虚线框为图 2 对应的 {x1-x0:g} × {y1-y0:g} µm 测量区域，坐标原点是整个 1 mm 计算区域的中心。
+    AG 为合成形貌，OLED 为示意光源，两者均未按特定商业样品标定。</p></section>
+    <section id="measurement"><h2><span class="section-number">02</span> 光学计算与闪点测量条件</h2>
+    <div class="condition-grid"><div><h3>传播与采样</h3><table class="input-spec">
+    <tr><th scope="row">OLED → AG 距离</th><td>{parameters['gap_um']:g} µm</td></tr>
+    <tr><th scope="row">真空波长</th><td>{parameters['wavelength_nm']:g} nm</td></tr>
+    <tr><th scope="row">折射率</th><td>层叠 {parameters['n_stack']:g} / 外部 {parameters['n_out']:g}</td></tr>
+    <tr><th scope="row">光学网格</th><td>1 µm；1000 × 1000</td></tr>
+    <tr><th scope="row">波动 / 光线模型</th><td>标量 ASM + 相位屏 / 几何折射</td></tr></table></div>
+    <div><h3>参考相机</h3><table class="input-spec">
+    <tr><th scope="row">镜头与物距</th><td>{camera['focal_length_mm']:g} mm · F/{camera['f_number']:g} · {camera['object_distance_mm']:g} mm</td></tr>
+    <tr><th scope="row">传感器像素</th><td>{camera['sensor_pitch_um']:g} µm</td></tr>
+    <tr><th scope="row">倍率</th><td>1/7（薄透镜近似）</td></tr>
+    <tr><th scope="row">物方像素</th><td>{camera['object_pitch_um']:g} µm</td></tr>
+    <tr><th scope="row">物方 NA</th><td>{camera['object_NA']:.8f}</td></tr></table></div>
+    <div><h3>闪点评价</h3><table class="input-spec">
+    <tr><th scope="row">周期纹理分离</th><td>3 次 140 µm 移动平均（MWA）</td></tr>
+    <tr><th scope="row">滤波区域</th><td>中心 560 × 560 µm</td></tr>
+    <tr><th scope="row">有效测量区域</th><td>551.25 × 551.25 µm</td></tr>
+    <tr><th scope="row">测量网格</th><td>21 × 21；全部 441 像素</td></tr>
+    <tr><th scope="row">物理像素积分</th><td>滤波后作面积平均</td></tr></table></div></div>
+    <p class="metric-definition"><strong>Sparkle (%) = 100 × σ(I) / μ(I)</strong>
+    <span>I 为分离周期调制并按物方像素积分后的亮度；σ 使用总体标准差（ddof = 0）。平面控制仅用于验证。</span></p>
+    <p id="roi-explanation"><strong>图 2 的坐标来源：</strong>1 mm 计算区域为 −500 至 +500 µm；
+    本算例预先固定中心 {roi_width:g} µm 区域（−{roi_width/2:g} 至 +{roi_width/2:g} µm），覆盖 4 个完整的 140 µm 强度周期。
+    {roi_width:g} µm 内可容纳 floor({roi_width:g} / {camera['object_pitch_um']:g}) = 21 个完整测量像素，
+    因此实际宽度为 21 × {camera['object_pitch_um']:g} = {x1-x0:g} µm，左右各再居中收进 {roi_margin:g} µm，
+    最终 X、Y 边界均为 <strong>{x0:g} 至 +{x1:g} µm</strong>。图 2 展示全部 441 个测量像素；该裁取范围是本参考算例的选择。</p>
+    <p class="muted">本页按公开 MWA 方法报告闪点。预先固定的 Fourier 方案及带宽敏感性完整保留在附录；
+    两种处理保留的随机信号频带不同。本参考实现未复现 SMS-1000 的专有算法。</p></section>
+    <section id="sparkle-result"><h2><span class="section-number">03</span> 四求解器结果与图像对比</h2>
+    <p class="section-intro">统一输入、物方孔径、测量区域和 MWA 处理。三个波动后端实现同一标量模型，Mitsuba 使用几何光线模型。</p>
+    <p class="muted" id="execution-batch">本次批次：<code>{summary['execution']['batch_id']}</code>；
+    计算时间（UTC）：{escape(started_at)} 至 {escape(finished_at)}。主表和全部对照均使用此批次的新计算。
+    求解器 SHA-256：<code>{summary['execution']['solver_sha256']}</code>。</p>
+    <div class="cards solver-cards">{''.join(cards)}</div>
+    <h3>表 1 · 闪点结果与求解耗时</h3>
+    <div class="scroll"><table id="solver-comparison"><thead><tr><th>求解器</th><th>物理模型</th>
+    <th class="numeric">Sparkle (%)</th><th class="numeric">相对 PyTorch FFT（百分点）</th><th class="numeric">本次求解耗时 (s)</th></tr></thead><tbody>
+    {''.join(table_rows)}
+    </tbody></table></div><p class="muted">差值用于数值比较；显示位数不代表测量精度。
+    四后端按顺序使用同一块 GPU。本次求解耗时统一取后端墙钟记录，包含求解器初始化、JIT 和最终图像回读，
+    不含闪点后处理与报告写入；Chromatix 通过 WSL CUDA 执行，其记录包含 worker 启动与传输时间。</p>
+    <figure class="comparison-figure"><img src="data:image/png;base64,{plot_data}" alt="PyTorch FFT、TorchOptics、Chromatix、Mitsuba 闪点分布对比">
+    <figcaption>图 2 · 分离后的闪点分布。X、Y 物理边界均为 {x0:g} 至 +{x1:g} µm；
+    即图 1 虚线框中的 {x1-x0:g} × {y1-y0:g} µm 区域，21 × 21 个测量像素，像素中心为 −262.5 至 +262.5 µm。
+    四图采用相同色标，颜色表示相对各自均值的亮度偏差 (%)。</figcaption></figure>
+    <h3>图 3 · 四求解器的光学亮度输出</h3><div class="gallery solver-gallery">{''.join(optical_panels)}</div>
+    <p class="muted">光学亮度预览各用自身刻度。所有闪点统计均由原始浮点结果计算。</p></section>
+    <section id="validation"><h2><span class="section-number">04</span> 验证与参考范围</h2>
+    <div class="scroll"><table><thead><tr><th>检查项</th><th>结果</th><th>解释</th></tr></thead><tbody>
+    <tr><td>0.5 µm 网格复核 · PyTorch FFT</td><td class="numeric">{mwa_fine:.6f}%</td><td>相对 1 µm 网格变化 {mwa_fine-mwa:+.6f} 个百分点</td></tr>
+    <tr><td>平面控制残余</td><td class="numeric">{baseline_mwa:.6f}%</td><td>检查周期残余和边界影响；不用于扣除或归一化</td></tr>
+    <tr><td>文献无 LDF 参考读数</td><td class="numeric">4.8–6.0</td><td><a href="https://sid.org/Portals/sid/Files/SID-Digest/docs/68-2.pdf">Cheng 2025 · 表 3</a>，按 SMS 通常百分比标度解读</td></tr>
+    </tbody></table></div>
+    <p>本次四个求解器的 MWA 闪点均处于文献读数的量级。原文未公开仪器与滤波设置，
+    其表面粗糙度和显示面板也与本算例不同，因此该比较用于量级检查，尚不能视为实测校准。</p></section>'''
+    comparison_css = '''
+    :root{background:#f4f6f8;color:#233247}p{line-height:1.8}
+    header{background:white;color:#172c43;border-bottom:1px solid #dce5ee;padding:28px max(5vw,24px)}
+    header p{color:#617186;margin:5px 0}header h1{font-size:29px;margin:4px 0 8px;font-weight:650}
+    main{max-width:1380px}section{scroll-margin-top:20px;border-radius:8px;padding:28px}
+    h2{font-size:21px;display:flex;align-items:baseline;gap:12px}.section-number{font-size:14px;color:#63829a;font-weight:500}
+    .section-intro{color:#617186;margin-top:-3px}.report-nav{margin:0 0 22px;padding:0 4px;font-size:13px;gap:24px}
+    .report-inputs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+    .report-input{margin:0;min-width:0;border:1px solid #dce5ee;border-radius:6px;padding:18px}
+    .report-input h3{margin:0 0 10px}.report-input>img{display:block;width:100%;height:auto}
+    .report-input figcaption p{font-size:12px;line-height:1.65}.input-spec th{font-size:12px;font-weight:500;color:#617186;width:33%;white-space:normal}
+    .input-spec td{font-size:13px}.input-spec th,.input-spec td{padding:9px 8px}
+    .input-file{display:grid;gap:4px;margin:14px 0 4px}.input-file span{color:#617186;margin-top:4px}
+    .input-file code{font-size:11px;word-break:break-all;color:#526477}.original-download{font-size:12px}
+    .condition-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+    .condition-grid h3{margin:4px 0 10px}.condition-grid .input-spec th{width:40%}
+    .metric-definition{background:#f4f7fa;border-left:3px solid #66889f;padding:14px 18px;margin-top:22px}
+    .metric-definition strong{font-size:15px;font-variant-numeric:tabular-nums}.metric-definition span{display:block;font-size:12px;color:#617186;margin-top:5px}
+    .solver-cards{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:22px 0}
+    .solver-cards .card{background:#fafcfd;border-radius:6px;padding:18px}.solver-cards h3{margin:0;font-size:14px}
+    .solver-cards strong{font-variant-numeric:tabular-nums;font-size:30px;color:#244d68;font-weight:600}
+    .solver-cards .unit{font-size:18px;color:#617186;font-weight:400}.solver-gallery{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .comparison-figure figcaption{line-height:1.7}.muted{font-size:12px}th,td{line-height:1.6}
+    @media(max-width:900px){.condition-grid{grid-template-columns:1fr}.solver-cards,.solver-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:640px){.report-inputs{grid-template-columns:1fr}.report-nav{gap:12px}section{padding:18px}header h1{font-size:23px}}
+    '''
+    document = document.replace('</style>', comparison_css+'</style>', 1)
+    appendix_open = '<details class="group" id="methods"><summary>方法对照、原始统计与复现数据（附录）</summary><div class="content">'
+    report_header = '<header><h1>OLED / AG 闪点仿真报告</h1><p>全绿画面 · 无 LDF · 四求解器对比 · SMS 公开方法参考口径</p></header>'
+    document = re.sub(r'<header>.*?</header>', report_header, document, count=1, flags=re.S)
+    document = document.replace('<main>', '<main>'+front+appendix_open+header, 1)
+    document = document.replace('</main>', '</div></details></main>', 1)
+    target.write_text(document, encoding='utf-8')
+    # Check self-contained original 16-bit PNGs and all filtered-data downloads.
+    for grid in ('1um', '0p5um', 'old-na-0p08'):
+        meta = read(results / grid / 'run.json')
+        for role in ('height', 'emission'):
+            encoded = base64.b64encode(Path(meta['input_files'][role]['path']).read_bytes()).decode('ascii')
+            assert encoded in document
+    downloads = re.findall(r'href="data:application/octet-stream;base64,([^\"]+)"', document)
+    assert len(downloads) == 42
+    assert all(base64.b64decode(value).startswith(b'\x93NUMPY') for value in downloads)
+    summary['verified'].append('offline report preserves input PNGs and all 42 NumPy downloads, including MWA floats')
+    (results / 'summary.json').write_text(json.dumps(summary, indent=2), encoding='utf-8')
+    # A small entry page keeps the inline NumPy downloads in the full report.
+    overview = '<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
+    overview += '<title>OLED / AG 闪点仿真报告 · 四求解器对比</title><style>'+CSS+comparison_css+'</style></head><body>'
+    overview += report_header+'<main>'+front
+    overview += appendix_open+header.split('<h3>分离后原始浮点下载</h3>', 1)[0]+'</section>'
+    for plot in plots[:2]:
+        encoded = base64.b64encode(plot.read_bytes()).decode('ascii')
+        overview += '<section><img style="width:100%;height:auto" src="data:image/png;base64,'+encoded+'" alt="'+escape(plot.name)+'"></section>'
+    overview += '</div></details><section><p><a href="sparkle-report.html">完整离线报告与浮点下载</a></p>'
+    overview += '<p><a href="summary.json">机器可读结果及验证</a> · <a href="protocol.json">计算前固定的测量方案</a></p></section></main></body></html>'
+    (results / 'sparkle.html').write_text(overview, encoding='utf-8')
+    (results / 'solver-comparison.html').write_text(overview, encoding='utf-8')
+    return results / 'sparkle.html'

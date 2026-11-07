@@ -21,8 +21,8 @@ ROOT = Path(__file__).resolve().parents[1]
                      'set SPARKLE_TEST_OPTIONAL=1 to run optional backend integration')
 class OptionalBackendsTest(unittest.TestCase):
     def run_all(self, out):
-        command = [sys.executable, str(ROOT / 'scripts/run_demo.py'),
-                   '--backend', 'all', '--device', os.environ.get('SPARKLE_TEST_TORCH_DEVICE','cpu'), '--out', str(out),
+        command = [sys.executable, str(ROOT / 'scripts/run_legacy_demo.py'),
+                   '--example', 'quick', '--backend', 'all', '--device', os.environ.get('SPARKLE_TEST_TORCH_DEVICE','cpu'), '--out', str(out),
                    '--extra', '--analysis-pitch-um', '32', '--roi-margin-um', '64',
                    '--backend-workers','2',
                    '--mitsuba-variant', os.environ.get('SPARKLE_TEST_MITSUBA_VARIANT', 'llvm_ad_rgb'),

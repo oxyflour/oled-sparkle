@@ -12,11 +12,11 @@ $env:SPARKLE_TEST_MITSUBA_VARIANT = 'cuda_ad_rgb'
 & $taskPython -m unittest discover -s (Join-Path $taskSkill 'tests') -v
 if ($LASTEXITCODE -ne 0) { throw 'Regression tests failed' }
 
-& $taskPython (Join-Path $taskSkill 'scripts\run_demo.py') --backend all --skip-unavailable --device cpu --out (Join-Path $PSScriptRoot 'quick-all') --extra --mitsuba-variant cuda_ad_rgb
+& $taskPython (Join-Path $taskSkill 'scripts\run_legacy_demo.py') --example quick --backend all --skip-unavailable --device cpu --out (Join-Path $PSScriptRoot 'quick-all') --extra --mitsuba-variant cuda_ad_rgb
 if ($LASTEXITCODE -ne 0) { throw 'Multi-backend quick demo failed' }
 
-& $taskPython (Join-Path $taskSkill 'scripts\run_demo.py') --example 1mm --backend all --device cpu --dry-run
+& $taskPython (Join-Path $taskSkill 'scripts\run_legacy_demo.py') --example 1mm --backend all --device cpu --dry-run
 if ($LASTEXITCODE -ne 0) { throw '1 mm dry run failed' }
 
-& $taskPython (Join-Path $taskSkill 'scripts\run_demo.py') --example 1mm --emission-variant subpixel --backend all --device cpu --dry-run
+& $taskPython (Join-Path $taskSkill 'scripts\run_legacy_demo.py') --example 1mm --emission-variant subpixel --backend all --device cpu --dry-run
 if ($LASTEXITCODE -ne 0) { throw '1 mm subpixel dry run failed' }

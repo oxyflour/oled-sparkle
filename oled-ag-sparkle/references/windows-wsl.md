@@ -40,8 +40,8 @@ pip dependencies; this setup does not require installing a Linux NVIDIA driver.
 Run the normal Windows commands from the skill folder:
 
 ```powershell
-python scripts/run_demo.py --backend chromatix --out outputs/quick-wsl
-python scripts/run_oled_demo.py --backend all --out outputs/oled-1mm-pits3to5um-periodic-50um
+python scripts/run_legacy_demo.py --example quick --backend chromatix --out outputs/quick-wsl
+python scripts/run_oled_demo.py --backend all --out outputs/oled-1mm-etched-ag-periodic-50um
 ```
 
 `--device` selects the Windows Torch device. Chromatix's WSL worker explicitly

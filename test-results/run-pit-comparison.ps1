@@ -9,7 +9,7 @@ if (Test-Path -LiteralPath (Join-Path $taskCudaRuntime 'torch\lib\torch_cuda.dll
 }
 & $taskPython (Join-Path $taskRoot 'oled-ag-sparkle\scripts\run_oled_demo.py') --height-surface original --backend all --out (Join-Path $PSScriptRoot 'oled-1mm-original-periodic-50um')
 if ($LASTEXITCODE -ne 0) { throw 'Original-surface tiled-emission run failed' }
-& $taskPython (Join-Path $taskRoot 'oled-ag-sparkle\scripts\run_oled_demo.py') --backend all --out (Join-Path $PSScriptRoot 'oled-1mm-pits3to5um-periodic-50um')
+& $taskPython (Join-Path $taskRoot 'oled-ag-sparkle\scripts\run_oled_demo.py') --height-surface random-pits --backend all --out (Join-Path $PSScriptRoot 'oled-1mm-pits3to5um-periodic-50um')
 if ($LASTEXITCODE -ne 0) { throw 'Random-pit four-backend run failed' }
 & $taskPython (Join-Path $PSScriptRoot 'check-pit-sampling.py')
 if ($LASTEXITCODE -ne 0) { throw 'Random-pit sampling check failed' }

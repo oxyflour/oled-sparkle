@@ -1,13 +1,17 @@
 ---
 name: oled-ag-sparkle
-description: Simulate collected OLED brightness with PyTorch FFT, TorchOptics, Chromatix and Mitsuba; report height/emission inputs, four brightness images, direct brightness-pixel CV, full parameters and computation times in offline HTML.
+description: Simulate OLED brightness with PyTorch FFT, TorchOptics, Chromatix and Mitsuba; report raw brightness CV or explicitly requested full-green SMS-reference separated sparkle, with input images, four-solver comparisons, parameters and timings in offline HTML.
 ---
 
-# OLED brightness and direct sparkle reporting
+# OLED brightness and separated sparkle reporting
 
 The direct CV below is the default statistic. When the user explicitly requests
 SMS-style separation of display periodicity, use the additional reference workflow
 described below and keep separated sparkle contrast distinct from direct CV.
+
+The bundled default heightfield is the etched-AG Voronoi surface in
+`assets/oled-1mm-etched-ag/heightfield.png`. `run_oled_demo.py` is the current
+default-example entrypoint; `run_legacy_demo.py` requires an explicit historical fixture.
 
 ## Required result
 
@@ -22,11 +26,18 @@ and intensity assumptions are recorded in `assets/oled-1mm-periodic/emission.sou
 
 The HTML report must visibly include:
 
+Present inputs and their physical scales first, followed by optical/measurement
+conditions, the four-solver results, and validation. Give quantitative image
+previews physical coordinates, units and color-scale definitions where relevant.
+
 1. The actual height map and emission image, their paths, SHA-256, dimensions,
    bit depth, physical scales and the emission source URL. Preserve original PNG
    bytes for download, including 16-bit height values.
 2. One collected brightness image for each of `torch`, `torchoptics`, `chromatix`
    and `mitsuba`, plus raw floating-point brightness downloads.
+   Keep the four-solver results, timings and image comparison visible in the main
+   report, including sparkle-only views. Raw total-brightness CV may be folded
+   into an appendix without hiding the solver comparison.
 3. The sparkle value computed **directly from brightness pixels** in the same
    geometric rectangular ROI for all backends:
 
@@ -59,16 +70,17 @@ red, four green and two blue connected bright bodies; none intersects the cell
 border at a 0.4 sRGB threshold. Wrap-neighbor RGB jumps are lower than ordinary
 within-cell neighbor variation in both axes. Do not blend or repaint its edges.
 The physical scale remains an illustrative assumption, not panel calibration.
-The bundled data uses
-1000x1000 height texels at 1um and 500x500 emission texels at 2um, a 0.5um height
-range and a 1mm x 1mm field. The current height surface contains randomly placed,
-nonoverlapping circular pits with uniformly drawn **3-5um diameters**, **0.5um
-depth** and **50% footprint coverage** (39,048 pits, seed 20261107). Pits have a
-smooth bowl profile `h/depth = 1 - (1 - (r/R)^2)^2` within the radius; the plateau
-is white and the pit bottom is black. Diameters are drawn before placement;
-largest-first placement with random positions avoids overlap without redrawing
-the diameter population. Geometry and generation assumptions are recorded in
-`assets/oled-1mm-pits3to5um/heightfield.source.json` and `pits.csv`. Use
+The default has 1000x1000 height texels at 1um and 500x500 emission texels at
+2um over a 1mm x 1mm field. Its synthetic etched-AG surface has **1,600 irregular
+Voronoi bowls**, **25um nominal site spacing**, variable depths and **1.2um rim
+rounding**, with seed 20261107. A shared 0.5um reference grid sets areal
+**Sa=0.10um**; sampled Sq is about 0.119um and peak-to-valley Sz about 0.515um.
+The 16-bit PNG black-to-white encoding range is **0.5361845861372564um**.
+Read this range from `assets/oled-1mm-etched-ag/heightfield.source.json`, as the
+wrapper does. Do not substitute Sz or the former 0.5um range for it.
+`scripts/prepare_etched_ag.py` and `sites.csv` record the generation and geometry.
+This is an illustrative proxy, not measured commercial glass; areal Sa and
+equivalent cell diameter do not equal manufacturer line Ra and Rsm. Use
 50um measurement pixels (20x20, 400 total), zero ROI margin, a 500um gap,
 530nm effective wavelength and camera NA 0.08. RGB input is gamma-decoded and
 mapped to relative luma for this single-wavelength example.
@@ -85,7 +97,7 @@ variants retain the NumPy integrator; reports record the integrator used.
 ## Run
 
 ```bash
-python scripts/run_oled_demo.py --backend all --out outputs/oled-1mm-pits3to5um-periodic-50um
+python scripts/run_oled_demo.py --backend all --out outputs/oled-1mm-etched-ag-periodic-50um
 ```
 
 The wrapper selects Torch's available device with `--device auto` and uses up to
@@ -99,24 +111,25 @@ and the WSL Python environment are recorded in each backend's execution context.
 Override `--device`, `--backend-workers` or
 `--mitsuba-variant` as needed. Each 50um measurement pixel averages 50x50 optical
 samples; emission remains at 2um during the height refinement.
-The 1um grid gives only 3-5 samples across a pit diameter. Check optical-grid
-sensitivity before treating small CV changes as resolved: regenerate the same
-geometry with the following command, keeping the physical FFT padding and
-emission sampling unchanged. Compare the original surface on the same refined
-grid too.
+For the same default geometry at a finer height pitch, the same runner retains
+the shared height calibration, physical FFT padding and fixed 2um emission sampling:
 
 ```bash
-python scripts/prepare_random_pits.py --pitch-um .5 --out assets/oled-1mm-pits3to5um-pitch0p5
+python scripts/run_oled_demo.py --pitch-um .5 --backend torch --out outputs/etched-ag/0p5um
 ```
 
 The original interpolated surface remains available with `--height-surface original`.
+The former circular-pit example is available with `--height-surface random-pits`.
+The small smoke-test fixture requires `run_legacy_demo.py --example quick`; its height
+is separate from the default display-cover example. `--example 1mm` retains the
+original analytical 1mm fixture.
 Superseded layouts are available only for historical reproduction with
 `--emission-layout legacy-stretched` or `--emission-layout legacy-whole-tile`.
 Neither the stretched nor the uncropped-patch CV comparison describes the current
 cropped-cell example. The default `--emission-layout periodic` crops before tiling.
 For custom inputs use `python scripts/sparkle_multibackend.py --help`.
-For an illustrative etched-glass proxy, use
-`python scripts/run_etched_ag_demo.py --backend all --out outputs/etched-ag/1um`.
+The default etched surface is selected by `run_oled_demo.py` or explicitly with
+`--height-surface etched-ag`; no surface-specific execution wrapper is needed.
 Its generator `scripts/prepare_etched_ag.py` creates 1,600 randomly sized Voronoi
 bowls at 25um nominal site spacing, variable depths and 1.2um rim rounding.
 The reference-grid calibration fixes areal Sa at 0.10um. Read the actual PNG
@@ -134,7 +147,7 @@ Failed, skipped and dry-run values must remain uncomputed, not zero.
 Regenerate HTML without optical recomputation:
 
 ```bash
-python scripts/generate_report.py --results outputs/oled-1mm-pits3to5um-periodic-50um
+python scripts/generate_report.py --results outputs/oled-1mm-etched-ag-periodic-50um
 ```
 
 `--recursive` combines saved runs; repeated `--figure path.png` embeds plots.
@@ -145,9 +158,27 @@ Use `VALIDATION.json` for the latest measured result and test status.
 
 `scripts/run_sms_reference.py` prepares the unchanged G channel with R/B zero,
 then computes the existing etched AG without LDF. A `prepare` stage writes the
-fixed protocol before optical calculation. `main` runs all four backends;
+inputs and fixed protocol before optical calculation. `main` runs all four backends;
 `fine` repeats Torch at 0.5um and `old-na` checks the previous NA 0.08.
-In this workspace use `test-results/run-sms-reference.ps1`.
+Use `--stage all --out outputs/oled-sms-reference` for the complete workflow.
+The SMS workflow defaults to one backend worker so all four solvers run
+sequentially on the same GPU. Its prepared protocol records a batch ID,
+declaration timestamp and solver SHA-256. All main and sensitivity runs in a
+report must start after that declaration, use the recorded current solver and
+match their backend run IDs. Show a single timing column from those same runs.
+The workspace wrapper `test-results/run-sms-reference.ps1` only selects the local
+CUDA environment and existing result paths. The SMS runner reuses the default
+runner's solver command; keep the measurement settings explicit and distinct.
+
+Rebuild the separated sparkle report without optics through the existing report CLI:
+
+```bash
+python scripts/generate_report.py --kind sms-reference --results outputs/oled-sms-reference
+```
+
+`reporting.py` owns both report renderers; `sms_reference.py` owns separation and
+saved-float analysis. Report generation updates result artifacts only; it does
+not prepare inputs, rewrite the protocol, edit skill metadata or package archives.
 
 `scripts/sms_reference.py` implements the public Fourier/MWA approach with explicit
 choices, not proprietary SMS software. It removes known 140um supercell frequencies,
