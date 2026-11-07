@@ -1,0 +1,76 @@
+test_failed_wsl_worker_is_reported_without_cpu_fallback (test_chromatix_wsl.ChromatixWslTest.test_failed_wsl_worker_is_reported_without_cpu_fallback) ... skipped 'requires Windows, WSL CUDA and SPARKLE_TEST_OPTIONAL=1'
+test_wsl_gpu_metadata_and_paths_with_spaces_and_unicode (test_chromatix_wsl.ChromatixWslTest.test_wsl_gpu_metadata_and_paths_with_spaces_and_unicode) ... skipped 'requires Windows, WSL CUDA and SPARKLE_TEST_OPTIONAL=1'
+test_help_and_demo_dry_run_under_gbk (test_cli_encoding.CliEncodingTest.test_help_and_demo_dry_run_under_gbk) ... ok
+test_1mm_field_collects_exactly_400_pixels_of_50um (test_direct_metric.DirectBrightnessMetricTest.test_1mm_field_collects_exactly_400_pixels_of_50um) ... ok
+test_1um_height_grid_collects_50_by_50_samples_per_pixel (test_direct_metric.DirectBrightnessMetricTest.test_1um_height_grid_collects_50_by_50_samples_per_pixel) ... ok
+test_dark_pixels_and_scale_invariance (test_direct_metric.DirectBrightnessMetricTest.test_dark_pixels_and_scale_invariance) ... ok
+test_detector_pixel_averages_brightness_before_cv (test_direct_metric.DirectBrightnessMetricTest.test_detector_pixel_averages_brightness_before_cv) ... ok
+test_fractional_overlap_and_centered_full_pixels (test_direct_metric.DirectBrightnessMetricTest.test_fractional_overlap_and_centered_full_pixels) ... ok
+test_roi_depends_only_on_geometry (test_direct_metric.DirectBrightnessMetricTest.test_roi_depends_only_on_geometry) ... ok
+test_invalid_geometry (test_etched_ag.EtchedAGTests.test_invalid_geometry) ... ok
+test_png_physical_roundtrip_and_determinism (test_etched_ag.EtchedAGTests.test_png_physical_roundtrip_and_determinism) ... ok
+test_same_geometry_and_scale_at_both_pitches (test_etched_ag.EtchedAGTests.test_same_geometry_and_scale_at_both_pitches) ... ok
+test_all_metrics_equal_the_saved_brightness_cv (test_optional_backends.OptionalBackendsTest.test_all_metrics_equal_the_saved_brightness_cv) ... skipped 'set SPARKLE_TEST_OPTIONAL=1 to run optional backend integration'
+test_wave_backends_agree (test_optional_backends.OptionalBackendsTest.test_wave_backends_agree) ... skipped 'set SPARKLE_TEST_OPTIONAL=1 to run optional backend integration'
+test_1mm_geometry_and_encoding (test_package.PackageAssetsTest.test_1mm_geometry_and_encoding) ... ok
+test_refined_height_keeps_1mm_extent_and_existing_height_data (test_package.PackageAssetsTest.test_refined_height_keeps_1mm_extent_and_existing_height_data) ... ok
+test_skill_header_and_scripts (test_package.PackageAssetsTest.test_skill_header_and_scripts) ... ok
+test_sourced_oled_1mm_inputs (test_package.PackageAssetsTest.test_sourced_oled_1mm_inputs) ... ok
+test_pit_is_a_depression_with_fixed_absolute_depth_and_smooth_rim (test_random_pits.RandomPitTest.test_pit_is_a_depression_with_fixed_absolute_depth_and_smooth_rim) ... ok
+test_target_coverage_diameters_boundaries_and_nonoverlap (test_random_pits.RandomPitTest.test_target_coverage_diameters_boundaries_and_nonoverlap) ... ok
+test_escape_and_missing_values_round_trip (test_reporting.HtmlReportingTest.test_escape_and_missing_values_round_trip) ... ok
+test_failed_solver_still_writes_input_snapshot_and_html (test_reporting.HtmlReportingTest.test_failed_solver_still_writes_input_snapshot_and_html) ... ok
+test_input_gallery_preserves_originals_is_visible_and_deduplicated (test_reporting.HtmlReportingTest.test_input_gallery_preserves_originals_is_visible_and_deduplicated) ... ok
+test_remote_chromatix_context_does_not_require_parent_jax (test_reporting.HtmlReportingTest.test_remote_chromatix_context_does_not_require_parent_jax) ... ok
+test_report_shows_detector_pixels_and_keeps_both_float_grids (test_reporting.HtmlReportingTest.test_report_shows_detector_pixels_and_keeps_both_float_grids) ... ok
+test_stale_and_skipped_outputs_are_excluded (test_reporting.HtmlReportingTest.test_stale_and_skipped_outputs_are_excluded) ... ok
+test_constant_height_uses_direct_image_metric (test_smoke.SmokeTest.test_constant_height_uses_direct_image_metric) ... ok
+test_random_height_uses_direct_image_metric (test_smoke.SmokeTest.test_random_height_uses_direct_image_metric) ... ok
+test_constant_zero_and_scale_invariance (test_sms_reference.SMSReferenceTests.test_constant_zero_and_scale_invariance) ... ok
+test_fast_flat_control_matches_wave_propagation (test_sms_reference.SMSReferenceTests.test_fast_flat_control_matches_wave_propagation) ... ok
+test_green_input_preserves_original_G (test_sms_reference.SMSReferenceTests.test_green_input_preserves_original_G) ... ok
+test_lattice_rejected_and_random_off_lattice_retained (test_sms_reference.SMSReferenceTests.test_lattice_rejected_and_random_off_lattice_retained) ... ok
+test_mwa_removes_exact_supercell (test_sms_reference.SMSReferenceTests.test_mwa_removes_exact_supercell) ... ok
+test_reject_noninteger_cell_crop (test_sms_reference.SMSReferenceTests.test_reject_noninteger_cell_crop) ... ok
+{
+  "output": "C:\\Users\\oxyfl\\AppData\\Local\\Temp\\tmp5qnhn_rf\\emission.png",
+  "tile_size_px": [
+    70,
+    70
+  ],
+  "tile_field_um": [
+    140.0,
+    140.0
+  ],
+  "repeats_xy": [
+    8,
+    8
+  ],
+  "cell_crop_xyxy": [
+    26,
+    58,
+    96,
+    128
+  ],
+  "boundary_statistics": {
+    "x_wrap_mse": 0.0008959191519745153,
+    "y_wrap_mse": 0.0007662986763332784,
+    "x_interior_neighbor_mse": 0.005634586050011555,
+    "y_interior_neighbor_mse": 0.005596694375391532,
+    "edge_rgb_energy": 0.0006505922630490105,
+    "edge_max_srgb": 0.3254901960784314
+  },
+  "output_size_px": [
+    500,
+    500
+  ],
+  "pitch_um": 2.0
+}
+test_bundled_1mm_field_keeps_texel_pitch_after_period_crop (test_tiled_emission.TiledEmissionTest.test_bundled_1mm_field_keeps_texel_pitch_after_period_crop) ... ok
+test_cell_contains_complete_emitter_bodies_and_continuous_joins (test_tiled_emission.TiledEmissionTest.test_cell_contains_complete_emitter_bodies_and_continuous_joins) ... ok
+test_partial_edge_tiles_preserve_all_source_texels (test_tiled_emission.TiledEmissionTest.test_partial_edge_tiles_preserve_all_source_texels) ... ok
+
+----------------------------------------------------------------------
+Ran 37 tests in 18.700s
+
+OK (skipped=4)

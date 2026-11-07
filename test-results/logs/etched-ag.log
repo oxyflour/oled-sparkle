@@ -1,0 +1,146 @@
+Height: 1000x1000 at 1um, emission: 500x500 at 2um
+Wave FFT: 1280x1280; source modes 76769; one complex64 field: 12.5 MiB
+Mitsuba rays: 1,536,000,000; mesh stride 1
+HTML report: C:\Projects\oled-sparkle\test-results\oled-etched-ag-dry-run\report.html
+Height: 1000x1000 at 1um, emission: 500x500 at 2um
+Wave FFT: 1280x1280; source modes 76769; one complex64 field: 12.5 MiB
+Mitsuba rays: 1,536,000,000; mesh stride 1
+
+=== torch ===
+
+=== torchoptics ===
+
+=== chromatix ===
+  Chromatix WSL: Ubuntu-22.04, JAX_PLATFORMS=cuda
+  torch: 6400/76769 modes
+  torchoptics: 6400/76769 modes
+  chromatix: 6400/76769 modes
+  torch: 12800/76769 modes
+  torchoptics: 12800/76769 modes
+  chromatix: 12800/76769 modes
+  torch: 19200/76769 modes
+  torchoptics: 19200/76769 modes
+  chromatix: 19200/76769 modes
+  torch: 25600/76769 modes
+  chromatix: 25600/76769 modes
+  torchoptics: 25600/76769 modes
+  chromatix: 32000/76769 modes
+  torch: 32000/76769 modes
+  torchoptics: 32000/76769 modes
+  chromatix: 38400/76769 modes
+  torch: 38400/76769 modes
+  torchoptics: 38400/76769 modes
+  chromatix: 44800/76769 modes
+  chromatix: 51200/76769 modes
+  torch: 44800/76769 modes
+  torchoptics: 44800/76769 modes
+  chromatix: 57600/76769 modes
+  torch: 51200/76769 modes
+  torchoptics: 51200/76769 modes
+  chromatix: 64000/76769 modes
+  torch: 57600/76769 modes
+  chromatix: 70400/76769 modes
+  torchoptics: 57600/76769 modes
+  chromatix: 76769/76769 modes
+  torch: 64000/76769 modes
+  Sparkle CV: 35.65004%
+
+=== mitsuba ===
+jitc_llvm_init(): LLVM API initialization failed ..
+  Mitsuba variant=cuda_ad_rgb; measured height mesh stride=1
+  torchoptics: 64000/76769 modes
+  Mitsuba mesh: 1,000,000 vertices, 1,996,002 triangles
+  torch: 70400/76769 modes
+  torchoptics: 70400/76769 modes
+  torch: 76769/76769 modes
+  Sparkle CV: 35.64978%
+  torchoptics: 76769/76769 modes
+  Sparkle CV: 35.64978%
+  Mitsuba pupil nodes: 200/1536
+  Mitsuba pupil nodes: 400/1536
+  Mitsuba pupil nodes: 600/1536
+  Mitsuba pupil nodes: 800/1536
+  Mitsuba pupil nodes: 1000/1536
+  Mitsuba pupil nodes: 1200/1536
+  Mitsuba pupil nodes: 1400/1536
+  Mitsuba pupil nodes: 1536/1536
+  Sparkle CV: 38.23467%
+torch: brightness CV = 35.649782%, solver = 133.509s
+torchoptics: brightness CV = 35.649779%, solver = 133.906s
+chromatix: brightness CV = 35.650040%, solver = 122.118s
+mitsuba: brightness CV = 38.234672%, solver = 242.222s
+HTML report: C:\Projects\oled-sparkle\test-results\oled-etched-ag\1um\report.html
+Height: 2000x2000 at 0.5um, emission: 500x500 at 2um
+Wave FFT: 2560x2560; source modes 76769; one complex64 field: 50.0 MiB
+Mitsuba rays: 6,144,000,000; mesh stride 1
+
+=== torch ===
+  torch: 3200/76769 modes
+  torch: 6400/76769 modes
+  torch: 9600/76769 modes
+  torch: 12800/76769 modes
+  torch: 16000/76769 modes
+  torch: 19200/76769 modes
+  torch: 22400/76769 modes
+  torch: 25600/76769 modes
+  torch: 28800/76769 modes
+  torch: 32000/76769 modes
+  torch: 35200/76769 modes
+  torch: 38400/76769 modes
+  torch: 41600/76769 modes
+  torch: 44800/76769 modes
+  torch: 48000/76769 modes
+  torch: 51200/76769 modes
+  torch: 54400/76769 modes
+  torch: 57600/76769 modes
+  torch: 60800/76769 modes
+  torch: 64000/76769 modes
+  torch: 67200/76769 modes
+  torch: 70400/76769 modes
+  torch: 73600/76769 modes
+  torch: 76769/76769 modes
+  Sparkle CV: 35.82968%
+torch: brightness CV = 35.829675%, solver = 153.787s
+HTML report: C:\Projects\oled-sparkle\test-results\oled-etched-ag\0p5um\report.html
+Report: C:\Projects\oled-sparkle\test-results\oled-etched-ag\report.html
+{
+  "runs": [
+    {
+      "grid": "1um",
+      "backend": "torch",
+      "CV_percent": 35.64978214842744,
+      "solver_seconds": 133.508996
+    },
+    {
+      "grid": "1um",
+      "backend": "torchoptics",
+      "CV_percent": 35.64977872086861,
+      "solver_seconds": 133.905823
+    },
+    {
+      "grid": "1um",
+      "backend": "chromatix",
+      "CV_percent": 35.650040234935275,
+      "solver_seconds": 122.117996
+    },
+    {
+      "grid": "1um",
+      "backend": "mitsuba",
+      "CV_percent": 38.234671553187404,
+      "solver_seconds": 242.221518
+    },
+    {
+      "grid": "0p5um",
+      "backend": "torch",
+      "CV_percent": 35.82967504940195,
+      "solver_seconds": 153.786791
+    }
+  ],
+  "sampling": {
+    "coarse_CV_percent": 35.64978214842744,
+    "fine_CV_percent": 35.82967504940195,
+    "difference_percentage_points": 0.17989290097450805,
+    "relative_difference_percent": 0.5046115014827546,
+    "scope": "Two-level optical-grid sensitivity only; source sampling, padding, ray mesh and pupil convergence are not established."
+  }
+}

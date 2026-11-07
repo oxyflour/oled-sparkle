@@ -585,7 +585,7 @@
   "reference_run_started_at_utc": "2026-11-07T07:46:13.254833+00:00",
   "reference_run_note": "Top-level multi-backend images and timings retain the recorded reference run. Current Windows Chromatix routing and bridge measurements are in windows_chromatix_wsl.",
   "current_example": "random_circular_pits_3to5um_diameter_50pct_coverage_periodic_cell",
-  "latest_experiment_at_utc": "2026-11-07T11:04:18.704725+00:00",
+  "latest_experiment_at_utc": "2026-11-07T12:41:34.647703+00:00",
   "random_circular_pits": {
     "generated_at_utc": "2026-11-07T11:03:35.430034+00:00",
     "baseline_results": "C:\\Projects\\oled-sparkle\\test-results\\oled-1mm-original-periodic-50um",
@@ -1554,16 +1554,13 @@
     }
   },
   "latest_tests": {
-    "passed": 28,
-    "skipped": 0,
-    "failed": 0,
-    "log": "test-results/logs/validation-periodic.log",
-    "focused_input_checks": {
-      "passed": 3,
-      "log": "test-results/logs/validation-periodic-input.log"
-    }
+    "status": "passed",
+    "run": 37,
+    "skipped": 4,
+    "passed": 33,
+    "log": "C:\\Projects\\oled-sparkle\\test-results\\logs\\validation-sms-reference.log"
   },
-  "latest_results_report": "test-results/oled-1mm-pits3to5um-periodic-50um/report.html",
+  "latest_results_report": "test-results/oled-sms-reference/sparkle-report.html",
   "emission_scale_correction": {
     "previous_layout": "same illustrated content stretched from 256um to 1000um",
     "previous_linear_enlargement": 3.90625,
@@ -2219,5 +2216,91 @@
     "pixel_scale_changed": false,
     "tile_boundary_note": "One 70x70 repeat cell is cropped before tiling. Wrap-neighbor jumps are smaller than ordinary within-cell neighbor variation in both axes. No seam blending, pixel repainting or procedural emitter reconstruction is applied.",
     "emission_png_sha256": "adaf09b5d4054d17cd74ad2a93b1138a3c8ba4ace08581ecc930a380e0619b3f"
+  },
+  "etched_ag_proxy": {
+    "report": "test-results/oled-etched-ag/report.html",
+    "audit": "test-results/oled-etched-ag/validation.json",
+    "height_asset": "oled-ag-sparkle/assets/oled-1mm-etched-ag/heightfield.png",
+    "synthetic_model": "Illustrative morphology, not measured glass or a calibrated commercial product.",
+    "height_sha256": "de8f07d6beac7e0817332b18ae12ee9ccf8008e4a4c8f4a0f87646306f2d5c7e",
+    "surface_statistics": {
+      "Sa_um": 0.099999276207844,
+      "Sq_um": 0.11851186992921194,
+      "Sz_um": 0.5150186515322807,
+      "height_min_um": 0.010832507698874302,
+      "height_max_um": 0.525851159231155,
+      "rms_slope": 0.03243637791250601,
+      "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+    },
+    "brightness_results": [
+      {
+        "grid": "1um",
+        "backend": "torch",
+        "CV_percent": 35.64978214842744,
+        "solver_seconds": 133.508996
+      },
+      {
+        "grid": "1um",
+        "backend": "torchoptics",
+        "CV_percent": 35.64977872086861,
+        "solver_seconds": 133.905823
+      },
+      {
+        "grid": "1um",
+        "backend": "chromatix",
+        "CV_percent": 35.650040234935275,
+        "solver_seconds": 122.117996
+      },
+      {
+        "grid": "1um",
+        "backend": "mitsuba",
+        "CV_percent": 38.234671553187404,
+        "solver_seconds": 242.221518
+      },
+      {
+        "grid": "0p5um",
+        "backend": "torch",
+        "CV_percent": 35.82967504940195,
+        "solver_seconds": 153.786791
+      }
+    ],
+    "sampling_check": {
+      "coarse_CV_percent": 35.64978214842744,
+      "fine_CV_percent": 35.82967504940195,
+      "difference_percentage_points": 0.17989290097450805,
+      "relative_difference_percent": 0.5046115014827546,
+      "scope": "Two-level optical-grid sensitivity only; source sampling, padding, ray mesh and pupil convergence are not established."
+    },
+    "wave_relative_L2_vs_torch": {
+      "torchoptics": 1.4035157391845132e-06,
+      "chromatix": 2.1983640181133524e-05
+    },
+    "verified": [
+      "16-bit PNG input hashes",
+      "unchanged periodic OLED emission",
+      "same surface geometry and calibration across grids",
+      "independent area integration",
+      "CV from saved floats",
+      "three-wave-backend agreement",
+      "all five computations complete",
+      "offline HTML preserves original PNG bytes and all 10 NumPy downloads"
+    ]
+  },
+  "sms_reference": {
+    "report": "test-results/oled-sms-reference/sparkle-report.html",
+    "overview": "test-results/oled-sms-reference/sparkle.html",
+    "summary": "test-results/oled-sms-reference/summary.json",
+    "primary_Torch_percent": 23.574746915763964,
+    "MWA_Torch_percent": 5.291802720752523,
+    "flat_control": {
+      "primary_Fourier_percent": 0.11947172989477055,
+      "three_MWA_percent": 0.1499166313031693,
+      "not_used_for_division_or_subtraction": true
+    },
+    "sampling": {
+      "primary_difference_percentage_points": -0.1527161466299063,
+      "MWA_difference_percentage_points": -0.1558801879325049
+    },
+    "scope": "SMS-inspired reference implementation. Different methods have different retained bandwidths; equality is not expected. Agreement with target in one method is not measurement calibration."
   }
 }

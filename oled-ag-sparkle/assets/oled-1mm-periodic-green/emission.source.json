@@ -1,0 +1,139 @@
+{
+  "title": "Samsung Display Diamond Pixel OLED subpixel distribution",
+  "source_page": "https://global.samsungdisplay.com/29043/",
+  "source_image": "https://global.samsungdisplay.com/wp-content/uploads/2021/11/pixel.png",
+  "copyright": "Samsung Display; source attribution retained for this local research report.",
+  "original_sha256": "f28b44acffee08e21b5ecff76eb1c0d9108ef16f316805d7a16e75f17e7a8789",
+  "original_size_px": [
+    820,
+    461
+  ],
+  "crop_xyxy": [
+    8,
+    0,
+    392,
+    384
+  ],
+  "resized_to_px": [
+    128,
+    128
+  ],
+  "resampling": "none during field expansion; source tile retains its original BOX resampling",
+  "assigned_emission_texel_um": 2.0,
+  "assigned_field_um": [
+    1000,
+    1000
+  ],
+  "intensity_model": "Original green channel only, sRGB-decoded to linear green intensity at 530 nm; R/B zero. Image is an illustrative emitter proxy, not calibrated panel radiometry.",
+  "scale_note": "Original 2um/texel example assumption retained, not measured panel calibration. Increasing the field changes tile count, not emitter dimensions or spacing.",
+  "source_texture": "assets/oled-diamond/emission.png",
+  "source_texture_sha256": "b753ba45e3407bd06e495d1c896b1595cc5955d704c16c9433ece9f15e9d454b",
+  "source_texture_size_px": [
+    128,
+    128
+  ],
+  "source_texture_field_um": [
+    256.0,
+    256.0
+  ],
+  "cell_crop_xyxy_in_source_texture": [
+    26,
+    58,
+    96,
+    128
+  ],
+  "period_detection": {
+    "x": {
+      "period_texels": 70,
+      "translation_mse": 0.0008333236664059358,
+      "search_range_inclusive": [
+        32,
+        96
+      ]
+    },
+    "y": {
+      "period_texels": 70,
+      "translation_mse": 0.0007689667877518372,
+      "search_range_inclusive": [
+        32,
+        96
+      ]
+    }
+  },
+  "crop_selection": "Minimize boundary RGB energy plus opposite-edge neighbor jump at the detected periods",
+  "cell_boundary_statistics": {
+    "x_wrap_mse": 0.0008959191519745153,
+    "y_wrap_mse": 0.0007662986763332784,
+    "x_interior_neighbor_mse": 0.005634586050011555,
+    "y_interior_neighbor_mse": 0.005596694375391532,
+    "edge_rgb_energy": 0.0006505922630490105,
+    "edge_max_srgb": 0.3254901960784314
+  },
+  "source_tile": "assets/oled-1mm-periodic/periodic-cell.png",
+  "source_tile_sha256": "c2d278aa4f8f12abfb7624bcee3171d3246fc8f9fae51457f2d69ad06cf2953a",
+  "source_tile_size_px": [
+    70,
+    70
+  ],
+  "source_tile_field_um": [
+    140.0,
+    140.0
+  ],
+  "source_tile_provenance": {
+    "title": "Samsung Display Diamond Pixel OLED subpixel distribution",
+    "source_page": "https://global.samsungdisplay.com/29043/",
+    "source_image": "https://global.samsungdisplay.com/wp-content/uploads/2021/11/pixel.png",
+    "copyright": "Samsung Display; source attribution retained for this local research report.",
+    "original_sha256": "f28b44acffee08e21b5ecff76eb1c0d9108ef16f316805d7a16e75f17e7a8789",
+    "original_size_px": [
+      820,
+      461
+    ],
+    "crop_xyxy": [
+      8,
+      0,
+      392,
+      384
+    ],
+    "resized_to_px": [
+      128,
+      128
+    ],
+    "resampling": "area average (Pillow BOX)",
+    "assigned_emission_texel_um": 2,
+    "assigned_field_um": [
+      256,
+      256
+    ],
+    "intensity_model": "sRGB decoded to linear RGB, then photopic luma weights 0.2126/0.7152/0.0722; single effective wavelength 530nm",
+    "scale_note": "Physical scale is an explicit example assumption; web illustration is not a radiometrically calibrated panel measurement."
+  },
+  "expansion_method": "crop one complete repeat cell, integer tile, then top-left field crop; no resizing or interpolation",
+  "tile_repeats_xy": [
+    8,
+    8
+  ],
+  "tiled_canvas_size_px": [
+    560,
+    560
+  ],
+  "field_crop_xyxy": [
+    0,
+    0,
+    500,
+    500
+  ],
+  "output_size_px": [
+    500,
+    500
+  ],
+  "pixel_scale_changed": false,
+  "tile_boundary_note": "One 70x70 repeat cell is cropped before tiling. Wrap-neighbor jumps are smaller than ordinary within-cell neighbor variation in both axes. No seam blending, pixel repainting or procedural emitter reconstruction is applied.",
+  "emission_png_sha256": "adaf09b5d4054d17cd74ad2a93b1138a3c8ba4ace08581ecc930a380e0619b3f",
+  "parent_sha256": "adaf09b5d4054d17cd74ad2a93b1138a3c8ba4ace08581ecc930a380e0619b3f",
+  "sha256": "1dc06595ecda55dd935e16a93a347e8974c19d7875f7ad284c54db467fa52ab3",
+  "processing": "G unchanged byte for byte; R=B=0; no resizing, repainting, edge blending or lattice changes",
+  "full_emission_supercell_um": 140.0,
+  "green_centers_geometric_pitch_um": 70.0,
+  "green_subcell_caveat": "The four green footprints within the full supercell are not identical. The exact intensity repeat is 140 um, not 70 um."
+}

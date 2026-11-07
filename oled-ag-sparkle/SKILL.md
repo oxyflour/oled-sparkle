@@ -5,6 +5,10 @@ description: Simulate collected OLED brightness with PyTorch FFT, TorchOptics, C
 
 # OLED brightness and direct sparkle reporting
 
+The direct CV below is the default statistic. When the user explicitly requests
+SMS-style separation of display periodicity, use the additional reference workflow
+described below and keep separated sparkle contrast distinct from direct CV.
+
 ## Required result
 
 Use the supplied height map and a sourced, representative OLED emission image.
@@ -107,6 +111,15 @@ Superseded layouts are available only for historical reproduction with
 Neither the stretched nor the uncropped-patch CV comparison describes the current
 cropped-cell example. The default `--emission-layout periodic` crops before tiling.
 For custom inputs use `python scripts/sparkle_multibackend.py --help`.
+For an illustrative etched-glass proxy, use
+`python scripts/run_etched_ag_demo.py --backend all --out outputs/etched-ag/1um`.
+Its generator `scripts/prepare_etched_ag.py` creates 1,600 randomly sized Voronoi
+bowls at 25um nominal site spacing, variable depths and 1.2um rim rounding.
+The reference-grid calibration fixes areal Sa at 0.10um. Read the actual PNG
+height range from its sidecar, as the wrapper does. Areal Sa and equivalent cell
+diameter are not manufacturer line Ra and Rsm. This is a synthetic morphology
+proxy, not a measured product. Use `--pitch-um .5 --backend torch` with a separate
+output directory for the same geometry/calibration on the finer optical grid.
 Use `--dry-run` before large calculations; it writes a report marked uncomputed.
 
 Every calculation writes `report.html`, `run.json`, `comparison.json/csv` and,
@@ -123,3 +136,27 @@ python scripts/generate_report.py --results outputs/oled-1mm-pits3to5um-periodic
 `--recursive` combines saved runs; repeated `--figure path.png` embeds plots.
 Always deliver the HTML report and code/output paths. State which backends ran.
 Use `VALIDATION.json` for the latest measured result and test status.
+
+## Explicitly requested SMS-reference measurements
+
+`scripts/run_sms_reference.py` prepares the unchanged G channel with R/B zero,
+then computes the existing etched AG without LDF. A `prepare` stage writes the
+fixed protocol before optical calculation. `main` runs all four backends;
+`fine` repeats Torch at 0.5um and `old-na` checks the previous NA 0.08.
+In this workspace use `test-results/run-sms-reference.ps1`.
+
+`scripts/sms_reference.py` implements the public Fourier/MWA approach with explicit
+choices, not proprietary SMS software. It removes known 140um supercell frequencies,
+retains DC and limits bandwidth below 1/70um^-1. Evaluate a central 560um square,
+then integrate to 26.25um virtual camera pixels. The reference camera is 50mm,
+F/8, 400mm object distance, 3.75um sensor pitch, giving object NA about 0.007812
+and magnification 1/7. Filtering precedes virtual detector integration, so detector
+aliasing before filtering is omitted. Compare predeclared notch/cutoff changes and
+three 140um MWA passes; they have different bandwidths, so equality is not expected.
+
+The user-requested separation supersedes the default no-filter requirement for this
+workflow. Preserve raw optical brightness and direct CV too. A fast analytical flat
+wave control diagnoses residual periodicity/boundaries; do not divide by it or
+subtract its CV. The report must distinguish an order-of-magnitude comparison
+against Cheng 2025's 4.8-6.0 readings from calibration: the paper's camera/filter
+settings are unpublished and its surface Ra differs from this proxy's areal Sa.

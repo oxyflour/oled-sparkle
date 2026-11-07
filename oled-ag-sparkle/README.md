@@ -76,6 +76,32 @@ The 50um measurement pixels and original OLED emission remain unchanged.
 
 ## Outputs
 
+For an explicitly requested **SMS-inspired green-only measurement**, the workspace
+entrypoint is `test-results/run-sms-reference.ps1`. It keeps the etched AG geometry
+and 500um gap, writes the fixed protocol, runs green-only inputs without LDF and
+generates `test-results/oled-sms-reference/sparkle-report.html` with `report-sms-reference.py`.
+The raw solver report retains direct CV; `sms_reference.py` additionally separates
+known periodic frequencies and evaluates random contrast with an explicit bandwidth.
+It also reports a three-pass full-supercell MWA alternative, flat-wave control,
+finer-grid check and original-NA comparison. This is a public-method reference,
+not the proprietary SMS-1000 algorithm or an IEC compliance claim. Parameters
+are recorded in `protocol.json` and are not fitted to the literature target.
+
+An additional **illustrative etched-AG morphology** is available through
+`scripts/prepare_etched_ag.py` and `scripts/run_etched_ag_demo.py`. It uses 1,600
+random Voronoi bowls in a periodic 1 mm square, nominal site spacing 25 um,
+independently varied bowl depths and 1.2 um Gaussian rounding. A common 0.5 um
+reference grid fixes the amplitude at areal Sa = 0.10 um; the actual PNG
+black-to-white range is recorded in `heightfield.source.json`. Cell diameter
+and areal Sa are not the manufacturer's line Rsm and Ra specifications.
+The model is synthetic and is not fitted to measured commercial glass.
+
+Run `python scripts/run_etched_ag_demo.py --backend all --out outputs/etched-ag/1um`.
+Use `--pitch-um .5 --backend torch --out outputs/etched-ag/0p5um` for the same
+geometry at finer sampling. In the workspace, `test-results/run-etched-ag.ps1`
+selects the existing CUDA runtime, runs both grids and generates an audited
+combined report at `test-results/oled-etched-ag/report.html`.
+
 - `report.html`: offline HTML with two inputs, four brightness outputs and raw downloads.
 - `run.json`: full CLI/default parameters, input hashes, environment and wall time.
 - `comparison.csv/json`: direct brightness CV, brightness mean/std and solver time.

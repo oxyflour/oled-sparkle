@@ -1,0 +1,88 @@
+{
+  "backend": "mitsuba",
+  "physics_group": "geometric_rays",
+  "physical_model": "Mitsuba mesh + Snell + pupil quadrature",
+  "metric_definition": "100 * std(I_ROI, ddof=0) / mean(I_ROI)",
+  "metric_domain": "area-averaged collected brightness pixels at analysis_pixel_pitch_um, including dark pixels",
+  "brightness_units": "relative linear intensity",
+  "deterministic": true,
+  "height_grid": [
+    1000,
+    1000
+  ],
+  "emission_grid": [
+    500,
+    500
+  ],
+  "height_pitch_um": 1.0,
+  "height_range_um": 0.5361845861372564,
+  "emission_pitch_um": 2.0,
+  "gap_um": 500.0,
+  "wavelength_nm": 530.0,
+  "n_stack": 1.5,
+  "n_out": 1.0,
+  "camera_na": 0.08,
+  "source_samples_per_axis": 1,
+  "source_node_pitch_um": null,
+  "source_representation": "continuous emission texture",
+  "field_width_um": 1000.0,
+  "field_height_um": 1000.0,
+  "pad_px": 140,
+  "batch": 16,
+  "roi_margin_um": 0.0,
+  "roi_margin_px": 0,
+  "torch_device_setting": "cuda",
+  "ray_radial": 24,
+  "ray_angular": 64,
+  "mesh_stride": 1,
+  "mitsuba_variant": "cuda_ad_rgb",
+  "num_sources_or_rays": 1536000000,
+  "elapsed_seconds": 242.221518,
+  "analysis_grid": [
+    20,
+    20
+  ],
+  "analysis_pixel_pitch_um": 49.99999999999999,
+  "analysis_pixel_area_um2": 2499.999999999999,
+  "analysis_extent_um_xyxy": [
+    -499.99999999999994,
+    -499.99999999999994,
+    500.0,
+    500.0
+  ],
+  "analysis_source_bounds_px_xyxy": [
+    5.684341886080802e-14,
+    5.684341886080802e-14,
+    1000.0,
+    1000.0
+  ],
+  "effective_roi_margin_um_xy": [
+    5.684341886080802e-14,
+    5.684341886080802e-14
+  ],
+  "analysis_resampling": "area-averaged linear brightness over square pixels",
+  "metric_source_file": "analysis_brightness.npy",
+  "sparkle_cv_percent": 38.234671553187404,
+  "brightness_mean": 0.05828992574531501,
+  "brightness_std": 0.02228696165731802,
+  "std_ddof": 0,
+  "num_roi_pixels": 400,
+  "roi_bounds_xyxy": [
+    0,
+    0,
+    20,
+    20
+  ],
+  "warnings": [
+    "Single effective wavelength and idealized camera optics; relative intensity units.",
+    "All full analysis pixels in the centered geometric ROI enter the statistic."
+  ],
+  "run_id": "56064d2dec894a1cb0732158f21a9151",
+  "started_at_utc": "2026-11-07T12:03:55.725355+00:00",
+  "finished_at_utc": "2026-11-07T12:07:58.002004+00:00",
+  "postprocess_elapsed_seconds": 0.054996,
+  "execution_context": {
+    "backend": "mitsuba",
+    "variant": "cuda_ad_rgb"
+  }
+}

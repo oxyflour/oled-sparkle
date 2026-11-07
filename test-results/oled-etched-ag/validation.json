@@ -1,0 +1,204 @@
+{
+  "status": "passed",
+  "surface": {
+    "source": "Synthetic rounded Voronoi-bowl proxy; scripts/prepare_etched_ag.py",
+    "model_status": "Illustrative morphology, not measured glass or a calibrated commercial product.",
+    "morphology_reference_url": "https://sid.org/Portals/sid/Files/SID-Digest/docs/68-2.pdf",
+    "roughness_order_of_magnitude_reference_url": "https://www.agc-yourglass.com/sites/default/files/agc_docs/Factsheet_Anti-glare_1020_EN.pdf",
+    "reference_interpretation": "Irregular polygonal etched features motivate the proxy. AGC line Ra/Rsm specifications are not equal to generated areal Sa or equivalent cell diameter.",
+    "assigned_field_um": [
+      1000.0,
+      1000.0
+    ],
+    "assigned_texel_um": 1.0,
+    "height_range_um": 0.5361845861372564,
+    "png_bits_per_channel": 16,
+    "sha256": "de8f07d6beac7e0817332b18ae12ee9ccf8008e4a4c8f4a0f87646306f2d5c7e",
+    "seed": 20261107,
+    "cell_count": 1600,
+    "nominal_site_spacing_um": 25.0,
+    "minimum_site_separation_um": 7.5,
+    "relative_depth_distribution": "Uniform [0.7, 1.3], assigned independently to each cell",
+    "raw_profile": "-depth_i * (1 - (d_nearest / d_second_nearest)^2)^2",
+    "rounding": {
+      "gaussian_sigma_um": 1.2,
+      "boundary": "periodic wrap"
+    },
+    "periodic_domain_um": 1000.0,
+    "calibration": {
+      "reference_pitch_um": 0.5,
+      "target_Sa_um": 0.1,
+      "raw_to_um_scale": 0.40302946859767835,
+      "raw_black_level": -1.3055529717873606,
+      "encoding": "uint16 / 65535 * height_range_um; black is low, white is high",
+      "no_per_output_grid_rescaling": true
+    },
+    "equivalent_cell_diameter_um": {
+      "definition": "2*sqrt(Voronoi cell area/pi), not Rsm or nearest-neighbor spacing",
+      "mean": 27.557867411047877,
+      "p10": 19.802170158196347,
+      "p50": 27.250999329690345,
+      "p90": 35.45472563305237
+    },
+    "measured_surface": {
+      "Sa_um": 0.099999276207844,
+      "Sq_um": 0.11851186992921194,
+      "Sz_um": 0.5150186515322807,
+      "height_min_um": 0.010832507698874302,
+      "height_max_um": 0.525851159231155,
+      "rms_slope": 0.03243637791250601,
+      "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+    },
+    "maximum_quantization_error_um": 4.0908233388536885e-06,
+    "generation_elapsed_seconds": 3.4543848000466824
+  },
+  "runs": [
+    {
+      "grid": "1um",
+      "backend": "torch",
+      "CV_percent": 35.64978214842744,
+      "solver_seconds": 133.508996,
+      "actual_execution_context": {
+        "backend": "torch",
+        "device": "cuda",
+        "threads": 2,
+        "gpu_name": "NVIDIA GeForce RTX 3090 Ti"
+      }
+    },
+    {
+      "grid": "1um",
+      "backend": "torchoptics",
+      "CV_percent": 35.64977872086861,
+      "solver_seconds": 133.905823,
+      "actual_execution_context": {
+        "backend": "torchoptics",
+        "device": "cuda",
+        "threads": 2,
+        "gpu_name": "NVIDIA GeForce RTX 3090 Ti"
+      }
+    },
+    {
+      "grid": "1um",
+      "backend": "chromatix",
+      "CV_percent": 35.650040234935275,
+      "solver_seconds": 122.117996,
+      "actual_execution_context": {
+        "backend": "chromatix",
+        "devices": [
+          "cuda:0"
+        ],
+        "x64_enabled": false,
+        "default_backend": "gpu",
+        "gpu_names": [
+          "NVIDIA GeForce RTX 3090 Ti"
+        ],
+        "environment": {
+          "python": "3.12.12 (main, Dec  5 2025, 20:21:41) [Clang 21.1.4 ]",
+          "executable": "/home/oxyflour/.venvs/oled-sparkle-chromatix/bin/python",
+          "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+          "processor": "x86_64",
+          "logical_cpus": 12,
+          "versions": {
+            "numpy": "2.5.4",
+            "Pillow": "13.0.0",
+            "torch": null,
+            "torchoptics": null,
+            "jax": "0.12.0.1",
+            "jaxlib": "0.12.0.1",
+            "jax-cuda13-plugin": "0.12.0.1",
+            "jax-cuda13-pjrt": "0.12.0.1",
+            "chromatix": "0.6.0",
+            "mitsuba": null,
+            "drjit": null
+          },
+          "environment_settings": {
+            "PYTHONPATH": null,
+            "OMP_NUM_THREADS": null,
+            "MKL_NUM_THREADS": null,
+            "JAX_PLATFORMS": "cuda",
+            "JAX_ENABLE_X64": null,
+            "DRJIT_LIBLLVM_PATH": null,
+            "SPARKLE_WSL_DISTRO": null,
+            "SPARKLE_WSL_PYTHON": null,
+            "XLA_PYTHON_CLIENT_PREALLOCATE": "false",
+            "XLA_PYTHON_CLIENT_MEM_FRACTION": "0.10"
+          }
+        },
+        "worker_solver_elapsed_seconds": 116.7353204220999,
+        "runtime": "wsl",
+        "wsl_distribution": "Ubuntu-22.04",
+        "worker_script": "/mnt/c/Projects/oled-sparkle/oled-ag-sparkle/scripts/chromatix_wsl.py",
+        "worker_command": [
+          "wsl.exe",
+          "--distribution",
+          "Ubuntu-22.04",
+          "--exec",
+          "env",
+          "-u",
+          "PYTHONPATH",
+          "-u",
+          "LD_LIBRARY_PATH",
+          "JAX_PLATFORMS=cuda",
+          "XLA_PYTHON_CLIENT_PREALLOCATE=false",
+          "XLA_PYTHON_CLIENT_MEM_FRACTION=0.10",
+          "PYTHONUNBUFFERED=1",
+          "/home/oxyflour/.venvs/oled-sparkle-chromatix/bin/python",
+          "/mnt/c/Projects/oled-sparkle/oled-ag-sparkle/scripts/chromatix_wsl.py",
+          "--request-dir",
+          "/mnt/c/Users/oxyfl/AppData/Local/Temp/chromatix-wsl-gb25xyg7"
+        ]
+      }
+    },
+    {
+      "grid": "1um",
+      "backend": "mitsuba",
+      "CV_percent": 38.234671553187404,
+      "solver_seconds": 242.221518,
+      "actual_execution_context": {
+        "backend": "mitsuba",
+        "variant": "cuda_ad_rgb"
+      }
+    },
+    {
+      "grid": "0p5um",
+      "backend": "torch",
+      "CV_percent": 35.82967504940195,
+      "solver_seconds": 153.786791,
+      "actual_execution_context": {
+        "backend": "torch",
+        "device": "cuda",
+        "threads": 2,
+        "gpu_name": "NVIDIA GeForce RTX 3090 Ti"
+      }
+    }
+  ],
+  "wave_relative_L2_vs_torch": {
+    "torchoptics": 1.4035157391845132e-06,
+    "chromatix": 2.1983640181133524e-05
+  },
+  "sampling_check": {
+    "coarse_CV_percent": 35.64978214842744,
+    "fine_CV_percent": 35.82967504940195,
+    "difference_percentage_points": 0.17989290097450805,
+    "relative_difference_percent": 0.5046115014827546,
+    "scope": "Two-level optical-grid sensitivity only; source sampling, padding, ray mesh and pupil convergence are not established."
+  },
+  "metric": "100*std(I, ddof=0)/mean(I), directly from all 400 area-averaged 50 um pixels",
+  "verified": [
+    "16-bit PNG input hashes",
+    "unchanged periodic OLED emission",
+    "same surface geometry and calibration across grids",
+    "independent area integration",
+    "CV from saved floats",
+    "three-wave-backend agreement",
+    "all five computations complete",
+    "offline HTML preserves original PNG bytes and all 10 NumPy downloads"
+  ],
+  "regression_tests": {
+    "run": 31,
+    "passed": 27,
+    "skipped": 4,
+    "log": "C:\\Projects\\oled-sparkle\\test-results\\logs\\validation-etched-ag.log",
+    "note": "Optional integration tests skipped in the CPU test environment; four production backends were run and audited separately on GPU."
+  }
+}

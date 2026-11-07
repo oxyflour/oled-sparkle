@@ -3,3 +3,4 @@ torchoptics
 # Windows Chromatix runs in WSL; install it there with JAX CUDA (references/windows-wsl.md).
 chromatix @ git+https://github.com/chromatix-team/chromatix.git@ce1482906fc663298613bb252bbf425e3be59839 ; sys_platform != "win32"
 mitsuba
+matplotlib>=3.7

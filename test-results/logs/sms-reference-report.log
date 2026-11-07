@@ -1,0 +1,50 @@
+REPORT: C:\Projects\oled-sparkle\test-results\oled-sms-reference\sparkle-report.html
+{
+  "records": [
+    {
+      "grid": "1um",
+      "backend": "torch",
+      "primary": 23.574746915763964,
+      "MWA": 5.291802720752523
+    },
+    {
+      "grid": "1um",
+      "backend": "torchoptics",
+      "primary": 23.574794033124032,
+      "MWA": 5.291731285078793
+    },
+    {
+      "grid": "1um",
+      "backend": "chromatix",
+      "primary": 23.574065069120596,
+      "MWA": 5.291655877699549
+    },
+    {
+      "grid": "1um",
+      "backend": "mitsuba",
+      "primary": 32.95557802883361,
+      "MWA": 5.409320692850004
+    },
+    {
+      "grid": "0p5um",
+      "backend": "torch",
+      "primary": 23.422030769134057,
+      "MWA": 5.135922532820018
+    },
+    {
+      "grid": "old-na-0p08",
+      "backend": "torch",
+      "primary": 5.181446571477961,
+      "MWA": 0.6864449816296588
+    }
+  ],
+  "flat": {
+    "primary_Fourier_percent": 0.11947172989477055,
+    "three_MWA_percent": 0.1499166313031693,
+    "not_used_for_division_or_subtraction": true
+  },
+  "sampling": {
+    "primary_difference_percentage_points": -0.1527161466299063,
+    "MWA_difference_percentage_points": -0.1558801879325049
+  }
+}

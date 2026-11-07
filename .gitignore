@@ -19,11 +19,26 @@ htmlcov/
 /*.zip
 !/oled-ag-sparkle-skill.zip
 /oled-ag-sparkle/outputs/
+/tmp/
+# Derived floating height arrays can be regenerated from the deterministic generator.
+/oled-ag-sparkle/assets/oled-1mm-etched-ag/height_um.npy
+/oled-ag-sparkle/assets/oled-1mm-etched-ag-pitch0p5/height_um.npy
 
 # Retain current reproducibility scripts and measured results
 /test-results/*
 !/test-results/run-comparison.ps1
 !/test-results/run-pit-comparison.ps1
+!/test-results/run-etched-ag.ps1
+!/test-results/plot-etched-ag.py
+!/test-results/oled-etched-ag/
+!/test-results/run-sms-reference.ps1
+!/test-results/report-sms-reference.py
+!/test-results/oled-sms-reference/
+# Large self-contained reports are rebuilt from the retained floating-point data.
+/test-results/oled-sms-reference/report.html
+/test-results/oled-sms-reference/sparkle-report.html
+/test-results/oled-sms-reference/overview.html
+/test-results/oled-sms-reference/*/report.html
 !/test-results/check-pit-sampling.py
 !/test-results/compare-random-pits.py
 !/test-results/finalize-random-pits.py
@@ -86,6 +101,10 @@ htmlcov/
 !/test-results/logs/oled-1mm-pits3to5um-tiled-50um.log
 !/test-results/logs/pit-sampling-tiled-0p5um.log
 !/test-results/logs/validation-periodic.log
+!/test-results/logs/validation-etched-ag.log
+!/test-results/logs/etched-ag.log
+!/test-results/logs/sms-reference-report.log
+!/test-results/logs/validation-sms-reference.log
 !/test-results/logs/validation-periodic-input.log
 !/test-results/logs/oled-1mm-original-periodic-50um.log
 !/test-results/logs/oled-1mm-pits3to5um-periodic-50um.log
