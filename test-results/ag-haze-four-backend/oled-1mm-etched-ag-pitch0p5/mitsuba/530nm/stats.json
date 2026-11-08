@@ -1,0 +1,63 @@
+{
+  "haze_percent": 0.6131831250946966,
+  "wavelength_nm": 530.0,
+  "acceptance_half_angle_deg": 2.5,
+  "n_in": 1.5,
+  "n_out": 1.0,
+  "physics_group": "geometric_rays",
+  "height_grid_yx": [
+    2000,
+    2000
+  ],
+  "height_pitch_um": 0.5,
+  "field_um_xy": [
+    1000.0,
+    1000.0
+  ],
+  "incident_rays": 8000000,
+  "hit_rays": 8000000,
+  "transmitted_rays": 8000000,
+  "mesh_vertices": 4004001,
+  "mesh_faces": 8000000,
+  "transmission_fraction": 0.959999742299974,
+  "reflection_fraction": 0.04000025416095741,
+  "energy_balance_error": 3.539068593738648e-09,
+  "definition": "100 * transmitted ray power outside acceptance cone / all forward transmitted ray power",
+  "boundary": "Periodically closed height mesh, N*dx projected area, two triangle-centroid rays per original grid cell",
+  "model_status": "Single-interface geometric refraction with native unpolarized Fresnel transmission; no diffraction or multiple scattering",
+  "backend": "mitsuba",
+  "surface_id": "oled-1mm-etched-ag-pitch0p5",
+  "input": {
+    "path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag-pitch0p5\\heightfield.png",
+    "sha256": "9a495dc565e3bb2b5ef725e9950f05a8958cc70e1364978b352607b1d91c4c3d",
+    "height_range_um": 0.5361845861372564,
+    "height_pitch_um": 0.5,
+    "periodicity": "source metadata",
+    "roughness": {
+      "Sa_um": 0.10000000480208875,
+      "Sq_um": 0.11851254239602815,
+      "Sz_um": 0.5155668647560674,
+      "height_min_um": 0.010308883524601242,
+      "height_max_um": 0.5258757482806686,
+      "rms_slope": 0.03302164002728051,
+      "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+    },
+    "sidecar_path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag-pitch0p5\\heightfield.source.json",
+    "sidecar_sha256": "fbaccda92c79fd07ebd9ac07a725f562f2a550bdbb1a7f786277fcc86cdd4033"
+  },
+  "reference_numpy_percent": 2.730997434174413,
+  "difference_vs_numpy_percentage_points": -2.1178143090797166,
+  "execution_context": {
+    "library": "Mitsuba",
+    "library_version": "3.9.1",
+    "variant": "cuda_ad_rgb",
+    "native_operations": "create_mitsuba_mesh -> ray_intersect -> fresnel -> refract",
+    "ray_chunk": 65536,
+    "normal": "geometric triangle normal"
+  },
+  "solver_seconds": 13.356864400207996,
+  "started_at_utc": "2026-11-08T05:42:26.803792+00:00",
+  "finished_at_utc": "2026-11-08T05:42:53.333754+00:00",
+  "flat_control_percent": 0.0,
+  "angular_curve_csv": "oled-1mm-etched-ag-pitch0p5/mitsuba/530nm/angular.csv"
+}

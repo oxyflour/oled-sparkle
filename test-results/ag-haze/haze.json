@@ -1,0 +1,347 @@
+{
+  "kind": "ag-transmission-haze-estimate",
+  "created_at_utc": "2026-11-08T06:12:25.827456+00:00",
+  "elapsed_seconds": 5.677018400281668,
+  "calculator_sha256": "d7ab851816864c6d43f984bd395352de94148dad8349b2bf88ad202caad68f2e",
+  "height_reader_sha256": "fa1e10c2ff4e2e9039436ba692aa7365905d202c6f99d8d35549c07b61a9183d",
+  "records": [
+    {
+      "haze_percent": 2.332374600185153,
+      "wavelength_nm": 450.00000000000006,
+      "n_in": 1.5,
+      "n_out": 1.0,
+      "acceptance_half_angle_deg": 2.5,
+      "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+      "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+      "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+      "height_grid_yx": [
+        1000,
+        1000
+      ],
+      "height_pitch_um": 1.0,
+      "field_um_xy": [
+        1000.0,
+        1000.0
+      ],
+      "zero_order_forward_flux_percent": 49.803569834885515,
+      "parseval_relative_error": 2.220446049250313e-16,
+      "evanescent_field_power_percent": 0.0,
+      "spectral_edge_field_power_percent": 5.366210925909476e-06,
+      "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+      "complete_azimuth_angle_limit_deg": 13.002878162913946,
+      "near_axis_angle_step_deg_xy": [
+        0.02578310165106678,
+        0.02578310165106678
+      ],
+      "acceptance_frequency_cycles_per_um": 0.09693197192296887,
+      "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+      "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim",
+      "surface_id": "oled-1mm-etched-ag",
+      "input": {
+        "path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag\\heightfield.png",
+        "sha256": "de8f07d6beac7e0817332b18ae12ee9ccf8008e4a4c8f4a0f87646306f2d5c7e",
+        "height_range_um": 0.5361845861372564,
+        "height_pitch_um": 1.0,
+        "periodicity": "source metadata",
+        "roughness": {
+          "Sa_um": 0.09999928019237102,
+          "Sq_um": 0.11851187462621333,
+          "Sz_um": 0.5150186828117853,
+          "height_min_um": 0.010832509111935451,
+          "height_max_um": 0.5258511919237208,
+          "rms_slope": 0.03243637919612731,
+          "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+        },
+        "sidecar_path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag\\heightfield.source.json",
+        "sidecar_sha256": "ca954aadf354c047af90764f80227241af5c0f492c0122a830b4a105a0f7a241"
+      },
+      "angular_curve_csv": "oled-1mm-etched-ag-450nm-angular.csv",
+      "flat_control_percent": 7.945995597302689e-32
+    },
+    {
+      "haze_percent": 2.7309503094158543,
+      "wavelength_nm": 530.0,
+      "n_in": 1.5,
+      "n_out": 1.0,
+      "acceptance_half_angle_deg": 2.5,
+      "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+      "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+      "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+      "height_grid_yx": [
+        1000,
+        1000
+      ],
+      "height_pitch_um": 1.0,
+      "field_um_xy": [
+        1000.0,
+        1000.0
+      ],
+      "zero_order_forward_flux_percent": 60.61303065531792,
+      "parseval_relative_error": 2.220446049250313e-16,
+      "evanescent_field_power_percent": 0.0,
+      "spectral_edge_field_power_percent": 1.911150008492189e-06,
+      "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+      "complete_azimuth_angle_limit_deg": 15.366952797777708,
+      "near_axis_angle_step_deg_xy": [
+        0.03036676456360444,
+        0.03036676456360444
+      ],
+      "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+      "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+      "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim",
+      "surface_id": "oled-1mm-etched-ag",
+      "input": {
+        "path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag\\heightfield.png",
+        "sha256": "de8f07d6beac7e0817332b18ae12ee9ccf8008e4a4c8f4a0f87646306f2d5c7e",
+        "height_range_um": 0.5361845861372564,
+        "height_pitch_um": 1.0,
+        "periodicity": "source metadata",
+        "roughness": {
+          "Sa_um": 0.09999928019237102,
+          "Sq_um": 0.11851187462621333,
+          "Sz_um": 0.5150186828117853,
+          "height_min_um": 0.010832509111935451,
+          "height_max_um": 0.5258511919237208,
+          "rms_slope": 0.03243637919612731,
+          "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+        },
+        "sidecar_path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag\\heightfield.source.json",
+        "sidecar_sha256": "ca954aadf354c047af90764f80227241af5c0f492c0122a830b4a105a0f7a241"
+      },
+      "angular_curve_csv": "oled-1mm-etched-ag-530nm-angular.csv",
+      "flat_control_percent": 7.894321493319612e-32
+    },
+    {
+      "haze_percent": 3.310192359105286,
+      "wavelength_nm": 650.0,
+      "n_in": 1.5,
+      "n_out": 1.0,
+      "acceptance_half_angle_deg": 2.5,
+      "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+      "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+      "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+      "height_grid_yx": [
+        1000,
+        1000
+      ],
+      "height_pitch_um": 1.0,
+      "field_um_xy": [
+        1000.0,
+        1000.0
+      ],
+      "zero_order_forward_flux_percent": 71.79044807340884,
+      "parseval_relative_error": 4.440892098500626e-16,
+      "evanescent_field_power_percent": 0.0,
+      "spectral_edge_field_power_percent": 5.609275965455377e-07,
+      "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+      "complete_azimuth_angle_limit_deg": 18.965574988848577,
+      "near_axis_angle_step_deg_xy": [
+        0.03724225930597958,
+        0.03724225930597958
+      ],
+      "acceptance_frequency_cycles_per_um": 0.06710674979282462,
+      "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+      "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim",
+      "surface_id": "oled-1mm-etched-ag",
+      "input": {
+        "path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag\\heightfield.png",
+        "sha256": "de8f07d6beac7e0817332b18ae12ee9ccf8008e4a4c8f4a0f87646306f2d5c7e",
+        "height_range_um": 0.5361845861372564,
+        "height_pitch_um": 1.0,
+        "periodicity": "source metadata",
+        "roughness": {
+          "Sa_um": 0.09999928019237102,
+          "Sq_um": 0.11851187462621333,
+          "Sz_um": 0.5150186828117853,
+          "height_min_um": 0.010832509111935451,
+          "height_max_um": 0.5258511919237208,
+          "rms_slope": 0.03243637919612731,
+          "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+        },
+        "sidecar_path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag\\heightfield.source.json",
+        "sidecar_sha256": "ca954aadf354c047af90764f80227241af5c0f492c0122a830b4a105a0f7a241"
+      },
+      "angular_curve_csv": "oled-1mm-etched-ag-650nm-angular.csv",
+      "flat_control_percent": 7.800124284882789e-32
+    },
+    {
+      "haze_percent": 2.3324394780383746,
+      "wavelength_nm": 450.00000000000006,
+      "n_in": 1.5,
+      "n_out": 1.0,
+      "acceptance_half_angle_deg": 2.5,
+      "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+      "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+      "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+      "height_grid_yx": [
+        2000,
+        2000
+      ],
+      "height_pitch_um": 0.5,
+      "field_um_xy": [
+        1000.0,
+        1000.0
+      ],
+      "zero_order_forward_flux_percent": 49.803147593874975,
+      "parseval_relative_error": 1.1102230246251565e-16,
+      "evanescent_field_power_percent": 0.0,
+      "spectral_edge_field_power_percent": 5.134419277049871e-09,
+      "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+      "complete_azimuth_angle_limit_deg": 26.74368395040301,
+      "near_axis_angle_step_deg_xy": [
+        0.02578310165106678,
+        0.02578310165106678
+      ],
+      "acceptance_frequency_cycles_per_um": 0.09693197192296887,
+      "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+      "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim",
+      "surface_id": "oled-1mm-etched-ag-pitch0p5",
+      "input": {
+        "path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag-pitch0p5\\heightfield.png",
+        "sha256": "9a495dc565e3bb2b5ef725e9950f05a8958cc70e1364978b352607b1d91c4c3d",
+        "height_range_um": 0.5361845861372564,
+        "height_pitch_um": 0.5,
+        "periodicity": "source metadata",
+        "roughness": {
+          "Sa_um": 0.10000000480208875,
+          "Sq_um": 0.11851254239602815,
+          "Sz_um": 0.5155668647560674,
+          "height_min_um": 0.010308883524601242,
+          "height_max_um": 0.5258757482806686,
+          "rms_slope": 0.03302164002728051,
+          "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+        },
+        "sidecar_path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag-pitch0p5\\heightfield.source.json",
+        "sidecar_sha256": "fbaccda92c79fd07ebd9ac07a725f562f2a550bdbb1a7f786277fcc86cdd4033"
+      },
+      "angular_curve_csv": "oled-1mm-etched-ag-pitch0p5-450nm-angular.csv",
+      "flat_control_percent": 7.536328687727145e-32
+    },
+    {
+      "haze_percent": 2.730997434174413,
+      "wavelength_nm": 530.0,
+      "n_in": 1.5,
+      "n_out": 1.0,
+      "acceptance_half_angle_deg": 2.5,
+      "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+      "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+      "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+      "height_grid_yx": [
+        2000,
+        2000
+      ],
+      "height_pitch_um": 0.5,
+      "field_um_xy": [
+        1000.0,
+        1000.0
+      ],
+      "zero_order_forward_flux_percent": 60.61266888346813,
+      "parseval_relative_error": 2.220446049250313e-16,
+      "evanescent_field_power_percent": 0.0,
+      "spectral_edge_field_power_percent": 3.701004965120179e-09,
+      "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+      "complete_azimuth_angle_limit_deg": 32.00545482776425,
+      "near_axis_angle_step_deg_xy": [
+        0.03036676456360444,
+        0.03036676456360444
+      ],
+      "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+      "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+      "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim",
+      "surface_id": "oled-1mm-etched-ag-pitch0p5",
+      "input": {
+        "path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag-pitch0p5\\heightfield.png",
+        "sha256": "9a495dc565e3bb2b5ef725e9950f05a8958cc70e1364978b352607b1d91c4c3d",
+        "height_range_um": 0.5361845861372564,
+        "height_pitch_um": 0.5,
+        "periodicity": "source metadata",
+        "roughness": {
+          "Sa_um": 0.10000000480208875,
+          "Sq_um": 0.11851254239602815,
+          "Sz_um": 0.5155668647560674,
+          "height_min_um": 0.010308883524601242,
+          "height_max_um": 0.5258757482806686,
+          "rms_slope": 0.03302164002728051,
+          "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+        },
+        "sidecar_path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag-pitch0p5\\heightfield.source.json",
+        "sidecar_sha256": "fbaccda92c79fd07ebd9ac07a725f562f2a550bdbb1a7f786277fcc86cdd4033"
+      },
+      "angular_curve_csv": "oled-1mm-etched-ag-pitch0p5-530nm-angular.csv",
+      "flat_control_percent": 7.315880898401518e-32
+    },
+    {
+      "haze_percent": 3.3102390714424126,
+      "wavelength_nm": 650.0,
+      "n_in": 1.5,
+      "n_out": 1.0,
+      "acceptance_half_angle_deg": 2.5,
+      "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+      "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+      "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+      "height_grid_yx": [
+        2000,
+        2000
+      ],
+      "height_pitch_um": 0.5,
+      "field_um_xy": [
+        1000.0,
+        1000.0
+      ],
+      "zero_order_forward_flux_percent": 71.79016963971263,
+      "parseval_relative_error": 2.220446049250313e-16,
+      "evanescent_field_power_percent": 0.0,
+      "spectral_edge_field_power_percent": 2.46058854091399e-09,
+      "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+      "complete_azimuth_angle_limit_deg": 40.541601873504526,
+      "near_axis_angle_step_deg_xy": [
+        0.03724225930597958,
+        0.03724225930597958
+      ],
+      "acceptance_frequency_cycles_per_um": 0.06710674979282462,
+      "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+      "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim",
+      "surface_id": "oled-1mm-etched-ag-pitch0p5",
+      "input": {
+        "path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag-pitch0p5\\heightfield.png",
+        "sha256": "9a495dc565e3bb2b5ef725e9950f05a8958cc70e1364978b352607b1d91c4c3d",
+        "height_range_um": 0.5361845861372564,
+        "height_pitch_um": 0.5,
+        "periodicity": "source metadata",
+        "roughness": {
+          "Sa_um": 0.10000000480208875,
+          "Sq_um": 0.11851254239602815,
+          "Sz_um": 0.5155668647560674,
+          "height_min_um": 0.010308883524601242,
+          "height_max_um": 0.5258757482806686,
+          "rms_slope": 0.03302164002728051,
+          "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+        },
+        "sidecar_path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag-pitch0p5\\heightfield.source.json",
+        "sidecar_sha256": "fbaccda92c79fd07ebd9ac07a725f562f2a550bdbb1a7f786277fcc86cdd4033"
+      },
+      "angular_curve_csv": "oled-1mm-etched-ag-pitch0p5-650nm-angular.csv",
+      "flat_control_percent": 6.899900100618648e-32
+    }
+  ],
+  "references": [
+    {
+      "title": "ASTM D1003-21, haze and luminous transmittance measurement",
+      "url": "https://store.astm.org/d1003-21.html",
+      "use": "Defines the measurement context; this scalar monochromatic calculation does not implement the complete standard."
+    },
+    {
+      "title": "Simonsen et al., Phys. Rev. A 79, 063813 (2009), sections III and IV.1",
+      "url": "https://arxiv.org/html/0904.3753",
+      "use": "Normalize angular scattered power by total transmitted power; 2.5 degree acceptance interval. Its 1D phase-perturbation approximation is not used as a 2D solver here."
+    }
+  ],
+  "limitations": [
+    "Normal-incidence plane wave at a single dielectric rough interface; identical local thin phase approximation to the sparkle wave model.",
+    "No OLED source pattern, camera NA, focal blur or pixel integration: haze is a separate angular transmission measurement.",
+    "No polarization, angle-dependent Fresnel factors, multiple reflections, bulk scattering, absorption or unresolved fine roughness.",
+    "Only represented propagating directions are integrated. Report angular coverage, spectral edge power and independently sampled grid convergence.",
+    "No claim of absolute total transmittance; haze is a ratio of transmitted scalar flux.",
+    "Separate wavelengths are not luminous haze. A white-light value requires source spectrum, V(lambda), dispersion and transmitted-power weighting, plus the instrument correction for a standard measurement."
+  ]
+}

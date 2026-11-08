@@ -1,0 +1,3 @@
+interface:
+  display_name: "AG Haze"
+  short_description: "Estimate AG haze from calibrated periodic height maps"

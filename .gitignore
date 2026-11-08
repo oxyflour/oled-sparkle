@@ -45,6 +45,8 @@ htmlcov/
 !/test-results/oled-sms-current/
 !/test-results/oled-layout-comparison/
 !/test-results/oled-camera-comparison/
+!/test-results/ag-haze/
+!/test-results/ag-haze-four-backend/
 # Large self-contained reports are rebuilt from the retained floating-point data.
 /test-results/oled-layout-comparison/*/*/report.html
 /test-results/oled-sms-reference/report.html
@@ -126,6 +128,10 @@ htmlcov/
 !/test-results/logs/oled-layout-comparison.log
 !/test-results/logs/oled-camera-comparison.log
 !/test-results/logs/validation-camera.log
+!/test-results/logs/validation-haze.log
+!/test-results/logs/ag-haze-four-backend.log
+!/test-results/logs/validation-haze-four-backend.log
+!/test-results/logs/validation-haze-wsl.log
 !/test-results/logs/default-etched-ag.log
 !/test-results/logs/validation-periodic-input.log
 !/test-results/logs/oled-1mm-original-periodic-50um.log

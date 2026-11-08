@@ -13,6 +13,11 @@ The bundled default heightfield is the etched-AG Voronoi surface in
 `assets/oled-1mm-etched-ag/heightfield.png`. `run_oled_demo.py` is the current
 default-example entrypoint; `run_legacy_demo.py` requires an explicit historical fixture.
 
+For transmission haze of the heightfield, use the separate `ag-haze` skill and
+`scripts/calculate_haze.py`. Haze uses uniform illumination and angular flux,
+not OLED emission or camera brightness; its monochromatic surface-only estimate
+must remain distinct from luminous-haze measurements and sparkle contrast.
+
 ## Required result
 
 Use the supplied height map and a sourced, representative OLED emission image.

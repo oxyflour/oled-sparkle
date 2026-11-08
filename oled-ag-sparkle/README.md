@@ -33,6 +33,7 @@ The supported script entrypoints are:
 | `run_oled_demo.py` | Current default OLED example, all four backends. Select `--height-surface` and `--pitch-um`; computes raw brightness CV. |
 | `run_sms_reference.py` | Full-green, no-LDF separated sparkle. Default `--stage all` runs six reference cases; `--layouts` selects equal-pitch camera sampling followed by common spectral separation. |
 | `generate_report.py` | Rebuild saved reports without optics. Default `--kind brightness`; choose `--kind sms-reference` explicitly for separated sparkle. |
+| `calculate_haze.py` | Monochromatic heightfield haze: NumPy estimate or `--backend all` for actual four native backends, with uniform illumination and saved angular-power data. |
 | `sparkle_multibackend.py` | General solver CLI for custom inputs and physical/numerical parameters. |
 | `run_legacy_demo.py` | Historical test fixtures only; requires `--example quick` or `--example 1mm`, defaults to Torch. |
 | `prepare_*.py` | Input generators used by the runners, or directly for input-only work. |
@@ -179,6 +180,72 @@ pictures in `assets/oled-layout-reference/` are review material. The existing
 `prepare_tiled_emission.py --layout rgb-delta` generates individual inputs.
 `--pixel-pitch-um` and `--emission-texel-um` change inputs; the fixed 840um camera
 ROI requires compatible full periods.
+
+## Surface transmission haze
+
+The independent `../ag-haze/SKILL.md` invokes `scripts/calculate_haze.py`;
+`../ag-haze/agents/openai.yaml` provides discovery metadata. This new angular
+observable cannot use the existing camera-pupil-clipped brightness arrays.
+The calculator reuses the existing PNG height reader and roughness function;
+it does not change the sparkle solver, input heights or their frozen hashes.
+
+```bash
+python scripts/calculate_haze.py --height assets/oled-1mm-etched-ag/heightfield.png assets/oled-1mm-etched-ag-pitch0p5/heightfield.png --wavelength-nm 450 530 650 --out ../test-results/ag-haze
+```
+
+Defaults: current etched AG, 530 nm, n_in=1.5, n_out=1, normal incidence,
+2.5-degree acceptance half-angle. The 530 nm estimate is 2.730950% on the 1um
+grid and 2.730997% at 0.5um. These are surface-only scalar results, not a match
+to the paper's 20-40% haze samples or a standard luminous-haze measurement.
+
+Read pitch and black-to-white encoding range from the sidecar; never use Sz
+as the range. Custom maps require calibration and justified periodicity;
+`--assume-periodic` acknowledges that assumption when metadata does not declare it.
+No aperture, padding or apodization is added. The output `haze.json` records
+source/code hashes, parameters, haze, flat null, Parseval error, spectral edge
+power and angular coverage. `*-angular.csv` records the cumulative angular flux.
+Finite frequency coverage and unmeasured fine roughness remain limitations;
+refining a genuinely sampled surface is different from interpolating an image.
+
+The implemented 2D angular integral includes all represented propagating forward
+flux in its denominator and uses Cartesian Fourier-bin weight |A|^2 cos(theta).
+No camera NA or OLED source enters this calculation. The multi-wavelength
+option gives independent monochromatic values; luminous haze requires the
+illuminant, V(lambda), dispersion, transmitted-power weights and instrument
+correction. See [physics-and-backends.md](references/physics-and-backends.md)
+for the definition, derivation and sources.
+
+For actual native-backend execution, use a separate protocol directory:
+
+```bash
+python scripts/calculate_haze.py --backend all --height assets/oled-1mm-etched-ag/heightfield.png assets/oled-1mm-etched-ag-pitch0p5/heightfield.png --out ../test-results/ag-haze-four-backend-new
+python scripts/generate_report.py --kind haze --results ../test-results/ag-haze-four-backend
+```
+
+The retained comparison ran eight main GPU jobs and native flat controls at
+530nm, n=1.5->1 and 2.5 degrees. Torch, TorchOptics and Chromatix give
+2.730950% (1um) / 2.730997% (0.5um), matching the NumPy phase-screen reference.
+Mitsuba gives 0.553996% / 0.613183%. Its +0.059187 percentage-point grid shift
+(about 10.7% relative) remains visible; do not label it fully grid-converged.
+The three wave libraries actually propagate their plane-illuminated phase fields
+100um through the outgoing homogeneous medium, whose propagation phases leave
+angular powers unchanged. Agreement is numerical consistency of one approximate
+boundary model. Mitsuba reuses the existing mesh constructor with periodic
+endpoints and traces one normal-incidence ray per projected triangle centroid,
+using native Fresnel/refraction and geometric normals. It includes Fresnel
+weights but omits diffraction. Neither model is established as measured-glass
+truth by this comparison.
+
+The calculator freezes inputs and code hashes before native execution and
+refuses an existing native protocol. `--backend` can select one backend;
+`--device`, `--propagation-um`, `--mitsuba-variant` and `--ray-chunk` control its
+declared execution. Windows Chromatix reuses the existing CUDA-only WSL adapter.
+The original OLED solver and frozen solver hash are unchanged.
+Each case stores `stats.json`, `angular.csv` and (for waves) the actual unshifted
+Fourier-bin `angular_power.npy`. The report CLI audits saved powers and curves,
+ray coverage and energy balance, then writes `validation.json`, plots and
+`haze.html` without launching solvers. Inputs, runtime contexts and timings are
+in `haze.json` and `protocol.json`; no new wrapper scripts are introduced.
 
 ## Outputs
 

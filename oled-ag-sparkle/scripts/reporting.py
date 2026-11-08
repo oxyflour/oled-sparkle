@@ -1222,3 +1222,123 @@ def _write_sms_report(results, records, arrays, plots):
     (results / 'sparkle.html').write_text(overview, encoding='utf-8')
     (results / 'solver-comparison.html').write_text(overview, encoding='utf-8')
     return results / 'sparkle.html'
+
+
+def write_haze_report(results, output=None):
+    """Audit and plot saved four-backend haze data; never launch a solver."""
+    import csv
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    from calculate_haze import transmission_haze, load_surface
+
+    results = Path(results).resolve()
+    data = json.loads((results/'haze.json').read_text(encoding='utf-8'))
+    if data['kind'] != 'ag-haze-four-backend':
+        raise ValueError('--kind haze requires a saved native-backend comparison')
+    protocol = json.loads((results/'protocol.json').read_text(encoding='utf-8'))
+    assert data['protocol_sha256'] == sha256(results/'protocol.json')
+    records = data['records']
+    declared = datetime.fromisoformat(protocol['declared_at_utc'])
+    curves, validations = {}, []
+    for record in records:
+        assert datetime.fromisoformat(record['started_at_utc']) >= declared
+        assert sha256(record['input']['path']) == record['input']['sha256']
+        folder = (results/record['angular_curve_csv']).parent
+        assert json.loads((folder/'stats.json').read_text(encoding='utf-8')) == record
+        with (results/record['angular_curve_csv']).open(encoding='utf-8', newline='') as stream:
+            rows = [{k: float(v) for k, v in row.items()} for row in csv.DictReader(stream)]
+        at_cutoff = next(row for row in rows if row['half_angle_deg'] == record['acceptance_half_angle_deg'])
+        error = abs(at_cutoff['outside_cone_percent']-record['haze_percent'])
+        assert error < 1e-10
+        if record['physics_group'] == 'scalar_phase_screen_wave':
+            power = np.load(folder/'angular_power.npy', allow_pickle=False)
+            h, pitch, _ = load_surface(record['input']['path'], record['input']['height_pitch_um'],
+                record['input']['height_range_um'], record['input']['periodicity'] == 'explicit user assumption')
+            measured, _ = transmission_haze(h, pitch*1e-6, record['wavelength_nm']*1e-9,
+                record['n_in'], record['n_out'], record['acceptance_half_angle_deg'], angular_power=power)
+            assert abs(measured['haze_percent']-record['haze_percent']) < 1e-10
+        else:
+            assert record['incident_rays'] == record['hit_rays'] == record['mesh_faces']
+            assert record['energy_balance_error'] < 1e-6
+        assert record['flat_control_percent'] < 1e-12
+        key = (record['surface_id'], record['backend'], record['wavelength_nm'])
+        curves[key] = rows
+        validations.append({'surface_id': record['surface_id'], 'backend': record['backend'],
+                            'curve_metric_absolute_error': error, 'passed': True})
+    surfaces = list(dict.fromkeys(r['surface_id'] for r in records))
+    backends = list(dict.fromkeys(r['backend'] for r in records))
+    wavelengths = list(dict.fromkeys(r['wavelength_nm'] for r in records))
+    figures = []
+    for wavelength in wavelengths:
+        fig, axes = plt.subplots(1, 2, figsize=(12, 4.8), layout='constrained')
+        x = np.arange(len(backends))
+        width = .75/len(surfaces)
+        for index, surface in enumerate(surfaces):
+            selection = [next(r for r in records if r['surface_id'] == surface and
+                         r['backend'] == b and r['wavelength_nm'] == wavelength) for b in backends]
+            axes[0].bar(x-.375+width*(index+.5), [r['haze_percent'] for r in selection], width,
+                        label=f'{selection[0]["height_pitch_um"]:g} um height grid')
+        reference = next(r['reference_numpy_percent'] for r in records if r['wavelength_nm'] == wavelength)
+        axes[0].axhline(reference, color='gray', ls='--', label=f'NumPy phase screen: {reference:.6f}%')
+        axes[0].set(xticks=x, xticklabels=backends, ylabel='Transmission haze [%]', title='Actual native backend runs')
+        axes[0].legend(fontsize=8)
+        for backend in backends:
+            rows = curves[(surfaces[0], backend, wavelength)]
+            angles = np.array([r['half_angle_deg'] for r in rows])
+            outside = np.array([r['outside_cone_percent'] for r in rows])
+            valid = (angles <= 6) & (outside > 1e-8)
+            axes[1].plot(angles[valid], outside[valid], label=backend)
+        axes[1].axvline(records[0]['acceptance_half_angle_deg'], color='gray', ls='--')
+        axes[1].set(xlabel='Acceptance half-angle [degrees]', ylabel='Power outside cone [%]',
+                    xlim=(0, 6), yscale='log', title='Angular power integral | main height grid')
+        axes[1].legend(fontsize=8)
+        fig.suptitle(f'Uniform normal incidence | {wavelength:g} nm | wave phase-screen vs geometric refraction')
+        path = results/f'haze-comparison-{wavelength:g}nm.png'
+        fig.savefig(path, dpi=150)
+        plt.close(fig)
+        figures.append(path)
+    table = []
+    for r in records:
+        flat = r['flat_control_percent']
+        physics = '薄相位屏波动' if r['physics_group'] == 'scalar_phase_screen_wave' else '网格折射 / Fresnel'
+        table.append(f'<tr><td>{r["height_pitch_um"]:g}</td><td>{r["wavelength_nm"]:g}</td><td>{escape(r["backend"])}</td>'
+                     f'<td>{physics}</td><td class="metric">{r["haze_percent"]:.6f}</td>'
+                     f'<td>{r["reference_numpy_percent"]:.6f}</td><td>{r["difference_vs_numpy_percentage_points"]:+.6f}</td>'
+                     f'<td>{flat:.3g}</td><td>{r["solver_seconds"]:.3f}</td></tr>')
+    document = '<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
+    document += '<title>AG 雾度 · 四后端实际计算</title><style>'+CSS+'</style></head><body><header><h1>AG 雾度 · 四后端实际计算</h1>'
+    document += f'<p>同一校准高度图、均匀正入射、n={records[0]["n_in"]:g}→{records[0]["n_out"]:g}、波长 {escape(str(wavelengths))} nm、{records[0]["acceptance_half_angle_deg"]:g}° 接收半角。三个波动后端调用各自原生传播；Mitsuba 调用网格求交及原生折射/Fresnel。无 OLED 发光图、相机光瞳、像元积分或额外滤波。</p></header><main>'
+    document += '<section><h2>结果与 NumPy 近似对照</h2><div class="scroll"><table><thead><tr><th>网格 [µm]</th><th>波长 [nm]</th><th>后端</th><th>模型</th><th>雾度 [%]</th><th>NumPy [%]</th><th>差 [百分点]</th><th>平面控制 [%]</th><th>求解 [s]</th></tr></thead><tbody>'+''.join(table)+'</tbody></table></div>'
+    for path in figures:
+        document += '<figure class="comparison-figure">'+_preview(path, max_size=(2200, 1000))+'</figure>'
+    document += f'</section><section><h2>如何理解后端一致与差异</h2><p>Torch、TorchOptics 和 Chromatix 仍然使用同一个薄相位屏近似；实际执行出射介质中的 {protocol["parameters"]["propagation_um"]:g} µm ASM 传播后，再读取角谱功率。均匀介质传播只改变传播模的相位，不改变其角功率，因此与未传播的 NumPy 估算一致是预期的数值检查，不是对薄相位面物理准确性的独立验证。</p>'
+    document += '<p>Mitsuba 将同一周期高度场补齐端点，建立完整周期投影范围的三角网格。每个三角形按投影面积在重心发射一条正入射光线，使用几何面法线和原生 Fresnel/refract 计算单次透射。透射光线携带的功率直接进入角度积分，不再乘一次 cosθ。这个模型包含局部折射和 Fresnel 权重，但缺少衍射；数值差异不等同于任一模型已验证为真实玻璃。</p>'
+    document += '<p>波动模型的 Cartesian 角谱功率按 cosθ 换算法向通量；2.5° 锥内的 DC 与漫射通量均包含在分母。波动角度覆盖受高度采样限制，几何模型则受三角网格法线离散化影响。0.5 µm 是同一生成表面的独立采样，不是对粗图插值。两种模型均未模拟体散射、多次界面作用或标准白光积分球的仪器校正。</p></section>'
+    geometric = sorted((r for r in records if r['physics_group'] == 'geometric_rays' and
+                        r['wavelength_nm'] == wavelengths[0]), key=lambda r: r['height_pitch_um'], reverse=True)
+    if len(geometric) == 2 and geometric[0]['haze_percent'] > 0:
+        delta = geometric[1]['haze_percent']-geometric[0]['haze_percent']
+        document += f'<section><h2>几何模型的网格敏感性</h2><p>Mitsuba 从 {geometric[0]["height_pitch_um"]:g} µm 到 {geometric[1]["height_pitch_um"]:g} µm 的变化为 {delta:+.6f} 个百分点，相对变化 {100*delta/geometric[0]["haze_percent"]:+.2f}%。这两级结果仍显示可见的网格敏感性，不能据此声称几何结果已充分收敛。波动与几何模型的差值也不构成真实雾度的误差上下界。</p></section>'
+    document += '<section><h2>实际运行与输入追溯</h2>'
+    for r in records:
+        folder = (results/r['angular_curve_csv']).parent
+        relative = folder.relative_to(results).as_posix()+'/'
+        document += '<details><summary>'+escape(f'{r["surface_id"]} / {r["backend"]} / {r["wavelength_nm"]:g} nm')+'</summary>'
+        document += '<pre>'+escape(json.dumps({'input': r['input'], 'execution_context': r['execution_context'],
+            'started_at_utc': r['started_at_utc'], 'finished_at_utc': r['finished_at_utc']}, ensure_ascii=False, indent=2))+'</pre>'
+        for filename in ('stats.json', 'angular.csv')+(('angular_power.npy',) if r['physics_group'] != 'geometric_rays' else ()):
+            document += '<a href="'+relative+filename+'">'+filename+'</a> · '
+        document += '</details>'
+    document += '<p><a href="haze.json">全部原始统计</a> · <a href="protocol.json">计算前固定方案</a> · <a href="validation.json">浮点及曲线审计</a></p></section></main></body></html>'
+    (results/'validation.json').write_text(json.dumps({'status': 'passed', 'checks': validations}, indent=2), encoding='utf-8')
+    entry = results/'haze.html'
+    entry.write_text(document, encoding='utf-8')
+    if output:
+        import re
+        destination = Path(output).resolve()
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        prefix = os.path.relpath(results, destination.parent).replace(os.sep, '/')+'/'
+        destination.write_text(re.sub(r'href="(?!https:|data:)([^"]+)"', lambda m: 'href="'+prefix+m[1]+'"', document), encoding='utf-8')
+        return destination
+    return entry

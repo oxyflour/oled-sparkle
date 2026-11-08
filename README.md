@@ -8,8 +8,9 @@
 |---|---|
 | `run_oled_demo.py` | 当前默认 OLED 用例。默认蚀刻 AG、1 µm 网格、四后端；`--height-surface` 选择表面，`--pitch-um .5` 作网格复核。输出原始亮度 CV。 |
 | `run_sms_reference.py` | 全绿、无 LDF 的分离闪点流程。默认 `--stage all` 运行六个参考工况；加 `--layouts` 进行统一间距、亮度与测量带宽的多排列比较。 |
-| `generate_report.py` | 唯一报告 CLI。默认重建原始亮度报告；`--kind sms-reference` 按 `protocol.json` 重建原参考流程或多排列分离闪点报告，不重跑光学。 |
+| `generate_report.py` | 唯一报告 CLI。默认原始亮度报告；`--kind sms-reference` 重建分离闪点，`--kind haze` 审计并绘制原生后端雾度，不重跑光学。 |
 | `sparkle_multibackend.py` | 自定义输入的通用四后端求解 CLI，支持 `--help` 查看所有物理与数值参数。 |
+| `calculate_haze.py` | 校准高度图的单色雾度：默认 NumPy 近似；`--backend all` 实际调用四原生后端，均匀正入射、2.5° 半角，保存角散射与统计。 |
 | `run_legacy_demo.py` | 仅保留历史测试素材，必须指定 `--example quick` 或 `--example 1mm`；默认只选 Torch。当前 OLED 用例使用 `run_oled_demo.py`。 |
 | `prepare_etched_ag.py`、`prepare_random_pits.py`、`prepare_oled_1mm.py`、`prepare_tiled_emission.py` | 输入生成器，由运行器调用；需要单独生成或修改输入时才直接使用。 |
 
@@ -55,6 +56,49 @@
 旧[共同 MWA 报告](test-results/oled-layout-comparison/sparkle.html)保留用于追溯，明确以 `--measurement optical-mwa` 选择历史方案。其 70/140/210 µm 拼接窗口不作为本次相机评价方法。历史钻石按三次 140 µm MWA 为 **5.291803%**，本批次同口径为 **5.287834%**；不能把这些数值等同于保留更多相机频带的本次结果。
 
 `assets/oled-layouts/<layout>/` 继续由 `prepare_tiled_emission.py` 维护：RGB 周期单元、1 mm RGB/full-green 输入与 `.source.json` 保存几何、周期、亮度倍率和哈希。`assets/oled-layout-reference/` 保存公开参考图及来源，参考图不直接作为光学强度。单独生成输入可用 `prepare_tiled_emission.py --layout rgb-delta`。
+
+## 当前高度图的雾度与 ag-haze 技能
+
+现有 `oled-1mm-etched-ag/heightfield.png` 在 **530 nm、n=1.5→1、正入射、2.5° 接收半角** 的薄相位面模型下，单色透射雾度约 **2.730950%**；同一合成表面在 0.5 µm 网格下为 **2.730997%**。这是单界面、表面散射的标量估算，不是 ASTM/ISO 白光实测值。不能将它当作论文 20–40% 雾度 AG 的等效样品，也不能从 Sa 或闪点 CV 直接换算雾度。
+
+```powershell
+.venv\Scripts\python.exe oled-ag-sparkle\scripts\calculate_haze.py --height oled-ag-sparkle\assets\oled-1mm-etched-ag\heightfield.png oled-ag-sparkle\assets\oled-1mm-etched-ag-pitch0p5\heightfield.png --wavelength-nm 450 530 650 --out test-results\ag-haze
+```
+
+省略 `--height` 和 `--wavelength-nm` 时，只计算当前默认高度图的 530 nm 结果。高度图横向节距、PNG 黑至白高度范围从原 sidecar 读取，并校验 PNG 哈希；不修改高度图或原有闪点流程。自定义图无 sidecar 时必须提供 `--height-pitch-um`、`--height-range-um`，且只有物理上合理的周期输入才可显式使用 `--assume-periodic`。
+
+雾度按透射角谱的前向通量计算：接收锥外通量 / 全部已表示的传播通量；包括 DC 和锥内漫射光作为分母。角谱来自相位面 FFT，使用 `sinθ=λ|f|/n_out` 和法向通量权重 `|A|²cosθ`。没有 OLED 发光图、相机光瞳、像元积分或人为滤波窗口。默认高度图的 1 µm 网格在所有方位上覆盖至约 15.37°，细网格约 32.01°；更高角度及未解析细结构是模型限制，不能仅凭边缘频谱小就认定真实样品高角散射为零。
+
+`test-results/ag-haze/haze.json` 保存各高度图/波长的雾度、平面控制、角覆盖、频谱边缘、Parseval 误差、原输入和实现哈希；逐输入/波长的 `*-angular.csv` 保存接收半角与锥内/锥外通量比例。450/530/650 nm 是独立单色结果，不作白光平均；标准亮度雾度还需要光源光谱、V(λ)、色散、透射功率权重和仪器校正。
+
+新增 [ag-haze/SKILL.md](ag-haze/SKILL.md) 负责解释口径、选择上述命令、审查标定和收敛；`ag-haze/agents/openai.yaml` 仅提供技能发现元数据。技能直接调用现有仓库中的新计算入口，后者复用原高度读取和粗糙度实现。原 OLED CLI 的目标是发光源和相机成像，不能以其截断后的亮度结果承担雾度积分，因此单独维护这个有明确调用方的角散射入口。详细模型和文献见 [physics-and-backends.md](oled-ag-sparkle/references/physics-and-backends.md)。
+
+### 四原生后端的实际雾度对照
+
+[四后端雾度报告](test-results/ag-haze-four-backend/haze.html)已在 530 nm、n=1.5→1、均匀正入射、2.5° 接收半角下执行两级网格，共八次主求解及对应的原生平面控制：
+
+| 方法 | 1 µm 网格 [%] | 0.5 µm 网格 [%] |
+|---|---:|---:|
+| 原 NumPy 薄相位面参考 | 2.730950 | 2.730997 |
+| PyTorch / CUDA | 2.730950 | 2.730997 |
+| TorchOptics / CUDA | 2.730950 | 2.730997 |
+| Chromatix / WSL CUDA | 2.730950 | 2.730997 |
+| Mitsuba / CUDA 几何折射 | 0.553996 | 0.613183 |
+
+三个波动库实际执行了均匀入射、相位调制和出射介质内 100 µm ASM 传播，再取角谱。均匀介质传播不改变传播模的角功率，因此与 NumPy 参考一致是预期的数值一致性，不能作为薄相位面模型的独立物理验证。Mitsuba 复用原高度网格生成器，补齐周期端点，用每个三角形的投影面积重心光线、几何面法线及原生 `fresnel/refract` 计算单界面折射。它包含 Fresnel 权重，但缺少衍射；波动/几何差异不能直接判定任一模型更接近真实玻璃。
+
+波动细网格变化约 0.000047 个百分点；Mitsuba 变化约 **0.059187 个百分点（相对约 10.7%）**，几何结果尚有可见的网格敏感性。Mitsuba 在两网格各有 200 万/800 万条主光线，全部命中；反射与透射能量平衡误差约 3.6×10⁻⁹。平面控制雾度均近零。原生光栅检查包含 Bessel 衍射级次、ASM 距离不变性和几何 Snell/Fresnel 面积分；完整 72 项回归中 63 项通过、9 项可选测试跳过，原 WSL 桥另两项实测回归通过。
+
+从仓库根目录使用已有 CUDA Torch、TorchOptics、Mitsuba 和 WSL Chromatix 环境重跑到新目录（CUDA 环境配置见后文）：
+
+```powershell
+.venv\Scripts\python.exe oled-ag-sparkle\scripts\calculate_haze.py --backend all --height oled-ag-sparkle\assets\oled-1mm-etched-ag\heightfield.png oled-ag-sparkle\assets\oled-1mm-etched-ag-pitch0p5\heightfield.png --out test-results\ag-haze-four-backend-new
+.venv\Scripts\python.exe oled-ag-sparkle\scripts\generate_report.py --kind haze --results test-results\ag-haze-four-backend
+```
+
+第一条命令在求解前固定 `protocol.json`，拒绝覆盖已有原生比较方案；`--backend torch/torchoptics/chromatix/mitsuba` 可单选。`--propagation-um` 控制波动出射传播距离，`--device` 控制 Torch 设备，`--mitsuba-variant`、`--ray-chunk` 控制几何运行。第二条命令只读取本次已有浮点结果重建报告。
+
+`test-results/ag-haze-four-backend/` 中，`protocol.json` 保存输入标定及求解实现哈希，`haze.json` 汇总八次执行设备、时间和指标；每个后端/网格的 `stats.json` 与 `angular.csv` 保存实际统计和角积分曲线，波动后端另保存未移位 Cartesian 格点上的 `angular_power.npy`。`validation.json` 记录浮点功率和曲线重评审计；PNG 与 `haze.html` 均由唯一报告 CLI 生成。没有新增运行包装脚本；原 OLED 求解器及其冻结代码哈希未变，Chromatix 复用并扩展原 WSL 传输适配。
 
 ## 单排列 MWA 参考报告与复现
 

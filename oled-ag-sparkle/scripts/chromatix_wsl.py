@@ -26,6 +26,26 @@ def _query(command):
 
 
 def simulate_chromatix_wsl(model, max_sources):
+    parameters = {field.name: getattr(model, field.name) for field in fields(model)
+                  if field.name not in ('h_m', 'emission')}
+    image, response = _execute_worker({'model': parameters, 'max_sources': max_sources},
+                                      {'h_m': model.h_m, 'emission': model.emission}, 'brightness.npy')
+    if image.shape != model.shape or not np.isfinite(image).all():
+        raise RuntimeError('Chromatix WSL returned an invalid brightness image')
+    model._chromatix_execution_context = response['execution_context']
+    return image, response['source_count']
+
+
+def simulate_haze_chromatix_wsl(height_m, parameters):
+    """Use the same CUDA-only transport for the uniform-incidence haze case."""
+    power, response = _execute_worker({'kind': 'haze', 'parameters': parameters},
+                                      {'h_m': height_m}, 'angular_power.npy')
+    if power.shape != height_m.shape or not np.isfinite(power).all() or np.any(power < 0):
+        raise RuntimeError('Chromatix WSL returned invalid haze angular power')
+    return power, response['execution_context']
+
+
+def _execute_worker(request, arrays, output_filename):
     distro = os.environ.get('SPARKLE_WSL_DISTRO', 'Ubuntu-22.04')
     prefix = ['wsl.exe', '--distribution', distro, '--exec']
     python = os.environ.get('SPARKLE_WSL_PYTHON')
@@ -35,11 +55,8 @@ def simulate_chromatix_wsl(model, max_sources):
     worker = _query(prefix + ['wslpath', '-a', '-u', str(Path(__file__).resolve())])
     with tempfile.TemporaryDirectory(prefix='chromatix-wsl-') as directory:
         root = Path(directory)
-        parameters = {field.name: getattr(model, field.name) for field in fields(model)
-                      if field.name not in ('h_m', 'emission')}
-        np.savez(root / 'inputs.npz', h_m=model.h_m, emission=model.emission)
-        (root / 'request.json').write_text(json.dumps({
-            'model': parameters, 'max_sources': max_sources}), encoding='utf-8')
+        np.savez(root / 'inputs.npz', **arrays)
+        (root / 'request.json').write_text(json.dumps(request), encoding='utf-8')
         linux_root = _query(prefix + ['wslpath', '-a', '-u', str(root.resolve())])
         command = prefix + ['env', '-u', 'PYTHONPATH', '-u', 'LD_LIBRARY_PATH',
                             'JAX_PLATFORMS=cuda', 'XLA_PYTHON_CLIENT_PREALLOCATE=false',
@@ -55,16 +72,13 @@ def simulate_chromatix_wsl(model, max_sources):
             raise RuntimeError(f'Chromatix WSL worker failed (exit {result.returncode}); '
                                'see worker output and references/windows-wsl.md')
         response = json.loads((root / 'result.json').read_text(encoding='utf-8'))
-        image = np.load(root / 'brightness.npy', allow_pickle=False)
-        if image.shape != model.shape or not np.isfinite(image).all():
-            raise RuntimeError('Chromatix WSL returned an invalid brightness image')
+        image = np.load(root / output_filename, allow_pickle=False)
         context = response['execution_context']
         if context['default_backend'] != 'gpu':
             raise RuntimeError('Chromatix WSL worker did not use the GPU')
         context.update({'runtime': 'wsl', 'wsl_distribution': distro,
                         'worker_script': worker, 'worker_command': command})
-        model._chromatix_execution_context = context
-        return image, response['source_count']
+        return image, response
 
 
 def run_worker(root):
@@ -75,6 +89,17 @@ def run_worker(root):
     if jax.default_backend() != 'gpu':
         raise RuntimeError(f'WSL worker requires the CUDA backend; got {jax.devices()}')
     request = json.loads((root / 'request.json').read_text(encoding='utf-8'))
+    if request.get('kind') == 'haze':
+        from calculate_haze import solve_wave_haze
+        with np.load(root/'inputs.npz', allow_pickle=False) as arrays:
+            height = arrays['h_m']
+        start = time.perf_counter()
+        power, context = solve_wave_haze(height, backend='chromatix', **request['parameters'])
+        context.update({'environment': environment_snapshot(),
+                        'worker_solver_elapsed_seconds': time.perf_counter()-start})
+        np.save(root/'angular_power.npy', power, allow_pickle=False)
+        (root/'result.json').write_text(json.dumps({'execution_context': context}, indent=2), encoding='utf-8')
+        return
     with np.load(root / 'inputs.npz', allow_pickle=False) as arrays:
         model = Model(h_m=arrays['h_m'], emission=arrays['emission'], **request['model'])
     start = time.perf_counter()

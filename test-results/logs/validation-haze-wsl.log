@@ -1,0 +1,7 @@
+test_failed_wsl_worker_is_reported_without_cpu_fallback (test_chromatix_wsl.ChromatixWslTest.test_failed_wsl_worker_is_reported_without_cpu_fallback) ... ok
+test_wsl_gpu_metadata_and_paths_with_spaces_and_unicode (test_chromatix_wsl.ChromatixWslTest.test_wsl_gpu_metadata_and_paths_with_spaces_and_unicode) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 11.428s
+
+OK

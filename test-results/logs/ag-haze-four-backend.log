@@ -1,0 +1,14 @@
+oled-1mm-etched-ag | torch | 530 nm | haze = 2.730950% | NumPy = 2.730950% | 3.999 s
+oled-1mm-etched-ag | torchoptics | 530 nm | haze = 2.730950% | NumPy = 2.730950% | 0.704 s
+  Chromatix WSL: Ubuntu-22.04, JAX_PLATFORMS=cuda
+  Chromatix WSL: Ubuntu-22.04, JAX_PLATFORMS=cuda
+oled-1mm-etched-ag | chromatix | 530 nm | haze = 2.730950% | NumPy = 2.730950% | 5.783 s
+jitc_llvm_init(): LLVM API initialization failed ..
+oled-1mm-etched-ag | mitsuba | 530 nm | haze = 0.553996% | NumPy = 2.730950% | 3.557 s
+oled-1mm-etched-ag-pitch0p5 | torch | 530 nm | haze = 2.730997% | NumPy = 2.730997% | 0.232 s
+oled-1mm-etched-ag-pitch0p5 | torchoptics | 530 nm | haze = 2.730997% | NumPy = 2.730997% | 0.038 s
+  Chromatix WSL: Ubuntu-22.04, JAX_PLATFORMS=cuda
+  Chromatix WSL: Ubuntu-22.04, JAX_PLATFORMS=cuda
+oled-1mm-etched-ag-pitch0p5 | chromatix | 530 nm | haze = 2.730997% | NumPy = 2.730997% | 5.547 s
+oled-1mm-etched-ag-pitch0p5 | mitsuba | 530 nm | haze = 0.613183% | NumPy = 2.730997% | 13.357 s
+Results: C:\Projects\oled-sparkle\test-results\ag-haze-four-backend\haze.json
