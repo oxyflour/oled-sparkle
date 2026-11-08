@@ -1,0 +1,3439 @@
+{
+  "kind": "controlled-AG-texture-sensitivity",
+  "protocol": {
+    "kind": "controlled-AG-texture-sensitivity",
+    "declared_before_execution": true,
+    "source": {
+      "path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag-pitch0p5\\heightfield.png",
+      "sha256": "9a495dc565e3bb2b5ef725e9950f05a8958cc70e1364978b352607b1d91c4c3d",
+      "height_range_um": 0.5361845861372564,
+      "height_pitch_um": 0.5,
+      "periodicity": "source metadata",
+      "roughness": {
+        "Sa_um": 0.10000000480208875,
+        "Sq_um": 0.11851254239602815,
+        "Sz_um": 0.5155668647560674,
+        "height_min_um": 0.010308883524601242,
+        "height_max_um": 0.5258757482806686,
+        "rms_slope": 0.03302164002728051,
+        "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+      },
+      "sidecar_path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag-pitch0p5\\heightfield.source.json",
+      "sidecar_sha256": "fbaccda92c79fd07ebd9ac07a725f562f2a550bdbb1a7f786277fcc86cdd4033"
+    },
+    "parameters": {
+      "wavelength_nm": 530.0,
+      "n_in": 1.5,
+      "n_out": 1.0,
+      "acceptance_half_angle_deg": 2.5
+    },
+    "scale_matrix": {
+      "lateral_scale": [
+        0.25,
+        0.5,
+        0.75,
+        1.0,
+        1.5,
+        2.0
+      ],
+      "height_scale": [
+        0.5,
+        1.0,
+        2.0,
+        3.0
+      ]
+    },
+    "meaning": "Controlled counterfactual surfaces, not fitted AG materials. h_new(x,y)=height_scale*h_original(x/lateral_scale,y/lateral_scale). Array samples are unchanged; pitch, domain, nominal site spacing and Gaussian rounding all scale laterally together. This is not a strictly periodic 25um grating.",
+    "scope": "Existing NumPy scalar-phase-screen function plus analytic single-hit facet Snell/Fresnel. No new native GPU backend runs or full 2D Maxwell validation.",
+    "execution_context": {
+      "python": "3.12.12 (main, Dec  9 2025, 19:02:55) [MSC v.1944 64 bit (AMD64)]",
+      "numpy": "2.5.4",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "device": "CPU"
+    },
+    "code_sha256": {
+      "calculate_haze.py": "a8180f230da7a0e538c3c8b035bdba5c92d9ddf5d8cb566ff7d471a2465cb0a4",
+      "prepare_etched_ag.py": "f763dfe8e0f233422546c6bf99416bb95839debb81eee0019293a71fc94ced2a"
+    }
+  },
+  "matrix": [
+    {
+      "group": "affine",
+      "lateral_scale": 0.25,
+      "height_scale": 0.5,
+      "nominal_site_spacing_um": 6.25,
+      "rounding_sigma_um": 0.3,
+      "pitch_um": 0.125,
+      "grid_yx": [
+        2000,
+        2000
+      ],
+      "surface_sha256_float64_m": "e799e49b85d9c63aef9d562d4b048c0188a001c06b9296b7e00661168dcf9c79",
+      "roughness": {
+        "Sa_um": 0.05000000240104437,
+        "Sq_um": 0.05925627119801408,
+        "Sz_um": 0.2577834323780337,
+        "height_min_um": -0.18489521216348168,
+        "height_max_um": 0.07288822021455202,
+        "rms_slope": 0.06604328005456102,
+        "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+      },
+      "wave": {
+        "haze_percent": 9.996989610508745,
+        "wavelength_nm": 530.0,
+        "n_in": 1.5,
+        "n_out": 1.0,
+        "acceptance_half_angle_deg": 2.5,
+        "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+        "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+        "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+        "height_grid_yx": [
+          2000,
+          2000
+        ],
+        "height_pitch_um": 0.125,
+        "field_um_xy": [
+          250.0,
+          250.0
+        ],
+        "represented_scalar_forward_flux": 0.9994444679335707,
+        "zero_order_forward_flux_percent": 88.39638579190502,
+        "within_cone_nonzero_order_flux_percent": 1.6066245975862223,
+        "nonzero_order_forward_flux_percent": 11.60361420809498,
+        "haze_without_cosine_weight_percent": 10.046191541743587,
+        "parseval_relative_error": 4.440892098500626e-16,
+        "evanescent_field_power_percent": 4.77229760977755e-08,
+        "spectral_edge_field_power_percent": 9.252694124829437e-10,
+        "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+        "complete_azimuth_angle_limit_deg": 90.0,
+        "near_axis_angle_step_deg_xy": [
+          0.12146714355483872,
+          0.12146714355483872
+        ],
+        "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+        "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+        "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim"
+      },
+      "geometric": {
+        "definition": "Projected-area statistics of the original periodic triangular facets; float64 analytic Snell/Fresnel, no native ray execution",
+        "rms_slope": 0.06634629796408963,
+        "slope_quantiles": {
+          "p50": 0.04957940513657748,
+          "p90": 0.10481219071840679,
+          "p99": 0.1638828798127371,
+          "p99_9": 0.2045191058961286
+        },
+        "slope_threshold_for_acceptance": 0.08707302627624788,
+        "area_above_slope_threshold_percent": 17.921775,
+        "single_hit_haze_percent": 17.92148057569885,
+        "transmission_fraction": 0.9599957637637714,
+        "total_internal_reflection_area_percent": 0.0
+      },
+      "selected_angular_curve": [
+        {
+          "half_angle_deg": 0.0,
+          "within_cone_percent": 88.39638579190502,
+          "outside_cone_percent": 11.603614208094982
+        },
+        {
+          "half_angle_deg": 0.5,
+          "within_cone_percent": 88.44603747092587,
+          "outside_cone_percent": 11.553962529074123
+        },
+        {
+          "half_angle_deg": 1.0,
+          "within_cone_percent": 88.62295383230108,
+          "outside_cone_percent": 11.377046167698923
+        },
+        {
+          "half_angle_deg": 1.5,
+          "within_cone_percent": 88.95747382373513,
+          "outside_cone_percent": 11.042526176264877
+        },
+        {
+          "half_angle_deg": 2.0,
+          "within_cone_percent": 89.34067781213545,
+          "outside_cone_percent": 10.65932218786454
+        },
+        {
+          "half_angle_deg": 2.5,
+          "within_cone_percent": 90.00301038949124,
+          "outside_cone_percent": 9.996989610508766
+        },
+        {
+          "half_angle_deg": 3.0,
+          "within_cone_percent": 90.83787930288204,
+          "outside_cone_percent": 9.16212069711796
+        },
+        {
+          "half_angle_deg": 5.0,
+          "within_cone_percent": 95.4177267196011,
+          "outside_cone_percent": 4.582273280398896
+        },
+        {
+          "half_angle_deg": 10.0,
+          "within_cone_percent": 99.45268923596167,
+          "outside_cone_percent": 0.5473107640383335
+        },
+        {
+          "half_angle_deg": 30.0,
+          "within_cone_percent": 99.9994813025692,
+          "outside_cone_percent": 0.0005186974308069026
+        },
+        {
+          "half_angle_deg": 90.0,
+          "within_cone_percent": 100.0,
+          "outside_cone_percent": 0.0
+        }
+      ]
+    },
+    {
+      "group": "affine",
+      "lateral_scale": 0.25,
+      "height_scale": 1.0,
+      "nominal_site_spacing_um": 6.25,
+      "rounding_sigma_um": 0.3,
+      "pitch_um": 0.125,
+      "grid_yx": [
+        2000,
+        2000
+      ],
+      "surface_sha256_float64_m": "5a23c5e3cd2ca14b12f11bd70e97e963969f44bdd38d7a2c781709bddb341e8f",
+      "roughness": {
+        "Sa_um": 0.10000000480208875,
+        "Sq_um": 0.11851254239602815,
+        "Sz_um": 0.5155668647560674,
+        "height_min_um": -0.36979042432696335,
+        "height_max_um": 0.14577644042910404,
+        "rms_slope": 0.13208656010912204,
+        "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+      },
+      "wave": {
+        "haze_percent": 34.303010513697686,
+        "wavelength_nm": 530.0,
+        "n_in": 1.5,
+        "n_out": 1.0,
+        "acceptance_half_angle_deg": 2.5,
+        "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+        "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+        "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+        "height_grid_yx": [
+          2000,
+          2000
+        ],
+        "height_pitch_um": 0.125,
+        "field_um_xy": [
+          250.0,
+          250.0
+        ],
+        "represented_scalar_forward_flux": 0.9977726255533624,
+        "zero_order_forward_flux_percent": 60.739590870312114,
+        "within_cone_nonzero_order_flux_percent": 4.957398615990198,
+        "nonzero_order_forward_flux_percent": 39.260409129687886,
+        "haze_without_cosine_weight_percent": 34.446880819575085,
+        "parseval_relative_error": 3.3306690738754696e-16,
+        "evanescent_field_power_percent": 2.351903084831617e-06,
+        "spectral_edge_field_power_percent": 3.7010049651201116e-09,
+        "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+        "complete_azimuth_angle_limit_deg": 90.0,
+        "near_axis_angle_step_deg_xy": [
+          0.12146714355483872,
+          0.12146714355483872
+        ],
+        "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+        "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+        "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim"
+      },
+      "geometric": {
+        "definition": "Projected-area statistics of the original periodic triangular facets; float64 analytic Snell/Fresnel, no native ray execution",
+        "rms_slope": 0.13269259592817925,
+        "slope_quantiles": {
+          "p50": 0.09915881027315496,
+          "p90": 0.20962438143681358,
+          "p99": 0.3277657596254742,
+          "p99_9": 0.4090382117922572
+        },
+        "slope_threshold_for_acceptance": 0.08707302627624788,
+        "area_above_slope_threshold_percent": 57.11707499999999,
+        "single_hit_haze_percent": 57.11385634727942,
+        "transmission_fraction": 0.9599267725920434,
+        "total_internal_reflection_area_percent": 0.0
+      },
+      "selected_angular_curve": [
+        {
+          "half_angle_deg": 0.0,
+          "within_cone_percent": 60.73959087031212,
+          "outside_cone_percent": 39.26040912968788
+        },
+        {
+          "half_angle_deg": 0.5,
+          "within_cone_percent": 60.89295272793622,
+          "outside_cone_percent": 39.10704727206378
+        },
+        {
+          "half_angle_deg": 1.0,
+          "within_cone_percent": 61.43704174776721,
+          "outside_cone_percent": 38.56295825223279
+        },
+        {
+          "half_angle_deg": 1.5,
+          "within_cone_percent": 62.45747499033926,
+          "outside_cone_percent": 37.54252500966074
+        },
+        {
+          "half_angle_deg": 2.0,
+          "within_cone_percent": 63.65482535116599,
+          "outside_cone_percent": 36.34517464883401
+        },
+        {
+          "half_angle_deg": 2.5,
+          "within_cone_percent": 65.69698948630241,
+          "outside_cone_percent": 34.303010513697586
+        },
+        {
+          "half_angle_deg": 3.0,
+          "within_cone_percent": 68.29761446987773,
+          "outside_cone_percent": 31.702385530122267
+        },
+        {
+          "half_angle_deg": 5.0,
+          "within_cone_percent": 82.82775727291347,
+          "outside_cone_percent": 17.172242727086527
+        },
+        {
+          "half_angle_deg": 10.0,
+          "within_cone_percent": 97.28017658065441,
+          "outside_cone_percent": 2.7198234193455906
+        },
+        {
+          "half_angle_deg": 30.0,
+          "within_cone_percent": 99.99289323937039,
+          "outside_cone_percent": 0.007106760629616016
+        },
+        {
+          "half_angle_deg": 90.0,
+          "within_cone_percent": 100.0,
+          "outside_cone_percent": 0.0
+        }
+      ]
+    },
+    {
+      "group": "affine",
+      "lateral_scale": 0.25,
+      "height_scale": 2.0,
+      "nominal_site_spacing_um": 6.25,
+      "rounding_sigma_um": 0.3,
+      "pitch_um": 0.125,
+      "grid_yx": [
+        2000,
+        2000
+      ],
+      "surface_sha256_float64_m": "b0f6baf08421039208340250b857964d24e5b07a8b8be480b570de16122ebee7",
+      "roughness": {
+        "Sa_um": 0.2000000096041775,
+        "Sq_um": 0.2370250847920563,
+        "Sz_um": 1.0311337295121348,
+        "height_min_um": -0.7395808486539267,
+        "height_max_um": 0.2915528808582081,
+        "rms_slope": 0.2641731202182441,
+        "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+      },
+      "wave": {
+        "haze_percent": 78.4128214391817,
+        "wavelength_nm": 530.0,
+        "n_in": 1.5,
+        "n_out": 1.0,
+        "acceptance_half_angle_deg": 2.5,
+        "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+        "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+        "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+        "height_grid_yx": [
+          2000,
+          2000
+        ],
+        "height_pitch_um": 0.125,
+        "field_um_xy": [
+          250.0,
+          250.0
+        ],
+        "represented_scalar_forward_flux": 0.9910017696062119,
+        "zero_order_forward_flux_percent": 14.76643746910356,
+        "within_cone_nonzero_order_flux_percent": 6.820741091714775,
+        "nonzero_order_forward_flux_percent": 85.23356253089645,
+        "haze_without_cosine_weight_percent": 78.60362189586722,
+        "parseval_relative_error": 1.1102230246251565e-16,
+        "evanescent_field_power_percent": 0.00026792700561262554,
+        "spectral_edge_field_power_percent": 1.506777936754416e-08,
+        "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+        "complete_azimuth_angle_limit_deg": 90.0,
+        "near_axis_angle_step_deg_xy": [
+          0.12146714355483872,
+          0.12146714355483872
+        ],
+        "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+        "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+        "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim"
+      },
+      "geometric": {
+        "definition": "Projected-area statistics of the original periodic triangular facets; float64 analytic Snell/Fresnel, no native ray execution",
+        "rms_slope": 0.2653851918563585,
+        "slope_quantiles": {
+          "p50": 0.19831762054630991,
+          "p90": 0.41924876287362717,
+          "p99": 0.6555315192509484,
+          "p99_9": 0.8180764235845144
+        },
+        "slope_threshold_for_acceptance": 0.08707302627624788,
+        "area_above_slope_threshold_percent": 83.1107375,
+        "single_hit_haze_percent": 83.0748223253986,
+        "transmission_fraction": 0.9579617190938365,
+        "total_internal_reflection_area_percent": 0.013975000000000001
+      },
+      "selected_angular_curve": [
+        {
+          "half_angle_deg": 0.0,
+          "within_cone_percent": 14.766437469103558,
+          "outside_cone_percent": 85.23356253089645
+        },
+        {
+          "half_angle_deg": 0.5,
+          "within_cone_percent": 14.972996873507944,
+          "outside_cone_percent": 85.02700312649205
+        },
+        {
+          "half_angle_deg": 1.0,
+          "within_cone_percent": 15.70277146863013,
+          "outside_cone_percent": 84.29722853136987
+        },
+        {
+          "half_angle_deg": 1.5,
+          "within_cone_percent": 17.026595045028422,
+          "outside_cone_percent": 82.97340495497157
+        },
+        {
+          "half_angle_deg": 2.0,
+          "within_cone_percent": 18.791461439089193,
+          "outside_cone_percent": 81.20853856091081
+        },
+        {
+          "half_angle_deg": 2.5,
+          "within_cone_percent": 21.587178560818344,
+          "outside_cone_percent": 78.41282143918166
+        },
+        {
+          "half_angle_deg": 3.0,
+          "within_cone_percent": 25.334572809234267,
+          "outside_cone_percent": 74.66542719076573
+        },
+        {
+          "half_angle_deg": 5.0,
+          "within_cone_percent": 48.080352321981714,
+          "outside_cone_percent": 51.919647678018286
+        },
+        {
+          "half_angle_deg": 10.0,
+          "within_cone_percent": 84.25778435646562,
+          "outside_cone_percent": 15.742215643534374
+        },
+        {
+          "half_angle_deg": 30.0,
+          "within_cone_percent": 99.83834945372728,
+          "outside_cone_percent": 0.16165054627272912
+        },
+        {
+          "half_angle_deg": 90.0,
+          "within_cone_percent": 99.99999999999945,
+          "outside_cone_percent": 5.551115123125783e-13
+        }
+      ]
+    },
+    {
+      "group": "affine",
+      "lateral_scale": 0.25,
+      "height_scale": 3.0,
+      "nominal_site_spacing_um": 6.25,
+      "rounding_sigma_um": 0.3,
+      "pitch_um": 0.125,
+      "grid_yx": [
+        2000,
+        2000
+      ],
+      "surface_sha256_float64_m": "8dca24c6124e3b8be73fc49141320fced31e79ed66626e233bd2327f9f99db05",
+      "roughness": {
+        "Sa_um": 0.3000000144062662,
+        "Sq_um": 0.35553762718808446,
+        "Sz_um": 1.5467005942682022,
+        "height_min_um": -1.10937127298089,
+        "height_max_um": 0.4373293212873121,
+        "rms_slope": 0.3962596803273661,
+        "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+      },
+      "wave": {
+        "haze_percent": 88.16647127593338,
+        "wavelength_nm": 530.0,
+        "n_in": 1.5,
+        "n_out": 1.0,
+        "acceptance_half_angle_deg": 2.5,
+        "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+        "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+        "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+        "height_grid_yx": [
+          2000,
+          2000
+        ],
+        "height_pitch_um": 0.125,
+        "field_um_xy": [
+          250.0,
+          250.0
+        ],
+        "represented_scalar_forward_flux": 0.9793784963158801,
+        "zero_order_forward_flux_percent": 8.715317257654755,
+        "within_cone_nonzero_order_flux_percent": 3.1182114664118648,
+        "nonzero_order_forward_flux_percent": 91.28468274234525,
+        "haze_without_cosine_weight_percent": 88.4082479853247,
+        "parseval_relative_error": 0.0,
+        "evanescent_field_power_percent": 0.005858449783253134,
+        "spectral_edge_field_power_percent": 6.897767127795182e-08,
+        "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+        "complete_azimuth_angle_limit_deg": 90.0,
+        "near_axis_angle_step_deg_xy": [
+          0.12146714355483872,
+          0.12146714355483872
+        ],
+        "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+        "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+        "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim"
+      },
+      "geometric": {
+        "definition": "Projected-area statistics of the original periodic triangular facets; float64 analytic Snell/Fresnel, no native ray execution",
+        "rms_slope": 0.39807778778453773,
+        "slope_quantiles": {
+          "p50": 0.2974764308194649,
+          "p90": 0.6288731443104408,
+          "p99": 0.9832972788764225,
+          "p99_9": 1.2271146353767715
+        },
+        "slope_threshold_for_acceptance": 0.08707302627624788,
+        "area_above_slope_threshold_percent": 89.96465,
+        "single_hit_haze_percent": 89.66109575590184,
+        "transmission_fraction": 0.9318129132408915,
+        "total_internal_reflection_area_percent": 1.8979249999999999
+      },
+      "selected_angular_curve": [
+        {
+          "half_angle_deg": 0.0,
+          "within_cone_percent": 8.715317257654755,
+          "outside_cone_percent": 91.28468274234524
+        },
+        {
+          "half_angle_deg": 0.5,
+          "within_cone_percent": 8.789351988338012,
+          "outside_cone_percent": 91.21064801166199
+        },
+        {
+          "half_angle_deg": 1.0,
+          "within_cone_percent": 9.095155774371722,
+          "outside_cone_percent": 90.90484422562828
+        },
+        {
+          "half_angle_deg": 1.5,
+          "within_cone_percent": 9.65243711572452,
+          "outside_cone_percent": 90.34756288427548
+        },
+        {
+          "half_angle_deg": 2.0,
+          "within_cone_percent": 10.565419107021357,
+          "outside_cone_percent": 89.43458089297864
+        },
+        {
+          "half_angle_deg": 2.5,
+          "within_cone_percent": 11.833528724066616,
+          "outside_cone_percent": 88.16647127593339
+        },
+        {
+          "half_angle_deg": 3.0,
+          "within_cone_percent": 13.670125768630474,
+          "outside_cone_percent": 86.32987423136953
+        },
+        {
+          "half_angle_deg": 5.0,
+          "within_cone_percent": 25.91525941588091,
+          "outside_cone_percent": 74.08474058411909
+        },
+        {
+          "half_angle_deg": 10.0,
+          "within_cone_percent": 62.30549693141799,
+          "outside_cone_percent": 37.69450306858201
+        },
+        {
+          "half_angle_deg": 30.0,
+          "within_cone_percent": 98.87952647579147,
+          "outside_cone_percent": 1.1204735242085317
+        },
+        {
+          "half_angle_deg": 90.0,
+          "within_cone_percent": 99.99999999999984,
+          "outside_cone_percent": 1.5543122344752192e-13
+        }
+      ]
+    },
+    {
+      "group": "affine",
+      "lateral_scale": 0.5,
+      "height_scale": 0.5,
+      "nominal_site_spacing_um": 12.5,
+      "rounding_sigma_um": 0.6,
+      "pitch_um": 0.25,
+      "grid_yx": [
+        2000,
+        2000
+      ],
+      "surface_sha256_float64_m": "e799e49b85d9c63aef9d562d4b048c0188a001c06b9296b7e00661168dcf9c79",
+      "roughness": {
+        "Sa_um": 0.05000000240104437,
+        "Sq_um": 0.05925627119801408,
+        "Sz_um": 0.2577834323780337,
+        "height_min_um": -0.18489521216348168,
+        "height_max_um": 0.07288822021455202,
+        "rms_slope": 0.03302164002728051,
+        "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+      },
+      "wave": {
+        "haze_percent": 4.605210564574886,
+        "wavelength_nm": 530.0,
+        "n_in": 1.5,
+        "n_out": 1.0,
+        "acceptance_half_angle_deg": 2.5,
+        "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+        "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+        "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+        "height_grid_yx": [
+          2000,
+          2000
+        ],
+        "height_pitch_um": 0.25,
+        "field_um_xy": [
+          500.0,
+          500.0
+        ],
+        "represented_scalar_forward_flux": 0.9998617994217195,
+        "zero_order_forward_flux_percent": 88.35949009766922,
+        "within_cone_nonzero_order_flux_percent": 7.035299337755899,
+        "nonzero_order_forward_flux_percent": 11.640509902330772,
+        "haze_without_cosine_weight_percent": 4.6150969445974095,
+        "parseval_relative_error": 4.440892098500626e-16,
+        "evanescent_field_power_percent": 1.4728261345918428e-09,
+        "spectral_edge_field_power_percent": 9.252694124829437e-10,
+        "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+        "complete_azimuth_angle_limit_deg": 90.0,
+        "near_axis_angle_step_deg_xy": [
+          0.060733537657238025,
+          0.060733537657238025
+        ],
+        "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+        "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+        "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim"
+      },
+      "geometric": {
+        "definition": "Projected-area statistics of the original periodic triangular facets; float64 analytic Snell/Fresnel, no native ray execution",
+        "rms_slope": 0.03317314898204481,
+        "slope_quantiles": {
+          "p50": 0.02478970256828874,
+          "p90": 0.052406095359203396,
+          "p99": 0.08194143990636855,
+          "p99_9": 0.1022595529480643
+        },
+        "slope_threshold_for_acceptance": 0.08707302627624788,
+        "area_above_slope_threshold_percent": 0.6132625,
+        "single_hit_haze_percent": 0.6132581235310034,
+        "transmission_fraction": 0.9599997399700431,
+        "total_internal_reflection_area_percent": 0.0
+      },
+      "selected_angular_curve": [
+        {
+          "half_angle_deg": 0.0,
+          "within_cone_percent": 88.35949009766922,
+          "outside_cone_percent": 11.640509902330775
+        },
+        {
+          "half_angle_deg": 0.5,
+          "within_cone_percent": 88.5859759026607,
+          "outside_cone_percent": 11.414024097339293
+        },
+        {
+          "half_angle_deg": 1.0,
+          "within_cone_percent": 89.30360002583498,
+          "outside_cone_percent": 10.696399974165017
+        },
+        {
+          "half_angle_deg": 1.5,
+          "within_cone_percent": 90.80128729795747,
+          "outside_cone_percent": 9.198712702042533
+        },
+        {
+          "half_angle_deg": 2.0,
+          "within_cone_percent": 93.04187336422409,
+          "outside_cone_percent": 6.9581266357759075
+        },
+        {
+          "half_angle_deg": 2.5,
+          "within_cone_percent": 95.39478943542487,
+          "outside_cone_percent": 4.605210564575135
+        },
+        {
+          "half_angle_deg": 3.0,
+          "within_cone_percent": 97.05997396807322,
+          "outside_cone_percent": 2.940026031926779
+        },
+        {
+          "half_angle_deg": 5.0,
+          "within_cone_percent": 99.45188192817349,
+          "outside_cone_percent": 0.5481180718265088
+        },
+        {
+          "half_angle_deg": 10.0,
+          "within_cone_percent": 99.98683504552463,
+          "outside_cone_percent": 0.013164954475364254
+        },
+        {
+          "half_angle_deg": 30.0,
+          "within_cone_percent": 99.99999996138172,
+          "outside_cone_percent": 3.86182752443176e-08
+        },
+        {
+          "half_angle_deg": 90.0,
+          "within_cone_percent": 99.99999999997985,
+          "outside_cone_percent": 2.015054789694659e-11
+        }
+      ]
+    },
+    {
+      "group": "affine",
+      "lateral_scale": 0.5,
+      "height_scale": 1.0,
+      "nominal_site_spacing_um": 12.5,
+      "rounding_sigma_um": 0.6,
+      "pitch_um": 0.25,
+      "grid_yx": [
+        2000,
+        2000
+      ],
+      "surface_sha256_float64_m": "5a23c5e3cd2ca14b12f11bd70e97e963969f44bdd38d7a2c781709bddb341e8f",
+      "roughness": {
+        "Sa_um": 0.10000000480208875,
+        "Sq_um": 0.11851254239602815,
+        "Sz_um": 0.5155668647560674,
+        "height_min_um": -0.36979042432696335,
+        "height_max_um": 0.14577644042910404,
+        "rms_slope": 0.06604328005456102,
+        "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+      },
+      "wave": {
+        "haze_percent": 17.255961146248204,
+        "wavelength_nm": 530.0,
+        "n_in": 1.5,
+        "n_out": 1.0,
+        "acceptance_half_angle_deg": 2.5,
+        "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+        "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+        "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+        "height_grid_yx": [
+          2000,
+          2000
+        ],
+        "height_pitch_um": 0.25,
+        "field_um_xy": [
+          500.0,
+          500.0
+        ],
+        "represented_scalar_forward_flux": 0.999446894360351,
+        "zero_order_forward_flux_percent": 60.63784018909309,
+        "within_cone_nonzero_order_flux_percent": 22.10619866465868,
+        "nonzero_order_forward_flux_percent": 39.36215981090691,
+        "haze_without_cosine_weight_percent": 17.291286411227482,
+        "parseval_relative_error": 3.3306690738754696e-16,
+        "evanescent_field_power_percent": 5.891083857234054e-09,
+        "spectral_edge_field_power_percent": 3.7010049651201116e-09,
+        "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+        "complete_azimuth_angle_limit_deg": 90.0,
+        "near_axis_angle_step_deg_xy": [
+          0.060733537657238025,
+          0.060733537657238025
+        ],
+        "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+        "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+        "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim"
+      },
+      "geometric": {
+        "definition": "Projected-area statistics of the original periodic triangular facets; float64 analytic Snell/Fresnel, no native ray execution",
+        "rms_slope": 0.06634629796408963,
+        "slope_quantiles": {
+          "p50": 0.04957940513657748,
+          "p90": 0.10481219071840679,
+          "p99": 0.1638828798127371,
+          "p99_9": 0.2045191058961286
+        },
+        "slope_threshold_for_acceptance": 0.08707302627624788,
+        "area_above_slope_threshold_percent": 17.921775,
+        "single_hit_haze_percent": 17.92148057569885,
+        "transmission_fraction": 0.9599957637637714,
+        "total_internal_reflection_area_percent": 0.0
+      },
+      "selected_angular_curve": [
+        {
+          "half_angle_deg": 0.0,
+          "within_cone_percent": 60.6378401890931,
+          "outside_cone_percent": 39.3621598109069
+        },
+        {
+          "half_angle_deg": 0.5,
+          "within_cone_percent": 61.33416074351064,
+          "outside_cone_percent": 38.66583925648936
+        },
+        {
+          "half_angle_deg": 1.0,
+          "within_cone_percent": 63.548848136967976,
+          "outside_cone_percent": 36.451151863032024
+        },
+        {
+          "half_angle_deg": 1.5,
+          "within_cone_percent": 68.1873032652921,
+          "outside_cone_percent": 31.812696734707902
+        },
+        {
+          "half_angle_deg": 2.0,
+          "within_cone_percent": 75.23087550224412,
+          "outside_cone_percent": 24.76912449775588
+        },
+        {
+          "half_angle_deg": 2.5,
+          "within_cone_percent": 82.74403885375172,
+          "outside_cone_percent": 17.25596114624828
+        },
+        {
+          "half_angle_deg": 3.0,
+          "within_cone_percent": 88.309664762022,
+          "outside_cone_percent": 11.690335237978012
+        },
+        {
+          "half_angle_deg": 5.0,
+          "within_cone_percent": 97.2691999987172,
+          "outside_cone_percent": 2.730800001282807
+        },
+        {
+          "half_angle_deg": 10.0,
+          "within_cone_percent": 99.88695770236772,
+          "outside_cone_percent": 0.11304229763228202
+        },
+        {
+          "half_angle_deg": 30.0,
+          "within_cone_percent": 99.99999801417867,
+          "outside_cone_percent": 1.98582132959757e-06
+        },
+        {
+          "half_angle_deg": 90.0,
+          "within_cone_percent": 99.99999999997736,
+          "outside_cone_percent": 2.2637447472106942e-11
+        }
+      ]
+    },
+    {
+      "group": "affine",
+      "lateral_scale": 0.5,
+      "height_scale": 2.0,
+      "nominal_site_spacing_um": 12.5,
+      "rounding_sigma_um": 0.6,
+      "pitch_um": 0.25,
+      "grid_yx": [
+        2000,
+        2000
+      ],
+      "surface_sha256_float64_m": "b0f6baf08421039208340250b857964d24e5b07a8b8be480b570de16122ebee7",
+      "roughness": {
+        "Sa_um": 0.2000000096041775,
+        "Sq_um": 0.2370250847920563,
+        "Sz_um": 1.0311337295121348,
+        "height_min_um": -0.7395808486539267,
+        "height_max_um": 0.2915528808582081,
+        "rms_slope": 0.13208656010912204,
+        "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+      },
+      "wave": {
+        "haze_percent": 52.149800429802546,
+        "wavelength_nm": 530.0,
+        "n_in": 1.5,
+        "n_out": 1.0,
+        "acceptance_half_angle_deg": 2.5,
+        "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+        "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+        "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+        "height_grid_yx": [
+          2000,
+          2000
+        ],
+        "height_pitch_um": 0.25,
+        "field_um_xy": [
+          500.0,
+          500.0
+        ],
+        "represented_scalar_forward_flux": 0.9977826770142411,
+        "zero_order_forward_flux_percent": 14.666085110287238,
+        "within_cone_nonzero_order_flux_percent": 33.184114459910205,
+        "nonzero_order_forward_flux_percent": 85.33391488971277,
+        "haze_without_cosine_weight_percent": 52.23968634507386,
+        "parseval_relative_error": 1.1102230246251565e-16,
+        "evanescent_field_power_percent": 2.3787938681690674e-08,
+        "spectral_edge_field_power_percent": 1.506777936754416e-08,
+        "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+        "complete_azimuth_angle_limit_deg": 90.0,
+        "near_axis_angle_step_deg_xy": [
+          0.060733537657238025,
+          0.060733537657238025
+        ],
+        "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+        "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+        "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim"
+      },
+      "geometric": {
+        "definition": "Projected-area statistics of the original periodic triangular facets; float64 analytic Snell/Fresnel, no native ray execution",
+        "rms_slope": 0.13269259592817925,
+        "slope_quantiles": {
+          "p50": 0.09915881027315496,
+          "p90": 0.20962438143681358,
+          "p99": 0.3277657596254742,
+          "p99_9": 0.4090382117922572
+        },
+        "slope_threshold_for_acceptance": 0.08707302627624788,
+        "area_above_slope_threshold_percent": 57.11707499999999,
+        "single_hit_haze_percent": 57.11385634727942,
+        "transmission_fraction": 0.9599267725920434,
+        "total_internal_reflection_area_percent": 0.0
+      },
+      "selected_angular_curve": [
+        {
+          "half_angle_deg": 0.0,
+          "within_cone_percent": 14.666085110287236,
+          "outside_cone_percent": 85.33391488971276
+        },
+        {
+          "half_angle_deg": 0.5,
+          "within_cone_percent": 15.596107859085647,
+          "outside_cone_percent": 84.40389214091435
+        },
+        {
+          "half_angle_deg": 1.0,
+          "within_cone_percent": 18.66468389026639,
+          "outside_cone_percent": 81.33531610973361
+        },
+        {
+          "half_angle_deg": 1.5,
+          "within_cone_percent": 25.168184212213824,
+          "outside_cone_percent": 74.83181578778617
+        },
+        {
+          "half_angle_deg": 2.0,
+          "within_cone_percent": 35.79748350207428,
+          "outside_cone_percent": 64.20251649792573
+        },
+        {
+          "half_angle_deg": 2.5,
+          "within_cone_percent": 47.85019957019739,
+          "outside_cone_percent": 52.14980042980262
+        },
+        {
+          "half_angle_deg": 3.0,
+          "within_cone_percent": 58.612212963237,
+          "outside_cone_percent": 41.387787036763
+        },
+        {
+          "half_angle_deg": 5.0,
+          "within_cone_percent": 84.12623296935068,
+          "outside_cone_percent": 15.873767030649322
+        },
+        {
+          "half_angle_deg": 10.0,
+          "within_cone_percent": 98.52036676276362,
+          "outside_cone_percent": 1.4796332372363885
+        },
+        {
+          "half_angle_deg": 30.0,
+          "within_cone_percent": 99.99977382539086,
+          "outside_cone_percent": 0.0002261746091414274
+        },
+        {
+          "half_angle_deg": 90.0,
+          "within_cone_percent": 99.99999999999706,
+          "outside_cone_percent": 2.942091015256665e-12
+        }
+      ]
+    },
+    {
+      "group": "affine",
+      "lateral_scale": 0.5,
+      "height_scale": 3.0,
+      "nominal_site_spacing_um": 12.5,
+      "rounding_sigma_um": 0.6,
+      "pitch_um": 0.25,
+      "grid_yx": [
+        2000,
+        2000
+      ],
+      "surface_sha256_float64_m": "8dca24c6124e3b8be73fc49141320fced31e79ed66626e233bd2327f9f99db05",
+      "roughness": {
+        "Sa_um": 0.3000000144062662,
+        "Sq_um": 0.35553762718808446,
+        "Sz_um": 1.5467005942682022,
+        "height_min_um": -1.10937127298089,
+        "height_max_um": 0.4373293212873121,
+        "rms_slope": 0.19812984016368304,
+        "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+      },
+      "wave": {
+        "haze_percent": 74.4332978642312,
+        "wavelength_nm": 530.0,
+        "n_in": 1.5,
+        "n_out": 1.0,
+        "acceptance_half_angle_deg": 2.5,
+        "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+        "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+        "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+        "height_grid_yx": [
+          2000,
+          2000
+        ],
+        "height_pitch_um": 0.25,
+        "field_um_xy": [
+          500.0,
+          500.0
+        ],
+        "represented_scalar_forward_flux": 0.9949922518556925,
+        "zero_order_forward_flux_percent": 8.578553546320181,
+        "within_cone_nonzero_order_flux_percent": 16.988148589448596,
+        "nonzero_order_forward_flux_percent": 91.42144645367982,
+        "haze_without_cosine_weight_percent": 74.55270517230562,
+        "parseval_relative_error": 0.0,
+        "evanescent_field_power_percent": 8.623059704011455e-08,
+        "spectral_edge_field_power_percent": 6.897767127795182e-08,
+        "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+        "complete_azimuth_angle_limit_deg": 90.0,
+        "near_axis_angle_step_deg_xy": [
+          0.060733537657238025,
+          0.060733537657238025
+        ],
+        "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+        "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+        "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim"
+      },
+      "geometric": {
+        "definition": "Projected-area statistics of the original periodic triangular facets; float64 analytic Snell/Fresnel, no native ray execution",
+        "rms_slope": 0.19903889389226886,
+        "slope_quantiles": {
+          "p50": 0.14873821540973245,
+          "p90": 0.3144365721552204,
+          "p99": 0.49164863943821124,
+          "p99_9": 0.6135573176883857
+        },
+        "slope_threshold_for_acceptance": 0.08707302627624788,
+        "area_above_slope_threshold_percent": 75.0504375,
+        "single_hit_haze_percent": 75.03921960045469,
+        "transmission_fraction": 0.9595673521470274,
+        "total_internal_reflection_area_percent": 0.0
+      },
+      "selected_angular_curve": [
+        {
+          "half_angle_deg": 0.0,
+          "within_cone_percent": 8.578553546320181,
+          "outside_cone_percent": 91.42144645367982
+        },
+        {
+          "half_angle_deg": 0.5,
+          "within_cone_percent": 8.95245433732176,
+          "outside_cone_percent": 91.04754566267825
+        },
+        {
+          "half_angle_deg": 1.0,
+          "within_cone_percent": 10.400072602861576,
+          "outside_cone_percent": 89.59992739713843
+        },
+        {
+          "half_angle_deg": 1.5,
+          "within_cone_percent": 13.458366483832993,
+          "outside_cone_percent": 86.54163351616701
+        },
+        {
+          "half_angle_deg": 2.0,
+          "within_cone_percent": 18.969082031458193,
+          "outside_cone_percent": 81.0309179685418
+        },
+        {
+          "half_angle_deg": 2.5,
+          "within_cone_percent": 25.566702135768775,
+          "outside_cone_percent": 74.43329786423124
+        },
+        {
+          "half_angle_deg": 3.0,
+          "within_cone_percent": 33.08451265827862,
+          "outside_cone_percent": 66.91548734172137
+        },
+        {
+          "half_angle_deg": 5.0,
+          "within_cone_percent": 61.869718542331434,
+          "outside_cone_percent": 38.130281457668566
+        },
+        {
+          "half_angle_deg": 10.0,
+          "within_cone_percent": 93.26283268255511,
+          "outside_cone_percent": 6.7371673174448805
+        },
+        {
+          "half_angle_deg": 30.0,
+          "within_cone_percent": 99.9950686486788,
+          "outside_cone_percent": 0.004931351321202371
+        },
+        {
+          "half_angle_deg": 90.0,
+          "within_cone_percent": 100.0,
+          "outside_cone_percent": 0.0
+        }
+      ]
+    },
+    {
+      "group": "affine",
+      "lateral_scale": 0.75,
+      "height_scale": 0.5,
+      "nominal_site_spacing_um": 18.75,
+      "rounding_sigma_um": 0.8999999999999999,
+      "pitch_um": 0.375,
+      "grid_yx": [
+        2000,
+        2000
+      ],
+      "surface_sha256_float64_m": "e799e49b85d9c63aef9d562d4b048c0188a001c06b9296b7e00661168dcf9c79",
+      "roughness": {
+        "Sa_um": 0.05000000240104437,
+        "Sq_um": 0.05925627119801408,
+        "Sz_um": 0.2577834323780337,
+        "height_min_um": -0.18489521216348168,
+        "height_max_um": 0.07288822021455202,
+        "rms_slope": 0.022014426684853674,
+        "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+      },
+      "wave": {
+        "haze_percent": 1.5258670328708215,
+        "wavelength_nm": 530.0,
+        "n_in": 1.5,
+        "n_out": 1.0,
+        "acceptance_half_angle_deg": 2.5,
+        "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+        "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+        "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+        "height_grid_yx": [
+          2000,
+          2000
+        ],
+        "height_pitch_um": 0.375,
+        "field_um_xy": [
+          750.0,
+          750.0
+        ],
+        "represented_scalar_forward_flux": 0.9999386319768879,
+        "zero_order_forward_flux_percent": 88.3527007956256,
+        "within_cone_nonzero_order_flux_percent": 10.121432171503596,
+        "nonzero_order_forward_flux_percent": 11.6472992043744,
+        "haze_without_cosine_weight_percent": 1.5285265319751888,
+        "parseval_relative_error": 4.440892098500626e-16,
+        "evanescent_field_power_percent": 0.0,
+        "spectral_edge_field_power_percent": 9.338332569386764e-10,
+        "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+        "complete_azimuth_angle_limit_deg": 44.964349283545715,
+        "near_axis_angle_step_deg_xy": [
+          0.040489020892464866,
+          0.040489020892464866
+        ],
+        "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+        "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+        "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim"
+      },
+      "geometric": {
+        "definition": "Projected-area statistics of the original periodic triangular facets; float64 analytic Snell/Fresnel, no native ray execution",
+        "rms_slope": 0.02211543265469654,
+        "slope_quantiles": {
+          "p50": 0.016526468378859162,
+          "p90": 0.03493739690613559,
+          "p99": 0.0546276266042457,
+          "p99_9": 0.06817303529870954
+        },
+        "slope_threshold_for_acceptance": 0.08707302627624788,
+        "area_above_slope_threshold_percent": 0.0,
+        "single_hit_haze_percent": 0.0,
+        "transmission_fraction": 0.9599999488048667,
+        "total_internal_reflection_area_percent": 0.0
+      },
+      "selected_angular_curve": [
+        {
+          "half_angle_deg": 0.0,
+          "within_cone_percent": 88.35270079562561,
+          "outside_cone_percent": 11.647299204374395
+        },
+        {
+          "half_angle_deg": 0.5,
+          "within_cone_percent": 88.91360074991346,
+          "outside_cone_percent": 11.086399250086544
+        },
+        {
+          "half_angle_deg": 1.0,
+          "within_cone_percent": 90.7945552065951,
+          "outside_cone_percent": 9.205444793404894
+        },
+        {
+          "half_angle_deg": 1.5,
+          "within_cone_percent": 94.29052263613764,
+          "outside_cone_percent": 5.709477363862359
+        },
+        {
+          "half_angle_deg": 2.0,
+          "within_cone_percent": 97.05540653053417,
+          "outside_cone_percent": 2.9445934694658282
+        },
+        {
+          "half_angle_deg": 2.5,
+          "within_cone_percent": 98.47413296712931,
+          "outside_cone_percent": 1.525867032870698
+        },
+        {
+          "half_angle_deg": 3.0,
+          "within_cone_percent": 99.18325797614266,
+          "outside_cone_percent": 0.816742023857342
+        },
+        {
+          "half_angle_deg": 5.0,
+          "within_cone_percent": 99.92077080169352,
+          "outside_cone_percent": 0.07922919830647412
+        },
+        {
+          "half_angle_deg": 10.0,
+          "within_cone_percent": 99.99959771827484,
+          "outside_cone_percent": 0.00040228172515366367
+        },
+        {
+          "half_angle_deg": 30.0,
+          "within_cone_percent": 99.99999999784563,
+          "outside_cone_percent": 2.1543655748246238e-09
+        },
+        {
+          "half_angle_deg": 90.0,
+          "within_cone_percent": 99.99999999997077,
+          "outside_cone_percent": 2.923217223838037e-11
+        }
+      ]
+    },
+    {
+      "group": "affine",
+      "lateral_scale": 0.75,
+      "height_scale": 1.0,
+      "nominal_site_spacing_um": 18.75,
+      "rounding_sigma_um": 0.8999999999999999,
+      "pitch_um": 0.375,
+      "grid_yx": [
+        2000,
+        2000
+      ],
+      "surface_sha256_float64_m": "5a23c5e3cd2ca14b12f11bd70e97e963969f44bdd38d7a2c781709bddb341e8f",
+      "roughness": {
+        "Sa_um": 0.10000000480208875,
+        "Sq_um": 0.11851254239602815,
+        "Sz_um": 0.5155668647560674,
+        "height_min_um": -0.36979042432696335,
+        "height_max_um": 0.14577644042910404,
+        "rms_slope": 0.04402885336970735,
+        "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+      },
+      "wave": {
+        "haze_percent": 6.660152550712967,
+        "wavelength_nm": 530.0,
+        "n_in": 1.5,
+        "n_out": 1.0,
+        "acceptance_half_angle_deg": 2.5,
+        "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+        "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+        "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+        "height_grid_yx": [
+          2000,
+          2000
+        ],
+        "height_pitch_um": 0.375,
+        "field_um_xy": [
+          750.0,
+          750.0
+        ],
+        "represented_scalar_forward_flux": 0.9997544687294376,
+        "zero_order_forward_flux_percent": 60.61918496321284,
+        "within_cone_nonzero_order_flux_percent": 32.72066248607421,
+        "nonzero_order_forward_flux_percent": 39.380815036787155,
+        "haze_without_cosine_weight_percent": 6.671771188545966,
+        "parseval_relative_error": 3.3306690738754696e-16,
+        "evanescent_field_power_percent": 0.0,
+        "spectral_edge_field_power_percent": 3.7354516049084385e-09,
+        "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+        "complete_azimuth_angle_limit_deg": 44.964349283545715,
+        "near_axis_angle_step_deg_xy": [
+          0.040489020892464866,
+          0.040489020892464866
+        ],
+        "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+        "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+        "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim"
+      },
+      "geometric": {
+        "definition": "Projected-area statistics of the original periodic triangular facets; float64 analytic Snell/Fresnel, no native ray execution",
+        "rms_slope": 0.04423086530939308,
+        "slope_quantiles": {
+          "p50": 0.033052936757718324,
+          "p90": 0.06987479381227119,
+          "p99": 0.1092552532084914,
+          "p99_9": 0.13634607059741907
+        },
+        "slope_threshold_for_acceptance": 0.08707302627624788,
+        "area_above_slope_threshold_percent": 3.9356500000000003,
+        "single_hit_haze_percent": 3.935611223075607,
+        "transmission_fraction": 0.9599991743594422,
+        "total_internal_reflection_area_percent": 0.0
+      },
+      "selected_angular_curve": [
+        {
+          "half_angle_deg": 0.0,
+          "within_cone_percent": 60.61918496321284,
+          "outside_cone_percent": 39.38081503678716
+        },
+        {
+          "half_angle_deg": 0.5,
+          "within_cone_percent": 62.333936144371314,
+          "outside_cone_percent": 37.666063855628686
+        },
+        {
+          "half_angle_deg": 1.0,
+          "within_cone_percent": 68.16708427673356,
+          "outside_cone_percent": 31.832915723266442
+        },
+        {
+          "half_angle_deg": 1.5,
+          "within_cone_percent": 79.17827615294867,
+          "outside_cone_percent": 20.82172384705133
+        },
+        {
+          "half_angle_deg": 2.0,
+          "within_cone_percent": 88.29184042288848,
+          "outside_cone_percent": 11.708159577111521
+        },
+        {
+          "half_angle_deg": 2.5,
+          "within_cone_percent": 93.33984744928718,
+          "outside_cone_percent": 6.660152550712828
+        },
+        {
+          "half_angle_deg": 3.0,
+          "within_cone_percent": 96.1278280308869,
+          "outside_cone_percent": 3.872171969113092
+        },
+        {
+          "half_angle_deg": 5.0,
+          "within_cone_percent": 99.47924125451529,
+          "outside_cone_percent": 0.5207587454847062
+        },
+        {
+          "half_angle_deg": 10.0,
+          "within_cone_percent": 99.99409902551663,
+          "outside_cone_percent": 0.005900974483363797
+        },
+        {
+          "half_angle_deg": 30.0,
+          "within_cone_percent": 99.99999999095895,
+          "outside_cone_percent": 9.041045689883731e-09
+        },
+        {
+          "half_angle_deg": 90.0,
+          "within_cone_percent": 99.99999999997839,
+          "outside_cone_percent": 2.1616042289451798e-11
+        }
+      ]
+    },
+    {
+      "group": "affine",
+      "lateral_scale": 0.75,
+      "height_scale": 2.0,
+      "nominal_site_spacing_um": 18.75,
+      "rounding_sigma_um": 0.8999999999999999,
+      "pitch_um": 0.375,
+      "grid_yx": [
+        2000,
+        2000
+      ],
+      "surface_sha256_float64_m": "b0f6baf08421039208340250b857964d24e5b07a8b8be480b570de16122ebee7",
+      "roughness": {
+        "Sa_um": 0.2000000096041775,
+        "Sq_um": 0.2370250847920563,
+        "Sz_um": 1.0311337295121348,
+        "height_min_um": -0.7395808486539267,
+        "height_max_um": 0.2915528808582081,
+        "rms_slope": 0.0880577067394147,
+        "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+      },
+      "wave": {
+        "haze_percent": 29.283892762502852,
+        "wavelength_nm": 530.0,
+        "n_in": 1.5,
+        "n_out": 1.0,
+        "acceptance_half_angle_deg": 2.5,
+        "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+        "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+        "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+        "height_grid_yx": [
+          2000,
+          2000
+        ],
+        "height_pitch_um": 0.375,
+        "field_um_xy": [
+          750.0,
+          750.0
+        ],
+        "represented_scalar_forward_flux": 0.9990169241765244,
+        "zero_order_forward_flux_percent": 14.647965723627097,
+        "within_cone_nonzero_order_flux_percent": 56.06814151387005,
+        "nonzero_order_forward_flux_percent": 85.3520342763729,
+        "haze_without_cosine_weight_percent": 29.33138630532526,
+        "parseval_relative_error": 1.1102230246251565e-16,
+        "evanescent_field_power_percent": 0.0,
+        "spectral_edge_field_power_percent": 1.5215906754042708e-08,
+        "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+        "complete_azimuth_angle_limit_deg": 44.964349283545715,
+        "near_axis_angle_step_deg_xy": [
+          0.040489020892464866,
+          0.040489020892464866
+        ],
+        "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+        "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+        "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim"
+      },
+      "geometric": {
+        "definition": "Projected-area statistics of the original periodic triangular facets; float64 analytic Snell/Fresnel, no native ray execution",
+        "rms_slope": 0.08846173061878616,
+        "slope_quantiles": {
+          "p50": 0.06610587351543665,
+          "p90": 0.13974958762454237,
+          "p99": 0.2185105064169828,
+          "p99_9": 0.27269214119483814
+        },
+        "slope_threshold_for_acceptance": 0.08707302627624788,
+        "area_above_slope_threshold_percent": 33.8249,
+        "single_hit_haze_percent": 33.824027697876055,
+        "transmission_fraction": 0.959986351634512,
+        "total_internal_reflection_area_percent": 0.0
+      },
+      "selected_angular_curve": [
+        {
+          "half_angle_deg": 0.0,
+          "within_cone_percent": 14.647965723627095,
+          "outside_cone_percent": 85.3520342763729
+        },
+        {
+          "half_angle_deg": 0.5,
+          "within_cone_percent": 16.890345007971785,
+          "outside_cone_percent": 83.10965499202821
+        },
+        {
+          "half_angle_deg": 1.0,
+          "within_cone_percent": 25.138159327620162,
+          "outside_cone_percent": 74.86184067237984
+        },
+        {
+          "half_angle_deg": 1.5,
+          "within_cone_percent": 41.85648377909229,
+          "outside_cone_percent": 58.14351622090772
+        },
+        {
+          "half_angle_deg": 2.0,
+          "within_cone_percent": 58.555696522080716,
+          "outside_cone_percent": 41.444303477919284
+        },
+        {
+          "half_angle_deg": 2.5,
+          "within_cone_percent": 70.71610723749718,
+          "outside_cone_percent": 29.283892762502816
+        },
+        {
+          "half_angle_deg": 3.0,
+          "within_cone_percent": 79.6666191260116,
+          "outside_cone_percent": 20.333380873988403
+        },
+        {
+          "half_angle_deg": 5.0,
+          "within_cone_percent": 95.21686905342666,
+          "outside_cone_percent": 4.783130946573333
+        },
+        {
+          "half_angle_deg": 10.0,
+          "within_cone_percent": 99.85410550620499,
+          "outside_cone_percent": 0.14589449379501795
+        },
+        {
+          "half_angle_deg": 30.0,
+          "within_cone_percent": 99.99999972426762,
+          "outside_cone_percent": 2.7573237026956576e-07
+        },
+        {
+          "half_angle_deg": 90.0,
+          "within_cone_percent": 99.9999999999988,
+          "outside_cone_percent": 1.199040866595169e-12
+        }
+      ]
+    },
+    {
+      "group": "affine",
+      "lateral_scale": 0.75,
+      "height_scale": 3.0,
+      "nominal_site_spacing_um": 18.75,
+      "rounding_sigma_um": 0.8999999999999999,
+      "pitch_um": 0.375,
+      "grid_yx": [
+        2000,
+        2000
+      ],
+      "surface_sha256_float64_m": "8dca24c6124e3b8be73fc49141320fced31e79ed66626e233bd2327f9f99db05",
+      "roughness": {
+        "Sa_um": 0.3000000144062662,
+        "Sq_um": 0.35553762718808446,
+        "Sz_um": 1.5467005942682022,
+        "height_min_um": -1.10937127298089,
+        "height_max_um": 0.4373293212873121,
+        "rms_slope": 0.13208656010912204,
+        "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+      },
+      "wave": {
+        "haze_percent": 55.80495301494797,
+        "wavelength_nm": 530.0,
+        "n_in": 1.5,
+        "n_out": 1.0,
+        "acceptance_half_angle_deg": 2.5,
+        "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+        "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+        "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+        "height_grid_yx": [
+          2000,
+          2000
+        ],
+        "height_pitch_um": 0.375,
+        "field_um_xy": [
+          750.0,
+          750.0
+        ],
+        "represented_scalar_forward_flux": 0.9977844824505209,
+        "zero_order_forward_flux_percent": 8.554547059856711,
+        "within_cone_nonzero_order_flux_percent": 35.64049992519533,
+        "nonzero_order_forward_flux_percent": 91.44545294014328,
+        "haze_without_cosine_weight_percent": 55.88649472993692,
+        "parseval_relative_error": 0.0,
+        "evanescent_field_power_percent": 0.0,
+        "spectral_edge_field_power_percent": 7.033609091496123e-08,
+        "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+        "complete_azimuth_angle_limit_deg": 44.964349283545715,
+        "near_axis_angle_step_deg_xy": [
+          0.040489020892464866,
+          0.040489020892464866
+        ],
+        "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+        "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+        "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim"
+      },
+      "geometric": {
+        "definition": "Projected-area statistics of the original periodic triangular facets; float64 analytic Snell/Fresnel, no native ray execution",
+        "rms_slope": 0.13269259592817922,
+        "slope_quantiles": {
+          "p50": 0.09915881027315496,
+          "p90": 0.2096243814368136,
+          "p99": 0.32776575962547416,
+          "p99_9": 0.4090382117922572
+        },
+        "slope_threshold_for_acceptance": 0.08707302627624788,
+        "area_above_slope_threshold_percent": 57.11707499999999,
+        "single_hit_haze_percent": 57.11385634727942,
+        "transmission_fraction": 0.9599267725920434,
+        "total_internal_reflection_area_percent": 0.0
+      },
+      "selected_angular_curve": [
+        {
+          "half_angle_deg": 0.0,
+          "within_cone_percent": 8.554547059856711,
+          "outside_cone_percent": 91.44545294014328
+        },
+        {
+          "half_angle_deg": 0.5,
+          "within_cone_percent": 9.474526629098266,
+          "outside_cone_percent": 90.52547337090174
+        },
+        {
+          "half_angle_deg": 1.0,
+          "within_cone_percent": 13.421213084350187,
+          "outside_cone_percent": 86.57878691564981
+        },
+        {
+          "half_angle_deg": 1.5,
+          "within_cone_percent": 22.0712782678488,
+          "outside_cone_percent": 77.92872173215119
+        },
+        {
+          "half_angle_deg": 2.0,
+          "within_cone_percent": 33.00156005662372,
+          "outside_cone_percent": 66.99843994337628
+        },
+        {
+          "half_angle_deg": 2.5,
+          "within_cone_percent": 44.19504698505199,
+          "outside_cone_percent": 55.80495301494801
+        },
+        {
+          "half_angle_deg": 3.0,
+          "within_cone_percent": 55.18646245391048,
+          "outside_cone_percent": 44.81353754608952
+        },
+        {
+          "half_angle_deg": 5.0,
+          "within_cone_percent": 83.5487011352669,
+          "outside_cone_percent": 16.45129886473311
+        },
+        {
+          "half_angle_deg": 10.0,
+          "within_cone_percent": 98.92106862330476,
+          "outside_cone_percent": 1.0789313766952358
+        },
+        {
+          "half_angle_deg": 30.0,
+          "within_cone_percent": 99.99998545392813,
+          "outside_cone_percent": 1.4546071869236954e-05
+        },
+        {
+          "half_angle_deg": 90.0,
+          "within_cone_percent": 99.99999999999949,
+          "outside_cone_percent": 5.10702591327572e-13
+        }
+      ]
+    },
+    {
+      "group": "affine",
+      "lateral_scale": 1.0,
+      "height_scale": 0.5,
+      "nominal_site_spacing_um": 25.0,
+      "rounding_sigma_um": 1.2,
+      "pitch_um": 0.5,
+      "grid_yx": [
+        2000,
+        2000
+      ],
+      "surface_sha256_float64_m": "e799e49b85d9c63aef9d562d4b048c0188a001c06b9296b7e00661168dcf9c79",
+      "roughness": {
+        "Sa_um": 0.05000000240104437,
+        "Sq_um": 0.05925627119801408,
+        "Sz_um": 0.2577834323780337,
+        "height_min_um": -0.18489521216348168,
+        "height_max_um": 0.07288822021455202,
+        "rms_slope": 0.016510820013640255,
+        "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+      },
+      "wave": {
+        "haze_percent": 0.5475519739457884,
+        "wavelength_nm": 530.0,
+        "n_in": 1.5,
+        "n_out": 1.0,
+        "acceptance_half_angle_deg": 2.5,
+        "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+        "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+        "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+        "height_grid_yx": [
+          2000,
+          2000
+        ],
+        "height_pitch_um": 0.5,
+        "field_um_xy": [
+          1000.0,
+          1000.0
+        ],
+        "represented_scalar_forward_flux": 0.9999654911432536,
+        "zero_order_forward_flux_percent": 88.35032763384096,
+        "within_cone_nonzero_order_flux_percent": 11.102120392213257,
+        "nonzero_order_forward_flux_percent": 11.649672366159027,
+        "haze_without_cosine_weight_percent": 0.5483987104369196,
+        "parseval_relative_error": 4.440892098500626e-16,
+        "evanescent_field_power_percent": 0.0,
+        "spectral_edge_field_power_percent": 9.252694124829437e-10,
+        "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+        "complete_azimuth_angle_limit_deg": 32.00545482776425,
+        "near_axis_angle_step_deg_xy": [
+          0.03036676456360444,
+          0.03036676456360444
+        ],
+        "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+        "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+        "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim"
+      },
+      "geometric": {
+        "definition": "Projected-area statistics of the original periodic triangular facets; float64 analytic Snell/Fresnel, no native ray execution",
+        "rms_slope": 0.016586574491022407,
+        "slope_quantiles": {
+          "p50": 0.01239485128414437,
+          "p90": 0.026203047679601698,
+          "p99": 0.04097071995318428,
+          "p99_9": 0.05112977647403215
+        },
+        "slope_threshold_for_acceptance": 0.08707302627624788,
+        "area_above_slope_threshold_percent": 0.0,
+        "single_hit_haze_percent": 0.0,
+        "transmission_fraction": 0.9599999838201347,
+        "total_internal_reflection_area_percent": 0.0
+      },
+      "selected_angular_curve": [
+        {
+          "half_angle_deg": 0.0,
+          "within_cone_percent": 88.35032763384098,
+          "outside_cone_percent": 11.649672366159026
+        },
+        {
+          "half_angle_deg": 0.5,
+          "within_cone_percent": 89.29439265814607,
+          "outside_cone_percent": 10.70560734185394
+        },
+        {
+          "half_angle_deg": 1.0,
+          "within_cone_percent": 93.03334401372035,
+          "outside_cone_percent": 6.966655986279646
+        },
+        {
+          "half_angle_deg": 1.5,
+          "within_cone_percent": 97.05381091356084,
+          "outside_cone_percent": 2.946189086439166
+        },
+        {
+          "half_angle_deg": 2.0,
+          "within_cone_percent": 98.76763454007514,
+          "outside_cone_percent": 1.2323654599248668
+        },
+        {
+          "half_angle_deg": 2.5,
+          "within_cone_percent": 99.45244802605416,
+          "outside_cone_percent": 0.5475519739458368
+        },
+        {
+          "half_angle_deg": 3.0,
+          "within_cone_percent": 99.75158074988211,
+          "outside_cone_percent": 0.2484192501178928
+        },
+        {
+          "half_angle_deg": 5.0,
+          "within_cone_percent": 99.98699270780148,
+          "outside_cone_percent": 0.01300729219851915
+        },
+        {
+          "half_angle_deg": 10.0,
+          "within_cone_percent": 99.99998556220064,
+          "outside_cone_percent": 1.443779936716183e-05
+        },
+        {
+          "half_angle_deg": 30.0,
+          "within_cone_percent": 99.9999999987695,
+          "outside_cone_percent": 1.230504587113046e-09
+        },
+        {
+          "half_angle_deg": 90.0,
+          "within_cone_percent": 99.99999999996781,
+          "outside_cone_percent": 3.218536548388329e-11
+        }
+      ]
+    },
+    {
+      "group": "affine",
+      "lateral_scale": 1.0,
+      "height_scale": 1.0,
+      "nominal_site_spacing_um": 25.0,
+      "rounding_sigma_um": 1.2,
+      "pitch_um": 0.5,
+      "grid_yx": [
+        2000,
+        2000
+      ],
+      "surface_sha256_float64_m": "5a23c5e3cd2ca14b12f11bd70e97e963969f44bdd38d7a2c781709bddb341e8f",
+      "roughness": {
+        "Sa_um": 0.10000000480208875,
+        "Sq_um": 0.11851254239602815,
+        "Sz_um": 0.5155668647560674,
+        "height_min_um": -0.36979042432696335,
+        "height_max_um": 0.14577644042910404,
+        "rms_slope": 0.03302164002728051,
+        "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+      },
+      "wave": {
+        "haze_percent": 2.730997434174413,
+        "wavelength_nm": 530.0,
+        "n_in": 1.5,
+        "n_out": 1.0,
+        "acceptance_half_angle_deg": 2.5,
+        "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+        "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+        "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+        "height_grid_yx": [
+          2000,
+          2000
+        ],
+        "height_pitch_um": 0.5,
+        "field_um_xy": [
+          1000.0,
+          1000.0
+        ],
+        "represented_scalar_forward_flux": 0.9998619459279074,
+        "zero_order_forward_flux_percent": 60.612668883468125,
+        "within_cone_nonzero_order_flux_percent": 36.65633368235749,
+        "nonzero_order_forward_flux_percent": 39.38733111653187,
+        "haze_without_cosine_weight_percent": 2.735312311498314,
+        "parseval_relative_error": 3.3306690738754696e-16,
+        "evanescent_field_power_percent": 0.0,
+        "spectral_edge_field_power_percent": 3.7010049651201116e-09,
+        "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+        "complete_azimuth_angle_limit_deg": 32.00545482776425,
+        "near_axis_angle_step_deg_xy": [
+          0.03036676456360444,
+          0.03036676456360444
+        ],
+        "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+        "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+        "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim"
+      },
+      "geometric": {
+        "definition": "Projected-area statistics of the original periodic triangular facets; float64 analytic Snell/Fresnel, no native ray execution",
+        "rms_slope": 0.03317314898204481,
+        "slope_quantiles": {
+          "p50": 0.02478970256828874,
+          "p90": 0.052406095359203396,
+          "p99": 0.08194143990636855,
+          "p99_9": 0.1022595529480643
+        },
+        "slope_threshold_for_acceptance": 0.08707302627624788,
+        "area_above_slope_threshold_percent": 0.6132625,
+        "single_hit_haze_percent": 0.6132581235310034,
+        "transmission_fraction": 0.9599997399700431,
+        "total_internal_reflection_area_percent": 0.0
+      },
+      "selected_angular_curve": [
+        {
+          "half_angle_deg": 0.0,
+          "within_cone_percent": 60.612668883468125,
+          "outside_cone_percent": 39.387331116531875
+        },
+        {
+          "half_angle_deg": 0.5,
+          "within_cone_percent": 63.52263261072287,
+          "outside_cone_percent": 36.47736738927713
+        },
+        {
+          "half_angle_deg": 1.0,
+          "within_cone_percent": 75.20314809640958,
+          "outside_cone_percent": 24.796851903590422
+        },
+        {
+          "half_angle_deg": 1.5,
+          "within_cone_percent": 88.28561883772267,
+          "outside_cone_percent": 11.714381162277332
+        },
+        {
+          "half_angle_deg": 2.0,
+          "within_cone_percent": 94.46553543136186,
+          "outside_cone_percent": 5.534464568638143
+        },
+        {
+          "half_angle_deg": 2.5,
+          "within_cone_percent": 97.26900256582542,
+          "outside_cone_percent": 2.7309974341745757
+        },
+        {
+          "half_angle_deg": 3.0,
+          "within_cone_percent": 98.61920297984516,
+          "outside_cone_percent": 1.3807970201548447
+        },
+        {
+          "half_angle_deg": 5.0,
+          "within_cone_percent": 99.88790094046492,
+          "outside_cone_percent": 0.11209905953508681
+        },
+        {
+          "half_angle_deg": 10.0,
+          "within_cone_percent": 99.99966043775338,
+          "outside_cone_percent": 0.0003395622466206838
+        },
+        {
+          "half_angle_deg": 30.0,
+          "within_cone_percent": 99.99999999517296,
+          "outside_cone_percent": 4.827049870925748e-09
+        },
+        {
+          "half_angle_deg": 90.0,
+          "within_cone_percent": 99.99999999997814,
+          "outside_cone_percent": 2.184918912462308e-11
+        }
+      ]
+    },
+    {
+      "group": "affine",
+      "lateral_scale": 1.0,
+      "height_scale": 2.0,
+      "nominal_site_spacing_um": 25.0,
+      "rounding_sigma_um": 1.2,
+      "pitch_um": 0.5,
+      "grid_yx": [
+        2000,
+        2000
+      ],
+      "surface_sha256_float64_m": "b0f6baf08421039208340250b857964d24e5b07a8b8be480b570de16122ebee7",
+      "roughness": {
+        "Sa_um": 0.2000000096041775,
+        "Sq_um": 0.2370250847920563,
+        "Sz_um": 1.0311337295121348,
+        "height_min_um": -0.7395808486539267,
+        "height_max_um": 0.2915528808582081,
+        "rms_slope": 0.06604328005456102,
+        "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+      },
+      "wave": {
+        "haze_percent": 15.902150881564468,
+        "wavelength_nm": 530.0,
+        "n_in": 1.5,
+        "n_out": 1.0,
+        "acceptance_half_angle_deg": 2.5,
+        "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+        "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+        "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+        "height_grid_yx": [
+          2000,
+          2000
+        ],
+        "height_pitch_um": 0.5,
+        "field_um_xy": [
+          1000.0,
+          1000.0
+        ],
+        "represented_scalar_forward_flux": 0.9994474847113773,
+        "zero_order_forward_flux_percent": 14.641655401120964,
+        "within_cone_nonzero_order_flux_percent": 69.45619371731458,
+        "nonzero_order_forward_flux_percent": 85.35834459887904,
+        "haze_without_cosine_weight_percent": 15.926665820836893,
+        "parseval_relative_error": 1.1102230246251565e-16,
+        "evanescent_field_power_percent": 0.0,
+        "spectral_edge_field_power_percent": 1.506777936754416e-08,
+        "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+        "complete_azimuth_angle_limit_deg": 32.00545482776425,
+        "near_axis_angle_step_deg_xy": [
+          0.03036676456360444,
+          0.03036676456360444
+        ],
+        "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+        "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+        "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim"
+      },
+      "geometric": {
+        "definition": "Projected-area statistics of the original periodic triangular facets; float64 analytic Snell/Fresnel, no native ray execution",
+        "rms_slope": 0.06634629796408963,
+        "slope_quantiles": {
+          "p50": 0.04957940513657748,
+          "p90": 0.10481219071840679,
+          "p99": 0.1638828798127371,
+          "p99_9": 0.2045191058961286
+        },
+        "slope_threshold_for_acceptance": 0.08707302627624788,
+        "area_above_slope_threshold_percent": 17.921775,
+        "single_hit_haze_percent": 17.92148057569885,
+        "transmission_fraction": 0.9599957637637714,
+        "total_internal_reflection_area_percent": 0.0
+      },
+      "selected_angular_curve": [
+        {
+          "half_angle_deg": 0.0,
+          "within_cone_percent": 14.641655401120962,
+          "outside_cone_percent": 85.35834459887903
+        },
+        {
+          "half_angle_deg": 0.5,
+          "within_cone_percent": 18.633825366312244,
+          "outside_cone_percent": 81.36617463368776
+        },
+        {
+          "half_angle_deg": 1.0,
+          "within_cone_percent": 35.74303697804738,
+          "outside_cone_percent": 64.25696302195263
+        },
+        {
+          "half_angle_deg": 1.5,
+          "within_cone_percent": 58.53603046911362,
+          "outside_cone_percent": 41.46396953088638
+        },
+        {
+          "half_angle_deg": 2.0,
+          "within_cone_percent": 74.08379723217759,
+          "outside_cone_percent": 25.916202767822416
+        },
+        {
+          "half_angle_deg": 2.5,
+          "within_cone_percent": 84.0978491184357,
+          "outside_cone_percent": 15.902150881564292
+        },
+        {
+          "half_angle_deg": 3.0,
+          "within_cone_percent": 90.20614349069838,
+          "outside_cone_percent": 9.793856509301612
+        },
+        {
+          "half_angle_deg": 5.0,
+          "within_cone_percent": 98.5239691637575,
+          "outside_cone_percent": 1.4760308362425034
+        },
+        {
+          "half_angle_deg": 10.0,
+          "within_cone_percent": 99.98508565749515,
+          "outside_cone_percent": 0.014914342504845912
+        },
+        {
+          "half_angle_deg": 30.0,
+          "within_cone_percent": 99.99999998056303,
+          "outside_cone_percent": 1.9436974252329264e-08
+        },
+        {
+          "half_angle_deg": 90.0,
+          "within_cone_percent": 99.99999999999882,
+          "outside_cone_percent": 1.176836406102666e-12
+        }
+      ]
+    },
+    {
+      "group": "affine",
+      "lateral_scale": 1.0,
+      "height_scale": 3.0,
+      "nominal_site_spacing_um": 25.0,
+      "rounding_sigma_um": 1.2,
+      "pitch_um": 0.5,
+      "grid_yx": [
+        2000,
+        2000
+      ],
+      "surface_sha256_float64_m": "8dca24c6124e3b8be73fc49141320fced31e79ed66626e233bd2327f9f99db05",
+      "roughness": {
+        "Sa_um": 0.3000000144062662,
+        "Sq_um": 0.35553762718808446,
+        "Sz_um": 1.5467005942682022,
+        "height_min_um": -1.10937127298089,
+        "height_max_um": 0.4373293212873121,
+        "rms_slope": 0.09906492008184152,
+        "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+      },
+      "wave": {
+        "haze_percent": 38.226924912356836,
+        "wavelength_nm": 530.0,
+        "n_in": 1.5,
+        "n_out": 1.0,
+        "acceptance_half_angle_deg": 2.5,
+        "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+        "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+        "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+        "height_grid_yx": [
+          2000,
+          2000
+        ],
+        "height_pitch_um": 0.5,
+        "field_um_xy": [
+          1000.0,
+          1000.0
+        ],
+        "represented_scalar_forward_flux": 0.9987557138714862,
+        "zero_order_forward_flux_percent": 8.546228263997758,
+        "within_cone_nonzero_order_flux_percent": 53.22684682364541,
+        "nonzero_order_forward_flux_percent": 91.45377173600224,
+        "haze_without_cosine_weight_percent": 38.28178665443964,
+        "parseval_relative_error": 0.0,
+        "evanescent_field_power_percent": 0.0,
+        "spectral_edge_field_power_percent": 6.897767127795182e-08,
+        "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+        "complete_azimuth_angle_limit_deg": 32.00545482776425,
+        "near_axis_angle_step_deg_xy": [
+          0.03036676456360444,
+          0.03036676456360444
+        ],
+        "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+        "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+        "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim"
+      },
+      "geometric": {
+        "definition": "Projected-area statistics of the original periodic triangular facets; float64 analytic Snell/Fresnel, no native ray execution",
+        "rms_slope": 0.09951944694613443,
+        "slope_quantiles": {
+          "p50": 0.07436910770486622,
+          "p90": 0.1572182860776102,
+          "p99": 0.24582431971910562,
+          "p99_9": 0.30677865884419286
+        },
+        "slope_threshold_for_acceptance": 0.08707302627624788,
+        "area_above_slope_threshold_percent": 40.8314875,
+        "single_hit_haze_percent": 40.830189116103945,
+        "transmission_fraction": 0.9599778755186038,
+        "total_internal_reflection_area_percent": 0.0
+      },
+      "selected_angular_curve": [
+        {
+          "half_angle_deg": 0.0,
+          "within_cone_percent": 8.546228263997758,
+          "outside_cone_percent": 91.45377173600224
+        },
+        {
+          "half_angle_deg": 0.5,
+          "within_cone_percent": 10.360995524651981,
+          "outside_cone_percent": 89.63900447534802
+        },
+        {
+          "half_angle_deg": 1.0,
+          "within_cone_percent": 18.900234490174405,
+          "outside_cone_percent": 81.09976550982559
+        },
+        {
+          "half_angle_deg": 1.5,
+          "within_cone_percent": 32.97283478728252,
+          "outside_cone_percent": 67.02716521271748
+        },
+        {
+          "half_angle_deg": 2.0,
+          "within_cone_percent": 48.01780906855666,
+          "outside_cone_percent": 51.98219093144334
+        },
+        {
+          "half_angle_deg": 2.5,
+          "within_cone_percent": 61.773075087643306,
+          "outside_cone_percent": 38.226924912356694
+        },
+        {
+          "half_angle_deg": 3.0,
+          "within_cone_percent": 72.42414478792666,
+          "outside_cone_percent": 27.57585521207333
+        },
+        {
+          "half_angle_deg": 5.0,
+          "within_cone_percent": 93.24639755948705,
+          "outside_cone_percent": 6.753602440512951
+        },
+        {
+          "half_angle_deg": 10.0,
+          "within_cone_percent": 99.83254037266398,
+          "outside_cone_percent": 0.1674596273360085
+        },
+        {
+          "half_angle_deg": 30.0,
+          "within_cone_percent": 99.99999992821641,
+          "outside_cone_percent": 7.178359018311653e-08
+        },
+        {
+          "half_angle_deg": 90.0,
+          "within_cone_percent": 99.9999999999998,
+          "outside_cone_percent": 1.9984014443252818e-13
+        }
+      ]
+    },
+    {
+      "group": "affine",
+      "lateral_scale": 1.5,
+      "height_scale": 0.5,
+      "nominal_site_spacing_um": 37.5,
+      "rounding_sigma_um": 1.7999999999999998,
+      "pitch_um": 0.75,
+      "grid_yx": [
+        2000,
+        2000
+      ],
+      "surface_sha256_float64_m": "e799e49b85d9c63aef9d562d4b048c0188a001c06b9296b7e00661168dcf9c79",
+      "roughness": {
+        "Sa_um": 0.05000000240104437,
+        "Sq_um": 0.05925627119801408,
+        "Sz_um": 0.2577834323780337,
+        "height_min_um": -0.18489521216348168,
+        "height_max_um": 0.07288822021455202,
+        "rms_slope": 0.011007213342426837,
+        "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+      },
+      "wave": {
+        "haze_percent": 0.07917133267296808,
+        "wavelength_nm": 530.0,
+        "n_in": 1.5,
+        "n_out": 1.0,
+        "acceptance_half_angle_deg": 2.5,
+        "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+        "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+        "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+        "height_grid_yx": [
+          2000,
+          2000
+        ],
+        "height_pitch_um": 0.75,
+        "field_um_xy": [
+          1500.0,
+          1500.0
+        ],
+        "represented_scalar_forward_flux": 0.9999846661042519,
+        "zero_order_forward_flux_percent": 88.34863349377663,
+        "within_cone_nonzero_order_flux_percent": 11.572195173550389,
+        "nonzero_order_forward_flux_percent": 11.651366506223356,
+        "haze_without_cosine_weight_percent": 0.07927870909403206,
+        "parseval_relative_error": 4.440892098500626e-16,
+        "evanescent_field_power_percent": 0.0,
+        "spectral_edge_field_power_percent": 9.338332569386764e-10,
+        "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+        "complete_azimuth_angle_limit_deg": 20.691332758187638,
+        "near_axis_angle_step_deg_xy": [
+          0.02024450918252485,
+          0.02024450918252485
+        ],
+        "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+        "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+        "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim"
+      },
+      "geometric": {
+        "definition": "Projected-area statistics of the original periodic triangular facets; float64 analytic Snell/Fresnel, no native ray execution",
+        "rms_slope": 0.01105771632734827,
+        "slope_quantiles": {
+          "p50": 0.008263234189429581,
+          "p90": 0.017468698453067796,
+          "p99": 0.02731381330212285,
+          "p99_9": 0.03408651764935477
+        },
+        "slope_threshold_for_acceptance": 0.08707302627624788,
+        "area_above_slope_threshold_percent": 0.0,
+        "single_hit_haze_percent": 0.0,
+        "transmission_fraction": 0.9599999968065948,
+        "total_internal_reflection_area_percent": 0.0
+      },
+      "selected_angular_curve": [
+        {
+          "half_angle_deg": 0.0,
+          "within_cone_percent": 88.34863349377665,
+          "outside_cone_percent": 11.65136650622336
+        },
+        {
+          "half_angle_deg": 0.5,
+          "within_cone_percent": 90.79052237140667,
+          "outside_cone_percent": 9.209477628593332
+        },
+        {
+          "half_angle_deg": 1.0,
+          "within_cone_percent": 97.05267212792077,
+          "outside_cone_percent": 2.9473278720792306
+        },
+        {
+          "half_angle_deg": 1.5,
+          "within_cone_percent": 99.18339117383199,
+          "outside_cone_percent": 0.8166088261680082
+        },
+        {
+          "half_angle_deg": 2.0,
+          "within_cone_percent": 99.7514553872492,
+          "outside_cone_percent": 0.24854461275080064
+        },
+        {
+          "half_angle_deg": 2.5,
+          "within_cone_percent": 99.92082866732714,
+          "outside_cone_percent": 0.07917133267285603
+        },
+        {
+          "half_angle_deg": 3.0,
+          "within_cone_percent": 99.97313511161873,
+          "outside_cone_percent": 0.026864888381272767
+        },
+        {
+          "half_angle_deg": 5.0,
+          "within_cone_percent": 99.99960770865863,
+          "outside_cone_percent": 0.00039229134136675725
+        },
+        {
+          "half_angle_deg": 10.0,
+          "within_cone_percent": 99.99999997729184,
+          "outside_cone_percent": 2.2708168678775564e-08
+        },
+        {
+          "half_angle_deg": 30.0,
+          "within_cone_percent": 99.99999999996713,
+          "outside_cone_percent": 3.2873703759150885e-11
+        },
+        {
+          "half_angle_deg": 90.0,
+          "within_cone_percent": 99.99999999996713,
+          "outside_cone_percent": 3.2873703759150885e-11
+        }
+      ]
+    },
+    {
+      "group": "affine",
+      "lateral_scale": 1.5,
+      "height_scale": 1.0,
+      "nominal_site_spacing_um": 37.5,
+      "rounding_sigma_um": 1.7999999999999998,
+      "pitch_um": 0.75,
+      "grid_yx": [
+        2000,
+        2000
+      ],
+      "surface_sha256_float64_m": "5a23c5e3cd2ca14b12f11bd70e97e963969f44bdd38d7a2c781709bddb341e8f",
+      "roughness": {
+        "Sa_um": 0.10000000480208875,
+        "Sq_um": 0.11851254239602815,
+        "Sz_um": 0.5155668647560674,
+        "height_min_um": -0.36979042432696335,
+        "height_max_um": 0.14577644042910404,
+        "rms_slope": 0.022014426684853674,
+        "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+      },
+      "wave": {
+        "haze_percent": 0.5206701844945834,
+        "wavelength_nm": 530.0,
+        "n_in": 1.5,
+        "n_out": 1.0,
+        "acceptance_half_angle_deg": 2.5,
+        "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+        "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+        "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+        "height_grid_yx": [
+          2000,
+          2000
+        ],
+        "height_pitch_um": 0.75,
+        "field_um_xy": [
+          1500.0,
+          1500.0
+        ],
+        "represented_scalar_forward_flux": 0.9999386607450554,
+        "zero_order_forward_flux_percent": 60.6080187084196,
+        "within_cone_nonzero_order_flux_percent": 38.871311107085816,
+        "nonzero_order_forward_flux_percent": 39.39198129158039,
+        "haze_without_cosine_weight_percent": 0.521399196136064,
+        "parseval_relative_error": 3.3306690738754696e-16,
+        "evanescent_field_power_percent": 0.0,
+        "spectral_edge_field_power_percent": 3.7354516049084385e-09,
+        "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+        "complete_azimuth_angle_limit_deg": 20.691332758187638,
+        "near_axis_angle_step_deg_xy": [
+          0.02024450918252485,
+          0.02024450918252485
+        ],
+        "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+        "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+        "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim"
+      },
+      "geometric": {
+        "definition": "Projected-area statistics of the original periodic triangular facets; float64 analytic Snell/Fresnel, no native ray execution",
+        "rms_slope": 0.02211543265469654,
+        "slope_quantiles": {
+          "p50": 0.016526468378859162,
+          "p90": 0.03493739690613559,
+          "p99": 0.0546276266042457,
+          "p99_9": 0.06817303529870954
+        },
+        "slope_threshold_for_acceptance": 0.08707302627624788,
+        "area_above_slope_threshold_percent": 0.0,
+        "single_hit_haze_percent": 0.0,
+        "transmission_fraction": 0.9599999488048667,
+        "total_internal_reflection_area_percent": 0.0
+      },
+      "selected_angular_curve": [
+        {
+          "half_angle_deg": 0.0,
+          "within_cone_percent": 60.60801870841961,
+          "outside_cone_percent": 39.39198129158039
+        },
+        {
+          "half_angle_deg": 0.5,
+          "within_cone_percent": 68.15498284005874,
+          "outside_cone_percent": 31.845017159941257
+        },
+        {
+          "half_angle_deg": 1.0,
+          "within_cone_percent": 88.2811801694199,
+          "outside_cone_percent": 11.718819830580095
+        },
+        {
+          "half_angle_deg": 1.5,
+          "within_cone_percent": 96.12796404010318,
+          "outside_cone_percent": 3.8720359598968135
+        },
+        {
+          "half_angle_deg": 2.0,
+          "within_cone_percent": 98.61839498058428,
+          "outside_cone_percent": 1.3816050194157214
+        },
+        {
+          "half_angle_deg": 2.5,
+          "within_cone_percent": 99.47932981550521,
+          "outside_cone_percent": 0.520670184494787
+        },
+        {
+          "half_angle_deg": 3.0,
+          "within_cone_percent": 99.79240226269623,
+          "outside_cone_percent": 0.2075977373037663
+        },
+        {
+          "half_angle_deg": 5.0,
+          "within_cone_percent": 99.99420813850207,
+          "outside_cone_percent": 0.005791861497927986
+        },
+        {
+          "half_angle_deg": 10.0,
+          "within_cone_percent": 99.99999884777164,
+          "outside_cone_percent": 1.1522283682730006e-06
+        },
+        {
+          "half_angle_deg": 30.0,
+          "within_cone_percent": 99.9999999999791,
+          "outside_cone_percent": 2.0905499553691698e-11
+        },
+        {
+          "half_angle_deg": 90.0,
+          "within_cone_percent": 99.9999999999791,
+          "outside_cone_percent": 2.0905499553691698e-11
+        }
+      ]
+    },
+    {
+      "group": "affine",
+      "lateral_scale": 1.5,
+      "height_scale": 2.0,
+      "nominal_site_spacing_um": 37.5,
+      "rounding_sigma_um": 1.7999999999999998,
+      "pitch_um": 0.75,
+      "grid_yx": [
+        2000,
+        2000
+      ],
+      "surface_sha256_float64_m": "b0f6baf08421039208340250b857964d24e5b07a8b8be480b570de16122ebee7",
+      "roughness": {
+        "Sa_um": 0.2000000096041775,
+        "Sq_um": 0.2370250847920563,
+        "Sz_um": 1.0311337295121348,
+        "height_min_um": -0.7395808486539267,
+        "height_max_um": 0.2915528808582081,
+        "rms_slope": 0.04402885336970735,
+        "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+      },
+      "wave": {
+        "haze_percent": 4.788086836069222,
+        "wavelength_nm": 530.0,
+        "n_in": 1.5,
+        "n_out": 1.0,
+        "acceptance_half_angle_deg": 2.5,
+        "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+        "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+        "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+        "height_grid_yx": [
+          2000,
+          2000
+        ],
+        "height_pitch_um": 0.75,
+        "field_um_xy": [
+          1500.0,
+          1500.0
+        ],
+        "represented_scalar_forward_flux": 0.9997545841702489,
+        "zero_order_forward_flux_percent": 14.637157852900769,
+        "within_cone_nonzero_order_flux_percent": 80.57475531103002,
+        "nonzero_order_forward_flux_percent": 85.36284214709923,
+        "haze_without_cosine_weight_percent": 4.7948186810326066,
+        "parseval_relative_error": 1.1102230246251565e-16,
+        "evanescent_field_power_percent": 0.0,
+        "spectral_edge_field_power_percent": 1.5215906754042708e-08,
+        "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+        "complete_azimuth_angle_limit_deg": 20.691332758187638,
+        "near_axis_angle_step_deg_xy": [
+          0.02024450918252485,
+          0.02024450918252485
+        ],
+        "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+        "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+        "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim"
+      },
+      "geometric": {
+        "definition": "Projected-area statistics of the original periodic triangular facets; float64 analytic Snell/Fresnel, no native ray execution",
+        "rms_slope": 0.04423086530939308,
+        "slope_quantiles": {
+          "p50": 0.033052936757718324,
+          "p90": 0.06987479381227119,
+          "p99": 0.1092552532084914,
+          "p99_9": 0.13634607059741907
+        },
+        "slope_threshold_for_acceptance": 0.08707302627624788,
+        "area_above_slope_threshold_percent": 3.9356500000000003,
+        "single_hit_haze_percent": 3.935611223075607,
+        "transmission_fraction": 0.9599991743594422,
+        "total_internal_reflection_area_percent": 0.0
+      },
+      "selected_angular_curve": [
+        {
+          "half_angle_deg": 0.0,
+          "within_cone_percent": 14.637157852900767,
+          "outside_cone_percent": 85.36284214709924
+        },
+        {
+          "half_angle_deg": 0.5,
+          "within_cone_percent": 25.120252486772404,
+          "outside_cone_percent": 74.87974751322758
+        },
+        {
+          "half_angle_deg": 1.0,
+          "within_cone_percent": 58.522019068032684,
+          "outside_cone_percent": 41.477980931967316
+        },
+        {
+          "half_angle_deg": 1.5,
+          "within_cone_percent": 79.66132266262913,
+          "outside_cone_percent": 20.338677337370868
+        },
+        {
+          "half_angle_deg": 2.0,
+          "within_cone_percent": 90.19959273994903,
+          "outside_cone_percent": 9.800407260050969
+        },
+        {
+          "half_angle_deg": 2.5,
+          "within_cone_percent": 95.21191316393113,
+          "outside_cone_percent": 4.788086836068873
+        },
+        {
+          "half_angle_deg": 3.0,
+          "within_cone_percent": 97.62713708086912,
+          "outside_cone_percent": 2.3728629191308803
+        },
+        {
+          "half_angle_deg": 5.0,
+          "within_cone_percent": 99.85577128418674,
+          "outside_cone_percent": 0.14422871581325492
+        },
+        {
+          "half_angle_deg": 10.0,
+          "within_cone_percent": 99.999851141436,
+          "outside_cone_percent": 0.0001488585639974893
+        },
+        {
+          "half_angle_deg": 30.0,
+          "within_cone_percent": 99.99999999999916,
+          "outside_cone_percent": 8.43769498715119e-13
+        },
+        {
+          "half_angle_deg": 90.0,
+          "within_cone_percent": 99.99999999999916,
+          "outside_cone_percent": 8.43769498715119e-13
+        }
+      ]
+    },
+    {
+      "group": "affine",
+      "lateral_scale": 1.5,
+      "height_scale": 3.0,
+      "nominal_site_spacing_um": 37.5,
+      "rounding_sigma_um": 1.7999999999999998,
+      "pitch_um": 0.75,
+      "grid_yx": [
+        2000,
+        2000
+      ],
+      "surface_sha256_float64_m": "8dca24c6124e3b8be73fc49141320fced31e79ed66626e233bd2327f9f99db05",
+      "roughness": {
+        "Sa_um": 0.3000000144062662,
+        "Sq_um": 0.35553762718808446,
+        "Sz_um": 1.5467005942682022,
+        "height_min_um": -1.10937127298089,
+        "height_max_um": 0.4373293212873121,
+        "rms_slope": 0.06604328005456102,
+        "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+      },
+      "wave": {
+        "haze_percent": 16.4864414883148,
+        "wavelength_nm": 530.0,
+        "n_in": 1.5,
+        "n_out": 1.0,
+        "acceptance_half_angle_deg": 2.5,
+        "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+        "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+        "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+        "height_grid_yx": [
+          2000,
+          2000
+        ],
+        "height_pitch_um": 0.75,
+        "field_um_xy": [
+          1500.0,
+          1500.0
+        ],
+        "represented_scalar_forward_flux": 0.9994475933741596,
+        "zero_order_forward_flux_percent": 8.540312035673004,
+        "within_cone_nonzero_order_flux_percent": 74.9732464760122,
+        "nonzero_order_forward_flux_percent": 91.459687964327,
+        "haze_without_cosine_weight_percent": 16.508911565630903,
+        "parseval_relative_error": 0.0,
+        "evanescent_field_power_percent": 0.0,
+        "spectral_edge_field_power_percent": 7.033609091496123e-08,
+        "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+        "complete_azimuth_angle_limit_deg": 20.691332758187638,
+        "near_axis_angle_step_deg_xy": [
+          0.02024450918252485,
+          0.02024450918252485
+        ],
+        "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+        "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+        "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim"
+      },
+      "geometric": {
+        "definition": "Projected-area statistics of the original periodic triangular facets; float64 analytic Snell/Fresnel, no native ray execution",
+        "rms_slope": 0.06634629796408961,
+        "slope_quantiles": {
+          "p50": 0.04957940513657748,
+          "p90": 0.1048121907184068,
+          "p99": 0.16388287981273708,
+          "p99_9": 0.2045191058961286
+        },
+        "slope_threshold_for_acceptance": 0.08707302627624788,
+        "area_above_slope_threshold_percent": 17.921775,
+        "single_hit_haze_percent": 17.92148057569885,
+        "transmission_fraction": 0.9599957637637714,
+        "total_internal_reflection_area_percent": 0.0
+      },
+      "selected_angular_curve": [
+        {
+          "half_angle_deg": 0.0,
+          "within_cone_percent": 8.540312035673004,
+          "outside_cone_percent": 91.459687964327
+        },
+        {
+          "half_angle_deg": 0.5,
+          "within_cone_percent": 13.399184583756895,
+          "outside_cone_percent": 86.60081541624311
+        },
+        {
+          "half_angle_deg": 1.0,
+          "within_cone_percent": 32.95241178915839,
+          "outside_cone_percent": 67.04758821084161
+        },
+        {
+          "half_angle_deg": 1.5,
+          "within_cone_percent": 55.15822632506671,
+          "outside_cone_percent": 44.84177367493329
+        },
+        {
+          "half_angle_deg": 2.0,
+          "within_cone_percent": 72.4025921168196,
+          "outside_cone_percent": 27.59740788318039
+        },
+        {
+          "half_angle_deg": 2.5,
+          "within_cone_percent": 83.51355851168529,
+          "outside_cone_percent": 16.486441488314707
+        },
+        {
+          "half_angle_deg": 3.0,
+          "within_cone_percent": 90.29937941167073,
+          "outside_cone_percent": 9.700620588329267
+        },
+        {
+          "half_angle_deg": 5.0,
+          "within_cone_percent": 98.92797574244075,
+          "outside_cone_percent": 1.0720242575592454
+        },
+        {
+          "half_angle_deg": 10.0,
+          "within_cone_percent": 99.9964334803482,
+          "outside_cone_percent": 0.003566519651798661
+        },
+        {
+          "half_angle_deg": 30.0,
+          "within_cone_percent": 100.0,
+          "outside_cone_percent": 0.0
+        },
+        {
+          "half_angle_deg": 90.0,
+          "within_cone_percent": 100.0,
+          "outside_cone_percent": 0.0
+        }
+      ]
+    },
+    {
+      "group": "affine",
+      "lateral_scale": 2.0,
+      "height_scale": 0.5,
+      "nominal_site_spacing_um": 50.0,
+      "rounding_sigma_um": 2.4,
+      "pitch_um": 1.0,
+      "grid_yx": [
+        2000,
+        2000
+      ],
+      "surface_sha256_float64_m": "e799e49b85d9c63aef9d562d4b048c0188a001c06b9296b7e00661168dcf9c79",
+      "roughness": {
+        "Sa_um": 0.05000000240104437,
+        "Sq_um": 0.05925627119801408,
+        "Sz_um": 0.2577834323780337,
+        "height_min_um": -0.18489521216348168,
+        "height_max_um": 0.07288822021455202,
+        "rms_slope": 0.008255410006820127,
+        "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+      },
+      "wave": {
+        "haze_percent": 0.012963575775280163,
+        "wavelength_nm": 530.0,
+        "n_in": 1.5,
+        "n_out": 1.0,
+        "acceptance_half_angle_deg": 2.5,
+        "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+        "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+        "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+        "height_grid_yx": [
+          2000,
+          2000
+        ],
+        "height_pitch_um": 1.0,
+        "field_um_xy": [
+          2000.0,
+          2000.0
+        ],
+        "represented_scalar_forward_flux": 0.9999913753468928,
+        "zero_order_forward_flux_percent": 88.34804073624521,
+        "within_cone_nonzero_order_flux_percent": 11.638995687979468,
+        "nonzero_order_forward_flux_percent": 11.651959263754785,
+        "haze_without_cosine_weight_percent": 0.012979791196119085,
+        "parseval_relative_error": 4.440892098500626e-16,
+        "evanescent_field_power_percent": 0.0,
+        "spectral_edge_field_power_percent": 9.252694124829437e-10,
+        "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+        "complete_azimuth_angle_limit_deg": 15.366952797777708,
+        "near_axis_angle_step_deg_xy": [
+          0.015183381748675649,
+          0.015183381748675649
+        ],
+        "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+        "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+        "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim"
+      },
+      "geometric": {
+        "definition": "Projected-area statistics of the original periodic triangular facets; float64 analytic Snell/Fresnel, no native ray execution",
+        "rms_slope": 0.008293287245511203,
+        "slope_quantiles": {
+          "p50": 0.006197425642072185,
+          "p90": 0.013101523839800849,
+          "p99": 0.02048535997659214,
+          "p99_9": 0.025564888237016074
+        },
+        "slope_threshold_for_acceptance": 0.08707302627624788,
+        "area_above_slope_threshold_percent": 0.0,
+        "single_hit_haze_percent": 0.0,
+        "transmission_fraction": 0.9599999989898761,
+        "total_internal_reflection_area_percent": 0.0
+      },
+      "selected_angular_curve": [
+        {
+          "half_angle_deg": 0.0,
+          "within_cone_percent": 88.34804073624521,
+          "outside_cone_percent": 11.651959263754785
+        },
+        {
+          "half_angle_deg": 0.5,
+          "within_cone_percent": 93.03121550182881,
+          "outside_cone_percent": 6.968784498171187
+        },
+        {
+          "half_angle_deg": 1.0,
+          "within_cone_percent": 98.76796896473566,
+          "outside_cone_percent": 1.232031035264347
+        },
+        {
+          "half_angle_deg": 1.5,
+          "within_cone_percent": 99.75135459523472,
+          "outside_cone_percent": 0.24864540476527974
+        },
+        {
+          "half_angle_deg": 2.0,
+          "within_cone_percent": 99.9448673351035,
+          "outside_cone_percent": 0.0551326648965067
+        },
+        {
+          "half_angle_deg": 2.5,
+          "within_cone_percent": 99.98703642422467,
+          "outside_cone_percent": 0.012963575775326586
+        },
+        {
+          "half_angle_deg": 3.0,
+          "within_cone_percent": 99.99689586028553,
+          "outside_cone_percent": 0.0031041397144715432
+        },
+        {
+          "half_angle_deg": 5.0,
+          "within_cone_percent": 99.99998606263752,
+          "outside_cone_percent": 1.3937362475235915e-05
+        },
+        {
+          "half_angle_deg": 10.0,
+          "within_cone_percent": 99.99999999682537,
+          "outside_cone_percent": 3.17463832999465e-09
+        },
+        {
+          "half_angle_deg": 30.0,
+          "within_cone_percent": 99.99999999996741,
+          "outside_cone_percent": 3.2585045772748344e-11
+        },
+        {
+          "half_angle_deg": 90.0,
+          "within_cone_percent": 99.99999999996741,
+          "outside_cone_percent": 3.2585045772748344e-11
+        }
+      ]
+    },
+    {
+      "group": "affine",
+      "lateral_scale": 2.0,
+      "height_scale": 1.0,
+      "nominal_site_spacing_um": 50.0,
+      "rounding_sigma_um": 2.4,
+      "pitch_um": 1.0,
+      "grid_yx": [
+        2000,
+        2000
+      ],
+      "surface_sha256_float64_m": "5a23c5e3cd2ca14b12f11bd70e97e963969f44bdd38d7a2c781709bddb341e8f",
+      "roughness": {
+        "Sa_um": 0.10000000480208875,
+        "Sq_um": 0.11851254239602815,
+        "Sz_um": 0.5155668647560674,
+        "height_min_um": -0.36979042432696335,
+        "height_max_um": 0.14577644042910404,
+        "rms_slope": 0.016510820013640255,
+        "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+      },
+      "wave": {
+        "haze_percent": 0.1118298457175771,
+        "wavelength_nm": 530.0,
+        "n_in": 1.5,
+        "n_out": 1.0,
+        "acceptance_half_angle_deg": 2.5,
+        "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+        "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+        "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+        "height_grid_yx": [
+          2000,
+          2000
+        ],
+        "height_pitch_um": 1.0,
+        "field_um_xy": [
+          2000.0,
+          2000.0
+        ],
+        "represented_scalar_forward_flux": 0.9999655002269567,
+        "zero_order_forward_flux_percent": 60.60639196447611,
+        "within_cone_nonzero_order_flux_percent": 39.28177818980632,
+        "nonzero_order_forward_flux_percent": 39.39360803552389,
+        "haze_without_cosine_weight_percent": 0.11197425027406052,
+        "parseval_relative_error": 3.3306690738754696e-16,
+        "evanescent_field_power_percent": 0.0,
+        "spectral_edge_field_power_percent": 3.7010049651201116e-09,
+        "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+        "complete_azimuth_angle_limit_deg": 15.366952797777708,
+        "near_axis_angle_step_deg_xy": [
+          0.015183381748675649,
+          0.015183381748675649
+        ],
+        "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+        "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+        "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim"
+      },
+      "geometric": {
+        "definition": "Projected-area statistics of the original periodic triangular facets; float64 analytic Snell/Fresnel, no native ray execution",
+        "rms_slope": 0.016586574491022407,
+        "slope_quantiles": {
+          "p50": 0.01239485128414437,
+          "p90": 0.026203047679601698,
+          "p99": 0.04097071995318428,
+          "p99_9": 0.05112977647403215
+        },
+        "slope_threshold_for_acceptance": 0.08707302627624788,
+        "area_above_slope_threshold_percent": 0.0,
+        "single_hit_haze_percent": 0.0,
+        "transmission_fraction": 0.9599999838201347,
+        "total_internal_reflection_area_percent": 0.0
+      },
+      "selected_angular_curve": [
+        {
+          "half_angle_deg": 0.0,
+          "within_cone_percent": 60.60639196447612,
+          "outside_cone_percent": 39.39360803552388
+        },
+        {
+          "half_angle_deg": 0.5,
+          "within_cone_percent": 75.196235359586,
+          "outside_cone_percent": 24.803764640414006
+        },
+        {
+          "half_angle_deg": 1.0,
+          "within_cone_percent": 94.46695506616001,
+          "outside_cone_percent": 5.533044933839992
+        },
+        {
+          "half_angle_deg": 1.5,
+          "within_cone_percent": 98.61781796912838,
+          "outside_cone_percent": 1.3821820308716148
+        },
+        {
+          "half_angle_deg": 2.0,
+          "within_cone_percent": 99.6174542866969,
+          "outside_cone_percent": 0.38254571330309517
+        },
+        {
+          "half_angle_deg": 2.5,
+          "within_cone_percent": 99.88817015428212,
+          "outside_cone_percent": 0.11182984571788124
+        },
+        {
+          "half_angle_deg": 3.0,
+          "within_cone_percent": 99.96650129144547,
+          "outside_cone_percent": 0.03349870855453574
+        },
+        {
+          "half_angle_deg": 5.0,
+          "within_cone_percent": 99.99966985957701,
+          "outside_cone_percent": 0.00033014042298828983
+        },
+        {
+          "half_angle_deg": 10.0,
+          "within_cone_percent": 99.99999998385086,
+          "outside_cone_percent": 1.614914868497408e-08
+        },
+        {
+          "half_angle_deg": 30.0,
+          "within_cone_percent": 99.99999999997962,
+          "outside_cone_percent": 2.0383694732117874e-11
+        },
+        {
+          "half_angle_deg": 90.0,
+          "within_cone_percent": 99.99999999997962,
+          "outside_cone_percent": 2.0383694732117874e-11
+        }
+      ]
+    },
+    {
+      "group": "affine",
+      "lateral_scale": 2.0,
+      "height_scale": 2.0,
+      "nominal_site_spacing_um": 50.0,
+      "rounding_sigma_um": 2.4,
+      "pitch_um": 1.0,
+      "grid_yx": [
+        2000,
+        2000
+      ],
+      "surface_sha256_float64_m": "b0f6baf08421039208340250b857964d24e5b07a8b8be480b570de16122ebee7",
+      "roughness": {
+        "Sa_um": 0.2000000096041775,
+        "Sq_um": 0.2370250847920563,
+        "Sz_um": 1.0311337295121348,
+        "height_min_um": -0.7395808486539267,
+        "height_max_um": 0.2915528808582081,
+        "rms_slope": 0.03302164002728051,
+        "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+      },
+      "wave": {
+        "haze_percent": 1.4747337251028299,
+        "wavelength_nm": 530.0,
+        "n_in": 1.5,
+        "n_out": 1.0,
+        "acceptance_half_angle_deg": 2.5,
+        "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+        "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+        "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+        "height_grid_yx": [
+          2000,
+          2000
+        ],
+        "height_pitch_um": 1.0,
+        "field_um_xy": [
+          2000.0,
+          2000.0
+        ],
+        "represented_scalar_forward_flux": 0.9998619823275929,
+        "zero_order_forward_flux_percent": 14.63558563212436,
+        "within_cone_nonzero_order_flux_percent": 83.88968064277282,
+        "nonzero_order_forward_flux_percent": 85.36441436787564,
+        "haze_without_cosine_weight_percent": 1.4766701696272435,
+        "parseval_relative_error": 1.1102230246251565e-16,
+        "evanescent_field_power_percent": 0.0,
+        "spectral_edge_field_power_percent": 1.506777936754416e-08,
+        "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+        "complete_azimuth_angle_limit_deg": 15.366952797777708,
+        "near_axis_angle_step_deg_xy": [
+          0.015183381748675649,
+          0.015183381748675649
+        ],
+        "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+        "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+        "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim"
+      },
+      "geometric": {
+        "definition": "Projected-area statistics of the original periodic triangular facets; float64 analytic Snell/Fresnel, no native ray execution",
+        "rms_slope": 0.03317314898204481,
+        "slope_quantiles": {
+          "p50": 0.02478970256828874,
+          "p90": 0.052406095359203396,
+          "p99": 0.08194143990636855,
+          "p99_9": 0.1022595529480643
+        },
+        "slope_threshold_for_acceptance": 0.08707302627624788,
+        "area_above_slope_threshold_percent": 0.6132625,
+        "single_hit_haze_percent": 0.6132581235310034,
+        "transmission_fraction": 0.9599997399700431,
+        "total_internal_reflection_area_percent": 0.0
+      },
+      "selected_angular_curve": [
+        {
+          "half_angle_deg": 0.0,
+          "within_cone_percent": 14.635585632124359,
+          "outside_cone_percent": 85.36441436787564
+        },
+        {
+          "half_angle_deg": 0.5,
+          "within_cone_percent": 35.729514328197226,
+          "outside_cone_percent": 64.27048567180277
+        },
+        {
+          "half_angle_deg": 1.0,
+          "within_cone_percent": 74.08276400159993,
+          "outside_cone_percent": 25.91723599840008
+        },
+        {
+          "half_angle_deg": 1.5,
+          "within_cone_percent": 90.1955288813736,
+          "outside_cone_percent": 9.80447111862639
+        },
+        {
+          "half_angle_deg": 2.0,
+          "within_cone_percent": 96.2141805471967,
+          "outside_cone_percent": 3.7858194528032962
+        },
+        {
+          "half_angle_deg": 2.5,
+          "within_cone_percent": 98.52526627489729,
+          "outside_cone_percent": 1.474733725102706
+        },
+        {
+          "half_angle_deg": 3.0,
+          "within_cone_percent": 99.4222235691593,
+          "outside_cone_percent": 0.5777764308407041
+        },
+        {
+          "half_angle_deg": 5.0,
+          "within_cone_percent": 99.98537665304768,
+          "outside_cone_percent": 0.014623346952324923
+        },
+        {
+          "half_angle_deg": 10.0,
+          "within_cone_percent": 99.99999863685328,
+          "outside_cone_percent": 1.3631467177255274e-06
+        },
+        {
+          "half_angle_deg": 30.0,
+          "within_cone_percent": 99.99999999999856,
+          "outside_cone_percent": 1.432187701766452e-12
+        },
+        {
+          "half_angle_deg": 90.0,
+          "within_cone_percent": 99.99999999999856,
+          "outside_cone_percent": 1.432187701766452e-12
+        }
+      ]
+    },
+    {
+      "group": "affine",
+      "lateral_scale": 2.0,
+      "height_scale": 3.0,
+      "nominal_site_spacing_um": 50.0,
+      "rounding_sigma_um": 2.4,
+      "pitch_um": 1.0,
+      "grid_yx": [
+        2000,
+        2000
+      ],
+      "surface_sha256_float64_m": "8dca24c6124e3b8be73fc49141320fced31e79ed66626e233bd2327f9f99db05",
+      "roughness": {
+        "Sa_um": 0.3000000144062662,
+        "Sq_um": 0.35553762718808446,
+        "Sz_um": 1.5467005942682022,
+        "height_min_um": -1.10937127298089,
+        "height_max_um": 0.4373293212873121,
+        "rms_slope": 0.04953246004092076,
+        "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+      },
+      "wave": {
+        "haze_percent": 6.7563591210431815,
+        "wavelength_nm": 530.0,
+        "n_in": 1.5,
+        "n_out": 1.0,
+        "acceptance_half_angle_deg": 2.5,
+        "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+        "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+        "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+        "height_grid_yx": [
+          2000,
+          2000
+        ],
+        "height_pitch_um": 1.0,
+        "field_um_xy": [
+          2000.0,
+          2000.0
+        ],
+        "represented_scalar_forward_flux": 0.9996893904779156,
+        "zero_order_forward_flux_percent": 8.538246371342595,
+        "within_cone_nonzero_order_flux_percent": 84.70539450761422,
+        "nonzero_order_forward_flux_percent": 91.4617536286574,
+        "haze_without_cosine_weight_percent": 6.765146568890431,
+        "parseval_relative_error": 0.0,
+        "evanescent_field_power_percent": 0.0,
+        "spectral_edge_field_power_percent": 6.897767127795182e-08,
+        "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+        "complete_azimuth_angle_limit_deg": 15.366952797777708,
+        "near_axis_angle_step_deg_xy": [
+          0.015183381748675649,
+          0.015183381748675649
+        ],
+        "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+        "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+        "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim"
+      },
+      "geometric": {
+        "definition": "Projected-area statistics of the original periodic triangular facets; float64 analytic Snell/Fresnel, no native ray execution",
+        "rms_slope": 0.049759723473067216,
+        "slope_quantiles": {
+          "p50": 0.03718455385243311,
+          "p90": 0.0786091430388051,
+          "p99": 0.12291215985955281,
+          "p99_9": 0.15338932942209643
+        },
+        "slope_threshold_for_acceptance": 0.08707302627624788,
+        "area_above_slope_threshold_percent": 6.7219125,
+        "single_hit_haze_percent": 6.721836445354056,
+        "transmission_fraction": 0.9599986737373833,
+        "total_internal_reflection_area_percent": 0.0
+      },
+      "selected_angular_curve": [
+        {
+          "half_angle_deg": 0.0,
+          "within_cone_percent": 8.538246371342595,
+          "outside_cone_percent": 91.4617536286574
+        },
+        {
+          "half_angle_deg": 0.5,
+          "within_cone_percent": 18.8832392611582,
+          "outside_cone_percent": 81.1167607388418
+        },
+        {
+          "half_angle_deg": 1.0,
+          "within_cone_percent": 47.99551243773911,
+          "outside_cone_percent": 52.00448756226089
+        },
+        {
+          "half_angle_deg": 1.5,
+          "within_cone_percent": 72.39173612940037,
+          "outside_cone_percent": 27.608263870599625
+        },
+        {
+          "half_angle_deg": 2.0,
+          "within_cone_percent": 86.18805382366006,
+          "outside_cone_percent": 13.811946176339951
+        },
+        {
+          "half_angle_deg": 2.5,
+          "within_cone_percent": 93.2436408789568,
+          "outside_cone_percent": 6.756359121043209
+        },
+        {
+          "half_angle_deg": 3.0,
+          "within_cone_percent": 96.75021347574908,
+          "outside_cone_percent": 3.2497865242509194
+        },
+        {
+          "half_angle_deg": 5.0,
+          "within_cone_percent": 99.83487154277658,
+          "outside_cone_percent": 0.16512845722341796
+        },
+        {
+          "half_angle_deg": 10.0,
+          "within_cone_percent": 99.9999366423384,
+          "outside_cone_percent": 6.335766160603384e-05
+        },
+        {
+          "half_angle_deg": 30.0,
+          "within_cone_percent": 99.99999999999922,
+          "outside_cone_percent": 7.771561172376096e-13
+        },
+        {
+          "half_angle_deg": 90.0,
+          "within_cone_percent": 99.99999999999922,
+          "outside_cone_percent": 7.771561172376096e-13
+        }
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "group": "control",
+      "control": "inverted",
+      "pitch_um": 0.5,
+      "grid_yx": [
+        2000,
+        2000
+      ],
+      "surface_sha256_float64_m": "7387a9af31004014d8c4d4254ca399638f47285012210c3d1a2b72a495006db2",
+      "roughness": {
+        "Sa_um": 0.10000000480208875,
+        "Sq_um": 0.11851254239602815,
+        "Sz_um": 0.5155668647560674,
+        "height_min_um": -0.14577644042910404,
+        "height_max_um": 0.36979042432696335,
+        "rms_slope": 0.03302164002728051,
+        "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+      },
+      "wave": {
+        "haze_percent": 2.7309974341744123,
+        "wavelength_nm": 530.0,
+        "n_in": 1.5,
+        "n_out": 1.0,
+        "acceptance_half_angle_deg": 2.5,
+        "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+        "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+        "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+        "height_grid_yx": [
+          2000,
+          2000
+        ],
+        "height_pitch_um": 0.5,
+        "field_um_xy": [
+          1000.0,
+          1000.0
+        ],
+        "represented_scalar_forward_flux": 0.9998619459279077,
+        "zero_order_forward_flux_percent": 60.61266888346811,
+        "within_cone_nonzero_order_flux_percent": 36.656333682357484,
+        "nonzero_order_forward_flux_percent": 39.38733111653189,
+        "haze_without_cosine_weight_percent": 2.735312311498313,
+        "parseval_relative_error": 4.440892098500626e-16,
+        "evanescent_field_power_percent": 0.0,
+        "spectral_edge_field_power_percent": 3.7010049651203354e-09,
+        "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+        "complete_azimuth_angle_limit_deg": 32.00545482776425,
+        "near_axis_angle_step_deg_xy": [
+          0.03036676456360444,
+          0.03036676456360444
+        ],
+        "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+        "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+        "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim"
+      },
+      "geometric": {
+        "definition": "Projected-area statistics of the original periodic triangular facets; float64 analytic Snell/Fresnel, no native ray execution",
+        "rms_slope": 0.03317314898204481,
+        "slope_quantiles": {
+          "p50": 0.02478970256828874,
+          "p90": 0.052406095359203396,
+          "p99": 0.08194143990636855,
+          "p99_9": 0.1022595529480643
+        },
+        "slope_threshold_for_acceptance": 0.08707302627624788,
+        "area_above_slope_threshold_percent": 0.6132625,
+        "single_hit_haze_percent": 0.6132581235310034,
+        "transmission_fraction": 0.9599997399700431,
+        "total_internal_reflection_area_percent": 0.0
+      },
+      "selected_angular_curve": [
+        {
+          "half_angle_deg": 0.0,
+          "within_cone_percent": 60.61266888346811,
+          "outside_cone_percent": 39.38733111653189
+        },
+        {
+          "half_angle_deg": 0.5,
+          "within_cone_percent": 63.522632610722866,
+          "outside_cone_percent": 36.477367389277134
+        },
+        {
+          "half_angle_deg": 1.0,
+          "within_cone_percent": 75.2031480964095,
+          "outside_cone_percent": 24.79685190359049
+        },
+        {
+          "half_angle_deg": 1.5,
+          "within_cone_percent": 88.28561883772295,
+          "outside_cone_percent": 11.714381162277043
+        },
+        {
+          "half_angle_deg": 2.0,
+          "within_cone_percent": 94.46553543136213,
+          "outside_cone_percent": 5.534464568637876
+        },
+        {
+          "half_angle_deg": 2.5,
+          "within_cone_percent": 97.26900256582563,
+          "outside_cone_percent": 2.730997434174376
+        },
+        {
+          "half_angle_deg": 3.0,
+          "within_cone_percent": 98.6192029798455,
+          "outside_cone_percent": 1.3807970201545006
+        },
+        {
+          "half_angle_deg": 5.0,
+          "within_cone_percent": 99.88790094046519,
+          "outside_cone_percent": 0.11209905953480925
+        },
+        {
+          "half_angle_deg": 10.0,
+          "within_cone_percent": 99.99966043775375,
+          "outside_cone_percent": 0.0003395622462543102
+        },
+        {
+          "half_angle_deg": 30.0,
+          "within_cone_percent": 99.99999999517264,
+          "outside_cone_percent": 4.827349631142397e-09
+        },
+        {
+          "half_angle_deg": 90.0,
+          "within_cone_percent": 99.9999999999779,
+          "outside_cone_percent": 2.2104540420286867e-11
+        }
+      ]
+    },
+    {
+      "group": "control",
+      "control": "repeat_2x2",
+      "pitch_um": 0.5,
+      "grid_yx": [
+        4000,
+        4000
+      ],
+      "surface_sha256_float64_m": "5d8bf04ee1cd04c7756ce73dcf890eca2152d85e31a47accc913b0a1addf9634",
+      "roughness": {
+        "Sa_um": 0.10000000480208875,
+        "Sq_um": 0.11851254239602815,
+        "Sz_um": 0.5155668647560674,
+        "height_min_um": -0.36979042432696335,
+        "height_max_um": 0.14577644042910404,
+        "rms_slope": 0.03302155899381184,
+        "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+      },
+      "wave": {
+        "haze_percent": 2.7309974341744128,
+        "wavelength_nm": 530.0,
+        "n_in": 1.5,
+        "n_out": 1.0,
+        "acceptance_half_angle_deg": 2.5,
+        "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+        "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+        "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+        "height_grid_yx": [
+          4000,
+          4000
+        ],
+        "height_pitch_um": 0.5,
+        "field_um_xy": [
+          2000.0,
+          2000.0
+        ],
+        "represented_scalar_forward_flux": 0.9998619459279074,
+        "zero_order_forward_flux_percent": 60.612668883468125,
+        "within_cone_nonzero_order_flux_percent": 36.65633368235749,
+        "nonzero_order_forward_flux_percent": 39.38733111653187,
+        "haze_without_cosine_weight_percent": 2.7353123114983138,
+        "parseval_relative_error": 2.220446049250313e-16,
+        "evanescent_field_power_percent": 0.0,
+        "spectral_edge_field_power_percent": 3.701004965120185e-09,
+        "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+        "complete_azimuth_angle_limit_deg": 32.00545482776425,
+        "near_axis_angle_step_deg_xy": [
+          0.015183381748675649,
+          0.015183381748675649
+        ],
+        "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+        "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+        "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim"
+      },
+      "geometric": {
+        "definition": "Projected-area statistics of the original periodic triangular facets; float64 analytic Snell/Fresnel, no native ray execution",
+        "rms_slope": 0.03317314898204481,
+        "slope_quantiles": {
+          "p50": 0.02478970256828874,
+          "p90": 0.052406095359203396,
+          "p99": 0.08194143990636839,
+          "p99_9": 0.10225955294806446
+        },
+        "slope_threshold_for_acceptance": 0.08707302627624788,
+        "area_above_slope_threshold_percent": 0.6132625,
+        "single_hit_haze_percent": 0.6132581235310034,
+        "transmission_fraction": 0.9599997399700431,
+        "total_internal_reflection_area_percent": 0.0
+      },
+      "selected_angular_curve": [
+        {
+          "half_angle_deg": 0.0,
+          "within_cone_percent": 60.612668883468125,
+          "outside_cone_percent": 39.387331116531875
+        },
+        {
+          "half_angle_deg": 0.5,
+          "within_cone_percent": 63.522632610722866,
+          "outside_cone_percent": 36.477367389277134
+        },
+        {
+          "half_angle_deg": 1.0,
+          "within_cone_percent": 75.20314809640952,
+          "outside_cone_percent": 24.79685190359048
+        },
+        {
+          "half_angle_deg": 1.5,
+          "within_cone_percent": 88.28561883772264,
+          "outside_cone_percent": 11.714381162277366
+        },
+        {
+          "half_angle_deg": 2.0,
+          "within_cone_percent": 94.4655354313618,
+          "outside_cone_percent": 5.534464568638198
+        },
+        {
+          "half_angle_deg": 2.5,
+          "within_cone_percent": 97.26900256582549,
+          "outside_cone_percent": 2.730997434174509
+        },
+        {
+          "half_angle_deg": 3.0,
+          "within_cone_percent": 98.61920297984541,
+          "outside_cone_percent": 1.3807970201545894
+        },
+        {
+          "half_angle_deg": 5.0,
+          "within_cone_percent": 99.88790094046526,
+          "outside_cone_percent": 0.11209905953474264
+        },
+        {
+          "half_angle_deg": 10.0,
+          "within_cone_percent": 99.99966043775349,
+          "outside_cone_percent": 0.0003395622465096615
+        },
+        {
+          "half_angle_deg": 30.0,
+          "within_cone_percent": 99.9999999951866,
+          "outside_cone_percent": 4.813405229953105e-09
+        },
+        {
+          "half_angle_deg": 90.0,
+          "within_cone_percent": 99.9999999999948,
+          "outside_cone_percent": 5.195843755245733e-12
+        }
+      ]
+    }
+  ],
+  "elapsed_seconds": 55.11112819984555,
+  "morphology": []
+}

@@ -18,6 +18,11 @@ from scipy.ndimage import gaussian_filter
 from scipy.spatial import cKDTree
 
 ROOT = Path(__file__).resolve().parents[1]
+DEFAULT_SPACING_UM = 6.9
+DEFAULT_SZ_UM = 1.
+DEFAULT_CASE = 'oled-1mm-etched-ag-spacing6p9-sz1um'
+DEFAULT_INPUTS = {pitch: ROOT/'assets'/(DEFAULT_CASE+suffix)
+                  for pitch, suffix in ((1., ''), (.5, '-pitch0p5'))}
 
 
 def geometry(field_um, spacing_um, seed):
@@ -41,7 +46,7 @@ def geometry(field_um, spacing_um, seed):
     return sites, rng.uniform(.7, 1.3, count)
 
 
-def raw_surface(sites, depths, field_um, pitch_um, rounding_um):
+def raw_surface(sites, depths, field_um, pitch_um, rounding_um, profile_power=2):
     if not math.isfinite(pitch_um) or pitch_um <= 0:
         raise ValueError('Pitch must be finite and positive')
     size = round(field_um / pitch_um)
@@ -49,6 +54,8 @@ def raw_surface(sites, depths, field_um, pitch_um, rounding_um):
         raise ValueError('Pitch must divide the field into at least 8 samples')
     if not math.isfinite(rounding_um) or rounding_um <= 0:
         raise ValueError('Rounding must be finite and positive')
+    if not math.isfinite(profile_power) or profile_power < 1:
+        raise ValueError('Bowl profile power must be finite and at least one')
     tree = cKDTree(sites, boxsize=field_um)
     raw = np.empty((size, size), dtype=np.float64)
     counts = np.zeros(len(sites), dtype=np.int64)
@@ -57,10 +64,11 @@ def raw_surface(sites, depths, field_um, pitch_um, rounding_um):
         stop = min(size, start + 64)
         xx, yy = np.meshgrid(axis, axis[start:stop])
         distances, indices = tree.query(np.column_stack((xx.ravel(), yy.ravel())), k=2)
-        # d1=d2 on a Voronoi boundary. Height and first derivative approach
-        # zero there; d1=0 gives a smooth bowl bottom at the site.
+        # d1=d2 on a Voronoi boundary. Power >1 gives zero rim derivative;
+        # power=1 retains a rim slope before Gaussian rounding. Increasing
+        # power narrows the bowl while preserving its unscaled center depth.
         ratio_squared = (distances[:, 0] / distances[:, 1])**2
-        values = -depths[indices[:, 0]] * (1 - ratio_squared)**2
+        values = -depths[indices[:, 0]] * (1 - ratio_squared)**profile_power
         raw[start:stop] = values.reshape(stop - start, size)
         counts += np.bincount(indices[:, 0], minlength=len(sites))
     return gaussian_filter(raw, rounding_um / pitch_um, mode='wrap'), counts
@@ -80,24 +88,32 @@ def roughness(height_um, pitch_um):
     }
 
 
-def prepare(output=None, pitch_um=1., field_um=1000., spacing_um=25.,
-            target_sa_um=.10, rounding_um=1.2, seed=20261107,
-            reference_pitch_um=.5):
-    if not math.isfinite(target_sa_um) or target_sa_um <= 0:
-        raise ValueError('Target Sa must be finite and positive')
+def prepare(output=None, pitch_um=1., field_um=1000., spacing_um=DEFAULT_SPACING_UM,
+            target_sa_um=None, rounding_um=1.2, seed=20261107,
+            reference_pitch_um=.5, profile_power=2, target_sz_um=None):
+    """Default to reference-grid post-rounding Sz=1um; explicit Sa selects Sa."""
+    if target_sa_um is not None and target_sz_um is not None:
+        raise ValueError('Select only one of target Sa and Sz')
+    if target_sa_um is None and target_sz_um is None:
+        target_sz_um = DEFAULT_SZ_UM
+    target = target_sa_um if target_sz_um is None else target_sz_um
+    if not math.isfinite(target) or target <= 0:
+        raise ValueError('Target Sa or Sz must be finite and positive')
     started = time.perf_counter()
-    output = Path(output) if output else ROOT / 'assets/oled-1mm-etched-ag'
+    if output is None and pitch_um not in DEFAULT_INPUTS:
+        raise ValueError('Specify output for a pitch other than the default 1 or 0.5 um')
+    output = Path(output) if output else DEFAULT_INPUTS[pitch_um]
     sites, depths = geometry(field_um, spacing_um, seed)
-    reference, counts = raw_surface(sites, depths, field_um, reference_pitch_um, rounding_um)
+    reference, counts = raw_surface(sites, depths, field_um, reference_pitch_um, rounding_um, profile_power)
     reference_sa = np.abs(reference - reference.mean()).mean()
-    scale = target_sa_um / reference_sa
     raw_span = np.ptp(reference)
+    scale = target_sa_um / reference_sa if target_sz_um is None else target_sz_um / raw_span
     # Fixed calibration at the reference grid, shared by every output pitch.
     # Two percent headroom avoids per-grid min/max renormalization.
     black_raw = float(reference.min() - .02 * raw_span)
     encoding_range_um = float(1.04 * raw_span * scale)
     raw = reference if pitch_um == reference_pitch_um else raw_surface(
-        sites, depths, field_um, pitch_um, rounding_um)[0]
+        sites, depths, field_um, pitch_um, rounding_um, profile_power)[0]
     physical = (raw - black_raw) * scale
     encoded = physical / encoding_range_um
     if encoded.min() < 0 or encoded.max() > 1:
@@ -125,10 +141,14 @@ def prepare(output=None, pitch_um=1., field_um=1000., spacing_um=25.,
         'seed': seed, 'cell_count': len(sites), 'nominal_site_spacing_um': spacing_um,
         'minimum_site_separation_um': .3 * spacing_um,
         'relative_depth_distribution': 'Uniform [0.7, 1.3], assigned independently to each cell',
-        'raw_profile': '-depth_i * (1 - (d_nearest / d_second_nearest)^2)^2',
+        'raw_profile': f'-depth_i * (1 - (d_nearest / d_second_nearest)^2)^{profile_power:g}',
+        'profile_power': profile_power,
         'rounding': {'gaussian_sigma_um': rounding_um, 'boundary': 'periodic wrap'},
         'periodic_domain_um': field_um,
-        'calibration': {'reference_pitch_um': reference_pitch_um, 'target_Sa_um': target_sa_um,
+        'calibration': {'reference_pitch_um': reference_pitch_um,
+                        **({'target_Sa_um': target_sa_um} if target_sz_um is None else
+                           {'target_Sz_um': target_sz_um,
+                            'Sz_definition': 'Peak-to-valley after Gaussian rounding on the reference grid; not nominal single-pit depth or PNG encoding range.'}),
                         'raw_to_um_scale': float(scale), 'raw_black_level': black_raw,
                         'encoding': 'uint16 / 65535 * height_range_um; black is low, white is high',
                         'no_per_output_grid_rescaling': True},
@@ -150,13 +170,19 @@ def main():
     parser.add_argument('--out', type=Path)
     parser.add_argument('--pitch-um', type=float, default=1.)
     parser.add_argument('--field-um', type=float, default=1000.)
-    parser.add_argument('--spacing-um', type=float, default=25.)
-    parser.add_argument('--sa-um', type=float, default=.10)
+    parser.add_argument('--spacing-um', type=float, default=DEFAULT_SPACING_UM)
+    amplitude = parser.add_mutually_exclusive_group()
+    amplitude.add_argument('--sa-um', type=float, help='Use reference-grid Sa normalization instead of the default Sz=1um')
+    amplitude.add_argument('--sz-um', type=float,
+                           help='Reference-grid peak-to-valley after rounding (default 1um); not the PNG encoding range')
     parser.add_argument('--rounding-um', type=float, default=1.2)
+    parser.add_argument('--profile-power', type=float, default=2,
+                        help='Voronoi bowl power >=1; 2 preserves the original profile, larger values narrow the bowls')
     parser.add_argument('--seed', type=int, default=20261107)
     args = parser.parse_args()
     output = prepare(args.out, args.pitch_um, args.field_um, args.spacing_um,
-                     args.sa_um, args.rounding_um, args.seed)
+                     args.sa_um, args.rounding_um, args.seed, profile_power=args.profile_power,
+                     target_sz_um=args.sz_um)
     print((output / 'heightfield.source.json').read_text(encoding='utf-8'))
 
 

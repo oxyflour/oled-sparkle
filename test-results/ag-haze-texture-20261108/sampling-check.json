@@ -1,0 +1,23 @@
+{
+  "kind": "independent-morphology-sampling-check",
+  "reference_case": "rounding0.3",
+  "scope": "Independently evaluate raw_surface at .25/.125um, same sites/depths, profile power2, rounding0.3um. Fixed reference raw-to-um scale and encoding step; quantized float64 heights. No new PNG or native GPU job. Coarse retained PNG reader uses float32, so its final decimal digits need not be identical.",
+  "records": [
+    {
+      "pitch_um": 0.25,
+      "wave_haze_percent": 3.8595534443023842,
+      "geometric_haze_percent": 2.3026874666151635,
+      "edge_percent": 3.422055117437578e-09,
+      "Sq_um": 0.11851254196309143,
+      "elapsed_seconds": 17.444425700232387
+    },
+    {
+      "pitch_um": 0.125,
+      "wave_haze_percent": 3.859571973171492,
+      "geometric_haze_percent": 2.311730935384166,
+      "edge_percent": 3.4076003633871955e-09,
+      "Sq_um": 0.11851262128288804,
+      "elapsed_seconds": 74.54391589993611
+    }
+  ]
+}

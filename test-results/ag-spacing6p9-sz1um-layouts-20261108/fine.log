@@ -1,0 +1,91 @@
+Height: 2000x2000 at 0.5um, emission: 500x500 at 2um
+Wave FFT: 2560x2560; source modes 77568; one complex64 field: 50.0 MiB
+Mitsuba rays: 6,144,000,000; mesh stride 1
+
+=== torch ===
+  torch: 3200/77568 modes
+  torch: 6400/77568 modes
+  torch: 9600/77568 modes
+  torch: 12800/77568 modes
+  torch: 16000/77568 modes
+  torch: 19200/77568 modes
+  torch: 22400/77568 modes
+  torch: 25600/77568 modes
+  torch: 28800/77568 modes
+  torch: 32000/77568 modes
+  torch: 35200/77568 modes
+  torch: 38400/77568 modes
+  torch: 41600/77568 modes
+  torch: 44800/77568 modes
+  torch: 48000/77568 modes
+  torch: 51200/77568 modes
+  torch: 54400/77568 modes
+  torch: 57600/77568 modes
+  torch: 60800/77568 modes
+  torch: 64000/77568 modes
+  torch: 67200/77568 modes
+  torch: 70400/77568 modes
+  torch: 73600/77568 modes
+  torch: 76800/77568 modes
+  torch: 77568/77568 modes
+  Sparkle CV: 34.30161%
+torch: brightness CV = 34.301608%, solver = 152.866s
+HTML report: C:\Projects\oled-sparkle\test-results\ag-spacing6p9-sz1um-layouts-20261108\0p5um\diamond\report.html
+Height: 2000x2000 at 0.5um, emission: 500x500 at 2um
+Wave FFT: 2560x2560; source modes 68068; one complex64 field: 50.0 MiB
+Mitsuba rays: 6,144,000,000; mesh stride 1
+
+=== torch ===
+  torch: 3200/68068 modes
+  torch: 6400/68068 modes
+  torch: 9600/68068 modes
+  torch: 12800/68068 modes
+  torch: 16000/68068 modes
+  torch: 19200/68068 modes
+  torch: 22400/68068 modes
+  torch: 25600/68068 modes
+  torch: 28800/68068 modes
+  torch: 32000/68068 modes
+  torch: 35200/68068 modes
+  torch: 38400/68068 modes
+  torch: 41600/68068 modes
+  torch: 44800/68068 modes
+  torch: 48000/68068 modes
+  torch: 51200/68068 modes
+  torch: 54400/68068 modes
+  torch: 57600/68068 modes
+  torch: 60800/68068 modes
+  torch: 64000/68068 modes
+  torch: 67200/68068 modes
+  torch: 68068/68068 modes
+  Sparkle CV: 24.82433%
+torch: brightness CV = 24.824332%, solver = 134.461s
+HTML report: C:\Projects\oled-sparkle\test-results\ag-spacing6p9-sz1um-layouts-20261108\0p5um\rgb-stripe\report.html
+Height: 2000x2000 at 0.5um, emission: 500x500 at 2um
+Wave FFT: 2560x2560; source modes 15133; one complex64 field: 50.0 MiB
+Mitsuba rays: 6,144,000,000; mesh stride 1
+
+=== torch ===
+  torch: 3200/15133 modes
+  torch: 6400/15133 modes
+  torch: 9600/15133 modes
+  torch: 12800/15133 modes
+  torch: 15133/15133 modes
+  Sparkle CV: 72.69792%
+torch: brightness CV = 72.697918%, solver = 32.686s
+HTML report: C:\Projects\oled-sparkle\test-results\ag-spacing6p9-sz1um-layouts-20261108\0p5um\rgb-delta\report.html
+Height: 2000x2000 at 0.5um, emission: 500x500 at 2um
+Wave FFT: 2560x2560; source modes 20890; one complex64 field: 50.0 MiB
+Mitsuba rays: 6,144,000,000; mesh stride 1
+
+=== torch ===
+  torch: 3200/20890 modes
+  torch: 6400/20890 modes
+  torch: 9600/20890 modes
+  torch: 12800/20890 modes
+  torch: 16000/20890 modes
+  torch: 19200/20890 modes
+  torch: 20890/20890 modes
+  Sparkle CV: 37.84999%
+torch: brightness CV = 37.849994%, solver = 43.896s
+HTML report: C:\Projects\oled-sparkle\test-results\ag-spacing6p9-sz1um-layouts-20261108\0p5um\windmill\report.html

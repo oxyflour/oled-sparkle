@@ -1,0 +1,36 @@
+[
+  {
+    "grid": "1um",
+    "command": [
+      "C:\\Projects\\oled-sparkle\\.venv\\Scripts\\python.exe",
+      "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\scripts\\prepare_etched_ag.py",
+      "--out",
+      "C:\\Projects\\oled-sparkle\\tmp\\default6p9-regenerate\\1um",
+      "--pitch-um",
+      "1"
+    ],
+    "identical_png": true,
+    "identical_sites": true,
+    "identical_calibration": true,
+    "height_range_um": 1.04,
+    "spacing_um": 6.9,
+    "Sz_reference_target_um": 1.0
+  },
+  {
+    "grid": "0p5um",
+    "command": [
+      "C:\\Projects\\oled-sparkle\\.venv\\Scripts\\python.exe",
+      "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\scripts\\prepare_etched_ag.py",
+      "--out",
+      "C:\\Projects\\oled-sparkle\\tmp\\default6p9-regenerate\\0p5um",
+      "--pitch-um",
+      ".5"
+    ],
+    "identical_png": true,
+    "identical_sites": true,
+    "identical_calibration": true,
+    "height_range_um": 1.04,
+    "spacing_um": 6.9,
+    "Sz_reference_target_um": 1.0
+  }
+]

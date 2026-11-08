@@ -10,7 +10,7 @@ SMS-style separation of display periodicity, use the additional reference workfl
 described below and keep separated sparkle contrast distinct from direct CV.
 
 The bundled default heightfield is the etched-AG Voronoi surface in
-`assets/oled-1mm-etched-ag/heightfield.png`. `run_oled_demo.py` is the current
+`assets/oled-1mm-etched-ag-spacing6p9-sz1um/heightfield.png`. `run_oled_demo.py` is the current
 default-example entrypoint; `run_legacy_demo.py` requires an explicit historical fixture.
 
 For transmission haze of the heightfield, use the separate `ag-haze` skill and
@@ -76,13 +76,16 @@ border at a 0.4 sRGB threshold. Wrap-neighbor RGB jumps are lower than ordinary
 within-cell neighbor variation in both axes. Do not blend or repaint its edges.
 The physical scale remains an illustrative assumption, not panel calibration.
 The default has 1000x1000 height texels at 1um and 500x500 emission texels at
-2um over a 1mm x 1mm field. Its synthetic etched-AG surface has **1,600 irregular
-Voronoi bowls**, **25um nominal site spacing**, variable depths and **1.2um rim
-rounding**, with seed 20261107. A shared 0.5um reference grid sets areal
-**Sa=0.10um**; sampled Sq is about 0.119um and peak-to-valley Sz about 0.515um.
-The 16-bit PNG black-to-white encoding range is **0.5361845861372564um**.
-Read this range from `assets/oled-1mm-etched-ag/heightfield.source.json`, as the
-wrapper does. Do not substitute Sz or the former 0.5um range for it.
+2um over a 1mm x 1mm field. Its synthetic etched-AG surface has **21,004 irregular
+Voronoi bowls**, **6.9um nominal site spacing**, variable depths and **1.2um rim
+rounding**, with seed 20261107. A shared 0.5um reference grid sets post-rounding
+**Sz=1um**; fine-grid Sa is about 0.128404um and Sq about 0.159244um.
+The 16-bit PNG black-to-white encoding range is **1.04um**.
+Read this range from `assets/oled-1mm-etched-ag-spacing6p9-sz1um/heightfield.source.json`,
+as the wrapper does. Do not substitute Sz=1um for the encoding range.
+The former 25um/Sa0.1um maps remain in `assets/oled-1mm-etched-ag/` and its
+`-pitch0p5` counterpart for historical reproduction. The new default is an
+exploratory assignment of Table 1's 6.9um statistic, not measured glass.
 `scripts/prepare_etched_ag.py` and `sites.csv` record the generation and geometry.
 This is an illustrative proxy, not measured commercial glass; areal Sa and
 equivalent cell diameter do not equal manufacturer line Ra and Rsm. Use
@@ -102,7 +105,7 @@ variants retain the NumPy integrator; reports record the integrator used.
 ## Run
 
 ```bash
-python scripts/run_oled_demo.py --backend all --out outputs/oled-1mm-etched-ag-periodic-50um
+python scripts/run_oled_demo.py --backend all
 ```
 
 The wrapper selects Torch's available device with `--device auto` and uses up to
@@ -120,7 +123,7 @@ For the same default geometry at a finer height pitch, the same runner retains
 the shared height calibration, physical FFT padding and fixed 2um emission sampling:
 
 ```bash
-python scripts/run_oled_demo.py --pitch-um .5 --backend torch --out outputs/etched-ag/0p5um
+python scripts/run_oled_demo.py --pitch-um .5 --backend torch
 ```
 
 The original interpolated surface remains available with `--height-surface original`.
@@ -135,9 +138,10 @@ cropped-cell example. The default `--emission-layout periodic` crops before tili
 For custom inputs use `python scripts/sparkle_multibackend.py --help`.
 The default etched surface is selected by `run_oled_demo.py` or explicitly with
 `--height-surface etched-ag`; no surface-specific execution wrapper is needed.
-Its generator `scripts/prepare_etched_ag.py` creates 1,600 randomly sized Voronoi
-bowls at 25um nominal site spacing, variable depths and 1.2um rim rounding.
-The reference-grid calibration fixes areal Sa at 0.10um. Read the actual PNG
+Its generator `scripts/prepare_etched_ag.py` defaults to 21,004 Voronoi
+bowls at 6.9um nominal site spacing, variable depths and 1.2um rim rounding.
+The reference-grid calibration fixes post-rounding Sz at 1um. Explicit
+`--sa-um` selects Sa normalization instead. Read the actual PNG
 height range from its sidecar, as the wrapper does. Areal Sa and equivalent cell
 diameter are not manufacturer line Ra and Rsm. This is a synthetic morphology
 proxy, not a measured product. Use `--pitch-um .5 --backend torch` with a separate
@@ -152,7 +156,7 @@ Failed, skipped and dry-run values must remain uncomputed, not zero.
 Regenerate HTML without optical recomputation:
 
 ```bash
-python scripts/generate_report.py --results outputs/oled-1mm-etched-ag-periodic-50um
+python scripts/generate_report.py --results outputs/oled-1mm-etched-ag-spacing6p9-sz1um-periodic-50um
 ```
 
 `--recursive` combines saved runs; repeated `--figure path.png` embeds plots.
@@ -165,20 +169,22 @@ Use `VALIDATION.json` for the latest measured result and test status.
 then computes the existing etched AG without LDF. A `prepare` stage writes the
 inputs and fixed protocol before optical calculation. `main` runs all four backends;
 `fine` repeats Torch at 0.5um and `old-na` checks the previous NA 0.08.
-Use `--stage all --out outputs/oled-sms-reference` for the complete workflow.
+Use `--stage all` for the complete workflow; its new default output is
+`outputs/oled-1mm-etched-ag-spacing6p9-sz1um-sms-reference`.
 The SMS workflow defaults to one backend worker so all four solvers run
 sequentially on the same GPU. Its prepared protocol records a batch ID,
 declaration timestamp and solver SHA-256. All main and sensitivity runs in a
 report must start after that declaration, use the recorded current solver and
 match their backend run IDs. Show a single timing column from those same runs.
-The workspace wrapper `test-results/run-sms-reference.ps1` only selects the local
-CUDA environment and existing result paths. The SMS runner reuses the default
+The workspace wrapper `test-results/run-sms-reference.ps1` targets fixed
+historical result paths; use the maintained CLI for the new default.
+The SMS runner reuses the default
 runner's solver command; keep the measurement settings explicit and distinct.
 
 Rebuild the separated sparkle report without optics through the existing report CLI:
 
 ```bash
-python scripts/generate_report.py --kind sms-reference --results outputs/oled-sms-reference
+python scripts/generate_report.py --kind sms-reference --results outputs/oled-1mm-etched-ag-spacing6p9-sz1um-sms-reference
 ```
 
 `reporting.py` owns both report renderers; `sms_reference.py` owns separation and

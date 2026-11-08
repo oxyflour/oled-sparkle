@@ -1,0 +1,56 @@
+{
+  "kind": "controlled-AG-texture-sensitivity",
+  "declared_before_execution": true,
+  "source": {
+    "path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag-pitch0p5\\heightfield.png",
+    "sha256": "9a495dc565e3bb2b5ef725e9950f05a8958cc70e1364978b352607b1d91c4c3d",
+    "height_range_um": 0.5361845861372564,
+    "height_pitch_um": 0.5,
+    "periodicity": "source metadata",
+    "roughness": {
+      "Sa_um": 0.10000000480208875,
+      "Sq_um": 0.11851254239602815,
+      "Sz_um": 0.5155668647560674,
+      "height_min_um": 0.010308883524601242,
+      "height_max_um": 0.5258757482806686,
+      "rms_slope": 0.03302164002728051,
+      "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+    },
+    "sidecar_path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag-pitch0p5\\heightfield.source.json",
+    "sidecar_sha256": "fbaccda92c79fd07ebd9ac07a725f562f2a550bdbb1a7f786277fcc86cdd4033"
+  },
+  "parameters": {
+    "wavelength_nm": 530.0,
+    "n_in": 1.5,
+    "n_out": 1.0,
+    "acceptance_half_angle_deg": 2.5
+  },
+  "scale_matrix": {
+    "lateral_scale": [
+      0.25,
+      0.5,
+      0.75,
+      1.0,
+      1.5,
+      2.0
+    ],
+    "height_scale": [
+      0.5,
+      1.0,
+      2.0,
+      3.0
+    ]
+  },
+  "meaning": "Controlled counterfactual surfaces, not fitted AG materials. h_new(x,y)=height_scale*h_original(x/lateral_scale,y/lateral_scale). Array samples are unchanged; pitch, domain, nominal site spacing and Gaussian rounding all scale laterally together. This is not a strictly periodic 25um grating.",
+  "scope": "Existing NumPy scalar-phase-screen function plus analytic single-hit facet Snell/Fresnel. No new native GPU backend runs or full 2D Maxwell validation.",
+  "execution_context": {
+    "python": "3.12.12 (main, Dec  9 2025, 19:02:55) [MSC v.1944 64 bit (AMD64)]",
+    "numpy": "2.5.4",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "device": "CPU"
+  },
+  "code_sha256": {
+    "calculate_haze.py": "a8180f230da7a0e538c3c8b035bdba5c92d9ddf5d8cb566ff7d471a2465cb0a4",
+    "prepare_etched_ag.py": "f763dfe8e0f233422546c6bf99416bb95839debb81eee0019293a71fc94ced2a"
+  }
+}

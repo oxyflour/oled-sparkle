@@ -522,7 +522,7 @@ def write_sms_report(results, output=None):
 def _write_layout_report(results, output=None):
     """Same report CLI, dedicated equal-pitch/common-bandwidth comparison view."""
     from sms_reference import analyze_layout_runs, measure_mwa
-    from sparkle_multibackend import read_emission
+    from sparkle_multibackend import read_emission, read_height
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
@@ -530,7 +530,10 @@ def _write_layout_report(results, output=None):
     protocol, records, arrays = analyze_layout_runs(results)
     camera_mode = protocol['analysis'].get('primary_metric') == 'sampled_camera_common_notch'
     optical_root = Path(protocol.get('optical_root', results))
-    names = list(protocol['layouts'])
+    comparison = protocol.get('height_scale_comparison') or protocol.get('surface_comparison')
+    # The retained layout metadata also defines the shared periodic mask. A
+    # surface-control batch may compute only a subset while preserving that mask.
+    names = list(dict.fromkeys(plan['layout'] for plan in protocol['runs']))
     labels = {'diamond': 'Diamond', 'rgb-stripe': 'RGB stripe', 'rgb-delta': 'RGB-Delta', 'windmill': 'Windmill'}
     display_backend = 'torch' if any(r['backend'] == 'torch' and r['grid'] == '1um' for r in records) else records[0]['backend']
     primary = [next(r for r in records if r['layout'] == name and r['grid'] == '1um' and r['backend'] == display_backend) for name in names]
@@ -545,7 +548,7 @@ def _write_layout_report(results, output=None):
         method_title = f'Common three-pass MWA | X: {x_windows} um; Y: {y_windows} um'
     peak = max(float(read_emission(protocol['layouts'][name]['emission_path'], 'green', True).max())*
                protocol['layouts'][name]['linear_emission_scale'] for name in names)
-    fig, axes = plt.subplots(2, len(names), figsize=(3.9*len(names), 7.3), squeeze=False, layout='constrained')
+    fig, axes = plt.subplots(2, len(names), figsize=(max(7.5, 3.9*len(names)), 7.3), squeeze=False, layout='constrained')
     for col, name in enumerate(names):
         info = protocol['layouts'][name]
         pitch = info['assigned_emission_texel_um']
@@ -564,7 +567,8 @@ def _write_layout_report(results, output=None):
         for ax in axes[:, col]:
             ax.set(xlabel='x [um]', ylabel='y [um]')
     fig.colorbar(image, ax=axes[1, :], shrink=.75, label='Linear green intensity (shared scale)')
-    fig.suptitle(f'Equal nominal address pitch P = {protocol["nominal_pixel_pitch_um"]:g} um | identical physical field of view')
+    fig.suptitle(f'Equal nominal address pitch P = {protocol["nominal_pixel_pitch_um"]:g} um'+
+                 ('\n' if len(names) == 1 else ' | ')+'Identical physical field of view')
     inputs_plot = results/'layout-inputs.png'
     fig.savefig(inputs_plot, dpi=150)
     plt.close(fig)
@@ -572,7 +576,7 @@ def _write_layout_report(results, output=None):
     values = [arrays[('1um', name, display_backend)]['primary_measurement_pixels'] for name in names]
     deviations = [100*(a/a.mean()-1) for a in values]
     limit = max(float(np.max(np.abs(a))) for a in deviations)
-    fig, axes = plt.subplots(1, len(names), figsize=(3.9*len(names), 4), squeeze=False, layout='constrained')
+    fig, axes = plt.subplots(1, len(names), figsize=(max(7.5, 3.9*len(names)), 4), squeeze=False, layout='constrained')
     for ax, name, deviation, record in zip(axes[0], names, deviations, primary):
         x0, y0, x1, y1 = record['primary']['analysis_extent_um_xyxy']
         image = ax.imshow(deviation, extent=(x0, x1, y1, y0), cmap='RdBu_r', vmin=-limit, vmax=limit,
@@ -580,7 +584,8 @@ def _write_layout_report(results, output=None):
         ax.set(title=f'{labels[name]}\nSparkle = {record["primary"]["sparkle_contrast_percent"]:.3f}%',
                xlabel='x [um]', ylabel='y [um]')
     fig.colorbar(image, ax=axes[0], shrink=.8, label='Brightness deviation [%], shared scale')
-    fig.suptitle(f'Same AG + camera + ROI + common filter | {display_backend} | no LDF')
+    fig.suptitle('Same AG + camera + ROI + common filter'+
+                 ('\n' if len(names) == 1 else ' | ')+f'{display_backend} | no LDF')
     sparkle_plot = results/'layout-sparkle.png'
     fig.savefig(sparkle_plot, dpi=150)
     plt.close(fig)
@@ -603,7 +608,7 @@ def _write_layout_report(results, output=None):
 
     if camera_mode:
         from sms_reference import circular_pupil_mtf
-        fig, axes = plt.subplots(2, len(names), figsize=(3.9*len(names), 7.3), squeeze=False, layout='constrained')
+        fig, axes = plt.subplots(2, len(names), figsize=(max(7.5, 3.9*len(names)), 7.3), squeeze=False, layout='constrained')
         raw_pixels = [arrays[('1um', name, display_backend)]['camera_pixels'] for name in names]
         raw_deviations = [100*(a/a.mean()-1) for a in raw_pixels]
         bound = max(float(np.abs(a).max()) for a in raw_deviations+deviations)
@@ -612,10 +617,12 @@ def _write_layout_report(results, output=None):
                 im = axes[row, col].imshow(data, cmap='RdBu_r', vmin=-bound, vmax=bound,
                                            extent=(-420, 420, 420, -420), interpolation='nearest')
                 value = record['direct_unseparated_camera_CV_percent'] if row == 0 else record['primary']['sparkle_contrast_percent']
-                axes[row, col].set(title=f'{labels[name]} | {"Captured CV" if row == 0 else "Separated contrast"} = {value:.3f}%',
+                axes[row, col].set(title=labels[name]+'\n'+
+                                   f'{"Captured CV" if row == 0 else "Separated contrast"} = {value:.3f}%',
                                    xlabel='Object x [um]', ylabel='Object y [um]')
         fig.colorbar(im, ax=axes.ravel().tolist(), label='Relative signal deviation [%], one shared scale', shrink=.8)
-        fig.suptitle('Top: lens -> square pixel integration -> sampling | Bottom: same samples after common notch mask')
+        fig.suptitle('Top: lens -> square pixel integration -> sampling'+
+                     ('\n' if len(names) == 1 else ' | ')+'Bottom: same samples after common notch mask')
         camera_plot = results/'camera-capture.png'
         fig.savefig(camera_plot, dpi=150)
         plt.close(fig)
@@ -669,7 +676,9 @@ def _write_layout_report(results, output=None):
                'protocol_sha256': sha256(results/'protocol.json'),
                'primary_metric': 'sampled_camera_common_notch' if camera_mode else 'common_three_pass_MWA', 'measurement': measurement,
                'legacy_diamond_check': reference_check,
-               'postprocessing_revision': ('Camera pixels captured before spectral separation; no MWA and no extra low-pass. Historical optical fields reused only after identity checks.' if camera_mode else
+               'postprocessing_revision': ('Camera pixels captured before spectral separation; no MWA and no extra low-pass. '+
+                                           ('Historical optical fields reused after identity checks.' if 'optical_root' in protocol else
+                                            'New optical runs verified against the predeclared protocol.') if camera_mode else
                                            'Restore three-pass MWA as headline; original Fourier protocol retained without modification as a diagnostic. Window schedule is derived only from periods and legacy support.'),
                'shared_mask_verified': True,
                'fine_minus_coarse_percentage_points': {name: b['primary']['sparkle_contrast_percent']-a['primary']['sparkle_contrast_percent']
@@ -692,7 +701,8 @@ def _write_layout_report(results, output=None):
             'note': 'Numerical consistency and stated controls; this does not establish camera calibration or a commercial-panel ranking.'}
     (results/'summary.json').write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding='utf-8')
     input_rows = []
-    for name, info in protocol['layouts'].items():
+    for name in names:
+        info = protocol['layouts'][name]
         input_rows.append(f'<tr><td>{escape(labels[name])}</td><td>{info["nominal_pixel_pitch_um"]:g}</td>'
                           f'<td>{escape(str(info["full_rgb_period_um_xy"]))}</td><td>{escape(str(info["green_period_um_xy"]))}</td>'
                           f'<td>{info["linear_emission_scale"]:.8f}</td><td>{info["unscaled_field_linear_green_mean"]*info["linear_emission_scale"]:.9f}</td></tr>')
@@ -705,10 +715,56 @@ def _write_layout_report(results, output=None):
                            f'<td>{r["solver_seconds"]:.3f}</td><td>{r["normalized_input_mean"]:.9f}</td></tr>')
     plot_html = lambda path: '<figure class="comparison-figure">'+_preview(path, max_size=(2400, 1600))+'</figure>'
     document = '<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
-    document += '<title>四种 OLED 排列 · 同 AG 闪点对比</title><style>'+CSS+'</style></head><body>'
-    document += '<header><h1>四种 OLED 排列 · 同 AG 闪点对比</h1><p>全绿、530 nm、无 LDF；同一 AG 高度图、相机、名义物理像素间距和输入平均线性亮度。'
+    title = 'OLED · 相机闪点与表面对照' if comparison else 'OLED 排列 · 同 AG 闪点对比'
+    document += '<title>'+title+'</title><style>'+CSS+'</style></head><body>'
+    document += '<header><h1>'+title+'</h1><p>全绿、530 nm、无 LDF；同一 AG 高度图、相机、名义物理像素间距和输入平均线性亮度。'
     document += ('先成像，再做方形像元积分与离散采样，最后用同一张含混叠频率的周期掩膜去周期。理想单色相机，无额外 MWA、低通或 LDF。</p></header><main>' if camera_mode else
                  '主结果恢复为三次移动平均（MWA）。所有排列使用相同窗口序列，并保留旧三次 140 µm MWA 的对照核验。</p></header><main>')
+    metrology_path = results/'metrology-audit.json'
+    if camera_mode and metrology_path.exists():
+        audit = json.loads(metrology_path.read_text(encoding='utf-8'))
+        spectrum = json.loads((results/'camera-spectrum.json').read_text(encoding='utf-8'))
+        if audit['kind'] != 'SMS1000-public-definition-audit':
+            raise ValueError('Unexpected SMS1000 metrology audit kind')
+        document += '<section><h2>SMS1000 口径核对：32% 尚不是论文的等价读数</h2><p>厂商公开说明明确包含采集图像上的数值低通，以限制参与评价的空间频率。当前共同陷波方案只去除周期频点，保留其间的高频随机分量，因此不能当作 SMS1000 等价测量。本次保留原始 32% 指标，未新增或调节主结果滤波器，未重跑光学求解。</p><ul>'
+        for item in audit['findings']:
+            document += '<li>'+escape(item['finding'])+'</li>'
+        document += '</ul><h3>参数来源逐项核对</h3><div class="scroll"><table><thead><tr><th>量</th><th>厂商/公开方法</th><th>Cheng 2025</th><th>当前模型</th><th>判定</th></tr></thead><tbody>'
+        for row in audit['parameter_rows']:
+            document += '<tr><td>'+escape(row['quantity'])+'</td><td>'+escape(row['vendor'])+'</td><td>'+escape(row['paper'])+'</td><td>'+escape(row['current'])+'</td><td>'+escape(row['status'])+' <a href="'+escape(row['source_url'], quote=True)+'">来源</a></td></tr>'
+        document += '</tbody></table></div><p>145 µm 是 LDF—像素距离；当前 500 µm 是 AG 平均界面—发光层距离，二者不是同一参数。50 mm、3.75 µm 来自厂商典型设备信息；F/8、400 mm 和由此导出的 26.25 µm 物方像元不是已确认的论文设置。表1的 Width/Depth Variance 不能直接当平均纹理周期和坑深。</p>'
+        document += '<h3>固定几何频率下的方差审计</h3><p>只按已知 70 µm 名义像素、140 µm 精确全绿周期及相机采样节距划分频段，没有反求能得到 5% 的截止频率。下表各分量用原信号均值归一，属于方差诊断，不是新的 SMS1000 校正值。</p><div class="scroll"><table><thead><tr><th>表面 / 网格</th><th>原主值 [%]</th><th>高于1/70的方差 [%]</th><th>1/70以下分量 [%]</th><th>1/140以下分量 [%]</th><th>Nyquist矩形内分量 [%]</th><th>仅DUT周期陷波 [%]</th></tr></thead><tbody>'
+        for row in spectrum['records']:
+            bands = row['frequency_boundaries']
+            document += (f'<tr><td>{row["surface"]} / {row["grid"]}</td><td>{row["headline_sparkle_percent"]:.5f}</td>'
+                f'<td>{bands["nominal_address_pitch_70um"]["above_retained_variance_percent"]:.3f}</td>'
+                f'<td>{bands["nominal_address_pitch_70um"]["within_component_contrast_percent_total_mean"]:.5f}</td>'
+                f'<td>{bands["exact_green_repeat_140um"]["within_component_contrast_percent_total_mean"]:.5f}</td>'
+                f'<td>{row["Nyquist_decomposition"]["low_component_contrast_percent_total_mean"]:.5f}</td>'
+                f'<td>{row["diamond_only_notch_diagnostic"]["contrast_percent"]:.5f}</td></tr>')
+        document += '</tbody></table></div><p>缺少带宽限制是明确的定义差异，但简单剔除1/70以上频率后，三倍深度仍约30%。不能把全部差距归给这一项。Nyquist 诊断把1 mm光学浮点图按相机二维矩形 Nyquist 区域分解后再采样；存在有限DFT周期延拓假设，并保留两分量协方差，因此不是实测抗混叠镜头替代。它显示当前模型的混叠分量不足以解释32%到5%的全部差距。</p>'
+        fig, ax = plt.subplots(figsize=(8.5, 4.6), layout='constrained')
+        for row in spectrum['records']:
+            if row['grid'] != '0p5um':
+                continue
+            curve = row['cumulative_variance']
+            ax.plot([r['frequency_cycles_per_mm'] for r in curve],
+                    [r['within_retained_variance_percent'] for r in curve], label=row['surface'])
+        ax.axvline(1000/140, ls='--', color='gray', label='1 / 140 um G repeat')
+        ax.axvline(1000/70, ls=':', color='black', label='1 / 70 um nominal pixel')
+        ax.set(xlabel='Object radial spatial frequency [cycles/mm]', ylabel='Cumulative retained non-DC variance [%]',
+               xlim=(0, 27), ylim=(0, 101), title='Unchanged camera signal | frequency audit, no fitted cutoff')
+        ax.legend(fontsize=8)
+        path = results/'metrology-frequency-variance.png'
+        fig.savefig(path, dpi=150)
+        plt.close(fig)
+        document += plot_html(path)+'<p>当前公共并集掩膜剔除89个非DC频点，而仅Diamond的周期掩膜剔除56个；后者使三倍深度上升到约33.07%，说明并集掩膜并不是32%偏高的原因。后端与网格检查仍只能审查数值一致性，不验证实际AG与测量链。</p><h3>仍缺少的独立证据</h3><ul>'
+        for item in audit['required_for_identified_comparison']:
+            document += '<li>'+escape(item)+'</li>'
+        document += '</ul><p>公开资料不足以唯一分摊剩余差距。没有得到论文实际设置前，不输出声称已复现仪器的约5%结果。</p><p><a href="metrology-audit.json">参数与结论</a> · <a href="camera-spectrum.json">方差与采样诊断</a> · <a href="sources.json">来源清单、位置与校验值</a></p>'
+        for source in audit['sources']:
+            document += '<p><a href="'+escape(source['url'], quote=True)+'">'+escape(Path(source['local_file']).stem)+'</a> · <a href="'+source['local_file']+'">本地核对副本</a>：'+escape(source['relevant_location'])+'</p>'
+        document += '</section>'
     if reference_check:
         document += '<section><h2>先核对原来约 5% 的钻石基准</h2><p>'
         document += f'旧报告原始浮点图按三次 140×140 µm MWA、560 µm ROI 重评：<strong>{reference_check["historical_three_140_MWA_percent"]:.6f}%</strong>；'
@@ -716,10 +772,81 @@ def _write_layout_report(results, output=None):
         document += f'上一版展示的 {diamond["fourier"]["sparkle_contrast_percent"]:.6f}% 来自另一种频域滤波与 420 µm ROI，不能替代这个 MWA 基准。'
         document += ('两批次 AG 哈希相同；' if reference_check['same_AG_hash'] else '两批次 AG 哈希不同，仅作方法对照；')
         document += '本批次仍保留线性亮度归一化与全部正值发光样本。光学结果未重跑。</p></section>'
-    document += '<section><h2>输入与归一化</h2><p>新增三种排列为公开图示启发的几何近似；钻石保留仓库原有完整重复单元。'
+    document += '<section><h2>输入与归一化</h2><p>采用已保存的发光布局；钻石保留仓库原有完整重复单元，其他布局为公开图示启发的几何近似。'
     document += 'P 表示名义逻辑像素间距，不表示各色子像素最近邻距离相同。按全 1 mm 输入场的线性 G 均值归一至 1；倍率在 sRGB 解码后应用，峰值不裁剪，全部正值发光样本参与求解。</p>'
     document += '<div class="scroll"><table><thead><tr><th>排列</th><th>P [µm]</th><th>RGB 精确周期 X/Y [µm]</th><th>G 精确周期 X/Y [µm]</th><th>线性倍率</th><th>输入均值</th></tr></thead><tbody>'+''.join(input_rows)+'</tbody></table></div>'
     document += plot_html(inputs_plot)+'</section>'
+    if camera_mode and comparison:
+        height_only = 'height_scale' in comparison
+        baseline_label = '原深度' if height_only else comparison['baseline_label']
+        surface_label = '三倍深度' if height_only else comparison['surface_label']
+        value_key = 'scaled_height_sparkle_percent' if height_only else 'surface_sparkle_percent'
+        comparison_file = 'depth-comparison.json' if height_only else 'surface-comparison.json'
+        baseline = Path(comparison['baseline_results'])
+        assert sha256(baseline/'protocol.json') == comparison['baseline_protocol_sha256']
+        assert sha256(baseline/'summary.json') == comparison['baseline_summary_sha256']
+        previous = json.loads((baseline/'summary.json').read_text(encoding='utf-8'))
+        assert previous['protocol']['analysis'] == protocol['analysis']
+        assert previous['protocol']['camera'] == protocol['camera']
+        comparisons = []
+        for record in records:
+            original = next(r for r in previous['records'] if all(r[k] == record[k] for k in ('layout', 'grid', 'backend')))
+            assert original['primary_metric'] == record['primary_metric']
+            # In-memory bin coordinates include tuples; saved JSON uses lists.
+            assert original['primary_filter'] == json.loads(json.dumps(record['primary_filter']))
+            base_value = original['primary']['sparkle_contrast_percent']
+            value = record['primary']['sparkle_contrast_percent']
+            comparisons.append({'layout': record['layout'], 'grid': record['grid'], 'backend': record['backend'],
+                'baseline_sparkle_percent': base_value, value_key: value,
+                'difference_percentage_points': value-base_value,
+                'same_frequency_mask': np.array_equal(np.load(baseline/record['grid']/record['layout']/record['backend']/'camera_frequency_mask.npy'),
+                                                     arrays[(record['grid'], record['layout'], record['backend'])]['transfer'])})
+        assert all(row['same_frequency_mask'] for row in comparisons)
+        (results/comparison_file).write_text(json.dumps({'definition': comparison, 'records': comparisons}, ensure_ascii=False, indent=2), encoding='utf-8')
+        comparison_title = f'高度起伏 ×{comparison["height_scale"]:g}：同口径闪点对照' if height_only else comparison['title']
+        description = ('只改变 AG 高度标定；PNG 灰度、横向采样、发光布局、相机、ROI 与频率掩膜保持一致。原深度的已保存相机浮点结果经身份和掩膜核对后作为对照，没有重写原文件。保留四种参考排列的周期集合来固定原共同掩膜，本次仅重算表中布局。' if height_only else comparison['description'])
+        document += '<section><h2>'+escape(comparison_title)+'</h2><p>'+escape(description)+'</p><table><thead><tr><th>布局 / 网格 / 后端</th><th>'+escape(baseline_label)+' [%]</th><th>'+escape(surface_label)+' [%]</th><th>差 [百分点]</th></tr></thead><tbody>'
+        for row in comparisons:
+            document += f'<tr><td>{row["layout"]} / {row["grid"]} / {row["backend"]}</td><td>{row["baseline_sparkle_percent"]:.6f}</td><td>{row[value_key]:.6f}</td><td>{row["difference_percentage_points"]:+.6f}</td></tr>'
+        document += '</tbody></table><p>主值为相机采样后的周期分离对比度，不是原始亮度 CV、雾度或历史三次 140 µm MWA。<a href="'+comparison_file+'">完整表面对照</a>；校准用例、执行命令与所有原始结果见 protocol.json 和各 run.json。</p>'
+        if not height_only:
+            document += '<p>本用例是探索性参数赋值，不是 Table 1 微结构统计的确定性复现；当前仍不是 SMS1000 等价测量。<a href="'+escape(comparison['haze_report'], quote=True)+'">同一输入的雾度报告</a>。</p>'
+        first = primary[0]
+        original = next(r for r in previous['records'] if all(r[k] == first[k] for k in ('layout', 'grid', 'backend')))
+        original_run = json.loads((Path(original['raw_optical_file']).parents[1]/'run.json').read_text(encoding='utf-8'))
+        scaled_plan = next(p for p in protocol['runs'] if p['layout'] == first['layout'] and p['grid'] == first['grid'])
+        scaled_run = json.loads((optical_root/scaled_plan['output']/'run.json').read_text(encoding='utf-8'))
+        height_maps = []
+        for run in (original_run, scaled_run):
+            params = run['parameters']
+            values = read_height(params['height'], params['height_range_um']).astype(np.float64)*1e6
+            height_maps.append(values-values.mean())
+        if height_only:
+            np.testing.assert_allclose(height_maps[1], comparison['height_scale']*height_maps[0], atol=3e-7, rtol=3e-6)
+        limit = max(float(np.max(np.abs(h))) for h in height_maps)
+        fig, axes = plt.subplots(1, 2, figsize=(9, 4), layout='constrained')
+        plot_labels = ('Original depth', f'Height x{comparison["height_scale"]:g}') if height_only else (comparison['baseline_plot_label'], comparison['surface_plot_label'])
+        field_um = 1000 if height_only else 100
+        for ax, values, label, run in zip(axes, height_maps, plot_labels, (original_run, scaled_run)):
+            if not height_only:
+                size = round(field_um/run['parameters']['height_pitch_um'])
+                start = (values.shape[0]-size)//2
+                values = values[start:start+size, start:start+size]
+            image = ax.imshow(values, cmap='viridis', vmin=-limit, vmax=limit,
+                              extent=(-field_um/2, field_um/2, field_um/2, -field_um/2), interpolation='nearest')
+            ax.set(title=label, xlabel='x [um]', ylabel='y [um]')
+        fig.colorbar(image, ax=axes, shrink=.8, label='Height relative to mean [um], shared scale')
+        height_plot = results/('height-depth-comparison.png' if height_only else 'height-surface-comparison.png')
+        fig.savefig(height_plot, dpi=150)
+        plt.close(fig)
+        document += plot_html(height_plot)
+        for label, run in ((baseline_label, original_run), (surface_label, scaled_run)):
+            params = run['parameters']
+            link = os.path.relpath(params['height'], results).replace(os.sep, '/')
+            metadata = json.loads(Path(params['height']).with_suffix('.source.json').read_text(encoding='utf-8'))
+            stats = metadata['measured_surface']
+            document += f'<p>{escape(label)}：名义坑间距 {metadata["nominal_site_spacing_um"]:g} µm，网格 {params["height_pitch_um"]:g} µm，Sa={stats["Sa_um"]:.6f}、Sq={stats["Sq_um"]:.6f}、Sz={stats["Sz_um"]:.6f} µm；PNG 黑白高度范围 {params["height_range_um"]:.12f} µm。<a href="{link}">原始 16-bit 高度 PNG</a>；<a href="{str(Path(link).with_suffix(".source.json")).replace(os.sep, "/")}">物理标定 sidecar</a>。</p>'
+        document += '</section>'
     if camera_mode:
         document += '<section><h2>相机采样后的随机闪点对比度</h2>'+plot_html(camera_plot)+plot_html(sparkle_plot)+plot_html(metrics_plot)
         document += '<p>主列为同一频率掩膜后的 100×σ/μ，采用总体标准差 ddof=0；直接采样 CV 仍包含显示周期，不能作为闪点。分离后的有符号信号不截断、不再次积分。波动平面控制的残余单列，不从结果扣除。</p>'
@@ -740,7 +867,7 @@ def _write_layout_report(results, output=None):
             phase_values = [c['sparkle_contrast_percent'] for c in r['phase_checks']]
             document += f'<tr><td>{labels[name]}</td><td>{r["primary"]["sparkle_contrast_percent"]:.6f}</td><td>{fine_r["primary"]["sparkle_contrast_percent"]:.6f}</td><td>{summary["fine_minus_coarse_percentage_points"][name]:+.6f}</td><td>{min(phase_values):.6f}–{max(phase_values):.6f}</td><td>{r["nested_ROI_same_full_mask"]["sparkle_contrast_percent"]:.6f}</td><td>{r["nested_ROI"]["sparkle_contrast_percent"]:.6f}</td><td>{r["nested_ROI_flat_percent"]:.6f}</td><td>{r["periodic_flat_null_percent"]:.3g}</td></tr>'
         document += '</tbody></table></div><p>有限 1 mm 发光场的衍射边缘及源离散化可能产生非周期残余；有限平面控制包含这些误差，无限周期平面控制用解析 Fourier 像元积分检查掩膜本身。0.5 µm 检查只细化光学/AG 网格，发光纹理与点源间距仍为 2 µm；单个 AG 实现、单个发光相位及小视场的统计差异不构成商用面板质量排名。</p>'
-        document += '<p>本报告比较 Torch、TorchOptics 和 Chromatix 的同一标量波动模型。历史 Mitsuba 几何光线结果缺少衍射，未并入这次理想衍射相机比较。所有原光学文件保持不变，来源、哈希和运行 ID 记录于 JSON。</p>'
+        document += '<p>本报告比较 Torch、TorchOptics 和 Chromatix 的同一标量波动模型。Mitsuba 几何光线结果缺少衍射，未并入这次理想衍射相机比较。用于分析的原光学文件保持不变，来源、哈希和运行 ID 记录于 JSON。</p>'
         document += '<p><a href="summary.json">完整统计与浮点结果索引</a> · <a href="protocol.json">采样与去周期前固定的方案</a></p></section>'
         document += '<details class="group"><summary>完整掩膜、折叠频率与复现参数</summary><pre>'+escape(json.dumps(measurement, ensure_ascii=False, indent=2))+'</pre></details>'
     else:
@@ -764,7 +891,8 @@ def _write_layout_report(results, output=None):
                             f'<td>{r["fourier"]["sparkle_contrast_percent"]:.6f}</td><td>{r["fourier_flat_percent"]:.6f}</td></tr>' for r in records)
         document += '</tbody></table></div><pre>'+escape(json.dumps(protocol['analysis'], ensure_ascii=False, indent=2))+'</pre></div></details>'
     document += '<details class="group"><summary>来源、几何定义与原始计算</summary><div class="content">'
-    for name, info in protocol['layouts'].items():
+    for name in names:
+        info = protocol['layouts'][name]
         document += f'<h3>{escape(labels[name])}</h3><a href="{escape(info["source_page"], quote=True)}">公开参考来源</a><pre>'+escape(json.dumps(info['geometry'], ensure_ascii=False, indent=2))+'</pre>'
     for plan in protocol['runs']:
         for backend in plan['backends']:
@@ -915,6 +1043,7 @@ def _write_sms_report(results, records, arrays, plots):
     skill_root = Path(__file__).resolve().parents[1]
     workspace = skill_root.parent
     read = lambda path: json.loads(path.read_text(encoding='utf-8'))
+    height_meta = read(results/'1um/run.json')['input_files']['height']['provenance']
 
     coarse = next(x for x in records if x['grid'] == '1um' and x['backend'] == 'torch')
     fine = next(x for x in records if x['grid'] == '0p5um')
@@ -1001,7 +1130,8 @@ def _write_sms_report(results, records, arrays, plots):
     MWA {summary['sampling_check']['MWA_difference_percentage_points']:+.6f} 个百分点。</p>
     <h3>固定参考条件与公开方法的边界</h3>
     <p>只保留原始发光图 G 通道，R/B 置零；G 像素逐字节保留。530 nm 单波长，OLED 到 AG 距离 500 µm，
-    高度图保持 Sa=0.10 µm、名义中心间距 25 µm，无 LDF。全绿强度的完整重复周期为 140 µm，
+    高度图 Sa={height_meta['measured_surface']['Sa_um']:.6f} µm、Sz={height_meta['measured_surface']['Sz_um']:.6f} µm，
+    名义中心间距 {height_meta['nominal_site_spacing_um']:g} µm，无 LDF。全绿强度的完整重复周期为 140 µm，
     四个绿色主体的几何中心间距约 70 µm，但其形状不完全相同。</p>
     <p>参考相机为 50 mm、F/8、400 mm 物距、3.75 µm 传感器像素；薄透镜近似给出倍率 1/7、
     物方像素 26.25 µm、绿色像素 ISR≈2.667，物方 NA≈0.007812。
@@ -1011,7 +1141,7 @@ def _write_sms_report(results, records, arrays, plots):
     <p>频域掩模是线性操作，不能保证分离后的信号始终非负。所有分离后样本均原样纳入面积积分和 CV，
     不作截断或亮度选择；每组 sms_stats.json 记录负值像素数。实际原始光强仍要求全部非负。</p>
     <p>Cheng 2025 无 LDF 读数 4.8–6.0 按 SMS 通常百分比标度解读；原表未明示百分号或算法设置。
-    其表面 Ra=0.25–0.35 µm、雾度 20–40%，与这里的合成 Sa=0.10 µm 不同。
+    其表面 Ra=0.25–0.35 µm、雾度 20–40%，不能直接与这里的合成表面 Sa 等同。
     1/70 截止、离散 notch 和三次 140 µm MWA 均为本次明确选择，未声称复现专有软件或满足 IEC 标准。</p>
     <p>方法依据：<a href="https://www.display-messtechnik.de/fileadmin/template/main/docs/10-Years-SparkleMeasurement--edC-2021-V2.pdf">Becker 2021，3.3–3.5 节</a>；
     相机范围：<a href="https://www.display-messtechnik.de/fileadmin/template/main/docs/SMS1000-05.2023-7.pdf">SMS-1000 公开规格</a>；
@@ -1230,9 +1360,12 @@ def write_haze_report(results, output=None):
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
-    from calculate_haze import transmission_haze, load_surface
+    from calculate_haze import transmission_haze, load_surface, surface_diagnostics
 
     results = Path(results).resolve()
+    entry = Path(output).resolve() if output else results/'haze.html'
+    artifacts = entry.parent
+    artifacts.mkdir(parents=True, exist_ok=True)
     data = json.loads((results/'haze.json').read_text(encoding='utf-8'))
     if data['kind'] != 'ag-haze-four-backend':
         raise ValueError('--kind haze requires a saved native-backend comparison')
@@ -1240,7 +1373,7 @@ def write_haze_report(results, output=None):
     assert data['protocol_sha256'] == sha256(results/'protocol.json')
     records = data['records']
     declared = datetime.fromisoformat(protocol['declared_at_utc'])
-    curves, validations = {}, []
+    curves, validations, diagnostics = {}, [], {}
     for record in records:
         assert datetime.fromisoformat(record['started_at_utc']) >= declared
         assert sha256(record['input']['path']) == record['input']['sha256']
@@ -1258,6 +1391,14 @@ def write_haze_report(results, output=None):
             measured, _ = transmission_haze(h, pitch*1e-6, record['wavelength_nm']*1e-9,
                 record['n_in'], record['n_out'], record['acceptance_half_angle_deg'], angular_power=power)
             assert abs(measured['haze_percent']-record['haze_percent']) < 1e-10
+            audit_key = f'{record["surface_id"]}/{record["wavelength_nm"]:g}nm'
+            if audit_key not in diagnostics:
+                surface, surface_curves = surface_diagnostics(h, pitch*1e-6, record['wavelength_nm']*1e-9,
+                    record['n_in'], record['n_out'], record['acceptance_half_angle_deg'])
+                diagnostics[audit_key] = {'input': record['input'], 'surface': surface, 'curves': surface_curves,
+                    'angular_flux': {k: measured[k] for k in ('zero_order_forward_flux_percent',
+                        'within_cone_nonzero_order_flux_percent', 'haze_percent',
+                        'nonzero_order_forward_flux_percent', 'haze_without_cosine_weight_percent')}}
         else:
             assert record['incident_rays'] == record['hit_rays'] == record['mesh_faces']
             assert record['energy_balance_error'] < 1e-6
@@ -1294,7 +1435,7 @@ def write_haze_report(results, output=None):
                     xlim=(0, 6), yscale='log', title='Angular power integral | main height grid')
         axes[1].legend(fontsize=8)
         fig.suptitle(f'Uniform normal incidence | {wavelength:g} nm | wave phase-screen vs geometric refraction')
-        path = results/f'haze-comparison-{wavelength:g}nm.png'
+        path = artifacts/f'haze-comparison-{wavelength:g}nm.png'
         fig.savefig(path, dpi=150)
         plt.close(fig)
         figures.append(path)
@@ -1307,7 +1448,8 @@ def write_haze_report(results, output=None):
                      f'<td>{r["reference_numpy_percent"]:.6f}</td><td>{r["difference_vs_numpy_percentage_points"]:+.6f}</td>'
                      f'<td>{flat:.3g}</td><td>{r["solver_seconds"]:.3f}</td></tr>')
     document = '<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
-    document += '<title>AG 雾度 · 四后端实际计算</title><style>'+CSS+'</style></head><body><header><h1>AG 雾度 · 四后端实际计算</h1>'
+    title = 'AG 雾度 · 纹理尺度、深度与形貌' if (artifacts/'texture-sensitivity.json').exists() else 'AG 雾度 · 四后端实际计算'
+    document += '<title>'+title+'</title><style>'+CSS+'</style></head><body><header><h1>'+title+'</h1>'
     document += f'<p>同一校准高度图、均匀正入射、n={records[0]["n_in"]:g}→{records[0]["n_out"]:g}、波长 {escape(str(wavelengths))} nm、{records[0]["acceptance_half_angle_deg"]:g}° 接收半角。三个波动后端调用各自原生传播；Mitsuba 调用网格求交及原生折射/Fresnel。无 OLED 发光图、相机光瞳、像元积分或额外滤波。</p></header><main>'
     document += '<section><h2>结果与 NumPy 近似对照</h2><div class="scroll"><table><thead><tr><th>网格 [µm]</th><th>波长 [nm]</th><th>后端</th><th>模型</th><th>雾度 [%]</th><th>NumPy [%]</th><th>差 [百分点]</th><th>平面控制 [%]</th><th>求解 [s]</th></tr></thead><tbody>'+''.join(table)+'</tbody></table></div>'
     for path in figures:
@@ -1320,6 +1462,173 @@ def write_haze_report(results, output=None):
     if len(geometric) == 2 and geometric[0]['haze_percent'] > 0:
         delta = geometric[1]['haze_percent']-geometric[0]['haze_percent']
         document += f'<section><h2>几何模型的网格敏感性</h2><p>Mitsuba 从 {geometric[0]["height_pitch_um"]:g} µm 到 {geometric[1]["height_pitch_um"]:g} µm 的变化为 {delta:+.6f} 个百分点，相对变化 {100*delta/geometric[0]["haze_percent"]:+.2f}%。这两级结果仍显示可见的网格敏感性，不能据此声称几何结果已充分收敛。波动与几何模型的差值也不构成真实雾度的误差上下界。</p></section>'
+    if diagnostics:
+        document += '<section><h2>差异来源：通量分区、横向尺度与坡度尾部</h2><p>下表从保存的角谱与原校准高度图离线计算。非 DC 阶包含窄角散射；不能将其整体作为 2.5° 雾度。周期单元的 DC 也不等同于随机表面系综的严格相干分量。</p><div class="scroll"><table><thead><tr><th>表面 / 波长</th><th>DC [%]</th><th>锥内非 DC [%]</th><th>锥外 [%]</th><th>去掉 cosθ 后 [%]</th><th>ACF 首次 1/e [µm]</th><th>频谱 RMS 坡度</th><th>解析网格折射 [%]</th></tr></thead><tbody>'
+        for key, audit in diagnostics.items():
+            flux, surface = audit['angular_flux'], audit['surface']
+            document += (f'<tr><td>{escape(key)}</td><td>{flux["zero_order_forward_flux_percent"]:.6f}</td>'
+                f'<td>{flux["within_cone_nonzero_order_flux_percent"]:.6f}</td><td>{flux["haze_percent"]:.6f}</td>'
+                f'<td>{flux["haze_without_cosine_weight_percent"]:.6f}</td>'
+                f'<td>{escape(str(surface["circular_radial_acf_first_1e_length_um"]))}</td>'
+                f'<td>{surface["spectral_rms_slope"]:.6f}</td><td>{surface["facet_model"]["single_hit_haze_percent"]:.6f}</td></tr>')
+        document += '</tbody></table></div><p>ACF 使用周期二维高度自相关的径向平均，报告首次 1/e 交点，没有拟合高斯相关长度。解析折射逐一使用原三角面的坡度和投影面积，只审查同一单次界面几何近似；它没有运行新原生后端，也没有验证 Maxwell 边界。</p>'
+        fig, axes = plt.subplots(1, 3, figsize=(13, 4), layout='constrained')
+        for key, audit in diagnostics.items():
+            # Omit the mean-removed DC only from this log plot; retain every
+            # shell in diagnostics.json and in all numerical integrations.
+            rows = [r for r in audit['curves']['radial_height_spectrum']
+                    if 0 < r['frequency_cycles_per_um'] <= .3]
+            axes[0].semilogy([r['frequency_cycles_per_um'] for r in rows],
+                             np.maximum([r['height_variance_um2'] for r in rows], 1e-30), label=key)
+            axes[0].axvline(audit['surface']['acceptance_frequency_cycles_per_um'], color='gray', ls='--', alpha=.4)
+            rows = audit['curves']['radial_height_acf']
+            axes[1].plot([r['radius_um'] for r in rows], [r['correlation'] for r in rows], label=key)
+            rows = audit['curves']['facet_slope_survival']
+            axes[2].semilogy([r['slope'] for r in rows], np.maximum([r['area_above_percent'] for r in rows], 1e-8), label=key)
+            threshold = audit['surface']['facet_model']['slope_threshold_for_acceptance']
+            if threshold is not None:
+                axes[2].axvline(threshold, color='gray', ls='--', alpha=.4)
+        axes[0].set(xlim=(0, .3), xlabel='Radial spatial frequency [cycles/um]', ylabel='Height variance per shell [um^2]')
+        axes[1].set(xlim=(0, 40), xlabel='Periodic radial displacement [um]', ylabel='Normalized height ACF')
+        axes[1].axhline(1/np.e, color='gray', ls='--')
+        axes[2].set(xlim=(0, .15), ylim=(1e-4, 100), xlabel='Facet slope magnitude', ylabel='Projected area above slope [%]')
+        axes[0].legend(fontsize=6)
+        path = artifacts/'haze-surface-diagnostics.png'
+        fig.savefig(path, dpi=150)
+        plt.close(fig)
+        document += '<figure class="comparison-figure">'+_preview(path, max_size=(2400, 1000))+'</figure><p>高度谱按径向壳层积分，其纵轴是高度方差而非光学角功率。相位 RMS 另存于诊断中；相位起伏并非必然远小于 1 rad，不能直接把高度 PSD 尾部比例当作雾度。详细矩、坡度阈值及曲线保存在 <a href="diagnostics.json">diagnostics.json</a>。</p></section>'
+    # Optional retained research experiments are data, never executable report
+    # helpers. --out keeps these and all newly derived artifacts together.
+    local_artifacts = {'diagnostics.json', 'validation.json'}
+    grid_path = artifacts/'geometric-grid.json'
+    if grid_path.exists():
+        grid = json.loads(grid_path.read_text(encoding='utf-8'))
+        if grid['kind'] != 'analytic-facet-grid-sensitivity':
+            raise ValueError('Unexpected geometric-grid.json experiment kind')
+        local_artifacts.add(grid_path.name)
+        document += '<section><h2>独立细采样：解析几何网格实验</h2><p>复用原生成器，固定坑位置、深度、平滑尺度及参考高度标定，分别直接计算每个网格；未插值粗 PNG，未写入或覆盖高度输入。这里运行的是 float64 解析 Snell/Fresnel 面积分，没有新增 Mitsuba GPU 作业。</p><table><thead><tr><th>网格 [µm]</th><th>解析雾度 [%]</th><th>RMS 面坡度</th><th>超过阈值的投影面积 [%]</th></tr></thead><tbody>'
+        for row in grid['records']:
+            document += f'<tr><td>{row["pitch_um"]:g}</td><td>{row["single_hit_haze_percent"]:.6f}</td><td>{row["rms_slope"]:.8f}</td><td>{row["area_above_slope_threshold_percent"]:.6f}</td></tr>'
+        document += '</tbody></table><p>更细网格约束的是同一个单次界面几何模型的离散误差，仍未包含衍射或真实玻璃中缺失的细结构。<a href="geometric-grid.json">固定标定、采样方案与结果</a></p></section>'
+    spectral_path = artifacts/'spectral-sensitivity.json'
+    if spectral_path.exists():
+        spectral = json.loads(spectral_path.read_text(encoding='utf-8'))
+        if spectral['kind'] != 'illustrative-phase-screen-spectral-sensitivity':
+            raise ValueError('Unexpected spectral-sensitivity.json experiment kind')
+        local_artifacts.update(('spectral-sensitivity.json', 'spectral-sensitivity.csv'))
+        document += '<section><h2>白光与色散：明确权重的示例积分</h2><p>使用独立 0.5 µm 高度图，380–780 nm、5 nm 步长、CIE D65 与 V(λ)，以 Q=T₀(n)×已表示的标量法向通量作近似透射权重，计算 ∫D65·V·Q·H dλ / ∫D65·V·Q dλ。T₀ 是平面界面 Fresnel 功率，Q 不是实测绝对透射率。此积分截断波段，未实现仪器校正，因此仅作模型敏感性研究。</p><table><thead><tr><th>折射率模型</th><th>D65/V 加权 [%]</th><th>10 nm 步长 [%]</th><th>单色范围 [%]</th></tr></thead><tbody>'
+        for row in spectral['summaries']:
+            document += f'<tr><td>{escape(row["model"])}</td><td>{row["D65_V_weighted_380_780nm_percent"]:.6f}</td><td>{row["10nm_quadrature_percent"]:.6f}</td><td>{row["minimum_monochromatic_percent"]:.4f}–{row["maximum_monochromatic_percent"]:.4f}</td></tr>'
+        document += '</tbody></table><p>N-BK7 仅为有制造商色散系数的示例材料，不能据此认定论文玻璃为 N-BK7。冻结 n(530 nm) 与使用同种材料色散的差异单独体现色散影响；与 n=1.5 的比较同时改变基准折射率。给定非负光谱及透射权重，积分比值是 H(λ) 的加权平均。这个模型的几百分点单色结果不会仅因白光加权变成 20–40%。</p>'
+        fig, ax = plt.subplots(figsize=(8, 4), layout='constrained')
+        for model in dict.fromkeys(r['model'] for r in spectral['records']):
+            rows = [r for r in spectral['records'] if r['model'] == model]
+            ax.plot([r['wavelength_nm'] for r in rows], [r['haze_percent'] for r in rows], label=model)
+        ax.set(xlabel='Vacuum wavelength [nm]', ylabel='Scalar surface haze [%]', title='Same heightfield | spectral and index sensitivity')
+        ax.legend(fontsize=8)
+        path = artifacts/'haze-spectral-sensitivity.png'
+        fig.savefig(path, dpi=150)
+        plt.close(fig)
+        document += '<figure class="comparison-figure">'+_preview(path, max_size=(1400, 800))+'</figure><p>数据来源：<a href="https://cie.co.at/datatable/cie-standard-illuminant-d65">CIE D65</a>、<a href="https://cie.co.at/datatable/cie-spectral-luminous-efficiency-photopic-vision">CIE V(λ)</a>、<a href="https://media.schott.com/api/public/content/41e799d0bf874807a0bb8e702fbb75b5?v=54856406">SCHOTT N-BK7</a>。输入校验值、公式及全部单色结果见 <a href="spectral-sensitivity.json">JSON</a> / <a href="spectral-sensitivity.csv">CSV</a>。</p></section>'
+    interface_path = artifacts/'interface-benchmark.json'
+    if interface_path.exists():
+        benchmark = json.loads(interface_path.read_text(encoding='utf-8'))
+        if benchmark['kind'] != 'shallow-1d-Maxwell-interface-Rayleigh-collocation':
+            raise ValueError('Unexpected interface-benchmark.json experiment kind')
+        local_artifacts.add(interface_path.name)
+        document += '<section><h2>浅正弦界面的 TE/TM 电磁边界基准</h2><p>530 nm、n=1.5→1、2.5° 半角；正弦振幅 0.12 µm，沿 y 无限延伸。用含传播及倏逝阶的反射/透射 Rayleigh 展开，在实际起伏界面匹配 TE 或 TM Maxwell 边界。TE/TM 按等入射功率的透射通量合并。结果仅验证这两个浅一维基准，不能外推为二维 AG 的电磁解。</p><table><thead><tr><th>周期 [µm]</th><th>薄相位屏 [%]</th><th>界面电磁解 [%]</th><th>相位屏差 [百分点]</th><th>解析几何 [%]</th></tr></thead><tbody>'
+        for row in benchmark['records']:
+            document += f'<tr><td>{row["period_um"]:g}</td><td>{row["phase_screen_haze_percent"]:.6f}</td><td>{row["unpolarized_interface_haze_percent"]:.6f}</td><td>{row["phase_minus_interface_percentage_points"]:+.6f}</td><td>{row["analytic_facet_haze_percent"]:.6f}</td></tr>'
+        document += '</tbody></table><p>检查包含平面 Fresnel T=0.96/R=0.04、阶数 ±8/16/32/48、配点加密与独立偏移配点残差、能量平衡。该测试独立施加界面边界条件，超过均匀介质传播一致性检查；Rayleigh 展开在一般陡峭界面上的适用性没有在此建立。16 µm 基准的几何结果为零而电磁解非零，直接展示锥外衍射可在所有局部折射偏角都很小时存在。</p><p>参考 <a href="https://arxiv.org/html/physics/0408050">Depine &amp; Lakhtakia 的边界与 Rayleigh 展开</a>；可复现实现在现有 test_haze.py 的 InterfaceBenchmarkTests 中。<a href="interface-benchmark.json">逐阶功率、收敛及残差</a></p></section>'
+    texture_path = artifacts/'texture-sensitivity.json'
+    if texture_path.exists():
+        texture = json.loads(texture_path.read_text(encoding='utf-8'))
+        if texture['kind'] != 'controlled-AG-texture-sensitivity':
+            raise ValueError('Unexpected texture-sensitivity.json experiment kind')
+        local_artifacts.update(('texture-sensitivity.json', 'texture-sensitivity.csv', 'texture-protocol.json'))
+        rows = texture['matrix']
+        lateral = sorted(set(r['lateral_scale'] for r in rows))
+        heights = sorted(set(r['height_scale'] for r in rows))
+        fig, axes = plt.subplots(1, 2, figsize=(12, 4.6), layout='constrained')
+        for ax, model, metric, title in zip(axes, ('wave', 'geometric'),
+                ('haze_percent', 'single_hit_haze_percent'), ('Scalar phase screen', 'Analytic single-hit geometry')):
+            values = np.array([[next(r[model][metric] for r in rows if r['lateral_scale'] == s and r['height_scale'] == d)
+                                for s in lateral] for d in heights])
+            plot = ax.imshow(values, origin='lower', aspect='auto', vmin=0, vmax=100, cmap='viridis')
+            for iy, ix in np.ndindex(values.shape):
+                ax.text(ix, iy, f'{values[iy, ix]:.2f}', ha='center', va='center',
+                        color='white' if values[iy, ix] < 50 else 'black', fontsize=9)
+            ax.set(xticks=range(len(lateral)), xticklabels=[f'{25*s:g}' for s in lateral],
+                   yticks=range(len(heights)), yticklabels=[f'{d:g}x' for d in heights],
+                   xlabel='Scaled nominal site spacing [um]', ylabel='Height factor', title=title)
+            fig.colorbar(plot, ax=ax, label='Model haze [%]', shrink=.8)
+        path = artifacts/'haze-texture-sensitivity.png'
+        fig.savefig(path, dpi=150)
+        plt.close(fig)
+        document += '<section><h2>受控因素：横向尺度与深度</h2><p>对原 0.5 µm 高度图施加 h_new(x,y)=d·h_original(x/s,y/s)。s 改变整个纹理的横向尺度，包括名义坑间距、1.2 µm 圆滑尺度和计算域；d 只改变高度幅值。原始 25 µm 是名义坑间距，不是严格光栅周期。所有数值仍为 530 nm、n=1.5→1、2.5° 半角下的模型估算。</p>'
+        document += '<figure class="comparison-figure">'+_preview(path, max_size=(2100, 900))+'</figure><p>两因素效应相互耦合；相同深宽比可给出相同几何折射，却因相对于波长的绝对尺度不同而具有不同衍射雾度。图中最陡的反事实含少量全反射，单次界面近似的适用范围也会改变，不能把这些数值视为真实玻璃预测。</p>'
+        document += '<p>将原图精确重复 2×2，计算域从 1 mm 变为 2 mm，雾度不变。这检查扩大盒子但重复同一纹理的数学一致性，并不检验独立更大随机样本的代表性。将全部凹坑反号为凸起，在当前正入射相位屏与单次几何模型中也保持雾度不变；不能将这一对称性外推到一般电磁多界面问题。</p><p>全部定义与结果：<a href="texture-sensitivity.json">JSON</a> / <a href="texture-sensitivity.csv">CSV</a>；<a href="texture-protocol.json">本次因素实验方案</a>。这些是分别记录的参数扰动，没有按论文雾度优化原表面。</p></section>'
+    spacing_path = artifacts/'spacing-sensitivity.json'
+    if spacing_path.exists():
+        spacing = json.loads(spacing_path.read_text(encoding='utf-8'))
+        if spacing['kind'] != 'spacing-at-fixed-rounding' or not spacing['complete']:
+            raise ValueError('Incomplete or unexpected fixed-rounding spacing experiment')
+        local_artifacts.add(spacing_path.name)
+        document += '<section><h2>分离坑间距与圆滑尺度</h2><p>整体横向缩放会同时改变坑间距和圆滑尺度。这里另固定物理高斯圆滑 σ=1.2 µm、Sq≈0.1185 µm、原坑的相对布局与深度，只改变布局及计算域的横向尺寸，并由 raw_surface 独立采样。对照明确区分两个横向因素；名义间距仍不是严格光栅周期。</p><table><thead><tr><th>名义坑间距 [µm]</th><th>固定 σ=1.2 µm 波动 [%]</th><th>解析几何 [%]</th><th>Sa [µm]</th><th>ACF 1/e [µm]</th></tr></thead><tbody>'
+        for row in spacing['records']:
+            document += f'<tr><td>{row["nominal_site_spacing_um"]:g}</td><td>{row["wave"]["haze_percent"]:.6f}</td><td>{row["surface"]["facet_model"]["single_hit_haze_percent"]:.6f}</td><td>{row["input"]["roughness"]["Sa_um"]:.6f}</td><td>{row["surface"]["circular_radial_acf_first_1e_length_um"]:.4f}</td></tr>'
+        document += '</tbody></table><p>固定的是 Sq 和相位 RMS，Sa、峰谷深度及完整高度分布可随间距/圆滑的相对尺度变化。<a href="spacing-sensitivity.json">完整定义、校准用例与结果</a></p></section>'
+    morphology_path = artifacts/'morphology-sensitivity.json'
+    if morphology_path.exists():
+        morphology = json.loads(morphology_path.read_text(encoding='utf-8'))
+        if morphology['kind'] != 'AG-morphology-sensitivity' or not morphology['complete']:
+            raise ValueError('Incomplete or unexpected morphology experiment')
+        local_artifacts.update(('morphology-sensitivity.json', 'morphology-protocol.json'))
+        rows = morphology['records']
+        document += '<section><h2>受控因素：等高度统计下的坑形与圆滑程度</h2><p>固定原 1600 个坑位置及相对深度，复用 prepare_etched_ag 的同一生成函数。原始坑形为 −depth·(1−(d1/d2)²)^p；p=1 在高斯圆滑前保留坑缘斜率，p=2 为原形状，p=4 更集中于坑中心。每个新用例均明确匹配 Sq 或 Sa，并另存校准 PNG 与 sidecar；匹配 Sq 不表示匹配峰谷深度或完整高度分布。</p><div class="scroll"><table><thead><tr><th>用例</th><th>匹配量</th><th>Sa [µm]</th><th>Sq [µm]</th><th>Sz [µm]</th><th>波动 [%]</th><th>解析几何 [%]</th><th>ACF 1/e [µm]</th><th>频谱 RMS 坡度</th></tr></thead><tbody>'
+        for row in rows:
+            rough, surface = row['input']['roughness'], row['surface']
+            document += (f'<tr><td>{escape(row["case_id"])}</td><td>{row["matched_metric"]}</td>'
+                f'<td>{rough["Sa_um"]:.5f}</td><td>{rough["Sq_um"]:.5f}</td><td>{rough["Sz_um"]:.5f}</td>'
+                f'<td>{row["wave"]["haze_percent"]:.5f}</td><td>{surface["facet_model"]["single_hit_haze_percent"]:.5f}</td>'
+                f'<td>{surface["circular_radial_acf_first_1e_length_um"]:.4f}</td><td>{surface["spectral_rms_slope"]:.6f}</td></tr>')
+        document += '</tbody></table></div>'
+        fig, axes = plt.subplots(1, 2, figsize=(13, 4.5), layout='constrained')
+        x = np.arange(len(rows))
+        axes[0].bar(x-.18, [r['wave']['haze_percent'] for r in rows], .36, label='Scalar phase screen')
+        axes[0].bar(x+.18, [r['surface']['facet_model']['single_hit_haze_percent'] for r in rows], .36, label='Analytic geometry')
+        axes[0].set(xticks=x, xticklabels=[r['case_id'] for r in rows], ylabel='Model haze [%]', title='Same sites | explicit Sa or Sq matching')
+        axes[0].tick_params(axis='x', labelrotation=45)
+        axes[0].legend(fontsize=8)
+        for row in rows:
+            if row['case_id'] in ('power1', 'power2', 'power4'):
+                axes[1].plot(row['profile_x_um'], row['profile_height_um'], label=f'p={row["profile_power"]:g}, matched Sq')
+        axes[1].set(xlim=(0, 100), xlabel='Lateral coordinate [um]', ylabel='Height relative to mean [um]', title='Same cross-section, different bowl profiles')
+        axes[1].legend(fontsize=8)
+        path = artifacts/'haze-morphology-sensitivity.png'
+        fig.savefig(path, dpi=150)
+        plt.close(fig)
+        document += '<figure class="comparison-figure">'+_preview(path, max_size=(2300, 900))+'</figure><p><a href="morphology-sensitivity.json">用例、输入校准、形貌与光学统计</a>；<a href="morphology-protocol.json">固定方案</a>。这些模型不能由一个 Sa、Sq 或名义间距唯一标定。</p></section>'
+    sampling_path = artifacts/'sampling-check.json'
+    if sampling_path.exists():
+        sampling = json.loads(sampling_path.read_text(encoding='utf-8'))
+        if sampling['kind'] != 'independent-morphology-sampling-check':
+            raise ValueError('Unexpected morphology sampling check')
+        local_artifacts.add(sampling_path.name)
+        document += '<section><h2>最小圆滑尺度的采样检查</h2><p>σ=0.3 µm、p=2 用例保留相同原始深度标定与编码步长，在两级网格独立计算；未插值较粗高度图，也没有新增原生 GPU 作业。</p><table><thead><tr><th>网格 [µm]</th><th>波动 [%]</th><th>解析几何 [%]</th></tr></thead><tbody>'
+        for row in sampling['records']:
+            document += f'<tr><td>{row["pitch_um"]:g}</td><td>{row["wave_haze_percent"]:.8f}</td><td>{row["geometric_haze_percent"]:.8f}</td></tr>'
+        document += '</tbody></table><p>细节与精度说明见 <a href="sampling-check.json">sampling-check.json</a>。</p></section>'
+    surrogate_path = artifacts/'phase-surrogates.json'
+    if surrogate_path.exists():
+        surrogate = json.loads(surrogate_path.read_text(encoding='utf-8'))
+        if surrogate['kind'] != 'same-height-PSD-phase-surrogates':
+            raise ValueError('Unexpected phase-surrogates.json experiment kind')
+        local_artifacts.add(surrogate_path.name)
+        document += '<section><h2>保持高度 PSD 的统计对照</h2><p>保持原二维高度 Fourier 幅值及 Sq，仅以共轭对称随机相位重排。它保持二维高度 PSD 和二点相关，但改变高度分布及更高阶空间相关，不能视为只改变高度 PDF 的实验。当前 exp(i·phase) 的非线性意味着等高度 PSD 也不严格保证等光学角谱。</p><table><thead><tr><th>seed</th><th>PSD 相对 L2 误差</th><th>Sa [µm]</th><th>Sq [µm]</th><th>波动 [%]</th><th>偏度</th><th>峰度</th></tr></thead><tbody>'
+        for row in surrogate['records']:
+            document += f'<tr><td>{row["seed"]}</td><td>{row["same_height_PSD_relative_L2"]:.2g}</td><td>{row["Sa_um"]:.6f}</td><td>{row["Sq_um"]:.6f}</td><td>{row["wave"]["haze_percent"]:.6f}</td><td>{row["surface"]["height_skewness"]:.5f}</td><td>{row["surface"]["height_kurtosis"]:.5f}</td></tr>'
+        document += '</tbody></table><p><a href="phase-surrogates.json">对照定义与全部结果</a>。这个有限对照不能排除其他形貌或未采样微结构造成更大的变化。</p></section>'
     document += '<section><h2>实际运行与输入追溯</h2>'
     for r in records:
         folder = (results/r['angular_curve_csv']).parent
@@ -1331,14 +1640,13 @@ def write_haze_report(results, output=None):
             document += '<a href="'+relative+filename+'">'+filename+'</a> · '
         document += '</details>'
     document += '<p><a href="haze.json">全部原始统计</a> · <a href="protocol.json">计算前固定方案</a> · <a href="validation.json">浮点及曲线审计</a></p></section></main></body></html>'
-    (results/'validation.json').write_text(json.dumps({'status': 'passed', 'checks': validations}, indent=2), encoding='utf-8')
-    entry = results/'haze.html'
-    entry.write_text(document, encoding='utf-8')
+    (artifacts/'validation.json').write_text(json.dumps({'status': 'passed', 'checks': validations}, indent=2), encoding='utf-8')
+    (artifacts/'diagnostics.json').write_text(json.dumps({'source_results': str(results),
+        'source_haze_sha256': sha256(results/'haze.json'), 'records': diagnostics}, ensure_ascii=False, indent=2), encoding='utf-8')
     if output:
         import re
-        destination = Path(output).resolve()
-        destination.parent.mkdir(parents=True, exist_ok=True)
-        prefix = os.path.relpath(results, destination.parent).replace(os.sep, '/')+'/'
-        destination.write_text(re.sub(r'href="(?!https:|data:)([^"]+)"', lambda m: 'href="'+prefix+m[1]+'"', document), encoding='utf-8')
-        return destination
+        prefix = os.path.relpath(results, artifacts).replace(os.sep, '/')+'/'
+        document = re.sub(r'href="(?!https:|data:)([^"]+)"',
+            lambda m: m[0] if m[1] in local_artifacts else 'href="'+prefix+m[1]+'"', document)
+    entry.write_text(document, encoding='utf-8')
     return entry

@@ -1,0 +1,14 @@
+1um | torch | 530 nm | haze = 41.206719% | NumPy = 41.206719% | 3.937 s
+1um | torchoptics | 530 nm | haze = 41.206719% | NumPy = 41.206719% | 0.577 s
+  Chromatix WSL: Ubuntu-22.04, JAX_PLATFORMS=cuda
+  Chromatix WSL: Ubuntu-22.04, JAX_PLATFORMS=cuda
+1um | chromatix | 530 nm | haze = 41.206719% | NumPy = 41.206719% | 9.711 s
+jitc_llvm_init(): LLVM API initialization failed ..
+1um | mitsuba | 530 nm | haze = 54.691702% | NumPy = 41.206719% | 4.252 s
+0p5um | torch | 530 nm | haze = 41.199873% | NumPy = 41.199873% | 0.297 s
+0p5um | torchoptics | 530 nm | haze = 41.199873% | NumPy = 41.199873% | 0.056 s
+  Chromatix WSL: Ubuntu-22.04, JAX_PLATFORMS=cuda
+  Chromatix WSL: Ubuntu-22.04, JAX_PLATFORMS=cuda
+0p5um | chromatix | 530 nm | haze = 41.199873% | NumPy = 41.199873% | 7.507 s
+0p5um | mitsuba | 530 nm | haze = 56.048276% | NumPy = 41.199873% | 15.442 s
+Results: C:\Projects\oled-sparkle\test-results\ag-spacing6p9-sz1um-20261108\haze\haze.json

@@ -1,0 +1,74 @@
+{
+  "status": "passed",
+  "saved_float_checks": [
+    {
+      "surface": "historical_original",
+      "grid": "1um",
+      "backend": "torch",
+      "metric_error": 0.0,
+      "raw_source_hash_verified": true
+    },
+    {
+      "surface": "original",
+      "grid": "1um",
+      "backend": "torch",
+      "metric_error": 0.0,
+      "raw_source_hash_verified": true
+    },
+    {
+      "surface": "original",
+      "grid": "1um",
+      "backend": "torchoptics",
+      "metric_error": 0.0,
+      "raw_source_hash_verified": true
+    },
+    {
+      "surface": "original",
+      "grid": "1um",
+      "backend": "chromatix",
+      "metric_error": 0.0,
+      "raw_source_hash_verified": true
+    },
+    {
+      "surface": "original",
+      "grid": "0p5um",
+      "backend": "torch",
+      "metric_error": 0.0,
+      "raw_source_hash_verified": true
+    },
+    {
+      "surface": "depth3",
+      "grid": "1um",
+      "backend": "torch",
+      "metric_error": 0.0,
+      "raw_source_hash_verified": true
+    },
+    {
+      "surface": "depth3",
+      "grid": "1um",
+      "backend": "torchoptics",
+      "metric_error": 0.0,
+      "raw_source_hash_verified": true
+    },
+    {
+      "surface": "depth3",
+      "grid": "1um",
+      "backend": "chromatix",
+      "metric_error": 0.0,
+      "raw_source_hash_verified": true
+    },
+    {
+      "surface": "depth3",
+      "grid": "0p5um",
+      "backend": "torch",
+      "metric_error": 0.0,
+      "raw_source_hash_verified": true
+    }
+  ],
+  "previously_protected_original_files": 599,
+  "unchanged_optical_sources": 9,
+  "zip_remains_deleted": true,
+  "optical_solves_performed": 0,
+  "previous_camera_headline_unchanged": true,
+  "comparison_sha256": "ec9cd7471c641618d440160a34b472608b2b6a0f01632db6d31e7a8d848c5e47"
+}

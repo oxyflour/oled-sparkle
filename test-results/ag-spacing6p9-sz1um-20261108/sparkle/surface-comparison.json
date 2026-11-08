@@ -1,0 +1,52 @@
+{
+  "definition": {
+    "title": "6.9 µm名义间距 / Sz≈1 µm：探索性同口径对照",
+    "description": "新生成独立的6.9 µm名义间距Voronoi坑表面，以0.5 µm参考网格平滑后的Sz=1 µm标定；1.2 µm平滑尺度、坑形和seed不变。显示名义70 µm、全绿发光、相机、ROI与四排列共同掩膜不变，没有新增低通或MWA。对照为已保存的25 µm间距/深度×3结果。",
+    "baseline_results": "C:\\Projects\\oled-sparkle\\test-results\\oled-depth3-camera-20261108",
+    "baseline_protocol_sha256": "7973cf5ee96edb73ee97cefb73e51501e1cdb5dec724305d673bfeb42ccc11a0",
+    "baseline_summary_sha256": "0e4def9b3d2a826411604299c6dce33ecfeb9307a61dab121758a9b580eb7012",
+    "baseline_label": "25 µm / 深度×3",
+    "surface_label": "6.9 µm / Sz≈1 µm",
+    "baseline_plot_label": "25 um spacing | original depth x3",
+    "surface_plot_label": "6.9 um spacing | reference Sz=1 um",
+    "haze_report": "../haze/haze.html"
+  },
+  "records": [
+    {
+      "layout": "diamond",
+      "grid": "1um",
+      "backend": "torch",
+      "baseline_sparkle_percent": 32.41436317590759,
+      "surface_sparkle_percent": 13.964710002868278,
+      "difference_percentage_points": -18.44965317303931,
+      "same_frequency_mask": true
+    },
+    {
+      "layout": "diamond",
+      "grid": "1um",
+      "backend": "torchoptics",
+      "baseline_sparkle_percent": 32.4143587057429,
+      "surface_sparkle_percent": 13.964793206821447,
+      "difference_percentage_points": -18.44956549892145,
+      "same_frequency_mask": true
+    },
+    {
+      "layout": "diamond",
+      "grid": "1um",
+      "backend": "chromatix",
+      "baseline_sparkle_percent": 32.414531650418134,
+      "surface_sparkle_percent": 13.964571602407226,
+      "difference_percentage_points": -18.449960048010908,
+      "same_frequency_mask": true
+    },
+    {
+      "layout": "diamond",
+      "grid": "0p5um",
+      "backend": "torch",
+      "baseline_sparkle_percent": 32.5651925226318,
+      "surface_sparkle_percent": 13.789377156607287,
+      "difference_percentage_points": -18.77581536602451,
+      "same_frequency_mask": true
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "source": "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\1um\\heightfield.png",
+    "destination": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag-spacing6p9-sz1um\\heightfield.png",
+    "sha256": "694b7c6d3914cf62ea9585d340dd62f2e70771c4f555276215903d9ac399d975"
+  },
+  {
+    "source": "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\1um\\heightfield.source.json",
+    "destination": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag-spacing6p9-sz1um\\heightfield.source.json",
+    "sha256": "53dc09a748fc5121103e78c168a78183110c727a486aecc149dfc3839ee1c256"
+  },
+  {
+    "source": "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\1um\\sites.csv",
+    "destination": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag-spacing6p9-sz1um\\sites.csv",
+    "sha256": "f34abf8decff7bca7682cffd9fc584b852acff978e4e482ad9a405a581c2e05f"
+  },
+  {
+    "source": "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\0p5um\\heightfield.png",
+    "destination": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag-spacing6p9-sz1um-pitch0p5\\heightfield.png",
+    "sha256": "16a45aba4bc32eff710a98bde0619a6ee7aac643750af3d9b03d6c46dd31ea9b"
+  },
+  {
+    "source": "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\0p5um\\heightfield.source.json",
+    "destination": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag-spacing6p9-sz1um-pitch0p5\\heightfield.source.json",
+    "sha256": "aa3b08e0988d5aabfac564147694cfbad8ea03376117c58946f7661a8435c8c8"
+  },
+  {
+    "source": "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\0p5um\\sites.csv",
+    "destination": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag-spacing6p9-sz1um-pitch0p5\\sites.csv",
+    "sha256": "f34abf8decff7bca7682cffd9fc584b852acff978e4e482ad9a405a581c2e05f"
+  }
+]

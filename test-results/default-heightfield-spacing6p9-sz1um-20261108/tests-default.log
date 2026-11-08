@@ -1,0 +1,13 @@
+test_circular_pits_remain_an_explicit_legacy_option (test_default_example.DefaultHeightfieldTests.test_circular_pits_remain_an_explicit_legacy_option) ... ok
+test_default_entrypoint_uses_etched_height_and_physical_range (test_default_example.DefaultHeightfieldTests.test_default_entrypoint_uses_etched_height_and_physical_range) ... ok
+test_finer_grid_preserves_field_height_scale_emission_and_measurement_pixels (test_default_example.DefaultHeightfieldTests.test_finer_grid_preserves_field_height_scale_emission_and_measurement_pixels) ... ok
+test_haze_default_uses_the_same_new_surface_calibration (test_default_example.DefaultHeightfieldTests.test_haze_default_uses_the_same_new_surface_calibration) ... ok
+test_historical_runner_requires_an_explicit_fixture (test_default_example.DefaultHeightfieldTests.test_historical_runner_requires_an_explicit_fixture) ... ok
+test_quick_fixture_remains_explicit (test_default_example.DefaultHeightfieldTests.test_quick_fixture_remains_explicit) ... ok
+test_sms_layout_prepare_records_the_new_default_inputs (test_default_example.DefaultHeightfieldTests.test_sms_layout_prepare_records_the_new_default_inputs) ... ok
+test_sms_reference_prepare_preserves_existing_height_assets (test_default_example.DefaultHeightfieldTests.test_sms_reference_prepare_preserves_existing_height_assets) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 9.486s
+
+OK

@@ -1,0 +1,73 @@
+{
+  "kind": "exploratory-AG-spacing-and-Sz",
+  "declared_at_utc": "2026-11-08T10:07:16.580865+00:00",
+  "surface": {
+    "field_um": 1000.0,
+    "nominal_site_spacing_um": 6.9,
+    "target_post_rounding_reference_Sz_um": 1.0,
+    "reference_pitch_um": 0.5,
+    "rounding_sigma_um": 1.2,
+    "profile_power": 2.0,
+    "seed": 20261107,
+    "output_pitches_um": [
+      1.0,
+      0.5
+    ]
+  },
+  "interpretation": "Exploratory assignment of 6.9 um to nominal site spacing, not a claim that Table 1 width variance is a mean period. Depth means Sz after Gaussian rounding on the 0.5 um reference grid, not Sa, Sq, nominal bowl depth or PNG black-white range.",
+  "held_fixed": "Same 70 um nominal emitter layout, 140 um exact G intensity repeat, 530 nm, 500 um AG gap, n=1.5 -> 1, camera 50mm F/8 400mm sensor3.75um, 26.25um object pixels, 840um ROI, four-layout union mask. No new MWA or lowpass.",
+  "haze": {
+    "wavelength_nm": 530.0,
+    "n_in": 1.5,
+    "n_out": 1.0,
+    "acceptance_half_angle_deg": 2.5,
+    "illumination": "uniform normally incident plane wave"
+  },
+  "baseline_results": [
+    "test-results/oled-camera-comparison",
+    "test-results/oled-depth3-camera-20261108"
+  ],
+  "generation_argv": [
+    [
+      "C:\\Projects\\oled-sparkle\\.venv\\Scripts\\python.exe",
+      "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\scripts\\prepare_etched_ag.py",
+      "--out",
+      "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\1um",
+      "--pitch-um",
+      "1.0",
+      "--field-um",
+      "1000",
+      "--spacing-um",
+      "6.9",
+      "--sz-um",
+      "1",
+      "--rounding-um",
+      "1.2",
+      "--profile-power",
+      "2",
+      "--seed",
+      "20261107"
+    ],
+    [
+      "C:\\Projects\\oled-sparkle\\.venv\\Scripts\\python.exe",
+      "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\scripts\\prepare_etched_ag.py",
+      "--out",
+      "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\0p5um",
+      "--pitch-um",
+      "0.5",
+      "--field-um",
+      "1000",
+      "--spacing-um",
+      "6.9",
+      "--sz-um",
+      "1",
+      "--rounding-um",
+      "1.2",
+      "--profile-power",
+      "2",
+      "--seed",
+      "20261107"
+    ]
+  ],
+  "generator_sha256": "ee58936aac970e5f02e98856f193afdf8a0e6a14520b213a18a877c754f197b3"
+}

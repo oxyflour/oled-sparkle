@@ -1,0 +1,37 @@
+[
+  {
+    "local_file": "sources/sms1000-2023.pdf",
+    "url": "https://www.display-messtechnik.de/fileadmin/template/main/docs/SMS1000-05.2023-7.pdf",
+    "sha256": "8b5581fdef8735f61b56b0843a0947d88b0c679aae79263d09258bcddda514ba",
+    "pages": 11,
+    "relevant_location": "PDF pages 5 and 11; printed pages 3 and 9"
+  },
+  {
+    "local_file": "sources/becker-2021.pdf",
+    "url": "https://www.display-messtechnik.de/fileadmin/template/main/docs/10-Years-SparkleMeasurement--edC-2021-V2.pdf",
+    "sha256": "2ad1d34edb92eeb7ff1e54f6ae530a9bf2bfc4c1b5b64eb89c807a7402d6413b",
+    "pages": 8,
+    "relevant_location": "Sections 2,3.2,3.4,3.6; printed pages 3-8"
+  },
+  {
+    "local_file": "sources/cheng-2025.pdf",
+    "url": "https://sid.org/Portals/sid/Files/SID-Digest/docs/68-2.pdf",
+    "sha256": "eb11c3abf90e43bc94c6c8cb3dd33036b89a09ec8551e7570e611ac51086c663",
+    "pages": 3,
+    "relevant_location": "Figures 5-6, Table 1, Table 3; printed pages 925-927"
+  },
+  {
+    "local_file": "sources/iec-preview.pdf",
+    "url": "https://assets.vde-verlag.de/iec-normen/preview-pdf/info_iec62977-3-9%7Bed1.0%7Den.pdf",
+    "sha256": "36452f684fe091f0d242ef76d0e30efc8fc2630701f4b2c94a88798c764a2ee7",
+    "pages": 6,
+    "relevant_location": "Public preview only; contents and scope. Does not include Annex B details"
+  },
+  {
+    "local_file": "sources/matched-mwa-2025.pdf",
+    "url": "https://sid.org/Portals/sid/Files/SID-Digest/docs/30-3.pdf",
+    "sha256": "c9a5a620d288816eae2466380c5670602015e7ea4ee2528adddf0fffd7c1e504",
+    "pages": 4,
+    "relevant_location": "Sampled-image fractional MWA kernel matching; not an instrument firmware specification"
+  }
+]

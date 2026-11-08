@@ -17,6 +17,7 @@ from uuid import uuid4
 import numpy as np
 from PIL import Image
 from run_oled_demo import build_command
+from prepare_etched_ag import DEFAULT_CASE, DEFAULT_INPUTS
 
 ROOT = Path(__file__).resolve().parents[1]
 CAMERA = {'focal_length_mm': 50., 'f_number': 8., 'object_distance_mm': 400.,
@@ -133,8 +134,7 @@ def run_layout_comparison(args):
                                       emission_scale=meta['linear_emission_scale'], emission_threshold=0.)
                 runs.append({'grid': grid, 'layout': layout, 'pitch_um': pitch, 'output': relative,
                              'backends': list(ALL_BACKENDS) if backend == 'all' else [backend], 'argv': command[2:]})
-        height_paths = {str(ROOT/'assets'/name/'heightfield.png') for name in
-                        ('oled-1mm-etched-ag', 'oled-1mm-etched-ag-pitch0p5')}
+        height_paths = {str(folder/'heightfield.png') for folder in DEFAULT_INPUTS.values()}
         analysis = (sampled_camera_plan(periods, CAMERA) if args.measurement == 'sampled-camera' else
                     {'roi_width_um': roi_um, 'camera_pitch_um': CAMERA['object_pitch_um'],
                      'cutoff_um_inv': 1/args.pixel_pitch_um, 'notch_periods_um': periods,
@@ -206,7 +206,7 @@ def main():
     args = parser.parse_args()
     if args.reuse_optics and not args.layouts:
         parser.error('--reuse-optics requires --layouts')
-    args.out = (args.out or ROOT/('outputs/oled-layout-comparison' if args.layouts else 'outputs/oled-sms-reference')).resolve()
+    args.out = (args.out or ROOT/'outputs'/(DEFAULT_CASE+('-sms-layouts' if args.layouts else '-sms-reference'))).resolve()
     args.out.mkdir(parents=True, exist_ok=True)
     if args.layouts:
         run_layout_comparison(args)
@@ -214,17 +214,22 @@ def main():
     if args.stage in ('prepare', 'all'):
         from prepare_etched_ag import prepare
         from prepare_tiled_emission import prepare as prepare_emission
-        for pitch, name in ((1., 'oled-1mm-etched-ag'), (.5, 'oled-1mm-etched-ag-pitch0p5')):
-            prepare(ROOT / 'assets' / name, pitch_um=pitch)
+        for pitch, folder in DEFAULT_INPUTS.items():
+            if not (folder/'heightfield.png').exists():
+                prepare(folder, pitch_um=pitch)
         prepare_emission()
         prepare_green()
+        height_meta = json.loads((DEFAULT_INPUTS[1.]/'heightfield.source.json').read_text(encoding='utf-8'))
         spec = {'status': 'predeclared before computing green optical results',
                 'execution': {'batch_id': uuid4().hex,
                               'created_at_utc': datetime.now(timezone.utc).isoformat(),
                               'backend_workers': args.backend_workers,
                               'solver_sha256': hashlib.sha256((ROOT / 'scripts/sparkle_multibackend.py').read_bytes()).hexdigest(),
                               'runner_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest()},
-                'camera': CAMERA, 'height': 'Existing etched-AG proxy unchanged, Sa = 0.10 um',
+                'camera': CAMERA,
+                'height': {'path': str(DEFAULT_INPUTS[1.]/'heightfield.png'),
+                           'nominal_site_spacing_um': height_meta['nominal_site_spacing_um'],
+                           'calibration': height_meta['calibration']},
                 'includes_LDF': False, 'roi_width_um': 560.,
                 'primary_filter': {'method': 'Fourier lattice notch, DC retained', 'full_supercell_um': 140.,
                                    'notch_guard_bins': 0, 'radial_cutoff_cycles_per_um': 1/70.},

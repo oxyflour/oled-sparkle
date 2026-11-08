@@ -18,7 +18,7 @@ from importlib.metadata import version
 import numpy as np
 
 from sparkle_multibackend import read_height
-from prepare_etched_ag import roughness
+from prepare_etched_ag import DEFAULT_CASE, DEFAULT_INPUTS, roughness
 
 ROOT = Path(__file__).resolve().parents[1]
 REFERENCES = [
@@ -93,7 +93,11 @@ def transmission_haze(height_m, pitch_m, wavelength_m=530e-9,
         'flux_weight': '|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins',
         'height_grid_yx': list(h.shape), 'height_pitch_um': pitch_m*1e6,
         'field_um_xy': [h.shape[1]*pitch_m*1e6, h.shape[0]*pitch_m*1e6],
+        'represented_scalar_forward_flux': total,
         'zero_order_forward_flux_percent': 100*float(flux[0, 0])/total,
+        'within_cone_nonzero_order_flux_percent': 100*float(flux[propagating & ~outside].sum()-flux[0, 0])/total,
+        'nonzero_order_forward_flux_percent': 100*(total-float(flux[0, 0]))/total,
+        'haze_without_cosine_weight_percent': 100*float(power[outside].sum())/float(power[propagating].sum()),
         'parseval_relative_error': abs(float(power.sum())-1.),
         'evanescent_field_power_percent': 100*float(power[~propagating].sum())/float(power.sum()),
         'spectral_edge_field_power_percent': 100*float(power[edge].sum())/float(power.sum()),
@@ -106,6 +110,107 @@ def transmission_haze(height_m, pitch_m, wavelength_m=530e-9,
         'model_status': 'Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim',
     }
     return result, curve
+
+
+def facet_slope_diagnostics(height_m, pitch_m, n_in=1.5, n_out=1., acceptance_deg=2.5):
+    """Audit the two periodic triangles per cell without tracing rays.
+
+    This is an analytic check of the existing single-hit mesh approximation,
+    not another native backend or an electromagnetic interface solution.
+    """
+    h = np.asarray(height_m, dtype=np.float64)
+    gx = (np.roll(h, -1, axis=1)-h)/pitch_m
+    gy = (np.roll(h, -1, axis=0)-h)/pitch_m
+    # Same diagonal as create_mitsuba_mesh: (v0,v1,v2), (v1,v3,v2).
+    slopes = np.concatenate((np.hypot(gx, gy).ravel(),
+        np.hypot(np.roll(gx, -1, axis=0), np.roll(gy, -1, axis=1)).ravel()))
+    incidence = np.arctan(slopes)
+    eta = n_in/n_out
+    sine = eta*np.sin(incidence)
+    propagating = sine < 1.
+    ci = np.cos(incidence)
+    ct = np.sqrt(np.maximum(0., 1-sine*sine))
+    rs = ((eta*ci-ct)/(eta*ci+ct))**2
+    rp = ((ci-eta*ct)/(ci+eta*ct))**2
+    weights = np.where(propagating, 1-(rs+rp)/2, 0.)
+    angles = np.abs(np.arcsin(np.clip(sine, 0., 1.))-incidence)
+    outside = angles > math.radians(acceptance_deg)
+    alpha = math.radians(acceptance_deg)
+    threshold = math.sin(alpha)/(eta-math.cos(alpha)) if eta > 1 else None
+    summary = {
+        'definition': 'Projected-area statistics of the original periodic triangular facets; float64 analytic Snell/Fresnel, no native ray execution',
+        'rms_slope': float(np.sqrt(np.mean(slopes**2))),
+        'slope_quantiles': dict(zip(('p50', 'p90', 'p99', 'p99_9'), map(float, np.percentile(slopes, [50, 90, 99, 99.9])))),
+        'slope_threshold_for_acceptance': threshold,
+        'area_above_slope_threshold_percent': float(100*np.mean(slopes > threshold)) if threshold is not None else None,
+        'single_hit_haze_percent': float(100*weights[outside].sum()/weights.sum()) if weights.sum() else None,
+        'transmission_fraction': float(weights.mean()),
+        'total_internal_reflection_area_percent': float(100*np.mean(~propagating)),
+    }
+    edges = np.linspace(0., max(.15, float(slopes.max())), 301)
+    count, _ = np.histogram(slopes, edges)
+    curve = [{'slope': float(s), 'area_above_percent': float(100*(1-c))}
+             for s, c in zip(edges[1:], np.cumsum(count)/slopes.size)]
+    return summary, curve
+
+
+def surface_diagnostics(height_m, pitch_m, wavelength_m=530e-9,
+                        n_in=1.5, n_out=1., acceptance_deg=2.5):
+    """Height spectrum/correlation and slope audit for the existing haze report.
+
+    Radial spectrum rows contain shell-integrated height variance, not a PSD
+    density or an optical power. Correlation is circular and azimuthally averaged;
+    its 1/e crossing is a declared descriptor, not a fitted Gaussian length.
+    """
+    h = np.asarray(height_m, dtype=np.float64)
+    z = h-h.mean()
+    variance = float(np.mean(z*z))
+    power = np.abs(np.fft.fft2(z, norm='forward'))**2
+    fy = np.fft.fftfreq(h.shape[0], pitch_m)
+    fx = np.fft.fftfreq(h.shape[1], pitch_m)
+    frequency = np.hypot(fy[:, None], fx[None, :])
+    cutoff = n_out*math.sin(math.radians(acceptance_deg))/wavelength_m
+    step = min(1/(s*pitch_m) for s in h.shape)
+    shells = np.rint(frequency/step).astype(np.int64)
+    counts = np.bincount(shells.ravel())
+    shell_power = np.bincount(shells.ravel(), weights=power.ravel())
+    shell_frequency = np.bincount(shells.ravel(), weights=frequency.ravel())/np.maximum(counts, 1)
+    spectrum = [{'frequency_cycles_per_um': float(f*1e-6), 'height_variance_um2': float(v*1e12)}
+                for f, v, count in zip(shell_frequency, shell_power, counts) if count]
+    # Wrap displacements to their shortest periodic distance. Use each shell's
+    # mean actual radius, rather than assigning floor(r/dx)*dx to all its points.
+    radius = np.hypot(fy[:, None]*h.shape[0]*pitch_m, fx[None, :]*h.shape[1]*pitch_m)*pitch_m
+    rings = np.rint(radius/pitch_m).astype(np.int64)
+    count = np.bincount(rings.ravel())
+    radii = np.bincount(rings.ravel(), weights=radius.ravel())/np.maximum(count, 1)
+    covariance = np.fft.ifft2(power, norm='forward').real
+    acf = np.bincount(rings.ravel(), weights=covariance.ravel())/np.maximum(count, 1)
+    acf = acf/variance if variance else np.ones_like(acf)
+    valid = (count > 0) & (radii <= min(h.shape)*pitch_m/2)
+    radii, acf = radii[valid], acf[valid]
+    crossings = np.flatnonzero(acf < 1/math.e)
+    crossing = None
+    if len(crossings):
+        j = crossings[0]
+        crossing = float(np.interp(1/math.e, acf[j-1:j+1][::-1], radii[j-1:j+1][::-1])*1e6)
+    facets, slopes = facet_slope_diagnostics(h, pitch_m, n_in, n_out, acceptance_deg)
+    summary = {
+        'height_skewness': float(np.mean(z**3)/variance**1.5) if variance else None,
+        'height_kurtosis': float(np.mean(z**4)/variance**2) if variance else None,
+        'circular_radial_acf_first_1e_length_um': crossing,
+        'acf_definition': 'Circular height covariance / Sq^2; nearest-radius shells at their mean actual radii; first 1/e crossing with linear interpolation, no Gaussian fit',
+        'spectral_rms_slope': float(np.sqrt(np.sum((2*np.pi*frequency)**2*power))),
+        'height_variance_above_acceptance_frequency_percent': float(100*power[frequency > cutoff].sum()/variance) if variance else None,
+        'acceptance_frequency_cycles_per_um': cutoff*1e-6,
+        'acceptance_lateral_period_um': 1e6/cutoff,
+        'phase_rms_rad': 2*np.pi*abs(n_in-n_out)*math.sqrt(variance)/wavelength_m,
+        'facet_model': facets,
+        'interpretation': 'Height PSD is not angular optical power. Phase RMS need not be small; no first-order height-PSD haze formula is assumed.',
+    }
+    curves = {'radial_height_spectrum': spectrum,
+              'radial_height_acf': [{'radius_um': float(r*1e6), 'correlation': float(c)} for r, c in zip(radii, acf)],
+              'facet_slope_survival': slopes}
+    return summary, curves
 
 
 def solve_wave_haze(height_m, pitch_m, wavelength_m, n_in, n_out,
@@ -292,7 +397,7 @@ def load_surface(path, pitch_um=None, height_range_um=None, assume_periodic=Fals
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--height', type=Path, nargs='+', default=[ROOT/'assets/oled-1mm-etched-ag/heightfield.png'])
+    parser.add_argument('--height', type=Path, nargs='+', default=[DEFAULT_INPUTS[1.]/'heightfield.png'])
     parser.add_argument('--height-pitch-um', type=float, help='Read from sidecar by default')
     parser.add_argument('--height-range-um', type=float, help='PNG black-to-white range, not sampled Sz; read from sidecar by default')
     parser.add_argument('--wavelength-nm', type=float, nargs='+', default=[530.], help='Independent monochromatic calculations, not a white-light average')
@@ -306,7 +411,7 @@ def main():
     parser.add_argument('--propagation-um', type=float, default=100., help='Actual homogeneous output propagation before wave angular-spectrum measurement')
     parser.add_argument('--mitsuba-variant', default='cuda_ad_rgb')
     parser.add_argument('--ray-chunk', type=int, default=65536)
-    parser.add_argument('--out', type=Path, default=ROOT/'outputs/ag-haze')
+    parser.add_argument('--out', type=Path, default=ROOT/'outputs'/(DEFAULT_CASE+'-haze'))
     args = parser.parse_args()
     records = []
     started = time.perf_counter()

@@ -10,10 +10,75 @@ import unittest
 import numpy as np
 from PIL import Image
 from scipy.special import jv
+from scipy.linalg import lstsq
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'scripts'))
-from calculate_haze import load_surface, transmission_haze, solve_wave_haze, solve_mitsuba_haze
+from calculate_haze import (load_surface, transmission_haze, solve_wave_haze, solve_mitsuba_haze,
+                            surface_diagnostics, facet_slope_diagnostics)
+
+
+def rayleigh_sinusoid(period_um, amplitude_um, order, polarization, oversampling=4):
+    """Independent shallow 1D interface reference for the tests below.
+
+    Match TE E_y and normal derivative, or TM H_y and epsilon^-1 normal
+    derivative at the actual sinusoid. Rayleigh expansions include reflected
+    and transmitted evanescent orders. Validity is checked only for these
+    shallow smooth benchmarks, never assumed for the 2D AG heightfield.
+    Units here are um; illumination is 530nm, n=1.5 -> 1, normal incidence.
+    """
+    k1, k2 = 2*np.pi*1.5/.530, 2*np.pi/.530
+    q = 2*np.pi*np.arange(-order, order+1)/period_um
+    a1, a2 = np.sqrt(k1*k1-q*q+0j), np.sqrt(k2*k2-q*q+0j)
+    count = oversampling*(2*order+1)
+
+    def boundary(x):
+        z = amplitude_um*np.cos(2*np.pi*x/period_um)
+        slope = -2*np.pi*amplitude_um/period_um*np.sin(2*np.pi*x/period_um)
+        lateral = np.exp(1j*x[:, None]*q)
+        reflected = lateral*np.exp(-1j*z[:, None]*a1)
+        transmitted = lateral*np.exp(1j*z[:, None]*a2)
+        incident = np.exp(1j*k1*z)
+        c1, c2 = (1., 1.) if polarization == 'TE' else (1/1.5**2, 1.)
+        dr = -1j*(a1+slope[:, None]*q)*reflected
+        dt = 1j*(a2-slope[:, None]*q)*transmitted
+        return (np.block([[reflected, -transmitted], [c1*dr/k1, -c2*dt/k1]]),
+                np.r_[-incident, -1j*c1*incident])
+
+    matrix, rhs = boundary(np.arange(count)*period_um/count)
+    scale = np.linalg.norm(matrix, axis=0)
+    coefficients, _, rank, _ = lstsq(matrix/scale, rhs, lapack_driver='gelsy')
+    coefficients /= scale
+    reflected, transmitted = np.split(coefficients, 2)
+    reflection = a1.real/k1*np.abs(reflected)**2
+    transmission = a2.real/k1*np.abs(transmitted)**2*(1 if polarization == 'TE' else 1.5**2)
+    check, expected = boundary((np.arange(2*count)+.371)*period_um/(2*count))
+    outside = np.abs(q) > k2*np.sin(np.radians(2.5))
+    return {'haze_percent': float(100*transmission[outside].sum()/transmission.sum()),
+            'transmission_fraction': float(transmission.sum()), 'reflection_fraction': float(reflection.sum()),
+            'energy_balance_error': float(abs(transmission.sum()+reflection.sum()-1)),
+            'independent_boundary_relative_L2': float(np.linalg.norm(check@coefficients-expected)/np.linalg.norm(expected)),
+            'rank': int(rank), 'unknowns': 2*(2*order+1),
+            'orders': np.arange(-order, order+1).tolist(), 'transmitted_order_power': transmission.tolist()}
+
+
+class InterfaceBenchmarkTests(unittest.TestCase):
+    def test_flat_interface_matches_fresnel_power_for_both_polarizations(self):
+        for polarization in ('TE', 'TM'):
+            r = rayleigh_sinusoid(16., 0., 16, polarization)
+            self.assertAlmostEqual(r['transmission_fraction'], .96, places=12)
+            self.assertAlmostEqual(r['reflection_fraction'], .04, places=12)
+            self.assertLess(r['haze_percent'], 1e-20)
+
+    def test_shallow_interface_converges_in_orders_and_boundary_sampling(self):
+        for period in (8., 16.):
+            for polarization in ('TE', 'TM'):
+                coarse = rayleigh_sinusoid(period, .12, 32, polarization)
+                fine = rayleigh_sinusoid(period, .12, 48, polarization, oversampling=6)
+                self.assertLess(fine['energy_balance_error'], 1e-11)
+                self.assertLess(fine['independent_boundary_relative_L2'], 1e-11)
+                self.assertEqual(fine['rank'], fine['unknowns'])
+                self.assertAlmostEqual(coarse['haze_percent'], fine['haze_percent'], places=8)
 
 
 class HazeTests(unittest.TestCase):
@@ -62,6 +127,43 @@ class HazeTests(unittest.TestCase):
         for other in (h+20e-6, -h, np.roll(h, (7, 3), (0, 1))):
             value = transmission_haze(other, 1e-6)[0]['haze_percent']
             self.assertAlmostEqual(value, reference, places=10)
+
+    def test_flux_partition_includes_narrow_angle_diffraction(self):
+        x = np.arange(512)*.25e-6
+        h = np.broadcast_to(100e-9*np.cos(2*np.pi*x/32e-6), (64, 512))
+        r, _ = transmission_haze(h, .25e-6)
+        self.assertAlmostEqual(r['zero_order_forward_flux_percent']+
+            r['within_cone_nonzero_order_flux_percent']+r['haze_percent'], 100., places=12)
+        self.assertGreater(r['nonzero_order_forward_flux_percent'], r['haze_percent']*100)
+
+    def test_surface_spectrum_recovers_sinusoidal_variance_and_slope(self):
+        x = np.arange(128)*.5e-6
+        amplitude, period = 80e-9, 16e-6
+        h = np.broadcast_to(amplitude*np.cos(2*np.pi*x/period), (128, 128))
+        r, curves = surface_diagnostics(h, .5e-6)
+        self.assertAlmostEqual(r['spectral_rms_slope'], 2*np.pi*amplitude/period/np.sqrt(2), places=12)
+        self.assertAlmostEqual(sum(row['height_variance_um2'] for row in curves['radial_height_spectrum']),
+                               (amplitude*1e6)**2/2, places=12)
+        self.assertAlmostEqual(r['height_skewness'], 0., places=12)
+        self.assertAlmostEqual(r['height_kurtosis'], 1.5, places=12)
+        self.assertAlmostEqual(curves['radial_height_acf'][0]['correlation'], 1., places=12)
+        flat, _ = surface_diagnostics(np.zeros_like(h), .5e-6)
+        self.assertIsNone(flat['circular_radial_acf_first_1e_length_um'])
+
+    def test_facet_slope_threshold_matches_exact_snell_angle(self):
+        x = np.arange(64)*1e-6
+        h = np.broadcast_to(.5e-6*np.cos(2*np.pi*x/16e-6), (32, 64))
+        r, _ = facet_slope_diagnostics(h, 1e-6)
+        threshold = r['slope_threshold_for_acceptance']
+        incidence = np.arctan(threshold)
+        self.assertAlmostEqual(np.degrees(np.arcsin(1.5*np.sin(incidence))-incidence), 2.5, places=12)
+        slopes = np.abs(np.roll(h[0], -1)-h[0])/1e-6
+        incidence = np.arctan(slopes)
+        transmitted = np.arcsin(1.5*np.sin(incidence))
+        ci, ct = np.cos(incidence), np.cos(transmitted)
+        weights = 1-.5*(((1.5*ci-ct)/(1.5*ci+ct))**2+((ci-1.5*ct)/(ci+1.5*ct))**2)
+        expected = 100*weights[transmitted-incidence > np.radians(2.5)].sum()/weights.sum()
+        self.assertAlmostEqual(r['single_hit_haze_percent'], expected, places=12)
 
     def test_reject_unresolved_cone_or_invalid_parameters(self):
         for options in ({'pitch_m': 10e-6}, {'acceptance_deg': 0},

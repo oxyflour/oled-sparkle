@@ -1,0 +1,88 @@
+{
+  "kind": "AG-morphology-sensitivity",
+  "declared_before_execution": true,
+  "source": {
+    "path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag-pitch0p5\\heightfield.png",
+    "sha256": "9a495dc565e3bb2b5ef725e9950f05a8958cc70e1364978b352607b1d91c4c3d",
+    "height_range_um": 0.5361845861372564,
+    "height_pitch_um": 0.5,
+    "periodicity": "source metadata",
+    "roughness": {
+      "Sa_um": 0.10000000480208875,
+      "Sq_um": 0.11851254239602815,
+      "Sz_um": 0.5155668647560674,
+      "height_min_um": 0.010308883524601242,
+      "height_max_um": 0.5258757482806686,
+      "rms_slope": 0.03302164002728051,
+      "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+    },
+    "sidecar_path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag-pitch0p5\\heightfield.source.json",
+    "sidecar_sha256": "fbaccda92c79fd07ebd9ac07a725f562f2a550bdbb1a7f786277fcc86cdd4033"
+  },
+  "source_sites_sha256": "4eb5327b85e14e81dbb99ff84cb605b9b2b257e5ee6f4b306d4ca02045a754a8",
+  "cases": [
+    [
+      "power1",
+      1.0,
+      1.2,
+      "Sq"
+    ],
+    [
+      "power2",
+      2.0,
+      1.2,
+      "Sq"
+    ],
+    [
+      "power4",
+      4.0,
+      1.2,
+      "Sq"
+    ],
+    [
+      "power1-Sa",
+      1.0,
+      1.2,
+      "Sa"
+    ],
+    [
+      "power4-Sa",
+      4.0,
+      1.2,
+      "Sa"
+    ],
+    [
+      "rounding0.3",
+      2.0,
+      0.3,
+      "Sq"
+    ],
+    [
+      "rounding0.6",
+      2.0,
+      0.6,
+      "Sq"
+    ],
+    [
+      "rounding2.4",
+      2.0,
+      2.4,
+      "Sq"
+    ],
+    [
+      "rounding4.8",
+      2.0,
+      4.8,
+      "Sq"
+    ]
+  ],
+  "target_Sq_um": 0.11851254239602814,
+  "target_Sa_um": 0.1,
+  "field_um": 1000.0,
+  "pitch_um": 0.25,
+  "model": "Same 1600 Voronoi sites and relative depths; vary bowl profile power and Gaussian rounding; renormalize each explicitly separate counterfactual to the declared Sa or Sq. Not fit to a haze target.",
+  "code_sha256": {
+    "prepare_etched_ag.py": "f763dfe8e0f233422546c6bf99416bb95839debb81eee0019293a71fc94ced2a",
+    "calculate_haze.py": "a8180f230da7a0e538c3c8b035bdba5c92d9ddf5d8cb566ff7d471a2465cb0a4"
+  }
+}

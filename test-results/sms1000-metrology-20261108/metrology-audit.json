@@ -1,0 +1,236 @@
+{
+  "kind": "SMS1000-public-definition-audit",
+  "sources": [
+    {
+      "local_file": "sources/sms1000-2023.pdf",
+      "url": "https://www.display-messtechnik.de/fileadmin/template/main/docs/SMS1000-05.2023-7.pdf",
+      "sha256": "8b5581fdef8735f61b56b0843a0947d88b0c679aae79263d09258bcddda514ba",
+      "pages": 11,
+      "relevant_location": "PDF pages 5 and 11; printed pages 3 and 9"
+    },
+    {
+      "local_file": "sources/becker-2021.pdf",
+      "url": "https://www.display-messtechnik.de/fileadmin/template/main/docs/10-Years-SparkleMeasurement--edC-2021-V2.pdf",
+      "sha256": "2ad1d34edb92eeb7ff1e54f6ae530a9bf2bfc4c1b5b64eb89c807a7402d6413b",
+      "pages": 8,
+      "relevant_location": "Sections 2,3.2,3.4,3.6; printed pages 3-8"
+    },
+    {
+      "local_file": "sources/cheng-2025.pdf",
+      "url": "https://sid.org/Portals/sid/Files/SID-Digest/docs/68-2.pdf",
+      "sha256": "eb11c3abf90e43bc94c6c8cb3dd33036b89a09ec8551e7570e611ac51086c663",
+      "pages": 3,
+      "relevant_location": "Figures 5-6, Table 1, Table 3; printed pages 925-927"
+    },
+    {
+      "local_file": "sources/iec-preview.pdf",
+      "url": "https://assets.vde-verlag.de/iec-normen/preview-pdf/info_iec62977-3-9%7Bed1.0%7Den.pdf",
+      "sha256": "36452f684fe091f0d242ef76d0e30efc8fc2630701f4b2c94a88798c764a2ee7",
+      "pages": 6,
+      "relevant_location": "Public preview only; contents and scope. Does not include Annex B details"
+    },
+    {
+      "local_file": "sources/matched-mwa-2025.pdf",
+      "url": "https://sid.org/Portals/sid/Files/SID-Digest/docs/30-3.pdf",
+      "sha256": "c9a5a620d288816eae2466380c5670602015e7ea4ee2528adddf0fffd7c1e504",
+      "pages": 4,
+      "relevant_location": "Sampled-image fractional MWA kernel matching; not an instrument firmware specification"
+    }
+  ],
+  "parameter_rows": [
+    {
+      "quantity": "闪点定义",
+      "vendor": "采集图像经数值低通后计算灰度标准差/均值；可移动 AG 可使用双图差分",
+      "paper": "注明 SMS1000 和绿画面；未给处理参数或读数换算",
+      "current": "相机像元积分/采样后，仅去周期频点，再计算100×总体标准差/均值",
+      "status": "统计形式相同，传递函数不等价",
+      "source": "sms1000-2023",
+      "source_url": "https://www.display-messtechnik.de/fileadmin/template/main/docs/SMS1000-05.2023-7.pdf"
+    },
+    {
+      "quantity": "空间带宽",
+      "vendor": "限制人眼不能分辨的高频；具体响应依设置",
+      "paper": "未给截止频率、核、次数、软件版本",
+      "current": "additional_lowpass=None；保留周期陷波以外的全部相机频段",
+      "status": "已确认口径缺项；不能据此臆定论文滤波器",
+      "source": "becker-2021",
+      "source_url": "https://www.display-messtechnik.de/fileadmin/template/main/docs/10-Years-SparkleMeasurement--edC-2021-V2.pdf"
+    },
+    {
+      "quantity": "显示名义像素间距",
+      "vendor": "需按 DUT 几何定义 ISR 与分离频率",
+      "paper": "约97 µm",
+      "current": "70 µm；Diamond 精确全绿重复单元140 µm",
+      "status": "明确几何不匹配；不能把97与140当成同一定义",
+      "source": "cheng-2025",
+      "source_url": "https://sid.org/Portals/sid/Files/SID-Digest/docs/68-2.pdf"
+    },
+    {
+      "quantity": "子像素排列与开口形状",
+      "vendor": "测量应使用实际DUT图像/周期",
+      "paper": "未给可恢复二维发光开口的校准图或填充率；未确认与当前Diamond相同",
+      "current": "Samsung公开图启发的Diamond代理，比例/物理尺寸为模型赋值",
+      "status": "没有证据是论文同一显示结构",
+      "source": "cheng-2025",
+      "source_url": "https://sid.org/Portals/sid/Files/SID-Digest/docs/68-2.pdf"
+    },
+    {
+      "quantity": "相机焦距",
+      "vendor": "标准50 mm；可选其他镜头",
+      "paper": "未报告",
+      "current": "50 mm",
+      "status": "厂商支持的假设，未验证为论文设置",
+      "source": "sms1000-2023",
+      "source_url": "https://www.display-messtechnik.de/fileadmin/template/main/docs/SMS1000-05.2023-7.pdf"
+    },
+    {
+      "quantity": "光圈",
+      "vendor": "闪点测量典型≥F/8；并非固定F/8",
+      "paper": "未报告",
+      "current": "F/8；理想无像差圆形光瞳",
+      "status": "允许范围内的模型假设；真实 MTF 未知",
+      "source": "sms1000-2023",
+      "source_url": "https://www.display-messtechnik.de/fileadmin/template/main/docs/SMS1000-05.2023-7.pdf"
+    },
+    {
+      "quantity": "相机工作距离",
+      "vendor": "2023版约200–900 mm可调，典型在500 mm以上",
+      "paper": "未报告",
+      "current": "400 mm",
+      "status": "不是论文参数，且不同于厂商所述典型距离",
+      "source": "sms1000-2023",
+      "source_url": "https://www.display-messtechnik.de/fileadmin/template/main/docs/SMS1000-05.2023-7.pdf"
+    },
+    {
+      "quantity": "相机像元/阵列",
+      "vendor": "2023版CCD，3.75 µm，1280×960，8/12 bit",
+      "paper": "未报告实际相机、ROI、曝光、位深",
+      "current": "采用3.75 µm；只模拟32×32像元ROI、无噪声浮点线性相机",
+      "status": "厂商规格不等于论文使用配置",
+      "source": "sms1000-2023",
+      "source_url": "https://www.display-messtechnik.de/fileadmin/template/main/docs/SMS1000-05.2023-7.pdf"
+    },
+    {
+      "quantity": "物方像元与ISR",
+      "vendor": "ISR可变，典型约3；以实际显示单元定义",
+      "paper": "未报告",
+      "current": "薄透镜假设导出26.25 µm；名义70/26.25=2.667；全绿周期比为5.333",
+      "status": "若仅把P改为97且相机不变，名义ISR为3.695；不是实测论文ISR",
+      "source": "sms1000-2023",
+      "source_url": "https://www.display-messtechnik.de/fileadmin/template/main/docs/SMS1000-05.2023-7.pdf"
+    },
+    {
+      "quantity": "相机光学带宽/采样",
+      "vendor": "需控制高于Nyquist的光学分量及莫尔",
+      "paper": "未报告",
+      "current": "强度截止29.480 cycles/mm，传感器轴向Nyquist19.048 cycles/mm",
+      "status": "存在混叠条件；当前数值分解影响小，不能独自解释6倍差距",
+      "source": "becker-2021",
+      "source_url": "https://www.display-messtechnik.de/fileadmin/template/main/docs/10-Years-SparkleMeasurement--edC-2021-V2.pdf"
+    },
+    {
+      "quantity": "焦点与谱响应",
+      "vendor": "成像MTF、采样和谱响应需声明",
+      "paper": "绿画面；530 nm为LDF设计波长，没有绿光谱或焦点设置",
+      "current": "对焦发光层；理想单色530 nm，无实测镜头MTF",
+      "status": "合理化假设，未匹配论文测量链",
+      "source": "cheng-2025",
+      "source_url": "https://sid.org/Portals/sid/Files/SID-Digest/docs/68-2.pdf"
+    },
+    {
+      "quantity": "145 µm 与500 µm",
+      "vendor": "相机工作距离应另计，单位为mm",
+      "paper": "145 µm是LDF到发光像素物理距离；Fig.5/6未标总AG距离",
+      "current": "AG平均界面至发光层500 µm",
+      "status": "不是同一距离；不能用145替换500来声称匹配",
+      "source": "cheng-2025",
+      "source_url": "https://sid.org/Portals/sid/Files/SID-Digest/docs/68-2.pdf"
+    },
+    {
+      "quantity": "AG统计与形貌",
+      "vendor": "实际玻璃、显示和镜头共同决定结果",
+      "paper": "表3 Ra=0.25–0.35 µm、Haze20–40%；无二维高度PSD/坡度PDF",
+      "current": "合成Voronoi坑；depth3 Sa≈0.30、Sq≈0.3555 µm；25 µm名义间距",
+      "status": "Sa不等于Ra；雾度接近不能鉴定为同一样品",
+      "source": "cheng-2025",
+      "source_url": "https://sid.org/Portals/sid/Files/SID-Digest/docs/68-2.pdf"
+    },
+    {
+      "quantity": "论文表1微结构尺寸",
+      "vendor": "—",
+      "paper": "列为Width/Depth Variance，缺乏均值与明确统计定义",
+      "current": "采用显式名义间距与高度分布",
+      "status": "不能把6.9 µm直接当蚀刻坑平均间距，也不能当周期",
+      "source": "cheng-2025",
+      "source_url": "https://sid.org/Portals/sid/Files/SID-Digest/docs/68-2.pdf"
+    },
+    {
+      "quantity": "标准与滤波核来源",
+      "vendor": "不同方法需报告完整设置；非整数ISR的MWA核须匹配频率",
+      "paper": "未给IEC版本或MWA/频域掩膜配置",
+      "current": "当前共同掩膜为自定义；历史MWA在光学网格先平滑",
+      "status": "公开IEC预览未包含Annex B正文；不宣称标准/固件等价",
+      "source": "matched-mwa-2025",
+      "source_url": "https://sid.org/Portals/sid/Files/SID-Digest/docs/30-3.pdf"
+    }
+  ],
+  "geometry": {
+    "assumed_current": {
+      "focal_length_mm": 50.0,
+      "f_number": 8.0,
+      "working_distance_mm": 400.0,
+      "sensor_pitch_um": 3.75
+    },
+    "derived": {
+      "thin_lens_magnification": 0.14285714285714285,
+      "object_pitch_um": 26.25,
+      "nominal_ISR_P70": 2.6666666666666665,
+      "conditional_ISR_P97_same_camera": 3.6952380952380954,
+      "object_NA": 0.00781226159233428,
+      "optical_intensity_cutoff_cycles_per_mm": 29.480232423902944,
+      "camera_axis_Nyquist_cycles_per_mm": 19.047619047619047,
+      "sensor_array_object_FOV_mm_xy": [
+        33.6,
+        25.2
+      ],
+      "current_ROI_mm_xy": [
+        0.84,
+        0.84
+      ]
+    },
+    "scope": "Thin-lens derivation from current declared assumptions, not a reconstruction of the paper camera. 145um LDF spacing and 500um AG-to-pixel gap must not be conflated."
+  },
+  "findings": [
+    {
+      "finding": "SMS1000的数值低通是公开定义的一部分；当前仅陷波的32%不能称作SMS1000等价读数。",
+      "level": "confirmed_definition_mismatch"
+    },
+    {
+      "finding": "在几何定义给定的频率边界下分解方差，未按5%挑选阈值；当前大部分方差仍处于较低空间频率。",
+      "level": "measured_internal_diagnostic"
+    },
+    {
+      "finding": "三倍深度使当前相机指标和既有MWA指标都升高；匹配表面雾度未同时匹配显示/AG空间统计。",
+      "level": "controlled_model_result"
+    },
+    {
+      "finding": "论文显示像素约97um，而当前名义70um；相机实际设置、总AG间隙及表面PSD仍缺失。",
+      "level": "confirmed_and_unresolved_parameters"
+    },
+    {
+      "finding": "无法从公开资料把32.6%与约5%的全部差距唯一分摊，不能生成一个声称为SMS1000校正值的数字。",
+      "level": "identifiability_limit"
+    }
+  ],
+  "paper_camera_settings_confirmed": false,
+  "SMS1000_firmware_or_filter_reconstructed": false,
+  "headline_filter_changed": false,
+  "optical_solves_performed": 0,
+  "paper_value_note": "Table 3 reports Sparkle Value 4.8-6.0 without a percent sign or detailed normalization; approximately5% follows the present comparison convention, not an independently confirmed instrument export format.",
+  "required_for_identified_comparison": [
+    "SMS1000 report/export with software version, lens, F-number, WD/ISR, ROI, focus, exposure/spectral response and chosen filtering/difference-image settings",
+    "Measured emission geometry/pitch and AG-to-emitter stack distances",
+    "Calibrated AG maps/PSD/slope statistics and Ra metrology bandwidth for the Table3 samples"
+  ],
+  "unchanged_current_pipeline": "The camera-periodic-notch benchmark remains intact and is labelled as an internal comparison, not a calibrated visual sparkle reading."
+}

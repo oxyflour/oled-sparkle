@@ -1,0 +1,53 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "surface_id": "1um",
+      "backend": "torch",
+      "curve_metric_absolute_error": 2.1316282072803006e-13,
+      "passed": true
+    },
+    {
+      "surface_id": "1um",
+      "backend": "torchoptics",
+      "curve_metric_absolute_error": 1.9184653865522705e-13,
+      "passed": true
+    },
+    {
+      "surface_id": "1um",
+      "backend": "chromatix",
+      "curve_metric_absolute_error": 2.1316282072803006e-13,
+      "passed": true
+    },
+    {
+      "surface_id": "1um",
+      "backend": "mitsuba",
+      "curve_metric_absolute_error": 0.0,
+      "passed": true
+    },
+    {
+      "surface_id": "0p5um",
+      "backend": "torch",
+      "curve_metric_absolute_error": 1.5631940186722204e-13,
+      "passed": true
+    },
+    {
+      "surface_id": "0p5um",
+      "backend": "torchoptics",
+      "curve_metric_absolute_error": 1.5631940186722204e-13,
+      "passed": true
+    },
+    {
+      "surface_id": "0p5um",
+      "backend": "chromatix",
+      "curve_metric_absolute_error": 1.6342482922482304e-13,
+      "passed": true
+    },
+    {
+      "surface_id": "0p5um",
+      "backend": "mitsuba",
+      "curve_metric_absolute_error": 0.0,
+      "passed": true
+    }
+  ]
+}

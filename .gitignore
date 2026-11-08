@@ -23,6 +23,7 @@ htmlcov/
 # Derived floating height arrays can be regenerated from the deterministic generator.
 /oled-ag-sparkle/assets/oled-1mm-etched-ag/height_um.npy
 /oled-ag-sparkle/assets/oled-1mm-etched-ag-pitch0p5/height_um.npy
+/oled-ag-sparkle/assets/oled-1mm-etched-ag-spacing6p9-sz1um*/height_um.npy
 
 # Retain current reproducibility scripts and measured results
 /test-results/*
@@ -47,6 +48,29 @@ htmlcov/
 !/test-results/oled-camera-comparison/
 !/test-results/ag-haze/
 !/test-results/ag-haze-four-backend/
+!/test-results/ag-haze-audit-20261108/
+/test-results/ag-haze-audit-20261108/haze.html
+!/test-results/ag-haze-texture-20261108/
+/test-results/ag-haze-texture-20261108/haze.html
+# Large derived counterfactual height maps remain local; retain their calibrated
+# sidecars, generation parameters, hashes and numerical results for reproduction.
+/test-results/ag-haze-texture-20261108/cases/*/heightfield.png
+!/test-results/oled-depth3-camera-20261108/
+/test-results/oled-depth3-camera-20261108/**/report.html
+/test-results/oled-depth3-camera-20261108/sparkle.html
+!/test-results/oled-depth3-metric-audit-20261108/
+!/test-results/sms1000-metrology-20261108/
+/test-results/sms1000-metrology-20261108/sparkle.html
+/test-results/sms1000-metrology-20261108/sources/*.pdf
+!/test-results/ag-spacing6p9-sz1um-20261108/
+/test-results/ag-spacing6p9-sz1um-20261108/inputs/*/height_um.npy
+/test-results/ag-spacing6p9-sz1um-20261108/**/report.html
+/test-results/ag-spacing6p9-sz1um-20261108/sparkle/sparkle.html
+/test-results/ag-spacing6p9-sz1um-20261108/haze/haze.html
+!/test-results/ag-spacing6p9-sz1um-layouts-20261108/
+/test-results/ag-spacing6p9-sz1um-layouts-20261108/**/report.html
+/test-results/ag-spacing6p9-sz1um-layouts-20261108/sparkle.html
+!/test-results/default-heightfield-spacing6p9-sz1um-20261108/
 # Large self-contained reports are rebuilt from the retained floating-point data.
 /test-results/oled-layout-comparison/*/*/report.html
 /test-results/oled-sms-reference/report.html

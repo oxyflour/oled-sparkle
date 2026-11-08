@@ -1,0 +1,33 @@
+Height: 2000x2000 at 0.5um, emission: 500x500 at 2um
+Wave FFT: 2560x2560; source modes 77568; one complex64 field: 50.0 MiB
+Mitsuba rays: 6,144,000,000; mesh stride 1
+
+=== torch ===
+  torch: 3200/77568 modes
+  torch: 6400/77568 modes
+  torch: 9600/77568 modes
+  torch: 12800/77568 modes
+  torch: 16000/77568 modes
+  torch: 19200/77568 modes
+  torch: 22400/77568 modes
+  torch: 25600/77568 modes
+  torch: 28800/77568 modes
+  torch: 32000/77568 modes
+  torch: 35200/77568 modes
+  torch: 38400/77568 modes
+  torch: 41600/77568 modes
+  torch: 44800/77568 modes
+  torch: 48000/77568 modes
+  torch: 51200/77568 modes
+  torch: 54400/77568 modes
+  torch: 57600/77568 modes
+  torch: 60800/77568 modes
+  torch: 64000/77568 modes
+  torch: 67200/77568 modes
+  torch: 70400/77568 modes
+  torch: 73600/77568 modes
+  torch: 76800/77568 modes
+  torch: 77568/77568 modes
+  Sparkle CV: 47.28725%
+torch: brightness CV = 47.287249%, solver = 153.445s
+HTML report: C:\Projects\oled-sparkle\test-results\oled-depth3-camera-20261108\0p5um\diamond\report.html

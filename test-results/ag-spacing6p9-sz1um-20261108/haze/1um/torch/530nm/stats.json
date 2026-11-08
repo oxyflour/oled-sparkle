@@ -1,0 +1,74 @@
+{
+  "haze_percent": 41.20671869857012,
+  "wavelength_nm": 530.0,
+  "n_in": 1.5,
+  "n_out": 1.0,
+  "acceptance_half_angle_deg": 2.5,
+  "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+  "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+  "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+  "height_grid_yx": [
+    1000,
+    1000
+  ],
+  "height_pitch_um": 1.0,
+  "field_um_xy": [
+    1000.0,
+    1000.0
+  ],
+  "represented_scalar_forward_flux": 0.9985155785981994,
+  "zero_order_forward_flux_percent": 41.6088972577998,
+  "within_cone_nonzero_order_flux_percent": 17.18438404363009,
+  "nonzero_order_forward_flux_percent": 58.391102742200204,
+  "haze_without_cosine_weight_percent": 41.2859367491121,
+  "parseval_relative_error": 0.0,
+  "evanescent_field_power_percent": 0.0,
+  "spectral_edge_field_power_percent": 0.008830173334508485,
+  "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+  "complete_azimuth_angle_limit_deg": 15.366952797777708,
+  "near_axis_angle_step_deg_xy": [
+    0.03036676456360444,
+    0.03036676456360444
+  ],
+  "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+  "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+  "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim",
+  "physics_group": "scalar_phase_screen_wave",
+  "angular_power_relative_L2_vs_numpy": 6.680498673110089e-16,
+  "backend": "torch",
+  "surface_id": "1um",
+  "input": {
+    "path": "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\1um\\heightfield.png",
+    "sha256": "694b7c6d3914cf62ea9585d340dd62f2e70771c4f555276215903d9ac399d975",
+    "height_range_um": 1.04,
+    "height_pitch_um": 1.0,
+    "periodicity": "source metadata",
+    "roughness": {
+      "Sa_um": 0.12840640606536477,
+      "Sq_um": 0.15925484394358616,
+      "Sz_um": 0.9975811963158776,
+      "height_min_um": 0.02221713657490909,
+      "height_max_um": 1.0197983328907867,
+      "rms_slope": 0.09867374404588064,
+      "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+    },
+    "sidecar_path": "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\1um\\heightfield.source.json",
+    "sidecar_sha256": "53dc09a748fc5121103e78c168a78183110c727a486aecc149dfc3839ee1c256"
+  },
+  "reference_numpy_percent": 41.206718698570114,
+  "difference_vs_numpy_percentage_points": 7.105427357601002e-15,
+  "execution_context": {
+    "library": "torch",
+    "torch_version": "2.13.0+cu130",
+    "device": "cuda:0",
+    "dtype": "complex128",
+    "output_propagation_um": 100.0,
+    "gpu_name": "NVIDIA GeForce RTX 3090 Ti",
+    "native_operations": "Torch plane field -> phase modulation -> ASM -> angular FFT"
+  },
+  "solver_seconds": 3.937343499623239,
+  "started_at_utc": "2026-11-08T10:09:00.880638+00:00",
+  "finished_at_utc": "2026-11-08T10:09:05.022016+00:00",
+  "flat_control_percent": 2.921846653831125e-31,
+  "angular_curve_csv": "1um/torch/530nm/angular.csv"
+}

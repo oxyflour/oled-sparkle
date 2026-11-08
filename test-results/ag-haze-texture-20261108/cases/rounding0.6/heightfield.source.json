@@ -1,0 +1,38 @@
+{
+  "source": "Controlled morphology counterfactual using prepare_etched_ag.raw_surface; not measured AG",
+  "assigned_texel_um": 0.25,
+  "height_range_um": 0.5180606647414515,
+  "periodic_domain_um": 1000.0,
+  "sha256": "b7dc54f388f0f6802e258026ce83d0e30d2d4917a50b4267ce9ba93c33814464",
+  "source_input": {
+    "path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag-pitch0p5\\heightfield.png",
+    "sha256": "9a495dc565e3bb2b5ef725e9950f05a8958cc70e1364978b352607b1d91c4c3d",
+    "height_range_um": 0.5361845861372564,
+    "height_pitch_um": 0.5,
+    "periodicity": "source metadata",
+    "roughness": {
+      "Sa_um": 0.10000000480208875,
+      "Sq_um": 0.11851254239602815,
+      "Sz_um": 0.5155668647560674,
+      "height_min_um": 0.010308883524601242,
+      "height_max_um": 0.5258757482806686,
+      "rms_slope": 0.03302164002728051,
+      "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+    },
+    "sidecar_path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag-pitch0p5\\heightfield.source.json",
+    "sidecar_sha256": "fbaccda92c79fd07ebd9ac07a725f562f2a550bdbb1a7f786277fcc86cdd4033"
+  },
+  "case_id": "rounding0.6",
+  "profile_power": 2.0,
+  "rounding_sigma_um": 0.6,
+  "normalization": {
+    "matched_metric": "Sq",
+    "target_Sq_um": 0.11851254239602814,
+    "target_Sa_um": null,
+    "raw_to_um_scale": 0.3849975995552181
+  },
+  "encoding": "uint16 /65535 * height_range_um; a global height offset is immaterial for normal-incidence haze",
+  "nominal_site_spacing_um": 25.0,
+  "seed": 20261107,
+  "site_file": "oled-ag-sparkle/assets/oled-1mm-etched-ag/sites.csv"
+}

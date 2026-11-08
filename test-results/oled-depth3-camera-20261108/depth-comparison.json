@@ -1,0 +1,52 @@
+{
+  "definition": {
+    "height_scale": 3.0,
+    "baseline_results": "C:\\Projects\\oled-sparkle\\test-results\\oled-camera-comparison",
+    "baseline_protocol_sha256": "7826ee4bc50831e20e6757276948e012ef89a142a6c3aa85a3f4a67aa4b84f63",
+    "baseline_summary_sha256": "32828e1724d1395d5df72d097934284b1ed48e882157f43a51647032287b0355",
+    "same_camera_and_four_layout_frequency_mask": true,
+    "input_height_ranges_um": {
+      "1um": 1.608553758411769,
+      "0p5um": 1.608553758411769
+    },
+    "note": "Same PNG hashes require checking the changed sidecar/range: encoding pixels alone do not identify physical height."
+  },
+  "records": [
+    {
+      "layout": "diamond",
+      "grid": "1um",
+      "backend": "torch",
+      "baseline_sparkle_percent": 24.016988381273602,
+      "scaled_height_sparkle_percent": 32.41436317590759,
+      "difference_percentage_points": 8.397374794633986,
+      "same_frequency_mask": true
+    },
+    {
+      "layout": "diamond",
+      "grid": "1um",
+      "backend": "torchoptics",
+      "baseline_sparkle_percent": 24.01705189996405,
+      "scaled_height_sparkle_percent": 32.4143587057429,
+      "difference_percentage_points": 8.39730680577885,
+      "same_frequency_mask": true
+    },
+    {
+      "layout": "diamond",
+      "grid": "1um",
+      "backend": "chromatix",
+      "baseline_sparkle_percent": 24.0163641655765,
+      "scaled_height_sparkle_percent": 32.414531650418134,
+      "difference_percentage_points": 8.398167484841633,
+      "same_frequency_mask": true
+    },
+    {
+      "layout": "diamond",
+      "grid": "0p5um",
+      "backend": "torch",
+      "baseline_sparkle_percent": 23.977983409677865,
+      "scaled_height_sparkle_percent": 32.5651925226318,
+      "difference_percentage_points": 8.587209112953932,
+      "same_frequency_mask": true
+    }
+  ]
+}

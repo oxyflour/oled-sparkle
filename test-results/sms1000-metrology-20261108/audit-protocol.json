@@ -1,0 +1,11 @@
+{
+  "kind": "SMS1000-metrology-audit",
+  "scope": "No optical solves, no new headline filter, no threshold selected against the paper 5%. Inspect retained variance at physical frequencies and a linear Nyquist-band decomposition. Source camera headlines remain unchanged.",
+  "predeclared_frequency_boundaries_cycles_per_mm": {
+    "exact_green_repeat_140um": 7.142857142857143,
+    "nominal_address_pitch_70um": 14.285714285714286,
+    "camera_axis_Nyquist_26p25um": 19.047619047619047
+  },
+  "boundaries_reason": "Known source geometric periods and camera sample pitch. They are diagnostic boundaries, not a claim of the undocumented paper SMS1000 cutoff.",
+  "alias_decomposition": "Full 1mm optical DFT, split at the rectangular camera Nyquist region abs(fx),abs(fy)<=1/(2*q); sample both components by the existing linear area integrator; remove the unchanged common periodic mask. Decomposition includes a finite-DFT periodic continuation assumption and is not a new physical antialiasing model."
+}

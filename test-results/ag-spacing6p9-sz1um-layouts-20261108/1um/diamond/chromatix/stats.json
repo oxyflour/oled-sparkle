@@ -1,0 +1,150 @@
+{
+  "backend": "chromatix",
+  "physics_group": "scalar_wave",
+  "physical_model": "scalar ASM + thin phase screen + ideal NA imaging",
+  "metric_definition": "100 * std(I_ROI, ddof=0) / mean(I_ROI)",
+  "metric_domain": "area-averaged collected brightness pixels at analysis_pixel_pitch_um, including dark pixels",
+  "brightness_units": "relative linear intensity",
+  "deterministic": true,
+  "height_grid": [
+    1000,
+    1000
+  ],
+  "emission_grid": [
+    500,
+    500
+  ],
+  "height_pitch_um": 1.0,
+  "height_range_um": 1.04,
+  "emission_pitch_um": 2.0,
+  "gap_um": 500.0,
+  "wavelength_nm": 530.0,
+  "n_stack": 1.5,
+  "n_out": 1.0,
+  "camera_na": 0.00781226159233428,
+  "source_samples_per_axis": 1,
+  "source_node_pitch_um": 2.0,
+  "source_representation": "incoherent point quadrature",
+  "field_width_um": 1000.0,
+  "field_height_um": 1000.0,
+  "pad_px": 140,
+  "batch": 16,
+  "roi_margin_um": 219.99999999999997,
+  "roi_margin_px": 0,
+  "torch_device_setting": "cuda",
+  "ray_radial": 24,
+  "ray_angular": 64,
+  "mesh_stride": 1,
+  "mitsuba_variant": "cuda_ad_rgb",
+  "num_sources_or_rays": 77568,
+  "elapsed_seconds": 74.718955,
+  "analysis_grid": [
+    21,
+    21
+  ],
+  "analysis_pixel_pitch_um": 26.249999999999996,
+  "analysis_pixel_area_um2": 689.0624999999998,
+  "analysis_extent_um_xyxy": [
+    -275.62499999999994,
+    -275.62499999999994,
+    275.625,
+    275.625
+  ],
+  "analysis_source_bounds_px_xyxy": [
+    224.37500000000006,
+    224.37500000000006,
+    775.625,
+    775.625
+  ],
+  "effective_roi_margin_um_xy": [
+    224.37500000000006,
+    224.37500000000006
+  ],
+  "analysis_resampling": "area-averaged linear brightness over square pixels",
+  "metric_source_file": "analysis_brightness.npy",
+  "sparkle_cv_percent": 34.30866536680821,
+  "brightness_mean": 0.00016377265983635178,
+  "brightness_std": 5.618821382557505e-05,
+  "std_ddof": 0,
+  "num_roi_pixels": 441,
+  "roi_bounds_xyxy": [
+    0,
+    0,
+    21,
+    21
+  ],
+  "warnings": [
+    "Single effective wavelength and idealized camera optics; relative intensity units.",
+    "All full analysis pixels in the centered geometric ROI enter the statistic."
+  ],
+  "run_id": "03c7211a96d84edb888b61fcbb1af7bc",
+  "started_at_utc": "2026-11-08T10:24:51.842590+00:00",
+  "finished_at_utc": "2026-11-08T10:26:06.724598+00:00",
+  "postprocess_elapsed_seconds": 0.174457,
+  "execution_context": {
+    "backend": "chromatix",
+    "devices": [
+      "cuda:0"
+    ],
+    "x64_enabled": false,
+    "default_backend": "gpu",
+    "gpu_names": [
+      "NVIDIA GeForce RTX 3090 Ti"
+    ],
+    "environment": {
+      "python": "3.12.12 (main, Dec  5 2025, 20:21:41) [Clang 21.1.4 ]",
+      "executable": "/home/oxyflour/.venvs/oled-sparkle-chromatix/bin/python",
+      "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+      "processor": "x86_64",
+      "logical_cpus": 12,
+      "versions": {
+        "numpy": "2.5.4",
+        "Pillow": "13.0.0",
+        "torch": null,
+        "torchoptics": null,
+        "jax": "0.12.0.1",
+        "jaxlib": "0.12.0.1",
+        "jax-cuda13-plugin": "0.12.0.1",
+        "jax-cuda13-pjrt": "0.12.0.1",
+        "chromatix": "0.6.0",
+        "mitsuba": null,
+        "drjit": null
+      },
+      "environment_settings": {
+        "PYTHONPATH": null,
+        "OMP_NUM_THREADS": null,
+        "MKL_NUM_THREADS": null,
+        "JAX_PLATFORMS": "cuda",
+        "JAX_ENABLE_X64": null,
+        "DRJIT_LIBLLVM_PATH": null,
+        "SPARKLE_WSL_DISTRO": null,
+        "SPARKLE_WSL_PYTHON": null,
+        "XLA_PYTHON_CLIENT_PREALLOCATE": "false",
+        "XLA_PYTHON_CLIENT_MEM_FRACTION": "0.10"
+      }
+    },
+    "worker_solver_elapsed_seconds": 70.42041219305247,
+    "runtime": "wsl",
+    "wsl_distribution": "Ubuntu-22.04",
+    "worker_script": "/mnt/c/Projects/oled-sparkle/oled-ag-sparkle/scripts/chromatix_wsl.py",
+    "worker_command": [
+      "wsl.exe",
+      "--distribution",
+      "Ubuntu-22.04",
+      "--exec",
+      "env",
+      "-u",
+      "PYTHONPATH",
+      "-u",
+      "LD_LIBRARY_PATH",
+      "JAX_PLATFORMS=cuda",
+      "XLA_PYTHON_CLIENT_PREALLOCATE=false",
+      "XLA_PYTHON_CLIENT_MEM_FRACTION=0.10",
+      "PYTHONUNBUFFERED=1",
+      "/home/oxyflour/.venvs/oled-sparkle-chromatix/bin/python",
+      "/mnt/c/Projects/oled-sparkle/oled-ag-sparkle/scripts/chromatix_wsl.py",
+      "--request-dir",
+      "/mnt/c/Users/oxyfl/AppData/Local/Temp/chromatix-wsl-5m6bwjmj"
+    ]
+  }
+}

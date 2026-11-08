@@ -9,7 +9,7 @@ def main():
     parser.add_argument('--results', required=True, help='Existing results directory')
     parser.add_argument('--kind', choices=('brightness', 'sms-reference', 'haze'), default='brightness',
                         help='Explicit metric: raw brightness CV, separated sparkle, or saved native-backend haze comparison')
-    parser.add_argument('--out', help='HTML destination; SMS mode copies its overview here')
+    parser.add_argument('--out', help='HTML destination; haze mode writes all derived artifacts beside it, preserving the source results')
     parser.add_argument('--recursive', action='store_true', help='Combine nested run directories')
     parser.add_argument('--title', help='Custom title for a brightness report')
     parser.add_argument('--figure', action='append', default=[], help='Embed a comparison PNG; repeat for multiple figures')

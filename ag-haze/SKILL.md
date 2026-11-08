@@ -23,15 +23,19 @@ physical assumption, not a remedy for arbitrary measured-patch edge jumps.
 From the repository root:
 
 ```powershell
-.venv\Scripts\python.exe oled-ag-sparkle\scripts\calculate_haze.py --out test-results\ag-haze
+.venv\Scripts\python.exe oled-ag-sparkle\scripts\calculate_haze.py
 ```
 
-The defaults are the current etched AG, normal-incidence illumination,
+The default height is `assets/oled-1mm-etched-ag-spacing6p9-sz1um/heightfield.png`:
+6.9um nominal site spacing, post-rounding reference Sz=1um and **1.04um PNG
+encoding range**. The former 25um/Sa0.1um assets and results remain historical.
+The default output is `oled-ag-sparkle/outputs/oled-1mm-etched-ag-spacing6p9-sz1um-haze`.
+Illumination is normal incidence,
 530 nm, n_in=1.5, n_out=1 and a **2.5 degree half-angle** about the direct beam.
 For the existing independently sampled convergence pair and spectral sensitivity:
 
 ```powershell
-.venv\Scripts\python.exe oled-ag-sparkle\scripts\calculate_haze.py --height oled-ag-sparkle\assets\oled-1mm-etched-ag\heightfield.png oled-ag-sparkle\assets\oled-1mm-etched-ag-pitch0p5\heightfield.png --wavelength-nm 450 530 650 --out test-results\ag-haze
+.venv\Scripts\python.exe oled-ag-sparkle\scripts\calculate_haze.py --height oled-ag-sparkle\assets\oled-1mm-etched-ag-spacing6p9-sz1um\heightfield.png oled-ag-sparkle\assets\oled-1mm-etched-ag-spacing6p9-sz1um-pitch0p5\heightfield.png --wavelength-nm 450 530 650 --out test-results\ag-haze-current-new
 ```
 
 For actual native-backend comparison, add `--backend all` and use a separate
@@ -40,9 +44,18 @@ default); Windows Chromatix uses the existing CUDA-only WSL adapter. Mitsuba
 defaults to `cuda_ad_rgb`. Keep the NumPy estimate as the common reference:
 
 ```powershell
-.venv\Scripts\python.exe oled-ag-sparkle\scripts\calculate_haze.py --backend all --height oled-ag-sparkle\assets\oled-1mm-etched-ag\heightfield.png oled-ag-sparkle\assets\oled-1mm-etched-ag-pitch0p5\heightfield.png --out test-results\ag-haze-four-backend-new
-.venv\Scripts\python.exe oled-ag-sparkle\scripts\generate_report.py --kind haze --results test-results\ag-haze-four-backend
+.venv\Scripts\python.exe oled-ag-sparkle\scripts\calculate_haze.py --backend all --height oled-ag-sparkle\assets\oled-1mm-etched-ag-spacing6p9-sz1um\heightfield.png oled-ag-sparkle\assets\oled-1mm-etched-ag-spacing6p9-sz1um-pitch0p5\heightfield.png --out test-results\ag-haze-current-native-new
+.venv\Scripts\python.exe oled-ag-sparkle\scripts\generate_report.py --kind haze --results test-results\ag-haze-current-native-new
 ```
+
+To preserve a historical results directory, add
+`--out test-results/ag-haze-audit-new/haze.html` to the report command. All
+derived figures, diagnostics and validation are then written beside that HTML.
+The offline audit includes DC/in-cone/outside flux, circular height ACF/PSD,
+height moments and projected facet slope/Snell diagnostics. The existing
+`tests/test_haze.py::InterfaceBenchmarkTests` independently checks two shallow
+1D sinusoidal interfaces by TE/TM Maxwell boundary matching; this is not a
+general electromagnetic solver for the 2D AG.
 
 The first command declares `protocol.json` before execution and refuses an
 existing protocol. The second audits/plots retained data without launching a

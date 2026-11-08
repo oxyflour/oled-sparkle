@@ -1,0 +1,4406 @@
+{
+  "primary": {
+    "analysis_grid": [
+      32,
+      32
+    ],
+    "analysis_pixel_pitch_um": 26.25,
+    "analysis_pixel_area_um2": 689.0625,
+    "analysis_extent_um_xyxy": [
+      -420.0,
+      -420.0,
+      420.0,
+      420.0
+    ],
+    "analysis_source_bounds_px_xyxy": [
+      0.0,
+      0.0,
+      840.0,
+      840.0
+    ],
+    "effective_roi_margin_um_xy": [
+      0.0,
+      0.0
+    ],
+    "analysis_resampling": "area-averaged linear brightness over square pixels",
+    "metric_source_file": "camera_separated.npy",
+    "sensor_phase_offset_um_xy": [
+      0.0,
+      0.0
+    ],
+    "mean": 0.00016327025968773044,
+    "std": 2.279999231952934e-05,
+    "ddof": 0,
+    "sparkle_contrast_percent": 13.964571602407226,
+    "num_pixels": 1024,
+    "minimum": 7.231658661304583e-05,
+    "maximum": 0.00032659960524243387,
+    "negative_filtered_measurement_pixels": 0,
+    "mean_preservation_error": 2.710505431213761e-20
+  },
+  "primary_filter": {
+    "primary_metric": "sampled_camera_common_notch",
+    "method": "Camera sampling first; common aliased reciprocal-lattice notches; DC retained",
+    "order": [
+      "incoherent sources -> AG thin phase screen -> focused circular-pupil wave imaging",
+      "square detector area integration -> discrete sensor samples",
+      "DFT -> common periodic-bin mask -> inverse DFT -> 100*std/mean"
+    ],
+    "camera_pitch_um": 26.25,
+    "roi_width_um": 840.0,
+    "sensitivity_roi_width_um": 420.0,
+    "sensor_phase_offsets_um_xy": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        7.0,
+        0.0
+      ],
+      [
+        0.0,
+        7.0
+      ],
+      [
+        7.0,
+        7.0
+      ]
+    ],
+    "notch_periods_um_xy": [
+      [
+        70.0,
+        70.0
+      ],
+      [
+        140.0,
+        140.0
+      ],
+      [
+        210.0,
+        140.0
+      ]
+    ],
+    "optical_intensity_cutoff_cycles_per_um": 0.029480232423902943,
+    "wavelength_um": 0.53,
+    "notch_radius_bins": 0,
+    "additional_lowpass": null,
+    "apodization": null,
+    "roi_rule": "840 um = 32 detector pixels = integer multiples of every exact G period; 420 um nested ROI is a sensitivity check",
+    "mask_rule": "Enumerate reciprocal vectors within the optical intensity bandwidth, fold modulo sensor sampling frequency, remove the union of exact DFT bins for all layouts; retain DC",
+    "detector": "Monochrome, linear, 100% square active area; noiseless, unquantized; no Bayer/ISP",
+    "focus": "OLED emission plane through the flat reference stack; ideal aberration-free pupil already present in the optical solver",
+    "metric_scope": "Camera-domain stochastic contrast under the declared mask, not a visually weighted or SMS-1000 calibrated reading",
+    "references": [
+      {
+        "title": "IEC 62977-3-9:2023, informative Annex B and Table B.1",
+        "url": "https://webstore.iec.ch/en/publication/64780",
+        "use": "Frequency-domain removal of periodic display modulation; compare only identical filter designs. The exact common mask here is explicitly specified by this protocol, not mandated by IEC."
+      },
+      {
+        "title": "Becker (2021), 10 years of sparkle measurement, sections 3.1-3.4",
+        "url": "https://www.display-messtechnik.de/fileadmin/template/main/docs/10-Years-SparkleMeasurement--edC-2021-V2.pdf",
+        "use": "Camera MTF, detector sampling, aliased periodic peaks, then Fourier masking of electronic images. The optional visual-frequency cutoff is not used for this camera-domain metric."
+      }
+    ],
+    "removed_bins_yx": [
+      [
+        0,
+        4
+      ],
+      [
+        0,
+        6
+      ],
+      [
+        0,
+        8
+      ],
+      [
+        0,
+        12
+      ],
+      [
+        0,
+        14
+      ],
+      [
+        0,
+        16
+      ],
+      [
+        0,
+        18
+      ],
+      [
+        0,
+        20
+      ],
+      [
+        0,
+        24
+      ],
+      [
+        0,
+        26
+      ],
+      [
+        0,
+        28
+      ],
+      [
+        6,
+        0
+      ],
+      [
+        6,
+        4
+      ],
+      [
+        6,
+        6
+      ],
+      [
+        6,
+        8
+      ],
+      [
+        6,
+        12
+      ],
+      [
+        6,
+        14
+      ],
+      [
+        6,
+        16
+      ],
+      [
+        6,
+        18
+      ],
+      [
+        6,
+        20
+      ],
+      [
+        6,
+        24
+      ],
+      [
+        6,
+        26
+      ],
+      [
+        6,
+        28
+      ],
+      [
+        8,
+        0
+      ],
+      [
+        8,
+        4
+      ],
+      [
+        8,
+        6
+      ],
+      [
+        8,
+        26
+      ],
+      [
+        8,
+        28
+      ],
+      [
+        12,
+        0
+      ],
+      [
+        12,
+        4
+      ],
+      [
+        12,
+        6
+      ],
+      [
+        12,
+        8
+      ],
+      [
+        12,
+        12
+      ],
+      [
+        12,
+        14
+      ],
+      [
+        12,
+        16
+      ],
+      [
+        12,
+        18
+      ],
+      [
+        12,
+        20
+      ],
+      [
+        12,
+        24
+      ],
+      [
+        12,
+        26
+      ],
+      [
+        12,
+        28
+      ],
+      [
+        14,
+        0
+      ],
+      [
+        14,
+        4
+      ],
+      [
+        14,
+        6
+      ],
+      [
+        14,
+        8
+      ],
+      [
+        14,
+        12
+      ],
+      [
+        14,
+        16
+      ],
+      [
+        14,
+        20
+      ],
+      [
+        14,
+        24
+      ],
+      [
+        14,
+        26
+      ],
+      [
+        14,
+        28
+      ],
+      [
+        18,
+        0
+      ],
+      [
+        18,
+        4
+      ],
+      [
+        18,
+        6
+      ],
+      [
+        18,
+        8
+      ],
+      [
+        18,
+        12
+      ],
+      [
+        18,
+        16
+      ],
+      [
+        18,
+        20
+      ],
+      [
+        18,
+        24
+      ],
+      [
+        18,
+        26
+      ],
+      [
+        18,
+        28
+      ],
+      [
+        20,
+        0
+      ],
+      [
+        20,
+        4
+      ],
+      [
+        20,
+        6
+      ],
+      [
+        20,
+        8
+      ],
+      [
+        20,
+        12
+      ],
+      [
+        20,
+        14
+      ],
+      [
+        20,
+        16
+      ],
+      [
+        20,
+        18
+      ],
+      [
+        20,
+        20
+      ],
+      [
+        20,
+        24
+      ],
+      [
+        20,
+        26
+      ],
+      [
+        20,
+        28
+      ],
+      [
+        24,
+        0
+      ],
+      [
+        24,
+        4
+      ],
+      [
+        24,
+        6
+      ],
+      [
+        24,
+        26
+      ],
+      [
+        24,
+        28
+      ],
+      [
+        26,
+        0
+      ],
+      [
+        26,
+        4
+      ],
+      [
+        26,
+        6
+      ],
+      [
+        26,
+        8
+      ],
+      [
+        26,
+        12
+      ],
+      [
+        26,
+        14
+      ],
+      [
+        26,
+        16
+      ],
+      [
+        26,
+        18
+      ],
+      [
+        26,
+        20
+      ],
+      [
+        26,
+        24
+      ],
+      [
+        26,
+        26
+      ],
+      [
+        26,
+        28
+      ]
+    ],
+    "removed_non_DC_bins": 89,
+    "retained_non_DC_bins": 934,
+    "sensor_nyquist_cycles_per_um": 0.01904761904761905,
+    "harmonics": [
+      {
+        "period_um_xy": [
+          70.0,
+          70.0
+        ],
+        "harmonic_xy": [
+          0,
+          -2
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.0,
+          -0.02857142857142857
+        ],
+        "folded_cycles_per_um_xy": [
+          0.0,
+          0.009523809523809528
+        ],
+        "bin_yx": [
+          8,
+          0
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          70.0,
+          70.0
+        ],
+        "harmonic_xy": [
+          -1,
+          -1
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.014285714285714285,
+          -0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.014285714285714285,
+          -0.014285714285714285
+        ],
+        "bin_yx": [
+          20,
+          20
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          70.0,
+          70.0
+        ],
+        "harmonic_xy": [
+          0,
+          -1
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.0,
+          -0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          0.0,
+          -0.014285714285714285
+        ],
+        "bin_yx": [
+          20,
+          0
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          70.0,
+          70.0
+        ],
+        "harmonic_xy": [
+          1,
+          -1
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.014285714285714285,
+          -0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          0.014285714285714284,
+          -0.014285714285714285
+        ],
+        "bin_yx": [
+          20,
+          12
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          70.0,
+          70.0
+        ],
+        "harmonic_xy": [
+          -2,
+          0
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.02857142857142857,
+          0.0
+        ],
+        "folded_cycles_per_um_xy": [
+          0.009523809523809528,
+          0.0
+        ],
+        "bin_yx": [
+          0,
+          8
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          70.0,
+          70.0
+        ],
+        "harmonic_xy": [
+          -1,
+          0
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.014285714285714285,
+          0.0
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.014285714285714285,
+          0.0
+        ],
+        "bin_yx": [
+          0,
+          20
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          70.0,
+          70.0
+        ],
+        "harmonic_xy": [
+          1,
+          0
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.014285714285714285,
+          0.0
+        ],
+        "folded_cycles_per_um_xy": [
+          0.014285714285714284,
+          0.0
+        ],
+        "bin_yx": [
+          0,
+          12
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          70.0,
+          70.0
+        ],
+        "harmonic_xy": [
+          2,
+          0
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.02857142857142857,
+          0.0
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.009523809523809532,
+          0.0
+        ],
+        "bin_yx": [
+          0,
+          24
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          70.0,
+          70.0
+        ],
+        "harmonic_xy": [
+          -1,
+          1
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.014285714285714285,
+          0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.014285714285714285,
+          0.014285714285714284
+        ],
+        "bin_yx": [
+          12,
+          20
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          70.0,
+          70.0
+        ],
+        "harmonic_xy": [
+          0,
+          1
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.0,
+          0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          0.0,
+          0.014285714285714284
+        ],
+        "bin_yx": [
+          12,
+          0
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          70.0,
+          70.0
+        ],
+        "harmonic_xy": [
+          1,
+          1
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.014285714285714285,
+          0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          0.014285714285714284,
+          0.014285714285714284
+        ],
+        "bin_yx": [
+          12,
+          12
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          70.0,
+          70.0
+        ],
+        "harmonic_xy": [
+          0,
+          2
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.0,
+          0.02857142857142857
+        ],
+        "folded_cycles_per_um_xy": [
+          0.0,
+          -0.009523809523809532
+        ],
+        "bin_yx": [
+          24,
+          0
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -1,
+          -4
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.007142857142857143,
+          -0.02857142857142857
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.007142857142857142,
+          0.009523809523809528
+        ],
+        "bin_yx": [
+          8,
+          26
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          0,
+          -4
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.0,
+          -0.02857142857142857
+        ],
+        "folded_cycles_per_um_xy": [
+          0.0,
+          0.009523809523809528
+        ],
+        "bin_yx": [
+          8,
+          0
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          1,
+          -4
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.007142857142857143,
+          -0.02857142857142857
+        ],
+        "folded_cycles_per_um_xy": [
+          0.007142857142857142,
+          0.009523809523809528
+        ],
+        "bin_yx": [
+          8,
+          6
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -2,
+          -3
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.014285714285714285,
+          -0.02142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.014285714285714285,
+          0.01666666666666667
+        ],
+        "bin_yx": [
+          14,
+          20
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -1,
+          -3
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.007142857142857143,
+          -0.02142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.007142857142857142,
+          0.01666666666666667
+        ],
+        "bin_yx": [
+          14,
+          26
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          0,
+          -3
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.0,
+          -0.02142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          0.0,
+          0.01666666666666667
+        ],
+        "bin_yx": [
+          14,
+          0
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          1,
+          -3
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.007142857142857143,
+          -0.02142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          0.007142857142857142,
+          0.01666666666666667
+        ],
+        "bin_yx": [
+          14,
+          6
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          2,
+          -3
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.014285714285714285,
+          -0.02142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          0.014285714285714284,
+          0.01666666666666667
+        ],
+        "bin_yx": [
+          14,
+          12
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -3,
+          -2
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.02142857142857143,
+          -0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          0.01666666666666667,
+          -0.014285714285714285
+        ],
+        "bin_yx": [
+          20,
+          14
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -2,
+          -2
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.014285714285714285,
+          -0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.014285714285714285,
+          -0.014285714285714285
+        ],
+        "bin_yx": [
+          20,
+          20
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -1,
+          -2
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.007142857142857143,
+          -0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.007142857142857142,
+          -0.014285714285714285
+        ],
+        "bin_yx": [
+          20,
+          26
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          0,
+          -2
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.0,
+          -0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          0.0,
+          -0.014285714285714285
+        ],
+        "bin_yx": [
+          20,
+          0
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          1,
+          -2
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.007142857142857143,
+          -0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          0.007142857142857142,
+          -0.014285714285714285
+        ],
+        "bin_yx": [
+          20,
+          6
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          2,
+          -2
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.014285714285714285,
+          -0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          0.014285714285714284,
+          -0.014285714285714285
+        ],
+        "bin_yx": [
+          20,
+          12
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          3,
+          -2
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.02142857142857143,
+          -0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.01666666666666667,
+          -0.014285714285714285
+        ],
+        "bin_yx": [
+          20,
+          18
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -4,
+          -1
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.02857142857142857,
+          -0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          0.009523809523809528,
+          -0.007142857142857142
+        ],
+        "bin_yx": [
+          26,
+          8
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -3,
+          -1
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.02142857142857143,
+          -0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          0.01666666666666667,
+          -0.007142857142857142
+        ],
+        "bin_yx": [
+          26,
+          14
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -2,
+          -1
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.014285714285714285,
+          -0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.014285714285714285,
+          -0.007142857142857142
+        ],
+        "bin_yx": [
+          26,
+          20
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -1,
+          -1
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.007142857142857143,
+          -0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.007142857142857142,
+          -0.007142857142857142
+        ],
+        "bin_yx": [
+          26,
+          26
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          0,
+          -1
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.0,
+          -0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          0.0,
+          -0.007142857142857142
+        ],
+        "bin_yx": [
+          26,
+          0
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          1,
+          -1
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.007142857142857143,
+          -0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          0.007142857142857142,
+          -0.007142857142857142
+        ],
+        "bin_yx": [
+          26,
+          6
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          2,
+          -1
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.014285714285714285,
+          -0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          0.014285714285714284,
+          -0.007142857142857142
+        ],
+        "bin_yx": [
+          26,
+          12
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          3,
+          -1
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.02142857142857143,
+          -0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.01666666666666667,
+          -0.007142857142857142
+        ],
+        "bin_yx": [
+          26,
+          18
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          4,
+          -1
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.02857142857142857,
+          -0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.009523809523809532,
+          -0.007142857142857142
+        ],
+        "bin_yx": [
+          26,
+          24
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -4,
+          0
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.02857142857142857,
+          0.0
+        ],
+        "folded_cycles_per_um_xy": [
+          0.009523809523809528,
+          0.0
+        ],
+        "bin_yx": [
+          0,
+          8
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -3,
+          0
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.02142857142857143,
+          0.0
+        ],
+        "folded_cycles_per_um_xy": [
+          0.01666666666666667,
+          0.0
+        ],
+        "bin_yx": [
+          0,
+          14
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -2,
+          0
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.014285714285714285,
+          0.0
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.014285714285714285,
+          0.0
+        ],
+        "bin_yx": [
+          0,
+          20
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -1,
+          0
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.007142857142857143,
+          0.0
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.007142857142857142,
+          0.0
+        ],
+        "bin_yx": [
+          0,
+          26
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          1,
+          0
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.007142857142857143,
+          0.0
+        ],
+        "folded_cycles_per_um_xy": [
+          0.007142857142857142,
+          0.0
+        ],
+        "bin_yx": [
+          0,
+          6
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          2,
+          0
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.014285714285714285,
+          0.0
+        ],
+        "folded_cycles_per_um_xy": [
+          0.014285714285714284,
+          0.0
+        ],
+        "bin_yx": [
+          0,
+          12
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          3,
+          0
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.02142857142857143,
+          0.0
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.01666666666666667,
+          0.0
+        ],
+        "bin_yx": [
+          0,
+          18
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          4,
+          0
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.02857142857142857,
+          0.0
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.009523809523809532,
+          0.0
+        ],
+        "bin_yx": [
+          0,
+          24
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -4,
+          1
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.02857142857142857,
+          0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          0.009523809523809528,
+          0.007142857142857142
+        ],
+        "bin_yx": [
+          6,
+          8
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -3,
+          1
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.02142857142857143,
+          0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          0.01666666666666667,
+          0.007142857142857142
+        ],
+        "bin_yx": [
+          6,
+          14
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -2,
+          1
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.014285714285714285,
+          0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.014285714285714285,
+          0.007142857142857142
+        ],
+        "bin_yx": [
+          6,
+          20
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -1,
+          1
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.007142857142857143,
+          0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.007142857142857142,
+          0.007142857142857142
+        ],
+        "bin_yx": [
+          6,
+          26
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          0,
+          1
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.0,
+          0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          0.0,
+          0.007142857142857142
+        ],
+        "bin_yx": [
+          6,
+          0
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          1,
+          1
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.007142857142857143,
+          0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          0.007142857142857142,
+          0.007142857142857142
+        ],
+        "bin_yx": [
+          6,
+          6
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          2,
+          1
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.014285714285714285,
+          0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          0.014285714285714284,
+          0.007142857142857142
+        ],
+        "bin_yx": [
+          6,
+          12
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          3,
+          1
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.02142857142857143,
+          0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.01666666666666667,
+          0.007142857142857142
+        ],
+        "bin_yx": [
+          6,
+          18
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          4,
+          1
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.02857142857142857,
+          0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.009523809523809532,
+          0.007142857142857142
+        ],
+        "bin_yx": [
+          6,
+          24
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -3,
+          2
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.02142857142857143,
+          0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          0.01666666666666667,
+          0.014285714285714284
+        ],
+        "bin_yx": [
+          12,
+          14
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -2,
+          2
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.014285714285714285,
+          0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.014285714285714285,
+          0.014285714285714284
+        ],
+        "bin_yx": [
+          12,
+          20
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -1,
+          2
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.007142857142857143,
+          0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.007142857142857142,
+          0.014285714285714284
+        ],
+        "bin_yx": [
+          12,
+          26
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          0,
+          2
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.0,
+          0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          0.0,
+          0.014285714285714284
+        ],
+        "bin_yx": [
+          12,
+          0
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          1,
+          2
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.007142857142857143,
+          0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          0.007142857142857142,
+          0.014285714285714284
+        ],
+        "bin_yx": [
+          12,
+          6
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          2,
+          2
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.014285714285714285,
+          0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          0.014285714285714284,
+          0.014285714285714284
+        ],
+        "bin_yx": [
+          12,
+          12
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          3,
+          2
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.02142857142857143,
+          0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.01666666666666667,
+          0.014285714285714284
+        ],
+        "bin_yx": [
+          12,
+          18
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -2,
+          3
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.014285714285714285,
+          0.02142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.014285714285714285,
+          -0.01666666666666667
+        ],
+        "bin_yx": [
+          18,
+          20
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -1,
+          3
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.007142857142857143,
+          0.02142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.007142857142857142,
+          -0.01666666666666667
+        ],
+        "bin_yx": [
+          18,
+          26
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          0,
+          3
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.0,
+          0.02142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          0.0,
+          -0.01666666666666667
+        ],
+        "bin_yx": [
+          18,
+          0
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          1,
+          3
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.007142857142857143,
+          0.02142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          0.007142857142857142,
+          -0.01666666666666667
+        ],
+        "bin_yx": [
+          18,
+          6
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          2,
+          3
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.014285714285714285,
+          0.02142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          0.014285714285714284,
+          -0.01666666666666667
+        ],
+        "bin_yx": [
+          18,
+          12
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -1,
+          4
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.007142857142857143,
+          0.02857142857142857
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.007142857142857142,
+          -0.009523809523809532
+        ],
+        "bin_yx": [
+          24,
+          26
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          0,
+          4
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.0,
+          0.02857142857142857
+        ],
+        "folded_cycles_per_um_xy": [
+          0.0,
+          -0.009523809523809532
+        ],
+        "bin_yx": [
+          24,
+          0
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          1,
+          4
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.007142857142857143,
+          0.02857142857142857
+        ],
+        "folded_cycles_per_um_xy": [
+          0.007142857142857142,
+          -0.009523809523809532
+        ],
+        "bin_yx": [
+          24,
+          6
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -1,
+          -4
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.004761904761904762,
+          -0.02857142857142857
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.004761904761904762,
+          0.009523809523809528
+        ],
+        "bin_yx": [
+          8,
+          28
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          0,
+          -4
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.0,
+          -0.02857142857142857
+        ],
+        "folded_cycles_per_um_xy": [
+          0.0,
+          0.009523809523809528
+        ],
+        "bin_yx": [
+          8,
+          0
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          1,
+          -4
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.004761904761904762,
+          -0.02857142857142857
+        ],
+        "folded_cycles_per_um_xy": [
+          0.004761904761904762,
+          0.009523809523809528
+        ],
+        "bin_yx": [
+          8,
+          4
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -4,
+          -3
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.01904761904761905,
+          -0.02142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.01904761904761905,
+          0.01666666666666667
+        ],
+        "bin_yx": [
+          14,
+          16
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -3,
+          -3
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.014285714285714285,
+          -0.02142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.014285714285714285,
+          0.01666666666666667
+        ],
+        "bin_yx": [
+          14,
+          20
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -2,
+          -3
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.009523809523809525,
+          -0.02142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.009523809523809525,
+          0.01666666666666667
+        ],
+        "bin_yx": [
+          14,
+          24
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -1,
+          -3
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.004761904761904762,
+          -0.02142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.004761904761904762,
+          0.01666666666666667
+        ],
+        "bin_yx": [
+          14,
+          28
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          0,
+          -3
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.0,
+          -0.02142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          0.0,
+          0.01666666666666667
+        ],
+        "bin_yx": [
+          14,
+          0
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          1,
+          -3
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.004761904761904762,
+          -0.02142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          0.004761904761904762,
+          0.01666666666666667
+        ],
+        "bin_yx": [
+          14,
+          4
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          2,
+          -3
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.009523809523809525,
+          -0.02142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          0.009523809523809525,
+          0.01666666666666667
+        ],
+        "bin_yx": [
+          14,
+          8
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          3,
+          -3
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.014285714285714285,
+          -0.02142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          0.014285714285714284,
+          0.01666666666666667
+        ],
+        "bin_yx": [
+          14,
+          12
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          4,
+          -3
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.01904761904761905,
+          -0.02142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.01904761904761905,
+          0.01666666666666667
+        ],
+        "bin_yx": [
+          14,
+          16
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -5,
+          -2
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.023809523809523808,
+          -0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          0.01428571428571429,
+          -0.014285714285714285
+        ],
+        "bin_yx": [
+          20,
+          12
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -4,
+          -2
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.01904761904761905,
+          -0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.01904761904761905,
+          -0.014285714285714285
+        ],
+        "bin_yx": [
+          20,
+          16
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -3,
+          -2
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.014285714285714285,
+          -0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.014285714285714285,
+          -0.014285714285714285
+        ],
+        "bin_yx": [
+          20,
+          20
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -2,
+          -2
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.009523809523809525,
+          -0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.009523809523809525,
+          -0.014285714285714285
+        ],
+        "bin_yx": [
+          20,
+          24
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -1,
+          -2
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.004761904761904762,
+          -0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.004761904761904762,
+          -0.014285714285714285
+        ],
+        "bin_yx": [
+          20,
+          28
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          0,
+          -2
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.0,
+          -0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          0.0,
+          -0.014285714285714285
+        ],
+        "bin_yx": [
+          20,
+          0
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          1,
+          -2
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.004761904761904762,
+          -0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          0.004761904761904762,
+          -0.014285714285714285
+        ],
+        "bin_yx": [
+          20,
+          4
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          2,
+          -2
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.009523809523809525,
+          -0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          0.009523809523809525,
+          -0.014285714285714285
+        ],
+        "bin_yx": [
+          20,
+          8
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          3,
+          -2
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.014285714285714285,
+          -0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          0.014285714285714284,
+          -0.014285714285714285
+        ],
+        "bin_yx": [
+          20,
+          12
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          4,
+          -2
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.01904761904761905,
+          -0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.01904761904761905,
+          -0.014285714285714285
+        ],
+        "bin_yx": [
+          20,
+          16
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          5,
+          -2
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.023809523809523808,
+          -0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.01428571428571429,
+          -0.014285714285714285
+        ],
+        "bin_yx": [
+          20,
+          20
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -6,
+          -1
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.02857142857142857,
+          -0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          0.009523809523809528,
+          -0.007142857142857142
+        ],
+        "bin_yx": [
+          26,
+          8
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -5,
+          -1
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.023809523809523808,
+          -0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          0.01428571428571429,
+          -0.007142857142857142
+        ],
+        "bin_yx": [
+          26,
+          12
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -4,
+          -1
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.01904761904761905,
+          -0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.01904761904761905,
+          -0.007142857142857142
+        ],
+        "bin_yx": [
+          26,
+          16
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -3,
+          -1
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.014285714285714285,
+          -0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.014285714285714285,
+          -0.007142857142857142
+        ],
+        "bin_yx": [
+          26,
+          20
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -2,
+          -1
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.009523809523809525,
+          -0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.009523809523809525,
+          -0.007142857142857142
+        ],
+        "bin_yx": [
+          26,
+          24
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -1,
+          -1
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.004761904761904762,
+          -0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.004761904761904762,
+          -0.007142857142857142
+        ],
+        "bin_yx": [
+          26,
+          28
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          0,
+          -1
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.0,
+          -0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          0.0,
+          -0.007142857142857142
+        ],
+        "bin_yx": [
+          26,
+          0
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          1,
+          -1
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.004761904761904762,
+          -0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          0.004761904761904762,
+          -0.007142857142857142
+        ],
+        "bin_yx": [
+          26,
+          4
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          2,
+          -1
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.009523809523809525,
+          -0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          0.009523809523809525,
+          -0.007142857142857142
+        ],
+        "bin_yx": [
+          26,
+          8
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          3,
+          -1
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.014285714285714285,
+          -0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          0.014285714285714284,
+          -0.007142857142857142
+        ],
+        "bin_yx": [
+          26,
+          12
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          4,
+          -1
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.01904761904761905,
+          -0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.01904761904761905,
+          -0.007142857142857142
+        ],
+        "bin_yx": [
+          26,
+          16
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          5,
+          -1
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.023809523809523808,
+          -0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.01428571428571429,
+          -0.007142857142857142
+        ],
+        "bin_yx": [
+          26,
+          20
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          6,
+          -1
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.02857142857142857,
+          -0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.009523809523809532,
+          -0.007142857142857142
+        ],
+        "bin_yx": [
+          26,
+          24
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -6,
+          0
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.02857142857142857,
+          0.0
+        ],
+        "folded_cycles_per_um_xy": [
+          0.009523809523809528,
+          0.0
+        ],
+        "bin_yx": [
+          0,
+          8
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -5,
+          0
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.023809523809523808,
+          0.0
+        ],
+        "folded_cycles_per_um_xy": [
+          0.01428571428571429,
+          0.0
+        ],
+        "bin_yx": [
+          0,
+          12
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -4,
+          0
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.01904761904761905,
+          0.0
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.01904761904761905,
+          0.0
+        ],
+        "bin_yx": [
+          0,
+          16
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -3,
+          0
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.014285714285714285,
+          0.0
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.014285714285714285,
+          0.0
+        ],
+        "bin_yx": [
+          0,
+          20
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -2,
+          0
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.009523809523809525,
+          0.0
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.009523809523809525,
+          0.0
+        ],
+        "bin_yx": [
+          0,
+          24
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -1,
+          0
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.004761904761904762,
+          0.0
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.004761904761904762,
+          0.0
+        ],
+        "bin_yx": [
+          0,
+          28
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          1,
+          0
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.004761904761904762,
+          0.0
+        ],
+        "folded_cycles_per_um_xy": [
+          0.004761904761904762,
+          0.0
+        ],
+        "bin_yx": [
+          0,
+          4
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          2,
+          0
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.009523809523809525,
+          0.0
+        ],
+        "folded_cycles_per_um_xy": [
+          0.009523809523809525,
+          0.0
+        ],
+        "bin_yx": [
+          0,
+          8
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          3,
+          0
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.014285714285714285,
+          0.0
+        ],
+        "folded_cycles_per_um_xy": [
+          0.014285714285714284,
+          0.0
+        ],
+        "bin_yx": [
+          0,
+          12
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          4,
+          0
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.01904761904761905,
+          0.0
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.01904761904761905,
+          0.0
+        ],
+        "bin_yx": [
+          0,
+          16
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          5,
+          0
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.023809523809523808,
+          0.0
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.01428571428571429,
+          0.0
+        ],
+        "bin_yx": [
+          0,
+          20
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          6,
+          0
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.02857142857142857,
+          0.0
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.009523809523809532,
+          0.0
+        ],
+        "bin_yx": [
+          0,
+          24
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -6,
+          1
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.02857142857142857,
+          0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          0.009523809523809528,
+          0.007142857142857142
+        ],
+        "bin_yx": [
+          6,
+          8
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -5,
+          1
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.023809523809523808,
+          0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          0.01428571428571429,
+          0.007142857142857142
+        ],
+        "bin_yx": [
+          6,
+          12
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -4,
+          1
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.01904761904761905,
+          0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.01904761904761905,
+          0.007142857142857142
+        ],
+        "bin_yx": [
+          6,
+          16
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -3,
+          1
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.014285714285714285,
+          0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.014285714285714285,
+          0.007142857142857142
+        ],
+        "bin_yx": [
+          6,
+          20
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -2,
+          1
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.009523809523809525,
+          0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.009523809523809525,
+          0.007142857142857142
+        ],
+        "bin_yx": [
+          6,
+          24
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -1,
+          1
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.004761904761904762,
+          0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.004761904761904762,
+          0.007142857142857142
+        ],
+        "bin_yx": [
+          6,
+          28
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          0,
+          1
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.0,
+          0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          0.0,
+          0.007142857142857142
+        ],
+        "bin_yx": [
+          6,
+          0
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          1,
+          1
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.004761904761904762,
+          0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          0.004761904761904762,
+          0.007142857142857142
+        ],
+        "bin_yx": [
+          6,
+          4
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          2,
+          1
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.009523809523809525,
+          0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          0.009523809523809525,
+          0.007142857142857142
+        ],
+        "bin_yx": [
+          6,
+          8
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          3,
+          1
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.014285714285714285,
+          0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          0.014285714285714284,
+          0.007142857142857142
+        ],
+        "bin_yx": [
+          6,
+          12
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          4,
+          1
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.01904761904761905,
+          0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.01904761904761905,
+          0.007142857142857142
+        ],
+        "bin_yx": [
+          6,
+          16
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          5,
+          1
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.023809523809523808,
+          0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.01428571428571429,
+          0.007142857142857142
+        ],
+        "bin_yx": [
+          6,
+          20
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          6,
+          1
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.02857142857142857,
+          0.007142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.009523809523809532,
+          0.007142857142857142
+        ],
+        "bin_yx": [
+          6,
+          24
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -5,
+          2
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.023809523809523808,
+          0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          0.01428571428571429,
+          0.014285714285714284
+        ],
+        "bin_yx": [
+          12,
+          12
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -4,
+          2
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.01904761904761905,
+          0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.01904761904761905,
+          0.014285714285714284
+        ],
+        "bin_yx": [
+          12,
+          16
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -3,
+          2
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.014285714285714285,
+          0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.014285714285714285,
+          0.014285714285714284
+        ],
+        "bin_yx": [
+          12,
+          20
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -2,
+          2
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.009523809523809525,
+          0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.009523809523809525,
+          0.014285714285714284
+        ],
+        "bin_yx": [
+          12,
+          24
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -1,
+          2
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.004761904761904762,
+          0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.004761904761904762,
+          0.014285714285714284
+        ],
+        "bin_yx": [
+          12,
+          28
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          0,
+          2
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.0,
+          0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          0.0,
+          0.014285714285714284
+        ],
+        "bin_yx": [
+          12,
+          0
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          1,
+          2
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.004761904761904762,
+          0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          0.004761904761904762,
+          0.014285714285714284
+        ],
+        "bin_yx": [
+          12,
+          4
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          2,
+          2
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.009523809523809525,
+          0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          0.009523809523809525,
+          0.014285714285714284
+        ],
+        "bin_yx": [
+          12,
+          8
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          3,
+          2
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.014285714285714285,
+          0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          0.014285714285714284,
+          0.014285714285714284
+        ],
+        "bin_yx": [
+          12,
+          12
+        ],
+        "aliased": false
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          4,
+          2
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.01904761904761905,
+          0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.01904761904761905,
+          0.014285714285714284
+        ],
+        "bin_yx": [
+          12,
+          16
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          5,
+          2
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.023809523809523808,
+          0.014285714285714285
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.01428571428571429,
+          0.014285714285714284
+        ],
+        "bin_yx": [
+          12,
+          20
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -4,
+          3
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.01904761904761905,
+          0.02142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.01904761904761905,
+          -0.01666666666666667
+        ],
+        "bin_yx": [
+          18,
+          16
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -3,
+          3
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.014285714285714285,
+          0.02142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.014285714285714285,
+          -0.01666666666666667
+        ],
+        "bin_yx": [
+          18,
+          20
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -2,
+          3
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.009523809523809525,
+          0.02142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.009523809523809525,
+          -0.01666666666666667
+        ],
+        "bin_yx": [
+          18,
+          24
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -1,
+          3
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.004761904761904762,
+          0.02142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.004761904761904762,
+          -0.01666666666666667
+        ],
+        "bin_yx": [
+          18,
+          28
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          0,
+          3
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.0,
+          0.02142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          0.0,
+          -0.01666666666666667
+        ],
+        "bin_yx": [
+          18,
+          0
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          1,
+          3
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.004761904761904762,
+          0.02142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          0.004761904761904762,
+          -0.01666666666666667
+        ],
+        "bin_yx": [
+          18,
+          4
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          2,
+          3
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.009523809523809525,
+          0.02142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          0.009523809523809525,
+          -0.01666666666666667
+        ],
+        "bin_yx": [
+          18,
+          8
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          3,
+          3
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.014285714285714285,
+          0.02142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          0.014285714285714284,
+          -0.01666666666666667
+        ],
+        "bin_yx": [
+          18,
+          12
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          4,
+          3
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.01904761904761905,
+          0.02142857142857143
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.01904761904761905,
+          -0.01666666666666667
+        ],
+        "bin_yx": [
+          18,
+          16
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          -1,
+          4
+        ],
+        "frequency_cycles_per_um_xy": [
+          -0.004761904761904762,
+          0.02857142857142857
+        ],
+        "folded_cycles_per_um_xy": [
+          -0.004761904761904762,
+          -0.009523809523809532
+        ],
+        "bin_yx": [
+          24,
+          28
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          0,
+          4
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.0,
+          0.02857142857142857
+        ],
+        "folded_cycles_per_um_xy": [
+          0.0,
+          -0.009523809523809532
+        ],
+        "bin_yx": [
+          24,
+          0
+        ],
+        "aliased": true
+      },
+      {
+        "period_um_xy": [
+          210.0,
+          140.0
+        ],
+        "harmonic_xy": [
+          1,
+          4
+        ],
+        "frequency_cycles_per_um_xy": [
+          0.004761904761904762,
+          0.02857142857142857
+        ],
+        "folded_cycles_per_um_xy": [
+          0.004761904761904762,
+          -0.009523809523809532
+        ],
+        "bin_yx": [
+          24,
+          4
+        ],
+        "aliased": true
+      }
+    ],
+    "DC_aliases_unidentifiable": []
+  },
+  "direct_unseparated_camera_CV_percent": 35.969132219556975,
+  "includes_LDF": false,
+  "primary_metric": "sampled_camera_common_notch",
+  "grid": "1um",
+  "layout": "diamond",
+  "backend": "chromatix",
+  "solver_seconds": 68.732002,
+  "execution_context": {
+    "backend": "chromatix",
+    "devices": [
+      "cuda:0"
+    ],
+    "x64_enabled": false,
+    "default_backend": "gpu",
+    "gpu_names": [
+      "NVIDIA GeForce RTX 3090 Ti"
+    ],
+    "environment": {
+      "python": "3.12.12 (main, Dec  5 2025, 20:21:41) [Clang 21.1.4 ]",
+      "executable": "/home/oxyflour/.venvs/oled-sparkle-chromatix/bin/python",
+      "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+      "processor": "x86_64",
+      "logical_cpus": 12,
+      "versions": {
+        "numpy": "2.5.4",
+        "Pillow": "13.0.0",
+        "torch": null,
+        "torchoptics": null,
+        "jax": "0.12.0.1",
+        "jaxlib": "0.12.0.1",
+        "jax-cuda13-plugin": "0.12.0.1",
+        "jax-cuda13-pjrt": "0.12.0.1",
+        "chromatix": "0.6.0",
+        "mitsuba": null,
+        "drjit": null
+      },
+      "environment_settings": {
+        "PYTHONPATH": null,
+        "OMP_NUM_THREADS": null,
+        "MKL_NUM_THREADS": null,
+        "JAX_PLATFORMS": "cuda",
+        "JAX_ENABLE_X64": null,
+        "DRJIT_LIBLLVM_PATH": null,
+        "SPARKLE_WSL_DISTRO": null,
+        "SPARKLE_WSL_PYTHON": null,
+        "XLA_PYTHON_CLIENT_PREALLOCATE": "false",
+        "XLA_PYTHON_CLIENT_MEM_FRACTION": "0.10"
+      }
+    },
+    "worker_solver_elapsed_seconds": 64.5186399850063,
+    "runtime": "wsl",
+    "wsl_distribution": "Ubuntu-22.04",
+    "worker_script": "/mnt/c/Projects/oled-sparkle/oled-ag-sparkle/scripts/chromatix_wsl.py",
+    "worker_command": [
+      "wsl.exe",
+      "--distribution",
+      "Ubuntu-22.04",
+      "--exec",
+      "env",
+      "-u",
+      "PYTHONPATH",
+      "-u",
+      "LD_LIBRARY_PATH",
+      "JAX_PLATFORMS=cuda",
+      "XLA_PYTHON_CLIENT_PREALLOCATE=false",
+      "XLA_PYTHON_CLIENT_MEM_FRACTION=0.10",
+      "PYTHONUNBUFFERED=1",
+      "/home/oxyflour/.venvs/oled-sparkle-chromatix/bin/python",
+      "/mnt/c/Projects/oled-sparkle/oled-ag-sparkle/scripts/chromatix_wsl.py",
+      "--request-dir",
+      "/mnt/c/Users/oxyfl/AppData/Local/Temp/chromatix-wsl-ayaehpfn"
+    ]
+  },
+  "run_id": "63a62e9d6e3b426bb74dd57140227f15",
+  "batch_id": "41d5b0a6feb04fd0a9b2a14d5d0c9dfe",
+  "raw_optical_file": "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\sparkle\\1um\\diamond\\chromatix\\brightness.npy",
+  "raw_optical_sha256": "f3cc69ea24b4efabc86c9d491f02e99febbdb115425eea773f18db50ce555a3d",
+  "height_sha256": "694b7c6d3914cf62ea9585d340dd62f2e70771c4f555276215903d9ac399d975",
+  "normalized_input_mean": 0.9999999950517565,
+  "linear_emission_scale": 15.060823752688876,
+  "green_period_um_xy": [
+    140.0,
+    140.0
+  ],
+  "flat_control_percent": 0.5385464205940038,
+  "periodic_flat_null_percent": 1.9144164900068457e-13,
+  "camera_mtf_audit": {
+    "frequency_cycles_per_um": [
+      0.0,
+      0.00078125,
+      0.0015625,
+      0.0023437500000000003,
+      0.003125,
+      0.00390625,
+      0.004687500000000001,
+      0.0054687500000000005,
+      0.00625,
+      0.00703125,
+      0.0078125,
+      0.00859375,
+      0.009375000000000001,
+      0.010156250000000002,
+      0.010937500000000001,
+      0.011718750000000002,
+      0.0125,
+      0.013281250000000001,
+      0.0140625,
+      0.014843750000000001,
+      0.015625,
+      0.016406250000000004,
+      0.0171875,
+      0.017968750000000002,
+      0.018750000000000003,
+      0.019531250000000003,
+      0.020312500000000004,
+      0.02109375,
+      0.021875000000000002,
+      0.022656250000000003,
+      0.023437500000000003,
+      0.024218750000000004,
+      0.025,
+      0.025781250000000002,
+      0.026562500000000003,
+      0.027343750000000003,
+      0.028125,
+      0.02890625
+    ],
+    "numerical_pupil_MTF": [
+      0.9999999999999999,
+      0.9666366095581606,
+      0.933273219116321,
+      0.8999098286744814,
+      0.8665464382326419,
+      0.8331830477908024,
+      0.7998196573489631,
+      0.7664562669071235,
+      0.733092876465284,
+      0.6997294860234445,
+      0.666366095581605,
+      0.6330027051397655,
+      0.6014427412082957,
+      0.569882777276826,
+      0.5383228133453561,
+      0.5067628494138864,
+      0.4752028854824165,
+      0.44364292155094676,
+      0.4138863841298467,
+      0.38412984670874656,
+      0.3561767357980162,
+      0.32822362488728585,
+      0.30027051397655546,
+      0.2723174030658251,
+      0.24616771866546439,
+      0.22001803426510372,
+      0.19567177637511268,
+      0.1713255184851217,
+      0.14878268710550044,
+      0.12623985572587917,
+      0.10550045085662757,
+      0.08476104598737602,
+      0.06762849413886382,
+      0.05049594229035167,
+      0.03516681695220919,
+      0.01983769161406671,
+      0.00991884580703336,
+      5.3896767422627884e-18
+    ],
+    "analytic_circular_pupil_MTF": [
+      1.0,
+      0.9662620722540536,
+      0.9325478536825733,
+      0.898881103561998,
+      0.8652856819040807,
+      0.8317856011651992,
+      0.798405079603249,
+      0.7651685968958326,
+      0.7321009526925352,
+      0.699227328853028,
+      0.6665733562254438,
+      0.6341651869513034,
+      0.602029573451401,
+      0.5701939554611939,
+      0.5386865567575078,
+      0.5075364935686172,
+      0.4767738971115842,
+      0.44643005328823654,
+      0.41653756334240233,
+      0.3871305303044716,
+      0.358244777424313,
+      0.32991810666629007,
+      0.3021906079302792,
+      0.2751050333069617,
+      0.2487072559028877,
+      0.22304684043218828,
+      0.19817776427946168,
+      0.1741593455132412,
+      0.1510574626836757,
+      0.12894619819803638,
+      0.10791011836726466,
+      0.08804755166164935,
+      0.06947551603806387,
+      0.05233755841790685,
+      0.036817211719368775,
+      0.023163714469844374,
+      0.011750073415247768,
+      0.0032517186048136894
+    ],
+    "max_absolute_MTF_error": 0.003326022855777662,
+    "padded_field_um_yx": [
+      1280.0,
+      1280.0
+    ],
+    "note": "Finite FFT pupil discretization; the existing wave pupil already supplies diffraction. Detector sinc is applied by subsequent pixel integration, not by another lens blur."
+  },
+  "phase_checks": [
+    {
+      "offset_um_xy": [
+        0.0,
+        0.0
+      ],
+      "analysis_grid": [
+        32,
+        32
+      ],
+      "analysis_pixel_pitch_um": 26.25,
+      "analysis_pixel_area_um2": 689.0625,
+      "analysis_extent_um_xyxy": [
+        -420.0,
+        -420.0,
+        420.0,
+        420.0
+      ],
+      "analysis_source_bounds_px_xyxy": [
+        0.0,
+        0.0,
+        840.0,
+        840.0
+      ],
+      "effective_roi_margin_um_xy": [
+        0.0,
+        0.0
+      ],
+      "analysis_resampling": "area-averaged linear brightness over square pixels",
+      "metric_source_file": "camera_separated.npy",
+      "sensor_phase_offset_um_xy": [
+        0.0,
+        0.0
+      ],
+      "mean": 0.00016327025968773044,
+      "std": 2.279999231952934e-05,
+      "ddof": 0,
+      "sparkle_contrast_percent": 13.964571602407226,
+      "num_pixels": 1024,
+      "minimum": 7.231658661304583e-05,
+      "maximum": 0.00032659960524243387,
+      "negative_filtered_measurement_pixels": 0,
+      "mean_preservation_error": 2.710505431213761e-20
+    },
+    {
+      "offset_um_xy": [
+        7.0,
+        0.0
+      ],
+      "analysis_grid": [
+        32,
+        32
+      ],
+      "analysis_pixel_pitch_um": 26.25,
+      "analysis_pixel_area_um2": 689.0625,
+      "analysis_extent_um_xyxy": [
+        -413.0,
+        -420.0,
+        427.0,
+        420.0
+      ],
+      "analysis_source_bounds_px_xyxy": [
+        0.0,
+        0.0,
+        840.0,
+        840.0
+      ],
+      "effective_roi_margin_um_xy": [
+        0.0,
+        0.0
+      ],
+      "analysis_resampling": "area-averaged linear brightness over square pixels",
+      "metric_source_file": "camera_separated.npy",
+      "sensor_phase_offset_um_xy": [
+        7.0,
+        0.0
+      ],
+      "mean": 0.00016332363342330808,
+      "std": 2.273396553866213e-05,
+      "ddof": 0,
+      "sparkle_contrast_percent": 13.919581056428875,
+      "num_pixels": 1024,
+      "minimum": 5.2449642940017834e-05,
+      "maximum": 0.0003150395777752539,
+      "negative_filtered_measurement_pixels": 0,
+      "mean_preservation_error": 0.0
+    },
+    {
+      "offset_um_xy": [
+        0.0,
+        7.0
+      ],
+      "analysis_grid": [
+        32,
+        32
+      ],
+      "analysis_pixel_pitch_um": 26.25,
+      "analysis_pixel_area_um2": 689.0625,
+      "analysis_extent_um_xyxy": [
+        -420.0,
+        -413.0,
+        420.0,
+        427.0
+      ],
+      "analysis_source_bounds_px_xyxy": [
+        0.0,
+        0.0,
+        840.0,
+        840.0
+      ],
+      "effective_roi_margin_um_xy": [
+        0.0,
+        0.0
+      ],
+      "analysis_resampling": "area-averaged linear brightness over square pixels",
+      "metric_source_file": "camera_separated.npy",
+      "sensor_phase_offset_um_xy": [
+        0.0,
+        7.0
+      ],
+      "mean": 0.00016327575916318674,
+      "std": 2.2729122040355996e-05,
+      "ddof": 0,
+      "sparkle_contrast_percent": 13.920695978904785,
+      "num_pixels": 1024,
+      "minimum": 6.617217473485251e-05,
+      "maximum": 0.0003236648429186896,
+      "negative_filtered_measurement_pixels": 0,
+      "mean_preservation_error": 0.0
+    },
+    {
+      "offset_um_xy": [
+        7.0,
+        7.0
+      ],
+      "analysis_grid": [
+        32,
+        32
+      ],
+      "analysis_pixel_pitch_um": 26.25,
+      "analysis_pixel_area_um2": 689.0625,
+      "analysis_extent_um_xyxy": [
+        -413.0,
+        -413.0,
+        427.0,
+        427.0
+      ],
+      "analysis_source_bounds_px_xyxy": [
+        0.0,
+        0.0,
+        840.0,
+        840.0
+      ],
+      "effective_roi_margin_um_xy": [
+        0.0,
+        0.0
+      ],
+      "analysis_resampling": "area-averaged linear brightness over square pixels",
+      "metric_source_file": "camera_separated.npy",
+      "sensor_phase_offset_um_xy": [
+        7.0,
+        7.0
+      ],
+      "mean": 0.0001633293066220589,
+      "std": 2.2656198953272932e-05,
+      "ddof": 0,
+      "sparkle_contrast_percent": 13.871484194627099,
+      "num_pixels": 1024,
+      "minimum": 4.579255555179085e-05,
+      "maximum": 0.0003100099778722301,
+      "negative_filtered_measurement_pixels": 0,
+      "mean_preservation_error": 0.0
+    }
+  ],
+  "nested_ROI": {
+    "analysis_grid": [
+      16,
+      16
+    ],
+    "analysis_pixel_pitch_um": 26.25,
+    "analysis_pixel_area_um2": 689.0625,
+    "analysis_extent_um_xyxy": [
+      -210.0,
+      -210.0,
+      210.0,
+      210.0
+    ],
+    "analysis_source_bounds_px_xyxy": [
+      0.0,
+      0.0,
+      420.0,
+      420.0
+    ],
+    "effective_roi_margin_um_xy": [
+      0.0,
+      0.0
+    ],
+    "analysis_resampling": "area-averaged linear brightness over square pixels",
+    "metric_source_file": "camera_separated.npy",
+    "sensor_phase_offset_um_xy": [
+      0.0,
+      0.0
+    ],
+    "mean": 0.00016514551903683224,
+    "std": 1.836360353259169e-05,
+    "ddof": 0,
+    "sparkle_contrast_percent": 11.119649894040464,
+    "num_pixels": 256,
+    "minimum": 0.00010319266486973663,
+    "maximum": 0.00022801894211885282,
+    "negative_filtered_measurement_pixels": 0,
+    "mean_preservation_error": 0.0
+  },
+  "nested_ROI_flat_percent": 0.06150721055254621,
+  "nested_ROI_mask_removed_bins": 89,
+  "nested_ROI_same_full_mask": {
+    "mean": 0.00016514551903683224,
+    "std": 2.0804986200066234e-05,
+    "ddof": 0,
+    "sparkle_contrast_percent": 12.597971971268635,
+    "num_pixels": 256,
+    "minimum": 8.379380203964382e-05,
+    "maximum": 0.0002294335041454818,
+    "negative_filtered_measurement_pixels": 0
+  }
+}

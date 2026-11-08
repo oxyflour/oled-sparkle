@@ -1,0 +1,53 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "surface_id": "oled-1mm-etched-ag",
+      "backend": "torch",
+      "curve_metric_absolute_error": 1.865174681370263e-14,
+      "passed": true
+    },
+    {
+      "surface_id": "oled-1mm-etched-ag",
+      "backend": "torchoptics",
+      "curve_metric_absolute_error": 1.7763568394002505e-14,
+      "passed": true
+    },
+    {
+      "surface_id": "oled-1mm-etched-ag",
+      "backend": "chromatix",
+      "curve_metric_absolute_error": 1.687538997430238e-14,
+      "passed": true
+    },
+    {
+      "surface_id": "oled-1mm-etched-ag",
+      "backend": "mitsuba",
+      "curve_metric_absolute_error": 5.551115123125783e-15,
+      "passed": true
+    },
+    {
+      "surface_id": "oled-1mm-etched-ag-pitch0p5",
+      "backend": "torch",
+      "curve_metric_absolute_error": 1.5187850976872141e-13,
+      "passed": true
+    },
+    {
+      "surface_id": "oled-1mm-etched-ag-pitch0p5",
+      "backend": "torchoptics",
+      "curve_metric_absolute_error": 1.5187850976872141e-13,
+      "passed": true
+    },
+    {
+      "surface_id": "oled-1mm-etched-ag-pitch0p5",
+      "backend": "chromatix",
+      "curve_metric_absolute_error": 1.6298074001497298e-13,
+      "passed": true
+    },
+    {
+      "surface_id": "oled-1mm-etched-ag-pitch0p5",
+      "backend": "mitsuba",
+      "curve_metric_absolute_error": 4.440892098500626e-16,
+      "passed": true
+    }
+  ]
+}

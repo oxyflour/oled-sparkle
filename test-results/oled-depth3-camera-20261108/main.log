@@ -1,0 +1,64 @@
+Height: 1000x1000 at 1um, emission: 500x500 at 2um
+Wave FFT: 1280x1280; source modes 77568; one complex64 field: 12.5 MiB
+Mitsuba rays: 1,536,000,000; mesh stride 1
+
+=== torch ===
+  torch: 6400/77568 modes
+  torch: 12800/77568 modes
+  torch: 19200/77568 modes
+  torch: 25600/77568 modes
+  torch: 32000/77568 modes
+  torch: 38400/77568 modes
+  torch: 44800/77568 modes
+  torch: 51200/77568 modes
+  torch: 57600/77568 modes
+  torch: 64000/77568 modes
+  torch: 70400/77568 modes
+  torch: 76800/77568 modes
+  torch: 77568/77568 modes
+  Sparkle CV: 47.70823%
+
+=== torchoptics ===
+  torchoptics: 6400/77568 modes
+  torchoptics: 12800/77568 modes
+  torchoptics: 19200/77568 modes
+  torchoptics: 25600/77568 modes
+  torchoptics: 32000/77568 modes
+  torchoptics: 38400/77568 modes
+  torchoptics: 44800/77568 modes
+  torchoptics: 51200/77568 modes
+  torchoptics: 57600/77568 modes
+  torchoptics: 64000/77568 modes
+  torchoptics: 70400/77568 modes
+  torchoptics: 76800/77568 modes
+  torchoptics: 77568/77568 modes
+  Sparkle CV: 47.70819%
+
+=== chromatix ===
+  Chromatix WSL: Ubuntu-22.04, JAX_PLATFORMS=cuda
+  chromatix: 6400/77568 modes
+  chromatix: 12800/77568 modes
+  chromatix: 19200/77568 modes
+  chromatix: 25600/77568 modes
+  chromatix: 32000/77568 modes
+  chromatix: 38400/77568 modes
+  chromatix: 44800/77568 modes
+  chromatix: 51200/77568 modes
+  chromatix: 57600/77568 modes
+  chromatix: 64000/77568 modes
+  chromatix: 70400/77568 modes
+  chromatix: 76800/77568 modes
+  chromatix: 77568/77568 modes
+  Sparkle CV: 47.70855%
+
+=== mitsuba ===
+jitc_llvm_init(): LLVM API initialization failed ..
+  Mitsuba variant=cuda_ad_rgb; measured height mesh stride=1
+  Mitsuba mesh: 1,000,000 vertices, 1,996,002 triangles
+  Mitsuba pixels: 1,000,000/1,000,000; pupil nodes 1536
+  Sparkle CV: 113.73845%
+torch: brightness CV = 47.708234%, solver = 37.759s
+torchoptics: brightness CV = 47.708185%, solver = 34.517s
+chromatix: brightness CV = 47.708553%, solver = 74.929s
+mitsuba: brightness CV = 113.738450%, solver = 2.325s
+HTML report: C:\Projects\oled-sparkle\test-results\oled-depth3-camera-20261108\1um\diamond\report.html

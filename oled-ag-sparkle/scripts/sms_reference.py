@@ -3,6 +3,11 @@
 Public basis: Becker 2021, sections 3.3-3.5, allows Fourier masking or moving
 window averaging to separate display periodicity. Exact proprietary settings
 used by Cheng 2025 were not published. All choices here are explicit.
+
+The public SMS1000 brochure also specifies numerical low-pass filtering of
+captured images. The retained sampled-camera common-notch benchmark omits that
+visual bandwidth restriction and is not an SMS1000-equivalent measurement.
+Do not change its historical plan silently or fit a cutoff to the paper value.
 """
 import math
 import numpy as np

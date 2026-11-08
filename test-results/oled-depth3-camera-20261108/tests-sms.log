@@ -1,0 +1,24 @@
+test_camera_no_second_integration_or_signed_signal_clipping (test_sms_reference.SMSReferenceTests.test_camera_no_second_integration_or_signed_signal_clipping) ... ok
+test_camera_pixel_aperture_matches_sinc_including_above_nyquist (test_sms_reference.SMSReferenceTests.test_camera_pixel_aperture_matches_sinc_including_above_nyquist) ... ok
+test_common_three_pass_mwa_cancels_all_periods_with_legacy_support (test_sms_reference.SMSReferenceTests.test_common_three_pass_mwa_cancels_all_periods_with_legacy_support) ... ok
+test_common_union_mask_removes_distinct_rectangular_lattices (test_sms_reference.SMSReferenceTests.test_common_union_mask_removes_distinct_rectangular_lattices) ... ok
+test_constant_zero_and_scale_invariance (test_sms_reference.SMSReferenceTests.test_constant_zero_and_scale_invariance) ... ok
+test_explicit_three_identical_windows_preserve_legacy_mwa (test_sms_reference.SMSReferenceTests.test_explicit_three_identical_windows_preserve_legacy_mwa) ... ok
+test_fast_flat_control_matches_wave_propagation (test_sms_reference.SMSReferenceTests.test_fast_flat_control_matches_wave_propagation) ... ok
+test_green_input_preserves_original_G (test_sms_reference.SMSReferenceTests.test_green_input_preserves_original_G) ... ok
+test_lattice_rejected_and_random_off_lattice_retained (test_sms_reference.SMSReferenceTests.test_lattice_rejected_and_random_off_lattice_retained) ... ok
+test_mwa_removes_exact_supercell (test_sms_reference.SMSReferenceTests.test_mwa_removes_exact_supercell) ... ok
+test_periodic_flat_camera_control_has_zero_post_notch_contrast (test_sms_reference.SMSReferenceTests.test_periodic_flat_camera_control_has_zero_post_notch_contrast) ... ok
+test_rectangular_mwa_uses_each_axis_period (test_sms_reference.SMSReferenceTests.test_rectangular_mwa_uses_each_axis_period) ... ok
+test_reject_noninteger_cell_crop (test_sms_reference.SMSReferenceTests.test_reject_noninteger_cell_crop) ... ok
+test_sampled_camera_removes_periodic_aliases_after_capture (test_sms_reference.SMSReferenceTests.test_sampled_camera_removes_periodic_aliases_after_capture) ... ok
+test_sampled_notches_retain_random_band_and_have_hermitian_symmetry (test_sms_reference.SMSReferenceTests.test_sampled_notches_retain_random_band_and_have_hermitian_symmetry) ... ok
+test_saved_report_rejects_a_different_solver_version (test_sms_reference.SMSReferenceTests.test_saved_report_rejects_a_different_solver_version) ... ok
+test_saved_report_rejects_a_run_before_its_declared_batch (test_sms_reference.SMSReferenceTests.test_saved_report_rejects_a_run_before_its_declared_batch) ... ok
+test_shared_runner_preserves_distinct_green_measurement_conditions (test_sms_reference.SMSReferenceTests.test_shared_runner_preserves_distinct_green_measurement_conditions) ... ok
+test_solver_applies_gain_after_linear_decoding (test_sms_reference.SMSReferenceTests.test_solver_applies_gain_after_linear_decoding) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 5.379s
+
+OK

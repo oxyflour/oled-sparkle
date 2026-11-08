@@ -1,0 +1,14 @@
+[
+  {
+    "pitch_um": 1.0,
+    "original_png_sha256": "de8f07d6beac7e0817332b18ae12ee9ccf8008e4a4c8f4a0f87646306f2d5c7e",
+    "regenerated_png_sha256": "de8f07d6beac7e0817332b18ae12ee9ccf8008e4a4c8f4a0f87646306f2d5c7e",
+    "same_calibration": true
+  },
+  {
+    "pitch_um": 0.5,
+    "original_png_sha256": "9a495dc565e3bb2b5ef725e9950f05a8958cc70e1364978b352607b1d91c4c3d",
+    "regenerated_png_sha256": "9a495dc565e3bb2b5ef725e9950f05a8958cc70e1364978b352607b1d91c4c3d",
+    "same_calibration": true
+  }
+]

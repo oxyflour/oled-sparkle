@@ -25,9 +25,9 @@ def build_command(*, height_surface='etched-ag', pitch_um=1., emission_layout='p
     if height_surface=='original' and pitch_um!=1.:
         raise ValueError('The original interpolated surface is available only at 1 um')
     if height_surface=='etched-ag':
-        from prepare_etched_ag import prepare
-        inputs=ROOT/'assets/oled-1mm-etched-ag'
-        case='oled-1mm-etched-ag-periodic-50um'
+        from prepare_etched_ag import DEFAULT_CASE, DEFAULT_INPUTS, prepare
+        inputs=DEFAULT_INPUTS[pitch_um]
+        case=DEFAULT_CASE+'-periodic-50um'
     elif height_surface=='random-pits':
         from prepare_random_pits import prepare
         inputs=ROOT/'assets/oled-1mm-pits3to5um'
@@ -37,7 +37,8 @@ def build_command(*, height_surface='etched-ag', pitch_um=1., emission_layout='p
         inputs=ROOT/'assets/oled-1mm-height1um'
         case='oled-1mm-original-periodic-50um'
     if pitch_um!=1.:
-        inputs=inputs.with_name(inputs.name+'-pitch0p5')
+        if height_surface!='etched-ag':
+            inputs=inputs.with_name(inputs.name+'-pitch0p5')
         case+='-pitch0p5'
     if emission_layout!='periodic':
         case=case.replace('-periodic-',f'-{emission_layout}-')

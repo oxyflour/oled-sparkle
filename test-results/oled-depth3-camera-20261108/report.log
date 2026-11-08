@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "C:\Projects\oled-sparkle\oled-ag-sparkle\scripts\generate_report.py", line 29, in <module>
+    main()
+  File "C:\Projects\oled-sparkle\oled-ag-sparkle\scripts\generate_report.py", line 20, in main
+    output = (write_sms_report(args.results, args.out) if args.kind == 'sms-reference' else
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Projects\oled-sparkle\oled-ag-sparkle\scripts\reporting.py", line 502, in write_sms_report
+    return _write_layout_report(results, output)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Projects\oled-sparkle\oled-ag-sparkle\scripts\reporting.py", line 741, in _write_layout_report
+    assert original['primary_filter'] == record['primary_filter']
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+HTML report: C:\Projects\oled-sparkle\test-results\oled-depth3-camera-20261108\sparkle.html
+HTML report: C:\Projects\oled-sparkle\test-results\oled-depth3-camera-20261108\sparkle.html

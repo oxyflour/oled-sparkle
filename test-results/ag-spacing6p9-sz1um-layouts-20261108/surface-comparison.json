@@ -1,0 +1,160 @@
+{
+  "definition": {
+    "title": "6.9 um / Sz1 um AG: four OLED layouts",
+    "description": "Four full-green OLED layout proxies on the same exploratory AG, at the same nominal logical pitch and mean linear green intensity. Camera, ROI and the common periodic mask are unchanged. The saved original 25 um / Sa0.1 um AG batch supplies the same-layout surface baseline; no lowpass or MWA is introduced.",
+    "baseline_results": "C:\\Projects\\oled-sparkle\\test-results\\oled-camera-comparison",
+    "baseline_protocol_sha256": "7826ee4bc50831e20e6757276948e012ef89a142a6c3aa85a3f4a67aa4b84f63",
+    "baseline_summary_sha256": "32828e1724d1395d5df72d097934284b1ed48e882157f43a51647032287b0355",
+    "baseline_label": "25 um / Sa0.1 um",
+    "surface_label": "6.9 um / Sz1 um",
+    "baseline_plot_label": "Original AG | 25 um spacing",
+    "surface_plot_label": "Exploratory AG | 6.9 um spacing",
+    "haze_report": "../ag-spacing6p9-sz1um-20261108/haze/haze.html"
+  },
+  "records": [
+    {
+      "layout": "diamond",
+      "grid": "1um",
+      "backend": "torch",
+      "baseline_sparkle_percent": 24.016988381273602,
+      "surface_sparkle_percent": 13.964710002868278,
+      "difference_percentage_points": -10.052278378405324,
+      "same_frequency_mask": true
+    },
+    {
+      "layout": "diamond",
+      "grid": "1um",
+      "backend": "torchoptics",
+      "baseline_sparkle_percent": 24.01705189996405,
+      "surface_sparkle_percent": 13.964793206821447,
+      "difference_percentage_points": -10.052258693142601,
+      "same_frequency_mask": true
+    },
+    {
+      "layout": "diamond",
+      "grid": "1um",
+      "backend": "chromatix",
+      "baseline_sparkle_percent": 24.0163641655765,
+      "surface_sparkle_percent": 13.964571602407226,
+      "difference_percentage_points": -10.051792563169275,
+      "same_frequency_mask": true
+    },
+    {
+      "layout": "rgb-stripe",
+      "grid": "1um",
+      "backend": "torch",
+      "baseline_sparkle_percent": 8.880588762124797,
+      "surface_sparkle_percent": 5.449757429421497,
+      "difference_percentage_points": -3.430831332703299,
+      "same_frequency_mask": true
+    },
+    {
+      "layout": "rgb-stripe",
+      "grid": "1um",
+      "backend": "torchoptics",
+      "baseline_sparkle_percent": 8.880347758541713,
+      "surface_sparkle_percent": 5.44970204722805,
+      "difference_percentage_points": -3.4306457113136632,
+      "same_frequency_mask": true
+    },
+    {
+      "layout": "rgb-stripe",
+      "grid": "1um",
+      "backend": "chromatix",
+      "baseline_sparkle_percent": 8.880276238585608,
+      "surface_sparkle_percent": 5.449716968758201,
+      "difference_percentage_points": -3.430559269827407,
+      "same_frequency_mask": true
+    },
+    {
+      "layout": "rgb-delta",
+      "grid": "1um",
+      "backend": "torch",
+      "baseline_sparkle_percent": 26.721904061227093,
+      "surface_sparkle_percent": 14.410891251556276,
+      "difference_percentage_points": -12.311012809670817,
+      "same_frequency_mask": true
+    },
+    {
+      "layout": "rgb-delta",
+      "grid": "1um",
+      "backend": "torchoptics",
+      "baseline_sparkle_percent": 26.72213998761559,
+      "surface_sparkle_percent": 14.410979875536485,
+      "difference_percentage_points": -12.311160112079106,
+      "same_frequency_mask": true
+    },
+    {
+      "layout": "rgb-delta",
+      "grid": "1um",
+      "backend": "chromatix",
+      "baseline_sparkle_percent": 26.721105581492694,
+      "surface_sparkle_percent": 14.410731624325877,
+      "difference_percentage_points": -12.310373957166817,
+      "same_frequency_mask": true
+    },
+    {
+      "layout": "windmill",
+      "grid": "1um",
+      "backend": "torch",
+      "baseline_sparkle_percent": 24.14710784955391,
+      "surface_sparkle_percent": 12.87189621089407,
+      "difference_percentage_points": -11.275211638659842,
+      "same_frequency_mask": true
+    },
+    {
+      "layout": "windmill",
+      "grid": "1um",
+      "backend": "torchoptics",
+      "baseline_sparkle_percent": 24.147240550943064,
+      "surface_sparkle_percent": 12.871925390277152,
+      "difference_percentage_points": -11.275315160665912,
+      "same_frequency_mask": true
+    },
+    {
+      "layout": "windmill",
+      "grid": "1um",
+      "backend": "chromatix",
+      "baseline_sparkle_percent": 24.146413496342213,
+      "surface_sparkle_percent": 12.871816346239234,
+      "difference_percentage_points": -11.274597150102979,
+      "same_frequency_mask": true
+    },
+    {
+      "layout": "diamond",
+      "grid": "0p5um",
+      "backend": "torch",
+      "baseline_sparkle_percent": 23.977983409677865,
+      "surface_sparkle_percent": 13.789377156607287,
+      "difference_percentage_points": -10.188606253070578,
+      "same_frequency_mask": true
+    },
+    {
+      "layout": "rgb-stripe",
+      "grid": "0p5um",
+      "backend": "torch",
+      "baseline_sparkle_percent": 8.715334151400048,
+      "surface_sparkle_percent": 5.419532828458999,
+      "difference_percentage_points": -3.295801322941049,
+      "same_frequency_mask": true
+    },
+    {
+      "layout": "rgb-delta",
+      "grid": "0p5um",
+      "backend": "torch",
+      "baseline_sparkle_percent": 26.48693927268095,
+      "surface_sparkle_percent": 14.184711063764254,
+      "difference_percentage_points": -12.302228208916695,
+      "same_frequency_mask": true
+    },
+    {
+      "layout": "windmill",
+      "grid": "0p5um",
+      "backend": "torch",
+      "baseline_sparkle_percent": 24.082596314621703,
+      "surface_sparkle_percent": 12.933971689155879,
+      "difference_percentage_points": -11.148624625465825,
+      "same_frequency_mask": true
+    }
+  ]
+}

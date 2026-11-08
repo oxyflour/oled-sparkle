@@ -1,0 +1,193 @@
+Height: 1000x1000 at 1um, emission: 500x500 at 2um
+Wave FFT: 1280x1280; source modes 77568; one complex64 field: 12.5 MiB
+Mitsuba rays: 1,536,000,000; mesh stride 1
+
+=== torch ===
+  torch: 6400/77568 modes
+  torch: 12800/77568 modes
+  torch: 19200/77568 modes
+  torch: 25600/77568 modes
+  torch: 32000/77568 modes
+  torch: 38400/77568 modes
+  torch: 44800/77568 modes
+  torch: 51200/77568 modes
+  torch: 57600/77568 modes
+  torch: 64000/77568 modes
+  torch: 70400/77568 modes
+  torch: 76800/77568 modes
+  torch: 77568/77568 modes
+  Sparkle CV: 34.30854%
+
+=== torchoptics ===
+  torchoptics: 6400/77568 modes
+  torchoptics: 12800/77568 modes
+  torchoptics: 19200/77568 modes
+  torchoptics: 25600/77568 modes
+  torchoptics: 32000/77568 modes
+  torchoptics: 38400/77568 modes
+  torchoptics: 44800/77568 modes
+  torchoptics: 51200/77568 modes
+  torchoptics: 57600/77568 modes
+  torchoptics: 64000/77568 modes
+  torchoptics: 70400/77568 modes
+  torchoptics: 76800/77568 modes
+  torchoptics: 77568/77568 modes
+  Sparkle CV: 34.30860%
+
+=== chromatix ===
+  Chromatix WSL: Ubuntu-22.04, JAX_PLATFORMS=cuda
+  chromatix: 6400/77568 modes
+  chromatix: 12800/77568 modes
+  chromatix: 19200/77568 modes
+  chromatix: 25600/77568 modes
+  chromatix: 32000/77568 modes
+  chromatix: 38400/77568 modes
+  chromatix: 44800/77568 modes
+  chromatix: 51200/77568 modes
+  chromatix: 57600/77568 modes
+  chromatix: 64000/77568 modes
+  chromatix: 70400/77568 modes
+  chromatix: 76800/77568 modes
+  chromatix: 77568/77568 modes
+  Sparkle CV: 34.30867%
+
+=== mitsuba ===
+jitc_llvm_init(): LLVM API initialization failed ..
+  Mitsuba variant=cuda_ad_rgb; measured height mesh stride=1
+  Mitsuba mesh: 1,000,000 vertices, 1,996,002 triangles
+  Mitsuba pixels: 1,000,000/1,000,000; pupil nodes 1536
+  Sparkle CV: 73.64578%
+torch: brightness CV = 34.308541%, solver = 37.808s
+torchoptics: brightness CV = 34.308599%, solver = 34.251s
+chromatix: brightness CV = 34.308665%, solver = 74.719s
+mitsuba: brightness CV = 73.645780%, solver = 1.023s
+HTML report: C:\Projects\oled-sparkle\test-results\ag-spacing6p9-sz1um-layouts-20261108\1um\diamond\report.html
+Height: 1000x1000 at 1um, emission: 500x500 at 2um
+Wave FFT: 1280x1280; source modes 68068; one complex64 field: 12.5 MiB
+Mitsuba rays: 1,536,000,000; mesh stride 1
+
+=== torch ===
+  torch: 6400/68068 modes
+  torch: 12800/68068 modes
+  torch: 19200/68068 modes
+  torch: 25600/68068 modes
+  torch: 32000/68068 modes
+  torch: 38400/68068 modes
+  torch: 44800/68068 modes
+  torch: 51200/68068 modes
+  torch: 57600/68068 modes
+  torch: 64000/68068 modes
+  torch: 68068/68068 modes
+  Sparkle CV: 24.87159%
+
+=== torchoptics ===
+  torchoptics: 6400/68068 modes
+  torchoptics: 12800/68068 modes
+  torchoptics: 19200/68068 modes
+  torchoptics: 25600/68068 modes
+  torchoptics: 32000/68068 modes
+  torchoptics: 38400/68068 modes
+  torchoptics: 44800/68068 modes
+  torchoptics: 51200/68068 modes
+  torchoptics: 57600/68068 modes
+  torchoptics: 64000/68068 modes
+  torchoptics: 68068/68068 modes
+  Sparkle CV: 24.87156%
+
+=== chromatix ===
+  Chromatix WSL: Ubuntu-22.04, JAX_PLATFORMS=cuda
+  chromatix: 6400/68068 modes
+  chromatix: 12800/68068 modes
+  chromatix: 19200/68068 modes
+  chromatix: 25600/68068 modes
+  chromatix: 32000/68068 modes
+  chromatix: 38400/68068 modes
+  chromatix: 44800/68068 modes
+  chromatix: 51200/68068 modes
+  chromatix: 57600/68068 modes
+  chromatix: 64000/68068 modes
+  chromatix: 68068/68068 modes
+  Sparkle CV: 24.87164%
+
+=== mitsuba ===
+jitc_llvm_init(): LLVM API initialization failed ..
+  Mitsuba variant=cuda_ad_rgb; measured height mesh stride=1
+  Mitsuba mesh: 1,000,000 vertices, 1,996,002 triangles
+  Mitsuba pixels: 1,000,000/1,000,000; pupil nodes 1536
+  Sparkle CV: 51.63425%
+torch: brightness CV = 24.871593%, solver = 33.628s
+torchoptics: brightness CV = 24.871562%, solver = 30.198s
+chromatix: brightness CV = 24.871637%, solver = 76.642s
+mitsuba: brightness CV = 51.634251%, solver = 1.122s
+HTML report: C:\Projects\oled-sparkle\test-results\ag-spacing6p9-sz1um-layouts-20261108\1um\rgb-stripe\report.html
+Height: 1000x1000 at 1um, emission: 500x500 at 2um
+Wave FFT: 1280x1280; source modes 15133; one complex64 field: 12.5 MiB
+Mitsuba rays: 1,536,000,000; mesh stride 1
+
+=== torch ===
+  torch: 6400/15133 modes
+  torch: 12800/15133 modes
+  torch: 15133/15133 modes
+  Sparkle CV: 72.69880%
+
+=== torchoptics ===
+  torchoptics: 6400/15133 modes
+  torchoptics: 12800/15133 modes
+  torchoptics: 15133/15133 modes
+  Sparkle CV: 72.69877%
+
+=== chromatix ===
+  Chromatix WSL: Ubuntu-22.04, JAX_PLATFORMS=cuda
+  chromatix: 6400/15133 modes
+  chromatix: 12800/15133 modes
+  chromatix: 15133/15133 modes
+  Sparkle CV: 72.69885%
+
+=== mitsuba ===
+jitc_llvm_init(): LLVM API initialization failed ..
+  Mitsuba variant=cuda_ad_rgb; measured height mesh stride=1
+  Mitsuba mesh: 1,000,000 vertices, 1,996,002 triangles
+  Mitsuba pixels: 1,000,000/1,000,000; pupil nodes 1536
+  Sparkle CV: 121.51715%
+torch: brightness CV = 72.698805%, solver = 10.261s
+torchoptics: brightness CV = 72.698771%, solver = 7.179s
+chromatix: brightness CV = 72.698849%, solver = 20.380s
+mitsuba: brightness CV = 121.517149%, solver = 0.834s
+HTML report: C:\Projects\oled-sparkle\test-results\ag-spacing6p9-sz1um-layouts-20261108\1um\rgb-delta\report.html
+Height: 1000x1000 at 1um, emission: 500x500 at 2um
+Wave FFT: 1280x1280; source modes 20890; one complex64 field: 12.5 MiB
+Mitsuba rays: 1,536,000,000; mesh stride 1
+
+=== torch ===
+  torch: 6400/20890 modes
+  torch: 12800/20890 modes
+  torch: 19200/20890 modes
+  torch: 20890/20890 modes
+  Sparkle CV: 37.74595%
+
+=== torchoptics ===
+  torchoptics: 6400/20890 modes
+  torchoptics: 12800/20890 modes
+  torchoptics: 19200/20890 modes
+  torchoptics: 20890/20890 modes
+  Sparkle CV: 37.74592%
+
+=== chromatix ===
+  Chromatix WSL: Ubuntu-22.04, JAX_PLATFORMS=cuda
+  chromatix: 6400/20890 modes
+  chromatix: 12800/20890 modes
+  chromatix: 19200/20890 modes
+  chromatix: 20890/20890 modes
+  Sparkle CV: 37.74600%
+
+=== mitsuba ===
+jitc_llvm_init(): LLVM API initialization failed ..
+  Mitsuba variant=cuda_ad_rgb; measured height mesh stride=1
+  Mitsuba mesh: 1,000,000 vertices, 1,996,002 triangles
+  Mitsuba pixels: 1,000,000/1,000,000; pupil nodes 1536
+  Sparkle CV: 78.34747%
+torch: brightness CV = 37.745948%, solver = 12.568s
+torchoptics: brightness CV = 37.745921%, solver = 9.664s
+chromatix: brightness CV = 37.746004%, solver = 25.890s
+mitsuba: brightness CV = 78.347465%, solver = 1.043s
+HTML report: C:\Projects\oled-sparkle\test-results\ag-spacing6p9-sz1um-layouts-20261108\1um\windmill\report.html

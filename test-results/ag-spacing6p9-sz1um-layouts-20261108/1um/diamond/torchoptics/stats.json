@@ -1,0 +1,90 @@
+{
+  "backend": "torchoptics",
+  "physics_group": "scalar_wave",
+  "physical_model": "scalar ASM + thin phase screen + ideal NA imaging",
+  "metric_definition": "100 * std(I_ROI, ddof=0) / mean(I_ROI)",
+  "metric_domain": "area-averaged collected brightness pixels at analysis_pixel_pitch_um, including dark pixels",
+  "brightness_units": "relative linear intensity",
+  "deterministic": true,
+  "height_grid": [
+    1000,
+    1000
+  ],
+  "emission_grid": [
+    500,
+    500
+  ],
+  "height_pitch_um": 1.0,
+  "height_range_um": 1.04,
+  "emission_pitch_um": 2.0,
+  "gap_um": 500.0,
+  "wavelength_nm": 530.0,
+  "n_stack": 1.5,
+  "n_out": 1.0,
+  "camera_na": 0.00781226159233428,
+  "source_samples_per_axis": 1,
+  "source_node_pitch_um": 2.0,
+  "source_representation": "incoherent point quadrature",
+  "field_width_um": 1000.0,
+  "field_height_um": 1000.0,
+  "pad_px": 140,
+  "batch": 16,
+  "roi_margin_um": 219.99999999999997,
+  "roi_margin_px": 0,
+  "torch_device_setting": "cuda",
+  "ray_radial": 24,
+  "ray_angular": 64,
+  "mesh_stride": 1,
+  "mitsuba_variant": "cuda_ad_rgb",
+  "num_sources_or_rays": 77568,
+  "elapsed_seconds": 34.250562,
+  "analysis_grid": [
+    21,
+    21
+  ],
+  "analysis_pixel_pitch_um": 26.249999999999996,
+  "analysis_pixel_area_um2": 689.0624999999998,
+  "analysis_extent_um_xyxy": [
+    -275.62499999999994,
+    -275.62499999999994,
+    275.625,
+    275.625
+  ],
+  "analysis_source_bounds_px_xyxy": [
+    224.37500000000006,
+    224.37500000000006,
+    775.625,
+    775.625
+  ],
+  "effective_roi_margin_um_xy": [
+    224.37500000000006,
+    224.37500000000006
+  ],
+  "analysis_resampling": "area-averaged linear brightness over square pixels",
+  "metric_source_file": "analysis_brightness.npy",
+  "sparkle_cv_percent": 34.308599163907004,
+  "brightness_mean": 0.000163772447932949,
+  "brightness_std": 5.6188032702233775e-05,
+  "std_ddof": 0,
+  "num_roi_pixels": 441,
+  "roi_bounds_xyxy": [
+    0,
+    0,
+    21,
+    21
+  ],
+  "warnings": [
+    "Single effective wavelength and idealized camera optics; relative intensity units.",
+    "All full analysis pixels in the centered geometric ROI enter the statistic."
+  ],
+  "run_id": "03c7211a96d84edb888b61fcbb1af7bc",
+  "started_at_utc": "2026-11-08T10:24:17.473930+00:00",
+  "finished_at_utc": "2026-11-08T10:24:51.841404+00:00",
+  "postprocess_elapsed_seconds": 0.116617,
+  "execution_context": {
+    "backend": "torchoptics",
+    "device": "cuda",
+    "threads": 6,
+    "gpu_name": "NVIDIA GeForce RTX 3090 Ti"
+  }
+}

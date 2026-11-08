@@ -1,0 +1,150 @@
+{
+  "kind": "analytic-facet-grid-sensitivity",
+  "model": "Same periodic mesh diagonal and float64 single-hit Snell/Fresnel. No Mitsuba execution, no diffraction or Maxwell validation.",
+  "input_calibration": {
+    "source": "Synthetic rounded Voronoi-bowl proxy; scripts/prepare_etched_ag.py",
+    "model_status": "Illustrative morphology, not measured glass or a calibrated commercial product.",
+    "morphology_reference_url": "https://sid.org/Portals/sid/Files/SID-Digest/docs/68-2.pdf",
+    "roughness_order_of_magnitude_reference_url": "https://www.agc-yourglass.com/sites/default/files/agc_docs/Factsheet_Anti-glare_1020_EN.pdf",
+    "reference_interpretation": "Irregular polygonal etched features motivate the proxy. AGC line Ra/Rsm specifications are not equal to generated areal Sa or equivalent cell diameter.",
+    "assigned_field_um": [
+      1000.0,
+      1000.0
+    ],
+    "assigned_texel_um": 1.0,
+    "height_range_um": 0.5361845861372564,
+    "png_bits_per_channel": 16,
+    "sha256": "de8f07d6beac7e0817332b18ae12ee9ccf8008e4a4c8f4a0f87646306f2d5c7e",
+    "seed": 20261107,
+    "cell_count": 1600,
+    "nominal_site_spacing_um": 25.0,
+    "minimum_site_separation_um": 7.5,
+    "relative_depth_distribution": "Uniform [0.7, 1.3], assigned independently to each cell",
+    "raw_profile": "-depth_i * (1 - (d_nearest / d_second_nearest)^2)^2",
+    "rounding": {
+      "gaussian_sigma_um": 1.2,
+      "boundary": "periodic wrap"
+    },
+    "periodic_domain_um": 1000.0,
+    "calibration": {
+      "reference_pitch_um": 0.5,
+      "target_Sa_um": 0.1,
+      "raw_to_um_scale": 0.40302946859767835,
+      "raw_black_level": -1.3055529717873606,
+      "encoding": "uint16 / 65535 * height_range_um; black is low, white is high",
+      "no_per_output_grid_rescaling": true
+    },
+    "equivalent_cell_diameter_um": {
+      "definition": "2*sqrt(Voronoi cell area/pi), not Rsm or nearest-neighbor spacing",
+      "mean": 27.557867411047877,
+      "p10": 19.802170158196347,
+      "p50": 27.250999329690345,
+      "p90": 35.45472563305237
+    },
+    "measured_surface": {
+      "Sa_um": 0.099999276207844,
+      "Sq_um": 0.11851186992921194,
+      "Sz_um": 0.5150186515322807,
+      "height_min_um": 0.010832507698874302,
+      "height_max_um": 0.525851159231155,
+      "rms_slope": 0.03243637791250601,
+      "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+    },
+    "maximum_quantization_error_um": 4.0908233388536885e-06,
+    "generation_elapsed_seconds": 5.031804800033569
+  },
+  "sampling": "Independently evaluate prepare_etched_ag.geometry/raw_surface at each pitch; retain fixed reference calibration, uint16 quantization and 1000um domain. No PNG or original input is overwritten.",
+  "records": [
+    {
+      "definition": "Projected-area statistics of the original periodic triangular facets; float64 analytic Snell/Fresnel, no native ray execution",
+      "rms_slope": 0.033021180760658034,
+      "slope_quantiles": {
+        "p50": 0.024770067652432413,
+        "p90": 0.05214364821399305,
+        "p99": 0.08108547611649243,
+        "p99_9": 0.1008914580658735
+      },
+      "slope_threshold_for_acceptance": 0.08707302627624788,
+      "area_above_slope_threshold_percent": 0.5539999999999999,
+      "single_hit_haze_percent": 0.553996124264048,
+      "transmission_fraction": 0.9599997475972308,
+      "total_internal_reflection_area_percent": 0.0,
+      "pitch_um": 1.0,
+      "grid_yx": [
+        1000,
+        1000
+      ],
+      "elapsed_seconds": 0.9055878003127873
+    },
+    {
+      "definition": "Projected-area statistics of the original periodic triangular facets; float64 analytic Snell/Fresnel, no native ray execution",
+      "rms_slope": 0.033173147669172225,
+      "slope_quantiles": {
+        "p50": 0.024789720727662213,
+        "p90": 0.052406098877594245,
+        "p99": 0.08194144783681016,
+        "p99_9": 0.10225954379668604
+      },
+      "slope_threshold_for_acceptance": 0.08707302627624788,
+      "area_above_slope_threshold_percent": 0.6132625,
+      "single_hit_haze_percent": 0.6132581235317058,
+      "transmission_fraction": 0.9599997399700845,
+      "total_internal_reflection_area_percent": 0.0,
+      "pitch_um": 0.5,
+      "grid_yx": [
+        2000,
+        2000
+      ],
+      "elapsed_seconds": 3.422550399787724
+    },
+    {
+      "definition": "Projected-area statistics of the original periodic triangular facets; float64 analytic Snell/Fresnel, no native ray execution",
+      "rms_slope": 0.03321317131315038,
+      "slope_quantiles": {
+        "p50": 0.024796362551305517,
+        "p90": 0.05247627876543324,
+        "p99": 0.08214736209791312,
+        "p99_9": 0.10266887654128494
+      },
+      "slope_threshold_for_acceptance": 0.08707302627624788,
+      "area_above_slope_threshold_percent": 0.627134375,
+      "single_hit_haze_percent": 0.6271298717803716,
+      "transmission_fraction": 0.9599997379210526,
+      "total_internal_reflection_area_percent": 0.0,
+      "pitch_um": 0.25,
+      "grid_yx": [
+        4000,
+        4000
+      ],
+      "elapsed_seconds": 15.682428899686784
+    },
+    {
+      "definition": "Projected-area statistics of the original periodic triangular facets; float64 analytic Snell/Fresnel, no native ray execution",
+      "rms_slope": 0.033223372917590394,
+      "slope_quantiles": {
+        "p50": 0.02479813340383772,
+        "p90": 0.05249580732140007,
+        "p99": 0.08220470881084677,
+        "p99_9": 0.10276868213105768
+      },
+      "slope_threshold_for_acceptance": 0.08707302627624788,
+      "area_above_slope_threshold_percent": 0.6312296875,
+      "single_hit_haze_percent": 0.6312251491230989,
+      "transmission_fraction": 0.9599997373965585,
+      "total_internal_reflection_area_percent": 0.0,
+      "pitch_um": 0.125,
+      "grid_yx": [
+        8000,
+        8000
+      ],
+      "elapsed_seconds": 65.54934929963201
+    }
+  ],
+  "execution_context": {
+    "python": "3.12.12 (main, Dec  9 2025, 19:02:55) [MSC v.1944 64 bit (AMD64)]",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "device": "CPU; no new native GPU solves"
+  }
+}

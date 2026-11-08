@@ -1,0 +1,787 @@
+{
+  "kind": "ag-haze-four-backend",
+  "created_at_utc": "2026-11-08T10:10:02.224581+00:00",
+  "elapsed_seconds": 61.99284680001438,
+  "calculator_sha256": "a8180f230da7a0e538c3c8b035bdba5c92d9ddf5d8cb566ff7d471a2465cb0a4",
+  "height_reader_sha256": "fa1e10c2ff4e2e9039436ba692aa7365905d202c6f99d8d35549c07b61a9183d",
+  "records": [
+    {
+      "haze_percent": 41.20671869857012,
+      "wavelength_nm": 530.0,
+      "n_in": 1.5,
+      "n_out": 1.0,
+      "acceptance_half_angle_deg": 2.5,
+      "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+      "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+      "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+      "height_grid_yx": [
+        1000,
+        1000
+      ],
+      "height_pitch_um": 1.0,
+      "field_um_xy": [
+        1000.0,
+        1000.0
+      ],
+      "represented_scalar_forward_flux": 0.9985155785981994,
+      "zero_order_forward_flux_percent": 41.6088972577998,
+      "within_cone_nonzero_order_flux_percent": 17.18438404363009,
+      "nonzero_order_forward_flux_percent": 58.391102742200204,
+      "haze_without_cosine_weight_percent": 41.2859367491121,
+      "parseval_relative_error": 0.0,
+      "evanescent_field_power_percent": 0.0,
+      "spectral_edge_field_power_percent": 0.008830173334508485,
+      "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+      "complete_azimuth_angle_limit_deg": 15.366952797777708,
+      "near_axis_angle_step_deg_xy": [
+        0.03036676456360444,
+        0.03036676456360444
+      ],
+      "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+      "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+      "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim",
+      "physics_group": "scalar_phase_screen_wave",
+      "angular_power_relative_L2_vs_numpy": 6.680498673110089e-16,
+      "backend": "torch",
+      "surface_id": "1um",
+      "input": {
+        "path": "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\1um\\heightfield.png",
+        "sha256": "694b7c6d3914cf62ea9585d340dd62f2e70771c4f555276215903d9ac399d975",
+        "height_range_um": 1.04,
+        "height_pitch_um": 1.0,
+        "periodicity": "source metadata",
+        "roughness": {
+          "Sa_um": 0.12840640606536477,
+          "Sq_um": 0.15925484394358616,
+          "Sz_um": 0.9975811963158776,
+          "height_min_um": 0.02221713657490909,
+          "height_max_um": 1.0197983328907867,
+          "rms_slope": 0.09867374404588064,
+          "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+        },
+        "sidecar_path": "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\1um\\heightfield.source.json",
+        "sidecar_sha256": "53dc09a748fc5121103e78c168a78183110c727a486aecc149dfc3839ee1c256"
+      },
+      "reference_numpy_percent": 41.206718698570114,
+      "difference_vs_numpy_percentage_points": 7.105427357601002e-15,
+      "execution_context": {
+        "library": "torch",
+        "torch_version": "2.13.0+cu130",
+        "device": "cuda:0",
+        "dtype": "complex128",
+        "output_propagation_um": 100.0,
+        "gpu_name": "NVIDIA GeForce RTX 3090 Ti",
+        "native_operations": "Torch plane field -> phase modulation -> ASM -> angular FFT"
+      },
+      "solver_seconds": 3.937343499623239,
+      "started_at_utc": "2026-11-08T10:09:00.880638+00:00",
+      "finished_at_utc": "2026-11-08T10:09:05.022016+00:00",
+      "flat_control_percent": 2.921846653831125e-31,
+      "angular_curve_csv": "1um/torch/530nm/angular.csv"
+    },
+    {
+      "haze_percent": 41.20671869857012,
+      "wavelength_nm": 530.0,
+      "n_in": 1.5,
+      "n_out": 1.0,
+      "acceptance_half_angle_deg": 2.5,
+      "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+      "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+      "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+      "height_grid_yx": [
+        1000,
+        1000
+      ],
+      "height_pitch_um": 1.0,
+      "field_um_xy": [
+        1000.0,
+        1000.0
+      ],
+      "represented_scalar_forward_flux": 0.9985155785981995,
+      "zero_order_forward_flux_percent": 41.60889725779982,
+      "within_cone_nonzero_order_flux_percent": 17.18438404363009,
+      "nonzero_order_forward_flux_percent": 58.39110274220018,
+      "haze_without_cosine_weight_percent": 41.285936749112096,
+      "parseval_relative_error": 2.220446049250313e-16,
+      "evanescent_field_power_percent": 0.0,
+      "spectral_edge_field_power_percent": 0.008830173334508484,
+      "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+      "complete_azimuth_angle_limit_deg": 15.366952797777708,
+      "near_axis_angle_step_deg_xy": [
+        0.03036676456360444,
+        0.03036676456360444
+      ],
+      "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+      "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+      "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim",
+      "physics_group": "scalar_phase_screen_wave",
+      "angular_power_relative_L2_vs_numpy": 2.6724395029149215e-16,
+      "backend": "torchoptics",
+      "surface_id": "1um",
+      "input": {
+        "path": "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\1um\\heightfield.png",
+        "sha256": "694b7c6d3914cf62ea9585d340dd62f2e70771c4f555276215903d9ac399d975",
+        "height_range_um": 1.04,
+        "height_pitch_um": 1.0,
+        "periodicity": "source metadata",
+        "roughness": {
+          "Sa_um": 0.12840640606536477,
+          "Sq_um": 0.15925484394358616,
+          "Sz_um": 0.9975811963158776,
+          "height_min_um": 0.02221713657490909,
+          "height_max_um": 1.0197983328907867,
+          "rms_slope": 0.09867374404588064,
+          "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+        },
+        "sidecar_path": "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\1um\\heightfield.source.json",
+        "sidecar_sha256": "53dc09a748fc5121103e78c168a78183110c727a486aecc149dfc3839ee1c256"
+      },
+      "reference_numpy_percent": 41.206718698570114,
+      "difference_vs_numpy_percentage_points": 7.105427357601002e-15,
+      "execution_context": {
+        "library": "torchoptics",
+        "torch_version": "2.13.0+cu130",
+        "device": "cuda:0",
+        "dtype": "complex128",
+        "output_propagation_um": 100.0,
+        "gpu_name": "NVIDIA GeForce RTX 3090 Ti",
+        "library_version": "1.0.2",
+        "native_operations": "Field -> modulate -> propagate_to_z(ASM) -> Torch angular FFT"
+      },
+      "solver_seconds": 0.5769070000387728,
+      "started_at_utc": "2026-11-08T10:09:05.038214+00:00",
+      "finished_at_utc": "2026-11-08T10:09:05.838352+00:00",
+      "flat_control_percent": 1.5314756050544792e-30,
+      "angular_curve_csv": "1um/torchoptics/530nm/angular.csv"
+    },
+    {
+      "haze_percent": 41.20671869857013,
+      "wavelength_nm": 530.0,
+      "n_in": 1.5,
+      "n_out": 1.0,
+      "acceptance_half_angle_deg": 2.5,
+      "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+      "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+      "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+      "height_grid_yx": [
+        1000,
+        1000
+      ],
+      "height_pitch_um": 1.0,
+      "field_um_xy": [
+        1000.0,
+        1000.0
+      ],
+      "represented_scalar_forward_flux": 0.9985155785981992,
+      "zero_order_forward_flux_percent": 41.608897257799796,
+      "within_cone_nonzero_order_flux_percent": 17.184384043630086,
+      "nonzero_order_forward_flux_percent": 58.391102742200204,
+      "haze_without_cosine_weight_percent": 41.2859367491121,
+      "parseval_relative_error": 1.1102230246251565e-16,
+      "evanescent_field_power_percent": 0.0,
+      "spectral_edge_field_power_percent": 0.008830173334508484,
+      "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+      "complete_azimuth_angle_limit_deg": 15.366952797777708,
+      "near_axis_angle_step_deg_xy": [
+        0.03036676456360444,
+        0.03036676456360444
+      ],
+      "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+      "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+      "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim",
+      "physics_group": "scalar_phase_screen_wave",
+      "angular_power_relative_L2_vs_numpy": 1.0688693527487573e-15,
+      "backend": "chromatix",
+      "surface_id": "1um",
+      "input": {
+        "path": "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\1um\\heightfield.png",
+        "sha256": "694b7c6d3914cf62ea9585d340dd62f2e70771c4f555276215903d9ac399d975",
+        "height_range_um": 1.04,
+        "height_pitch_um": 1.0,
+        "periodicity": "source metadata",
+        "roughness": {
+          "Sa_um": 0.12840640606536477,
+          "Sq_um": 0.15925484394358616,
+          "Sz_um": 0.9975811963158776,
+          "height_min_um": 0.02221713657490909,
+          "height_max_um": 1.0197983328907867,
+          "rms_slope": 0.09867374404588064,
+          "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+        },
+        "sidecar_path": "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\1um\\heightfield.source.json",
+        "sidecar_sha256": "53dc09a748fc5121103e78c168a78183110c727a486aecc149dfc3839ee1c256"
+      },
+      "reference_numpy_percent": 41.206718698570114,
+      "difference_vs_numpy_percentage_points": 1.4210854715202004e-14,
+      "execution_context": {
+        "library": "Chromatix",
+        "library_version": "0.6.0",
+        "jax_version": "0.12.0.1",
+        "default_backend": "gpu",
+        "devices": [
+          "cuda:0"
+        ],
+        "dtype": "float64",
+        "native_operations": "plane_wave -> phase_change -> asm_propagate -> JAX angular FFT",
+        "output_propagation_um": 100.0,
+        "environment": {
+          "python": "3.12.12 (main, Dec  5 2025, 20:21:41) [Clang 21.1.4 ]",
+          "executable": "/home/oxyflour/.venvs/oled-sparkle-chromatix/bin/python",
+          "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+          "processor": "x86_64",
+          "logical_cpus": 12,
+          "versions": {
+            "numpy": "2.5.4",
+            "Pillow": "13.0.0",
+            "torch": null,
+            "torchoptics": null,
+            "jax": "0.12.0.1",
+            "jaxlib": "0.12.0.1",
+            "jax-cuda13-plugin": "0.12.0.1",
+            "jax-cuda13-pjrt": "0.12.0.1",
+            "chromatix": "0.6.0",
+            "mitsuba": null,
+            "drjit": null
+          },
+          "environment_settings": {
+            "PYTHONPATH": null,
+            "OMP_NUM_THREADS": null,
+            "MKL_NUM_THREADS": null,
+            "JAX_PLATFORMS": "cuda",
+            "JAX_ENABLE_X64": null,
+            "DRJIT_LIBLLVM_PATH": null,
+            "SPARKLE_WSL_DISTRO": null,
+            "SPARKLE_WSL_PYTHON": null,
+            "XLA_PYTHON_CLIENT_PREALLOCATE": "false",
+            "XLA_PYTHON_CLIENT_MEM_FRACTION": "0.10"
+          }
+        },
+        "worker_solver_elapsed_seconds": 3.0161634869873524,
+        "runtime": "wsl",
+        "wsl_distribution": "Ubuntu-22.04",
+        "worker_script": "/mnt/c/Projects/oled-sparkle/oled-ag-sparkle/scripts/chromatix_wsl.py",
+        "worker_command": [
+          "wsl.exe",
+          "--distribution",
+          "Ubuntu-22.04",
+          "--exec",
+          "env",
+          "-u",
+          "PYTHONPATH",
+          "-u",
+          "LD_LIBRARY_PATH",
+          "JAX_PLATFORMS=cuda",
+          "XLA_PYTHON_CLIENT_PREALLOCATE=false",
+          "XLA_PYTHON_CLIENT_MEM_FRACTION=0.10",
+          "PYTHONUNBUFFERED=1",
+          "/home/oxyflour/.venvs/oled-sparkle-chromatix/bin/python",
+          "/mnt/c/Projects/oled-sparkle/oled-ag-sparkle/scripts/chromatix_wsl.py",
+          "--request-dir",
+          "/mnt/c/Users/oxyfl/AppData/Local/Temp/chromatix-wsl-2eyjl_h7"
+        ]
+      },
+      "solver_seconds": 9.710610100068152,
+      "started_at_utc": "2026-11-08T10:09:05.844632+00:00",
+      "finished_at_utc": "2026-11-08T10:09:21.251427+00:00",
+      "flat_control_percent": 5.377925822471192e-31,
+      "angular_curve_csv": "1um/chromatix/530nm/angular.csv"
+    },
+    {
+      "haze_percent": 54.691701580351825,
+      "wavelength_nm": 530.0,
+      "acceptance_half_angle_deg": 2.5,
+      "n_in": 1.5,
+      "n_out": 1.0,
+      "physics_group": "geometric_rays",
+      "height_grid_yx": [
+        1000,
+        1000
+      ],
+      "height_pitch_um": 1.0,
+      "field_um_xy": [
+        1000.0,
+        1000.0
+      ],
+      "incident_rays": 2000000,
+      "hit_rays": 2000000,
+      "transmitted_rays": 2000000,
+      "mesh_vertices": 1002001,
+      "mesh_faces": 2000000,
+      "transmission_fraction": 0.9599806979571283,
+      "reflection_fraction": 0.04001930162853003,
+      "energy_balance_error": 4.1434167208365125e-10,
+      "definition": "100 * transmitted ray power outside acceptance cone / all forward transmitted ray power",
+      "boundary": "Periodically closed height mesh, N*dx projected area, two triangle-centroid rays per original grid cell",
+      "model_status": "Single-interface geometric refraction with native unpolarized Fresnel transmission; no diffraction or multiple scattering",
+      "backend": "mitsuba",
+      "surface_id": "1um",
+      "input": {
+        "path": "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\1um\\heightfield.png",
+        "sha256": "694b7c6d3914cf62ea9585d340dd62f2e70771c4f555276215903d9ac399d975",
+        "height_range_um": 1.04,
+        "height_pitch_um": 1.0,
+        "periodicity": "source metadata",
+        "roughness": {
+          "Sa_um": 0.12840640606536477,
+          "Sq_um": 0.15925484394358616,
+          "Sz_um": 0.9975811963158776,
+          "height_min_um": 0.02221713657490909,
+          "height_max_um": 1.0197983328907867,
+          "rms_slope": 0.09867374404588064,
+          "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+        },
+        "sidecar_path": "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\1um\\heightfield.source.json",
+        "sidecar_sha256": "53dc09a748fc5121103e78c168a78183110c727a486aecc149dfc3839ee1c256"
+      },
+      "reference_numpy_percent": 41.206718698570114,
+      "difference_vs_numpy_percentage_points": 13.484982881781711,
+      "execution_context": {
+        "library": "Mitsuba",
+        "library_version": "3.9.1",
+        "variant": "cuda_ad_rgb",
+        "native_operations": "create_mitsuba_mesh -> ray_intersect -> fresnel -> refract",
+        "ray_chunk": 65536,
+        "normal": "geometric triangle normal"
+      },
+      "solver_seconds": 4.252429999876767,
+      "started_at_utc": "2026-11-08T10:09:21.251427+00:00",
+      "finished_at_utc": "2026-11-08T10:09:26.068703+00:00",
+      "flat_control_percent": 0.0,
+      "angular_curve_csv": "1um/mitsuba/530nm/angular.csv"
+    },
+    {
+      "haze_percent": 41.19987285026296,
+      "wavelength_nm": 530.0,
+      "n_in": 1.5,
+      "n_out": 1.0,
+      "acceptance_half_angle_deg": 2.5,
+      "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+      "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+      "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+      "height_grid_yx": [
+        2000,
+        2000
+      ],
+      "height_pitch_um": 0.5,
+      "field_um_xy": [
+        1000.0,
+        1000.0
+      ],
+      "represented_scalar_forward_flux": 0.9985160326817046,
+      "zero_order_forward_flux_percent": 41.614024167416325,
+      "within_cone_nonzero_order_flux_percent": 17.186102982320712,
+      "nonzero_order_forward_flux_percent": 58.38597583258368,
+      "haze_without_cosine_weight_percent": 41.27907343100045,
+      "parseval_relative_error": 0.0,
+      "evanescent_field_power_percent": 0.0,
+      "spectral_edge_field_power_percent": 5.9938872398911e-08,
+      "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+      "complete_azimuth_angle_limit_deg": 32.00545482776425,
+      "near_axis_angle_step_deg_xy": [
+        0.03036676456360444,
+        0.03036676456360444
+      ],
+      "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+      "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+      "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim",
+      "physics_group": "scalar_phase_screen_wave",
+      "angular_power_relative_L2_vs_numpy": 4.0078876646351894e-16,
+      "backend": "torch",
+      "surface_id": "0p5um",
+      "input": {
+        "path": "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\0p5um\\heightfield.png",
+        "sha256": "16a45aba4bc32eff710a98bde0619a6ee7aac643750af3d9b03d6c46dd31ea9b",
+        "height_range_um": 1.04,
+        "height_pitch_um": 0.5,
+        "periodicity": "source metadata",
+        "roughness": {
+          "Sa_um": 0.12840444439753476,
+          "Sq_um": 0.15924351373229473,
+          "Sz_um": 1.0000091386075383,
+          "height_min_um": 0.019995422206875446,
+          "height_max_um": 1.0200045608144137,
+          "rms_slope": 0.10611445520559629,
+          "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+        },
+        "sidecar_path": "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\0p5um\\heightfield.source.json",
+        "sidecar_sha256": "aa3b08e0988d5aabfac564147694cfbad8ea03376117c58946f7661a8435c8c8"
+      },
+      "reference_numpy_percent": 41.199872850262956,
+      "difference_vs_numpy_percentage_points": 7.105427357601002e-15,
+      "execution_context": {
+        "library": "torch",
+        "torch_version": "2.13.0+cu130",
+        "device": "cuda:0",
+        "dtype": "complex128",
+        "output_propagation_um": 100.0,
+        "gpu_name": "NVIDIA GeForce RTX 3090 Ti",
+        "native_operations": "Torch plane field -> phase modulation -> ASM -> angular FFT"
+      },
+      "solver_seconds": 0.2966227997094393,
+      "started_at_utc": "2026-11-08T10:09:27.814068+00:00",
+      "finished_at_utc": "2026-11-08T10:09:29.450486+00:00",
+      "flat_control_percent": 3.210437901682838e-31,
+      "angular_curve_csv": "0p5um/torch/530nm/angular.csv"
+    },
+    {
+      "haze_percent": 41.19987285026296,
+      "wavelength_nm": 530.0,
+      "n_in": 1.5,
+      "n_out": 1.0,
+      "acceptance_half_angle_deg": 2.5,
+      "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+      "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+      "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+      "height_grid_yx": [
+        2000,
+        2000
+      ],
+      "height_pitch_um": 0.5,
+      "field_um_xy": [
+        1000.0,
+        1000.0
+      ],
+      "represented_scalar_forward_flux": 0.9985160326817046,
+      "zero_order_forward_flux_percent": 41.614024167416325,
+      "within_cone_nonzero_order_flux_percent": 17.186102982320712,
+      "nonzero_order_forward_flux_percent": 58.38597583258368,
+      "haze_without_cosine_weight_percent": 41.27907343100045,
+      "parseval_relative_error": 0.0,
+      "evanescent_field_power_percent": 0.0,
+      "spectral_edge_field_power_percent": 5.993887239891103e-08,
+      "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+      "complete_azimuth_angle_limit_deg": 32.00545482776425,
+      "near_axis_angle_step_deg_xy": [
+        0.03036676456360444,
+        0.03036676456360444
+      ],
+      "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+      "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+      "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim",
+      "physics_group": "scalar_phase_screen_wave",
+      "angular_power_relative_L2_vs_numpy": 4.0078889169506334e-16,
+      "backend": "torchoptics",
+      "surface_id": "0p5um",
+      "input": {
+        "path": "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\0p5um\\heightfield.png",
+        "sha256": "16a45aba4bc32eff710a98bde0619a6ee7aac643750af3d9b03d6c46dd31ea9b",
+        "height_range_um": 1.04,
+        "height_pitch_um": 0.5,
+        "periodicity": "source metadata",
+        "roughness": {
+          "Sa_um": 0.12840444439753476,
+          "Sq_um": 0.15924351373229473,
+          "Sz_um": 1.0000091386075383,
+          "height_min_um": 0.019995422206875446,
+          "height_max_um": 1.0200045608144137,
+          "rms_slope": 0.10611445520559629,
+          "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+        },
+        "sidecar_path": "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\0p5um\\heightfield.source.json",
+        "sidecar_sha256": "aa3b08e0988d5aabfac564147694cfbad8ea03376117c58946f7661a8435c8c8"
+      },
+      "reference_numpy_percent": 41.199872850262956,
+      "difference_vs_numpy_percentage_points": 7.105427357601002e-15,
+      "execution_context": {
+        "library": "torchoptics",
+        "torch_version": "2.13.0+cu130",
+        "device": "cuda:0",
+        "dtype": "complex128",
+        "output_propagation_um": 100.0,
+        "gpu_name": "NVIDIA GeForce RTX 3090 Ti",
+        "library_version": "1.0.2",
+        "native_operations": "Field -> modulate -> propagate_to_z(ASM) -> Torch angular FFT"
+      },
+      "solver_seconds": 0.055894399993121624,
+      "started_at_utc": "2026-11-08T10:09:29.459938+00:00",
+      "finished_at_utc": "2026-11-08T10:09:30.801846+00:00",
+      "flat_control_percent": 1.870836584101588e-30,
+      "angular_curve_csv": "0p5um/torchoptics/530nm/angular.csv"
+    },
+    {
+      "haze_percent": 41.19987285026296,
+      "wavelength_nm": 530.0,
+      "n_in": 1.5,
+      "n_out": 1.0,
+      "acceptance_half_angle_deg": 2.5,
+      "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+      "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+      "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+      "height_grid_yx": [
+        2000,
+        2000
+      ],
+      "height_pitch_um": 0.5,
+      "field_um_xy": [
+        1000.0,
+        1000.0
+      ],
+      "represented_scalar_forward_flux": 0.9985160326817043,
+      "zero_order_forward_flux_percent": 41.61402416741634,
+      "within_cone_nonzero_order_flux_percent": 17.186102982320715,
+      "nonzero_order_forward_flux_percent": 58.38597583258366,
+      "haze_without_cosine_weight_percent": 41.27907343100045,
+      "parseval_relative_error": 3.3306690738754696e-16,
+      "evanescent_field_power_percent": 0.0,
+      "spectral_edge_field_power_percent": 5.993887239891045e-08,
+      "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+      "complete_azimuth_angle_limit_deg": 32.00545482776425,
+      "near_axis_angle_step_deg_xy": [
+        0.03036676456360444,
+        0.03036676456360444
+      ],
+      "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+      "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+      "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim",
+      "physics_group": "scalar_phase_screen_wave",
+      "angular_power_relative_L2_vs_numpy": 4.0079829538634644e-16,
+      "backend": "chromatix",
+      "surface_id": "0p5um",
+      "input": {
+        "path": "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\0p5um\\heightfield.png",
+        "sha256": "16a45aba4bc32eff710a98bde0619a6ee7aac643750af3d9b03d6c46dd31ea9b",
+        "height_range_um": 1.04,
+        "height_pitch_um": 0.5,
+        "periodicity": "source metadata",
+        "roughness": {
+          "Sa_um": 0.12840444439753476,
+          "Sq_um": 0.15924351373229473,
+          "Sz_um": 1.0000091386075383,
+          "height_min_um": 0.019995422206875446,
+          "height_max_um": 1.0200045608144137,
+          "rms_slope": 0.10611445520559629,
+          "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+        },
+        "sidecar_path": "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\0p5um\\heightfield.source.json",
+        "sidecar_sha256": "aa3b08e0988d5aabfac564147694cfbad8ea03376117c58946f7661a8435c8c8"
+      },
+      "reference_numpy_percent": 41.199872850262956,
+      "difference_vs_numpy_percentage_points": 7.105427357601002e-15,
+      "execution_context": {
+        "library": "Chromatix",
+        "library_version": "0.6.0",
+        "jax_version": "0.12.0.1",
+        "default_backend": "gpu",
+        "devices": [
+          "cuda:0"
+        ],
+        "dtype": "float64",
+        "native_operations": "plane_wave -> phase_change -> asm_propagate -> JAX angular FFT",
+        "output_propagation_um": 100.0,
+        "environment": {
+          "python": "3.12.12 (main, Dec  5 2025, 20:21:41) [Clang 21.1.4 ]",
+          "executable": "/home/oxyflour/.venvs/oled-sparkle-chromatix/bin/python",
+          "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+          "processor": "x86_64",
+          "logical_cpus": 12,
+          "versions": {
+            "numpy": "2.5.4",
+            "Pillow": "13.0.0",
+            "torch": null,
+            "torchoptics": null,
+            "jax": "0.12.0.1",
+            "jaxlib": "0.12.0.1",
+            "jax-cuda13-plugin": "0.12.0.1",
+            "jax-cuda13-pjrt": "0.12.0.1",
+            "chromatix": "0.6.0",
+            "mitsuba": null,
+            "drjit": null
+          },
+          "environment_settings": {
+            "PYTHONPATH": null,
+            "OMP_NUM_THREADS": null,
+            "MKL_NUM_THREADS": null,
+            "JAX_PLATFORMS": "cuda",
+            "JAX_ENABLE_X64": null,
+            "DRJIT_LIBLLVM_PATH": null,
+            "SPARKLE_WSL_DISTRO": null,
+            "SPARKLE_WSL_PYTHON": null,
+            "XLA_PYTHON_CLIENT_PREALLOCATE": "false",
+            "XLA_PYTHON_CLIENT_MEM_FRACTION": "0.10"
+          }
+        },
+        "worker_solver_elapsed_seconds": 3.275387531146407,
+        "runtime": "wsl",
+        "wsl_distribution": "Ubuntu-22.04",
+        "worker_script": "/mnt/c/Projects/oled-sparkle/oled-ag-sparkle/scripts/chromatix_wsl.py",
+        "worker_command": [
+          "wsl.exe",
+          "--distribution",
+          "Ubuntu-22.04",
+          "--exec",
+          "env",
+          "-u",
+          "PYTHONPATH",
+          "-u",
+          "LD_LIBRARY_PATH",
+          "JAX_PLATFORMS=cuda",
+          "XLA_PYTHON_CLIENT_PREALLOCATE=false",
+          "XLA_PYTHON_CLIENT_MEM_FRACTION=0.10",
+          "PYTHONUNBUFFERED=1",
+          "/home/oxyflour/.venvs/oled-sparkle-chromatix/bin/python",
+          "/mnt/c/Projects/oled-sparkle/oled-ag-sparkle/scripts/chromatix_wsl.py",
+          "--request-dir",
+          "/mnt/c/Users/oxyfl/AppData/Local/Temp/chromatix-wsl-4ogysyu4"
+        ]
+      },
+      "solver_seconds": 7.506945299915969,
+      "started_at_utc": "2026-11-08T10:09:30.812359+00:00",
+      "finished_at_utc": "2026-11-08T10:09:45.381101+00:00",
+      "flat_control_percent": 6.484724724348197e-31,
+      "angular_curve_csv": "0p5um/chromatix/530nm/angular.csv"
+    },
+    {
+      "haze_percent": 56.0482761756101,
+      "wavelength_nm": 530.0,
+      "acceptance_half_angle_deg": 2.5,
+      "n_in": 1.5,
+      "n_out": 1.0,
+      "physics_group": "geometric_rays",
+      "height_grid_yx": [
+        2000,
+        2000
+      ],
+      "height_pitch_um": 0.5,
+      "field_um_xy": [
+        1000.0,
+        1000.0
+      ],
+      "incident_rays": 8000000,
+      "hit_rays": 8000000,
+      "transmitted_rays": 8000000,
+      "mesh_vertices": 4004001,
+      "mesh_faces": 8000000,
+      "transmission_fraction": 0.9599793255759105,
+      "reflection_fraction": 0.04002067400943767,
+      "energy_balance_error": 4.146518683967315e-10,
+      "definition": "100 * transmitted ray power outside acceptance cone / all forward transmitted ray power",
+      "boundary": "Periodically closed height mesh, N*dx projected area, two triangle-centroid rays per original grid cell",
+      "model_status": "Single-interface geometric refraction with native unpolarized Fresnel transmission; no diffraction or multiple scattering",
+      "backend": "mitsuba",
+      "surface_id": "0p5um",
+      "input": {
+        "path": "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\0p5um\\heightfield.png",
+        "sha256": "16a45aba4bc32eff710a98bde0619a6ee7aac643750af3d9b03d6c46dd31ea9b",
+        "height_range_um": 1.04,
+        "height_pitch_um": 0.5,
+        "periodicity": "source metadata",
+        "roughness": {
+          "Sa_um": 0.12840444439753476,
+          "Sq_um": 0.15924351373229473,
+          "Sz_um": 1.0000091386075383,
+          "height_min_um": 0.019995422206875446,
+          "height_max_um": 1.0200045608144137,
+          "rms_slope": 0.10611445520559629,
+          "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+        },
+        "sidecar_path": "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\0p5um\\heightfield.source.json",
+        "sidecar_sha256": "aa3b08e0988d5aabfac564147694cfbad8ea03376117c58946f7661a8435c8c8"
+      },
+      "reference_numpy_percent": 41.199872850262956,
+      "difference_vs_numpy_percentage_points": 14.848403325347142,
+      "execution_context": {
+        "library": "Mitsuba",
+        "library_version": "3.9.1",
+        "variant": "cuda_ad_rgb",
+        "native_operations": "create_mitsuba_mesh -> ray_intersect -> fresnel -> refract",
+        "ray_chunk": 65536,
+        "normal": "geometric triangle normal"
+      },
+      "solver_seconds": 15.442252099979669,
+      "started_at_utc": "2026-11-08T10:09:45.399770+00:00",
+      "finished_at_utc": "2026-11-08T10:10:02.224581+00:00",
+      "flat_control_percent": 0.0,
+      "angular_curve_csv": "0p5um/mitsuba/530nm/angular.csv"
+    }
+  ],
+  "references": [
+    {
+      "title": "ASTM D1003-21, haze and luminous transmittance measurement",
+      "url": "https://store.astm.org/d1003-21.html",
+      "use": "Defines the measurement context; this scalar monochromatic calculation does not implement the complete standard."
+    },
+    {
+      "title": "Simonsen et al., Phys. Rev. A 79, 063813 (2009), sections III and IV.1",
+      "url": "https://arxiv.org/html/0904.3753",
+      "use": "Normalize angular scattered power by total transmitted power; 2.5 degree acceptance interval. Its 1D phase-perturbation approximation is not used as a 2D solver here."
+    }
+  ],
+  "limitations": [
+    "Normal-incidence plane wave at one rough dielectric interface. Wave backends use a thin phase screen; Mitsuba uses geometric mesh refraction with Fresnel weights.",
+    "No OLED source pattern, camera NA, focal blur or pixel integration: haze is a separate angular transmission measurement.",
+    "Wave backends omit polarization and Fresnel amplitudes; Mitsuba includes unpolarized Fresnel transmission but omits diffraction. Both omit volume scatter and multiple interactions.",
+    "Only represented propagating directions are integrated. Report angular coverage, spectral edge power and independently sampled grid convergence.",
+    "No claim of absolute total transmittance; haze is a ratio of transmitted scalar flux.",
+    "Separate wavelengths are not luminous haze. A white-light value requires source spectrum, V(lambda), dispersion and transmitted-power weighting, plus the instrument correction for a standard measurement."
+  ],
+  "protocol": {
+    "kind": "ag-haze-four-backend",
+    "declared_at_utc": "2026-11-08T10:09:00.568316+00:00",
+    "parameters": {
+      "height_pitch_um": null,
+      "height_range_um": null,
+      "wavelength_nm": [
+        530.0
+      ],
+      "n_in": 1.5,
+      "n_out": 1.0,
+      "acceptance_deg": 2.5,
+      "assume_periodic": false,
+      "backend": "all",
+      "device": "cuda",
+      "propagation_um": 100.0,
+      "mitsuba_variant": "cuda_ad_rgb",
+      "ray_chunk": 65536,
+      "out": "test-results\\ag-spacing6p9-sz1um-20261108\\haze"
+    },
+    "inputs": [
+      {
+        "path": "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\1um\\heightfield.png",
+        "sha256": "694b7c6d3914cf62ea9585d340dd62f2e70771c4f555276215903d9ac399d975",
+        "height_range_um": 1.04,
+        "height_pitch_um": 1.0,
+        "periodicity": "source metadata",
+        "roughness": {
+          "Sa_um": 0.12840640606536477,
+          "Sq_um": 0.15925484394358616,
+          "Sz_um": 0.9975811963158776,
+          "height_min_um": 0.02221713657490909,
+          "height_max_um": 1.0197983328907867,
+          "rms_slope": 0.09867374404588064,
+          "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+        },
+        "sidecar_path": "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\1um\\heightfield.source.json",
+        "sidecar_sha256": "53dc09a748fc5121103e78c168a78183110c727a486aecc149dfc3839ee1c256"
+      },
+      {
+        "path": "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\0p5um\\heightfield.png",
+        "sha256": "16a45aba4bc32eff710a98bde0619a6ee7aac643750af3d9b03d6c46dd31ea9b",
+        "height_range_um": 1.04,
+        "height_pitch_um": 0.5,
+        "periodicity": "source metadata",
+        "roughness": {
+          "Sa_um": 0.12840444439753476,
+          "Sq_um": 0.15924351373229473,
+          "Sz_um": 1.0000091386075383,
+          "height_min_um": 0.019995422206875446,
+          "height_max_um": 1.0200045608144137,
+          "rms_slope": 0.10611445520559629,
+          "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+        },
+        "sidecar_path": "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\0p5um\\heightfield.source.json",
+        "sidecar_sha256": "aa3b08e0988d5aabfac564147694cfbad8ea03376117c58946f7661a8435c8c8"
+      }
+    ],
+    "illumination": "Uniform normally incident plane wave from n_in to n_out",
+    "wave_model": "Existing scalar thin phase-screen boundary, native homogeneous ASM, no camera pupil",
+    "ray_model": "Existing height mesh with periodic endpoints; triangle-centroid projected-area quadrature; native Mitsuba Fresnel/refraction",
+    "reference": "Original NumPy phase-screen angular estimate, recomputed on the identical height samples",
+    "code_sha256": {
+      "calculate_haze.py": "a8180f230da7a0e538c3c8b035bdba5c92d9ddf5d8cb566ff7d471a2465cb0a4",
+      "sparkle_multibackend.py": "fa1e10c2ff4e2e9039436ba692aa7365905d202c6f99d8d35549c07b61a9183d",
+      "chromatix_wsl.py": "a959a1e2adb6fbe4ddc2f01f772a99dfd8e8f69550c064314b7ee36df149ea6f"
+    }
+  },
+  "protocol_sha256": "a317728c2b56ccd912460fbae99a6986df73a369fae49ba5d44edc0964d5d7a0",
+  "comparison_scope": "Three native wave implementations of one phase-screen approximation versus a native geometric refraction model. Agreement among wave backends is numerical consistency, not independent Maxwell validation."
+}

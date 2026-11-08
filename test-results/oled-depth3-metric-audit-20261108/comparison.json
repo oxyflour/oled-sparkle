@@ -1,0 +1,431 @@
+{
+  "kind": "offline-metric-scope-audit",
+  "scope": "Recompute the established historical three140um MWA on saved unchanged optical brightness. No optics rerun, no adjustment to target 5%, and no replacement of sampled-camera headline metric. MWA filters on the optical grid before pixel integration and uses a different spatial bandwidth and ROI. Not the paper SMS instrument.",
+  "fixed_MWA_parameters": {
+    "width_um": 140.0,
+    "passes": 3,
+    "roi_width_um": 560.0,
+    "camera_pitch_um": 26.25,
+    "ddof": 0
+  },
+  "measurement_code_sha256": "db30c7d19f6797e4d889f607d95a3a753429deda27382114e04cc001a9c39c3c",
+  "records": [
+    {
+      "surface": "historical_original",
+      "grid": "1um",
+      "backend": "torch",
+      "raw_optical_file": "C:\\Projects\\oled-sparkle\\test-results\\oled-sms-current\\1um\\torch\\brightness.npy",
+      "raw_optical_sha256": "9a80d35a57c8087c196fc877f753ebaab9d8e8b80d3cc8ea464e14da09eb2a8a",
+      "historical_three_140_MWA": {
+        "sparkle_contrast_percent": 5.291802720752523,
+        "mean": 1.042260892711668e-05,
+        "std": 5.515439027785558e-07,
+        "ddof": 0,
+        "minimum": 9.057658534437367e-06,
+        "maximum": 1.1757283966451532e-05,
+        "negative_filtered_measurement_pixels": 0,
+        "num_pixels": 441,
+        "analysis_grid": [
+          21,
+          21
+        ],
+        "analysis_pixel_pitch_um": 26.25,
+        "analysis_pixel_area_um2": 689.0625,
+        "analysis_extent_um_xyxy": [
+          -275.625,
+          -275.625,
+          275.625,
+          275.625
+        ],
+        "analysis_source_bounds_px_xyxy": [
+          4.375,
+          4.375,
+          555.625,
+          555.625
+        ],
+        "effective_roi_margin_um_xy": [
+          4.375,
+          4.375
+        ],
+        "analysis_resampling": "area-averaged linear brightness over square pixels",
+        "metric_source_file": "analysis_brightness.npy"
+      }
+    },
+    {
+      "surface": "original",
+      "grid": "1um",
+      "backend": "torch",
+      "raw_optical_file": "C:\\Projects\\oled-sparkle\\test-results\\oled-layout-comparison\\1um\\diamond\\torch\\brightness.npy",
+      "raw_optical_sha256": "fe0180a63a22ba3206a918e640bc4f763dbca2152911cb2c38e4b97f0d47ce50",
+      "historical_three_140_MWA": {
+        "sparkle_contrast_percent": 5.287833642712464,
+        "mean": 0.00015707886516941406,
+        "std": 8.306069078019227e-06,
+        "ddof": 0,
+        "minimum": 0.00013652253407496227,
+        "maximum": 0.00017717928987549957,
+        "negative_filtered_measurement_pixels": 0,
+        "num_pixels": 441,
+        "analysis_grid": [
+          21,
+          21
+        ],
+        "analysis_pixel_pitch_um": 26.25,
+        "analysis_pixel_area_um2": 689.0625,
+        "analysis_extent_um_xyxy": [
+          -275.625,
+          -275.625,
+          275.625,
+          275.625
+        ],
+        "analysis_source_bounds_px_xyxy": [
+          4.375,
+          4.375,
+          555.625,
+          555.625
+        ],
+        "effective_roi_margin_um_xy": [
+          4.375,
+          4.375
+        ],
+        "analysis_resampling": "area-averaged linear brightness over square pixels",
+        "metric_source_file": "analysis_brightness.npy"
+      },
+      "sampled_camera_sparkle_percent": 24.016988381273602,
+      "sampled_camera_ROI_um": 840.0,
+      "sampled_camera_grid": [
+        32,
+        32
+      ]
+    },
+    {
+      "surface": "original",
+      "grid": "1um",
+      "backend": "torchoptics",
+      "raw_optical_file": "C:\\Projects\\oled-sparkle\\test-results\\oled-layout-comparison\\1um\\diamond\\torchoptics\\brightness.npy",
+      "raw_optical_sha256": "fabac921e60b03bda222f37cb8825287961ecd5b4c8b2180719eb0d130909ded",
+      "historical_three_140_MWA": {
+        "sparkle_contrast_percent": 5.287762715980528,
+        "mean": 0.0001570791443382085,
+        "std": 8.305972428897028e-06,
+        "ddof": 0,
+        "minimum": 0.00013652272785072953,
+        "maximum": 0.00017717939521675157,
+        "negative_filtered_measurement_pixels": 0,
+        "num_pixels": 441,
+        "analysis_grid": [
+          21,
+          21
+        ],
+        "analysis_pixel_pitch_um": 26.25,
+        "analysis_pixel_area_um2": 689.0625,
+        "analysis_extent_um_xyxy": [
+          -275.625,
+          -275.625,
+          275.625,
+          275.625
+        ],
+        "analysis_source_bounds_px_xyxy": [
+          4.375,
+          4.375,
+          555.625,
+          555.625
+        ],
+        "effective_roi_margin_um_xy": [
+          4.375,
+          4.375
+        ],
+        "analysis_resampling": "area-averaged linear brightness over square pixels",
+        "metric_source_file": "analysis_brightness.npy"
+      },
+      "sampled_camera_sparkle_percent": 24.01705189996405,
+      "sampled_camera_ROI_um": 840.0,
+      "sampled_camera_grid": [
+        32,
+        32
+      ]
+    },
+    {
+      "surface": "original",
+      "grid": "1um",
+      "backend": "chromatix",
+      "raw_optical_file": "C:\\Projects\\oled-sparkle\\test-results\\oled-layout-comparison\\1um\\diamond\\chromatix\\brightness.npy",
+      "raw_optical_sha256": "09d5cc68851d41095558d2d52005864f4badb97d38c7bb85dbb3a0ee65d8f92f",
+      "historical_three_140_MWA": {
+        "sparkle_contrast_percent": 5.287731993067018,
+        "mean": 0.00015707944984371693,
+        "std": 8.30594032391988e-06,
+        "ddof": 0,
+        "minimum": 0.00013652351830415856,
+        "maximum": 0.00017717963189132712,
+        "negative_filtered_measurement_pixels": 0,
+        "num_pixels": 441,
+        "analysis_grid": [
+          21,
+          21
+        ],
+        "analysis_pixel_pitch_um": 26.25,
+        "analysis_pixel_area_um2": 689.0625,
+        "analysis_extent_um_xyxy": [
+          -275.625,
+          -275.625,
+          275.625,
+          275.625
+        ],
+        "analysis_source_bounds_px_xyxy": [
+          4.375,
+          4.375,
+          555.625,
+          555.625
+        ],
+        "effective_roi_margin_um_xy": [
+          4.375,
+          4.375
+        ],
+        "analysis_resampling": "area-averaged linear brightness over square pixels",
+        "metric_source_file": "analysis_brightness.npy"
+      },
+      "sampled_camera_sparkle_percent": 24.0163641655765,
+      "sampled_camera_ROI_um": 840.0,
+      "sampled_camera_grid": [
+        32,
+        32
+      ]
+    },
+    {
+      "surface": "original",
+      "grid": "0p5um",
+      "backend": "torch",
+      "raw_optical_file": "C:\\Projects\\oled-sparkle\\test-results\\oled-layout-comparison\\0p5um\\diamond\\torch\\brightness.npy",
+      "raw_optical_sha256": "2dfd318495865bbcf4d6d2267925be5f02982f6725d3191cc36e3e00fe2fa027",
+      "historical_three_140_MWA": {
+        "sparkle_contrast_percent": 5.132102155317068,
+        "mean": 9.838924425282624e-06,
+        "std": 5.04943652489947e-07,
+        "ddof": 0,
+        "minimum": 8.541648027628254e-06,
+        "maximum": 1.0997701064918827e-05,
+        "negative_filtered_measurement_pixels": 0,
+        "num_pixels": 441,
+        "analysis_grid": [
+          21,
+          21
+        ],
+        "analysis_pixel_pitch_um": 26.25,
+        "analysis_pixel_area_um2": 689.0625,
+        "analysis_extent_um_xyxy": [
+          -275.625,
+          -275.625,
+          275.625,
+          275.625
+        ],
+        "analysis_source_bounds_px_xyxy": [
+          8.75,
+          8.75,
+          1111.25,
+          1111.25
+        ],
+        "effective_roi_margin_um_xy": [
+          4.375,
+          4.375
+        ],
+        "analysis_resampling": "area-averaged linear brightness over square pixels",
+        "metric_source_file": "analysis_brightness.npy"
+      },
+      "sampled_camera_sparkle_percent": 23.977983409677865,
+      "sampled_camera_ROI_um": 840.0,
+      "sampled_camera_grid": [
+        32,
+        32
+      ]
+    },
+    {
+      "surface": "depth3",
+      "grid": "1um",
+      "backend": "torch",
+      "raw_optical_file": "C:\\Projects\\oled-sparkle\\test-results\\oled-depth3-camera-20261108\\1um\\diamond\\torch\\brightness.npy",
+      "raw_optical_sha256": "a4e50c3474a7159bc9e581734eff69ca6e0ca6205d77ab6e0ad13eebea4090a3",
+      "historical_three_140_MWA": {
+        "sparkle_contrast_percent": 8.42236660706542,
+        "mean": 0.00016111720258451422,
+        "std": 1.3569881468716071e-05,
+        "ddof": 0,
+        "minimum": 0.0001346462840766656,
+        "maximum": 0.00019703744607794637,
+        "negative_filtered_measurement_pixels": 0,
+        "num_pixels": 441,
+        "analysis_grid": [
+          21,
+          21
+        ],
+        "analysis_pixel_pitch_um": 26.25,
+        "analysis_pixel_area_um2": 689.0625,
+        "analysis_extent_um_xyxy": [
+          -275.625,
+          -275.625,
+          275.625,
+          275.625
+        ],
+        "analysis_source_bounds_px_xyxy": [
+          4.375,
+          4.375,
+          555.625,
+          555.625
+        ],
+        "effective_roi_margin_um_xy": [
+          4.375,
+          4.375
+        ],
+        "analysis_resampling": "area-averaged linear brightness over square pixels",
+        "metric_source_file": "analysis_brightness.npy"
+      },
+      "sampled_camera_sparkle_percent": 32.41436317590759,
+      "sampled_camera_ROI_um": 840.0,
+      "sampled_camera_grid": [
+        32,
+        32
+      ]
+    },
+    {
+      "surface": "depth3",
+      "grid": "1um",
+      "backend": "torchoptics",
+      "raw_optical_file": "C:\\Projects\\oled-sparkle\\test-results\\oled-depth3-camera-20261108\\1um\\diamond\\torchoptics\\brightness.npy",
+      "raw_optical_sha256": "683d1c066471f8d5c6f0441063285bf9f256bff537842eabf74c3c4d8596b267",
+      "historical_three_140_MWA": {
+        "sparkle_contrast_percent": 8.422367143844959,
+        "mean": 0.00016111742790940296,
+        "std": 1.3569901311249644e-05,
+        "ddof": 0,
+        "minimum": 0.00013464666438844876,
+        "maximum": 0.00019703781535923873,
+        "negative_filtered_measurement_pixels": 0,
+        "num_pixels": 441,
+        "analysis_grid": [
+          21,
+          21
+        ],
+        "analysis_pixel_pitch_um": 26.25,
+        "analysis_pixel_area_um2": 689.0625,
+        "analysis_extent_um_xyxy": [
+          -275.625,
+          -275.625,
+          275.625,
+          275.625
+        ],
+        "analysis_source_bounds_px_xyxy": [
+          4.375,
+          4.375,
+          555.625,
+          555.625
+        ],
+        "effective_roi_margin_um_xy": [
+          4.375,
+          4.375
+        ],
+        "analysis_resampling": "area-averaged linear brightness over square pixels",
+        "metric_source_file": "analysis_brightness.npy"
+      },
+      "sampled_camera_sparkle_percent": 32.4143587057429,
+      "sampled_camera_ROI_um": 840.0,
+      "sampled_camera_grid": [
+        32,
+        32
+      ]
+    },
+    {
+      "surface": "depth3",
+      "grid": "1um",
+      "backend": "chromatix",
+      "raw_optical_file": "C:\\Projects\\oled-sparkle\\test-results\\oled-depth3-camera-20261108\\1um\\diamond\\chromatix\\brightness.npy",
+      "raw_optical_sha256": "20175176f806c13767c1e35f454dc1f379bed7d2953cba84a7d5a16dea454eeb",
+      "historical_three_140_MWA": {
+        "sparkle_contrast_percent": 8.422466020379657,
+        "mean": 0.00016111747668902214,
+        "std": 1.3570064727026004e-05,
+        "ddof": 0,
+        "minimum": 0.0001346460207522793,
+        "maximum": 0.0001970380995581495,
+        "negative_filtered_measurement_pixels": 0,
+        "num_pixels": 441,
+        "analysis_grid": [
+          21,
+          21
+        ],
+        "analysis_pixel_pitch_um": 26.25,
+        "analysis_pixel_area_um2": 689.0625,
+        "analysis_extent_um_xyxy": [
+          -275.625,
+          -275.625,
+          275.625,
+          275.625
+        ],
+        "analysis_source_bounds_px_xyxy": [
+          4.375,
+          4.375,
+          555.625,
+          555.625
+        ],
+        "effective_roi_margin_um_xy": [
+          4.375,
+          4.375
+        ],
+        "analysis_resampling": "area-averaged linear brightness over square pixels",
+        "metric_source_file": "analysis_brightness.npy"
+      },
+      "sampled_camera_sparkle_percent": 32.414531650418134,
+      "sampled_camera_ROI_um": 840.0,
+      "sampled_camera_grid": [
+        32,
+        32
+      ]
+    },
+    {
+      "surface": "depth3",
+      "grid": "0p5um",
+      "backend": "torch",
+      "raw_optical_file": "C:\\Projects\\oled-sparkle\\test-results\\oled-depth3-camera-20261108\\0p5um\\diamond\\torch\\brightness.npy",
+      "raw_optical_sha256": "a1ba0e888a0250acf55dc6d25b4115cb98d35c848f7b49b5c46f080bf0b937d8",
+      "historical_three_140_MWA": {
+        "sparkle_contrast_percent": 7.989120221426835,
+        "mean": 1.0051970039778989e-05,
+        "std": 8.030639710997503e-07,
+        "ddof": 0,
+        "minimum": 8.321359960569495e-06,
+        "maximum": 1.199007279501435e-05,
+        "negative_filtered_measurement_pixels": 0,
+        "num_pixels": 441,
+        "analysis_grid": [
+          21,
+          21
+        ],
+        "analysis_pixel_pitch_um": 26.25,
+        "analysis_pixel_area_um2": 689.0625,
+        "analysis_extent_um_xyxy": [
+          -275.625,
+          -275.625,
+          275.625,
+          275.625
+        ],
+        "analysis_source_bounds_px_xyxy": [
+          8.75,
+          8.75,
+          1111.25,
+          1111.25
+        ],
+        "effective_roi_margin_um_xy": [
+          4.375,
+          4.375
+        ],
+        "analysis_resampling": "area-averaged linear brightness over square pixels",
+        "metric_source_file": "analysis_brightness.npy"
+      },
+      "sampled_camera_sparkle_percent": 32.5651925226318,
+      "sampled_camera_ROI_um": 840.0,
+      "sampled_camera_grid": [
+        32,
+        32
+      ]
+    }
+  ]
+}

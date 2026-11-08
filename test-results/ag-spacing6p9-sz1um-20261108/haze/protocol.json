@@ -1,0 +1,68 @@
+{
+  "kind": "ag-haze-four-backend",
+  "declared_at_utc": "2026-11-08T10:09:00.568316+00:00",
+  "parameters": {
+    "height_pitch_um": null,
+    "height_range_um": null,
+    "wavelength_nm": [
+      530.0
+    ],
+    "n_in": 1.5,
+    "n_out": 1.0,
+    "acceptance_deg": 2.5,
+    "assume_periodic": false,
+    "backend": "all",
+    "device": "cuda",
+    "propagation_um": 100.0,
+    "mitsuba_variant": "cuda_ad_rgb",
+    "ray_chunk": 65536,
+    "out": "test-results\\ag-spacing6p9-sz1um-20261108\\haze"
+  },
+  "inputs": [
+    {
+      "path": "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\1um\\heightfield.png",
+      "sha256": "694b7c6d3914cf62ea9585d340dd62f2e70771c4f555276215903d9ac399d975",
+      "height_range_um": 1.04,
+      "height_pitch_um": 1.0,
+      "periodicity": "source metadata",
+      "roughness": {
+        "Sa_um": 0.12840640606536477,
+        "Sq_um": 0.15925484394358616,
+        "Sz_um": 0.9975811963158776,
+        "height_min_um": 0.02221713657490909,
+        "height_max_um": 1.0197983328907867,
+        "rms_slope": 0.09867374404588064,
+        "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+      },
+      "sidecar_path": "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\1um\\heightfield.source.json",
+      "sidecar_sha256": "53dc09a748fc5121103e78c168a78183110c727a486aecc149dfc3839ee1c256"
+    },
+    {
+      "path": "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\0p5um\\heightfield.png",
+      "sha256": "16a45aba4bc32eff710a98bde0619a6ee7aac643750af3d9b03d6c46dd31ea9b",
+      "height_range_um": 1.04,
+      "height_pitch_um": 0.5,
+      "periodicity": "source metadata",
+      "roughness": {
+        "Sa_um": 0.12840444439753476,
+        "Sq_um": 0.15924351373229473,
+        "Sz_um": 1.0000091386075383,
+        "height_min_um": 0.019995422206875446,
+        "height_max_um": 1.0200045608144137,
+        "rms_slope": 0.10611445520559629,
+        "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+      },
+      "sidecar_path": "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\0p5um\\heightfield.source.json",
+      "sidecar_sha256": "aa3b08e0988d5aabfac564147694cfbad8ea03376117c58946f7661a8435c8c8"
+    }
+  ],
+  "illumination": "Uniform normally incident plane wave from n_in to n_out",
+  "wave_model": "Existing scalar thin phase-screen boundary, native homogeneous ASM, no camera pupil",
+  "ray_model": "Existing height mesh with periodic endpoints; triangle-centroid projected-area quadrature; native Mitsuba Fresnel/refraction",
+  "reference": "Original NumPy phase-screen angular estimate, recomputed on the identical height samples",
+  "code_sha256": {
+    "calculate_haze.py": "a8180f230da7a0e538c3c8b035bdba5c92d9ddf5d8cb566ff7d471a2465cb0a4",
+    "sparkle_multibackend.py": "fa1e10c2ff4e2e9039436ba692aa7365905d202c6f99d8d35549c07b61a9183d",
+    "chromatix_wsl.py": "a959a1e2adb6fbe4ddc2f01f772a99dfd8e8f69550c064314b7ee36df149ea6f"
+  }
+}

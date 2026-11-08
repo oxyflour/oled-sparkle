@@ -1,0 +1,1563 @@
+{
+  "protocol": {
+    "kind": "SMS1000-metrology-audit",
+    "scope": "No optical solves, no new headline filter, no threshold selected against the paper 5%. Inspect retained variance at physical frequencies and a linear Nyquist-band decomposition. Source camera headlines remain unchanged.",
+    "predeclared_frequency_boundaries_cycles_per_mm": {
+      "exact_green_repeat_140um": 7.142857142857143,
+      "nominal_address_pitch_70um": 14.285714285714286,
+      "camera_axis_Nyquist_26p25um": 19.047619047619047
+    },
+    "boundaries_reason": "Known source geometric periods and camera sample pitch. They are diagnostic boundaries, not a claim of the undocumented paper SMS1000 cutoff.",
+    "alias_decomposition": "Full 1mm optical DFT, split at the rectangular camera Nyquist region abs(fx),abs(fy)<=1/(2*q); sample both components by the existing linear area integrator; remove the unchanged common periodic mask. Decomposition includes a finite-DFT periodic continuation assumption and is not a new physical antialiasing model."
+  },
+  "records": [
+    {
+      "surface": "original",
+      "grid": "1um",
+      "source_camera_stats": "C:\\Projects\\oled-sparkle\\test-results\\oled-camera-comparison\\1um\\diamond\\torch\\camera_stats.json",
+      "raw_optical_sha256": "fe0180a63a22ba3206a918e640bc4f763dbca2152911cb2c38e4b97f0d47ce50",
+      "headline_sparkle_percent": 24.016988381273602,
+      "parseval_variance_relative_error": 1.426775571043463e-16,
+      "frequency_boundaries": {
+        "exact_green_repeat_140um": {
+          "frequency_cycles_per_mm": 7.142857142857143,
+          "within_retained_variance_percent": 45.367386360276186,
+          "above_retained_variance_percent": 54.632613639723814,
+          "within_component_contrast_percent_total_mean": 16.176718493782385
+        },
+        "nominal_address_pitch_70um": {
+          "frequency_cycles_per_mm": 14.285714285714286,
+          "within_retained_variance_percent": 84.36594165335799,
+          "above_retained_variance_percent": 15.63405834664201,
+          "within_component_contrast_percent_total_mean": 22.059828262788937
+        },
+        "camera_axis_Nyquist_26p25um": {
+          "frequency_cycles_per_mm": 19.047619047619047,
+          "within_retained_variance_percent": 97.72126744644753,
+          "above_retained_variance_percent": 2.278732553552465,
+          "within_component_contrast_percent_total_mean": 23.741770007142676
+        }
+      },
+      "diamond_only_notch_diagnostic": {
+        "removed_bins": 56,
+        "contrast_percent": 24.354795270674444,
+        "common_union_removed_bins": 89
+      },
+      "Nyquist_decomposition": {
+        "low_variance_over_total": 0.9953126273926414,
+        "high_variance_over_total": 0.009882899791579858,
+        "twice_covariance_over_total": -0.00519552718422134,
+        "low_component_contrast_percent_total_mean": 23.960633978459082,
+        "high_component_contrast_percent_total_mean": 2.387595457097617,
+        "mean_low_over_total": 1.0008529769260168,
+        "variance_balance_relative_error": 0.0
+      },
+      "phase_range_percent": [
+        23.99076024621277,
+        24.13724140866888
+      ],
+      "nested_ROI_percent": 21.291642340918077,
+      "same_full_mask_center_ROI_percent": 24.38960509518652,
+      "finite_flat_percent": 0.5385464205940038,
+      "cumulative_variance": [
+        {
+          "frequency_cycles_per_mm": 0.0,
+          "within_retained_variance_percent": 0.0
+        },
+        {
+          "frequency_cycles_per_mm": 0.336717514850737,
+          "within_retained_variance_percent": 0.0
+        },
+        {
+          "frequency_cycles_per_mm": 0.673435029701474,
+          "within_retained_variance_percent": 0.0
+        },
+        {
+          "frequency_cycles_per_mm": 1.0101525445522108,
+          "within_retained_variance_percent": 0.0
+        },
+        {
+          "frequency_cycles_per_mm": 1.346870059402948,
+          "within_retained_variance_percent": 1.0692259443519108
+        },
+        {
+          "frequency_cycles_per_mm": 1.6835875742536848,
+          "within_retained_variance_percent": 2.856175522219686
+        },
+        {
+          "frequency_cycles_per_mm": 2.0203050891044216,
+          "within_retained_variance_percent": 2.856175522219686
+        },
+        {
+          "frequency_cycles_per_mm": 2.357022603955159,
+          "within_retained_variance_percent": 2.856175522219686
+        },
+        {
+          "frequency_cycles_per_mm": 2.693740118805896,
+          "within_retained_variance_percent": 9.152746242081475
+        },
+        {
+          "frequency_cycles_per_mm": 3.0304576336566327,
+          "within_retained_variance_percent": 9.152746242081475
+        },
+        {
+          "frequency_cycles_per_mm": 3.3671751485073695,
+          "within_retained_variance_percent": 12.849514258851713
+        },
+        {
+          "frequency_cycles_per_mm": 3.7038926633581064,
+          "within_retained_variance_percent": 14.633337503548555
+        },
+        {
+          "frequency_cycles_per_mm": 4.040610178208843,
+          "within_retained_variance_percent": 19.282429667949735
+        },
+        {
+          "frequency_cycles_per_mm": 4.377327693059581,
+          "within_retained_variance_percent": 21.627763511918353
+        },
+        {
+          "frequency_cycles_per_mm": 4.714045207910318,
+          "within_retained_variance_percent": 21.627763511918353
+        },
+        {
+          "frequency_cycles_per_mm": 5.050762722761054,
+          "within_retained_variance_percent": 28.967733191666664
+        },
+        {
+          "frequency_cycles_per_mm": 5.387480237611792,
+          "within_retained_variance_percent": 33.36385365468703
+        },
+        {
+          "frequency_cycles_per_mm": 5.724197752462528,
+          "within_retained_variance_percent": 33.36385365468703
+        },
+        {
+          "frequency_cycles_per_mm": 6.060915267313265,
+          "within_retained_variance_percent": 36.70157448656897
+        },
+        {
+          "frequency_cycles_per_mm": 6.397632782164003,
+          "within_retained_variance_percent": 38.8524451461908
+        },
+        {
+          "frequency_cycles_per_mm": 6.734350297014739,
+          "within_retained_variance_percent": 43.720254563184916
+        },
+        {
+          "frequency_cycles_per_mm": 7.071067811865476,
+          "within_retained_variance_percent": 45.367386360276186
+        },
+        {
+          "frequency_cycles_per_mm": 7.142857142857143,
+          "within_retained_variance_percent": 45.367386360276186
+        },
+        {
+          "frequency_cycles_per_mm": 7.407785326716213,
+          "within_retained_variance_percent": 47.55970286013258
+        },
+        {
+          "frequency_cycles_per_mm": 7.74450284156695,
+          "within_retained_variance_percent": 52.38048405767984
+        },
+        {
+          "frequency_cycles_per_mm": 8.081220356417687,
+          "within_retained_variance_percent": 54.18380466931384
+        },
+        {
+          "frequency_cycles_per_mm": 8.417937871268425,
+          "within_retained_variance_percent": 57.145774412164954
+        },
+        {
+          "frequency_cycles_per_mm": 8.754655386119161,
+          "within_retained_variance_percent": 61.30297184249675
+        },
+        {
+          "frequency_cycles_per_mm": 9.091372900969898,
+          "within_retained_variance_percent": 61.99701790471782
+        },
+        {
+          "frequency_cycles_per_mm": 9.428090415820636,
+          "within_retained_variance_percent": 62.84248653913409
+        },
+        {
+          "frequency_cycles_per_mm": 9.764807930671372,
+          "within_retained_variance_percent": 66.12993604233753
+        },
+        {
+          "frequency_cycles_per_mm": 10.101525445522109,
+          "within_retained_variance_percent": 67.78617204165302
+        },
+        {
+          "frequency_cycles_per_mm": 10.438242960372845,
+          "within_retained_variance_percent": 68.68350625161196
+        },
+        {
+          "frequency_cycles_per_mm": 10.774960475223583,
+          "within_retained_variance_percent": 69.30059119937289
+        },
+        {
+          "frequency_cycles_per_mm": 11.11167799007432,
+          "within_retained_variance_percent": 71.59331793306254
+        },
+        {
+          "frequency_cycles_per_mm": 11.448395504925056,
+          "within_retained_variance_percent": 72.64447090056218
+        },
+        {
+          "frequency_cycles_per_mm": 11.785113019775794,
+          "within_retained_variance_percent": 73.4133512631128
+        },
+        {
+          "frequency_cycles_per_mm": 12.12183053462653,
+          "within_retained_variance_percent": 74.27114177391522
+        },
+        {
+          "frequency_cycles_per_mm": 12.458548049477267,
+          "within_retained_variance_percent": 76.89962555601534
+        },
+        {
+          "frequency_cycles_per_mm": 12.795265564328005,
+          "within_retained_variance_percent": 77.32764246555774
+        },
+        {
+          "frequency_cycles_per_mm": 13.131983079178742,
+          "within_retained_variance_percent": 79.38499250657341
+        },
+        {
+          "frequency_cycles_per_mm": 13.468700594029478,
+          "within_retained_variance_percent": 81.91961883284256
+        },
+        {
+          "frequency_cycles_per_mm": 13.805418108880215,
+          "within_retained_variance_percent": 82.84494425856255
+        },
+        {
+          "frequency_cycles_per_mm": 14.142135623730953,
+          "within_retained_variance_percent": 84.36594165335799
+        },
+        {
+          "frequency_cycles_per_mm": 14.285714285714286,
+          "within_retained_variance_percent": 84.36594165335799
+        },
+        {
+          "frequency_cycles_per_mm": 14.47885313858169,
+          "within_retained_variance_percent": 85.48032981987123
+        },
+        {
+          "frequency_cycles_per_mm": 14.815570653432426,
+          "within_retained_variance_percent": 87.58531043168172
+        },
+        {
+          "frequency_cycles_per_mm": 15.152288168283164,
+          "within_retained_variance_percent": 88.23604051435625
+        },
+        {
+          "frequency_cycles_per_mm": 15.4890056831339,
+          "within_retained_variance_percent": 89.43577859244877
+        },
+        {
+          "frequency_cycles_per_mm": 15.825723197984635,
+          "within_retained_variance_percent": 90.22039051641906
+        },
+        {
+          "frequency_cycles_per_mm": 16.162440712835373,
+          "within_retained_variance_percent": 90.82635704072824
+        },
+        {
+          "frequency_cycles_per_mm": 16.499158227686113,
+          "within_retained_variance_percent": 91.66952750986201
+        },
+        {
+          "frequency_cycles_per_mm": 16.83587574253685,
+          "within_retained_variance_percent": 93.4297517092221
+        },
+        {
+          "frequency_cycles_per_mm": 17.172593257387582,
+          "within_retained_variance_percent": 94.71786339032921
+        },
+        {
+          "frequency_cycles_per_mm": 17.509310772238322,
+          "within_retained_variance_percent": 95.01394409165482
+        },
+        {
+          "frequency_cycles_per_mm": 17.846028287089062,
+          "within_retained_variance_percent": 95.60308338586893
+        },
+        {
+          "frequency_cycles_per_mm": 18.182745801939795,
+          "within_retained_variance_percent": 96.59894689350153
+        },
+        {
+          "frequency_cycles_per_mm": 18.51946331679053,
+          "within_retained_variance_percent": 97.20598969934544
+        },
+        {
+          "frequency_cycles_per_mm": 18.85618083164127,
+          "within_retained_variance_percent": 97.72126744644753
+        },
+        {
+          "frequency_cycles_per_mm": 19.047619047619047,
+          "within_retained_variance_percent": 97.72126744644753
+        },
+        {
+          "frequency_cycles_per_mm": 19.192898346492008,
+          "within_retained_variance_percent": 97.99838918527246
+        },
+        {
+          "frequency_cycles_per_mm": 19.529615861342744,
+          "within_retained_variance_percent": 98.5921210252028
+        },
+        {
+          "frequency_cycles_per_mm": 19.86633337619348,
+          "within_retained_variance_percent": 98.91701095630862
+        },
+        {
+          "frequency_cycles_per_mm": 20.203050891044217,
+          "within_retained_variance_percent": 99.02485291772281
+        },
+        {
+          "frequency_cycles_per_mm": 20.539768405894957,
+          "within_retained_variance_percent": 99.35046392724884
+        },
+        {
+          "frequency_cycles_per_mm": 20.87648592074569,
+          "within_retained_variance_percent": 99.51533416507378
+        },
+        {
+          "frequency_cycles_per_mm": 21.213203435596427,
+          "within_retained_variance_percent": 99.6770319439021
+        },
+        {
+          "frequency_cycles_per_mm": 21.549920950447166,
+          "within_retained_variance_percent": 99.74700570168123
+        },
+        {
+          "frequency_cycles_per_mm": 21.886638465297903,
+          "within_retained_variance_percent": 99.76991821259334
+        },
+        {
+          "frequency_cycles_per_mm": 22.22335598014864,
+          "within_retained_variance_percent": 99.79044979557251
+        },
+        {
+          "frequency_cycles_per_mm": 22.560073494999376,
+          "within_retained_variance_percent": 99.8225586926416
+        },
+        {
+          "frequency_cycles_per_mm": 22.896791009850112,
+          "within_retained_variance_percent": 99.8700889818985
+        },
+        {
+          "frequency_cycles_per_mm": 23.233508524700852,
+          "within_retained_variance_percent": 99.88063565269736
+        },
+        {
+          "frequency_cycles_per_mm": 23.57022603955159,
+          "within_retained_variance_percent": 99.8993480630481
+        },
+        {
+          "frequency_cycles_per_mm": 23.90694355440232,
+          "within_retained_variance_percent": 99.9515434706245
+        },
+        {
+          "frequency_cycles_per_mm": 24.24366106925306,
+          "within_retained_variance_percent": 99.9515434706245
+        },
+        {
+          "frequency_cycles_per_mm": 24.5803785841038,
+          "within_retained_variance_percent": 99.97566584277422
+        },
+        {
+          "frequency_cycles_per_mm": 24.917096098954534,
+          "within_retained_variance_percent": 99.97566584277422
+        },
+        {
+          "frequency_cycles_per_mm": 25.25381361380527,
+          "within_retained_variance_percent": 99.98419479789882
+        },
+        {
+          "frequency_cycles_per_mm": 25.59053112865601,
+          "within_retained_variance_percent": 99.99170074986306
+        },
+        {
+          "frequency_cycles_per_mm": 25.927248643506747,
+          "within_retained_variance_percent": 99.99170074986306
+        },
+        {
+          "frequency_cycles_per_mm": 26.263966158357483,
+          "within_retained_variance_percent": 99.99777460159989
+        },
+        {
+          "frequency_cycles_per_mm": 26.60068367320822,
+          "within_retained_variance_percent": 99.99777460159989
+        },
+        {
+          "frequency_cycles_per_mm": 26.937401188058956,
+          "within_retained_variance_percent": 100.00000000000001
+        }
+      ]
+    },
+    {
+      "surface": "original",
+      "grid": "0p5um",
+      "source_camera_stats": "C:\\Projects\\oled-sparkle\\test-results\\oled-camera-comparison\\0p5um\\diamond\\torch\\camera_stats.json",
+      "raw_optical_sha256": "2dfd318495865bbcf4d6d2267925be5f02982f6725d3191cc36e3e00fe2fa027",
+      "headline_sparkle_percent": 23.977983409677865,
+      "parseval_variance_relative_error": 0.0,
+      "frequency_boundaries": {
+        "exact_green_repeat_140um": {
+          "frequency_cycles_per_mm": 7.142857142857143,
+          "within_retained_variance_percent": 44.42056544901436,
+          "above_retained_variance_percent": 55.57943455098564,
+          "within_component_contrast_percent_total_mean": 15.981027419987225
+        },
+        "nominal_address_pitch_70um": {
+          "frequency_cycles_per_mm": 14.285714285714286,
+          "within_retained_variance_percent": 84.20831056721366,
+          "above_retained_variance_percent": 15.791689432786349,
+          "within_component_contrast_percent_total_mean": 22.003417159843046
+        },
+        "camera_axis_Nyquist_26p25um": {
+          "frequency_cycles_per_mm": 19.047619047619047,
+          "within_retained_variance_percent": 97.67140305384238,
+          "above_retained_variance_percent": 2.328596946157613,
+          "within_component_contrast_percent_total_mean": 23.697163695782244
+        }
+      },
+      "diamond_only_notch_diagnostic": {
+        "removed_bins": 56,
+        "contrast_percent": 24.30704624793939,
+        "common_union_removed_bins": 89
+      },
+      "Nyquist_decomposition": {
+        "low_variance_over_total": 0.9952425012880497,
+        "high_variance_over_total": 0.009945673930442147,
+        "twice_covariance_over_total": -0.005188175218491847,
+        "low_component_contrast_percent_total_mean": 23.92087779613877,
+        "high_component_contrast_percent_total_mean": 2.3912763230417946,
+        "mean_low_over_total": 1.0008535094461903,
+        "variance_balance_relative_error": 0.0
+      },
+      "phase_range_percent": [
+        23.9673808056198,
+        24.040955632445506
+      ],
+      "nested_ROI_percent": 21.392168961563684,
+      "same_full_mask_center_ROI_percent": 24.324267851188548,
+      "finite_flat_percent": 0.5394028514491241,
+      "cumulative_variance": [
+        {
+          "frequency_cycles_per_mm": 0.0,
+          "within_retained_variance_percent": 0.0
+        },
+        {
+          "frequency_cycles_per_mm": 0.336717514850737,
+          "within_retained_variance_percent": 0.0
+        },
+        {
+          "frequency_cycles_per_mm": 0.673435029701474,
+          "within_retained_variance_percent": 0.0
+        },
+        {
+          "frequency_cycles_per_mm": 1.0101525445522108,
+          "within_retained_variance_percent": 0.0
+        },
+        {
+          "frequency_cycles_per_mm": 1.346870059402948,
+          "within_retained_variance_percent": 0.8639808771269699
+        },
+        {
+          "frequency_cycles_per_mm": 1.6835875742536848,
+          "within_retained_variance_percent": 3.274975306486592
+        },
+        {
+          "frequency_cycles_per_mm": 2.0203050891044216,
+          "within_retained_variance_percent": 3.274975306486592
+        },
+        {
+          "frequency_cycles_per_mm": 2.357022603955159,
+          "within_retained_variance_percent": 3.274975306486592
+        },
+        {
+          "frequency_cycles_per_mm": 2.693740118805896,
+          "within_retained_variance_percent": 8.83625227626084
+        },
+        {
+          "frequency_cycles_per_mm": 3.0304576336566327,
+          "within_retained_variance_percent": 8.83625227626084
+        },
+        {
+          "frequency_cycles_per_mm": 3.3671751485073695,
+          "within_retained_variance_percent": 12.060354265783632
+        },
+        {
+          "frequency_cycles_per_mm": 3.7038926633581064,
+          "within_retained_variance_percent": 13.669048636384135
+        },
+        {
+          "frequency_cycles_per_mm": 4.040610178208843,
+          "within_retained_variance_percent": 17.999723323344515
+        },
+        {
+          "frequency_cycles_per_mm": 4.377327693059581,
+          "within_retained_variance_percent": 20.31849995426026
+        },
+        {
+          "frequency_cycles_per_mm": 4.714045207910318,
+          "within_retained_variance_percent": 20.31849995426026
+        },
+        {
+          "frequency_cycles_per_mm": 5.050762722761054,
+          "within_retained_variance_percent": 27.32819912220558
+        },
+        {
+          "frequency_cycles_per_mm": 5.387480237611792,
+          "within_retained_variance_percent": 31.872744858841866
+        },
+        {
+          "frequency_cycles_per_mm": 5.724197752462528,
+          "within_retained_variance_percent": 31.872744858841866
+        },
+        {
+          "frequency_cycles_per_mm": 6.060915267313265,
+          "within_retained_variance_percent": 35.521251901510304
+        },
+        {
+          "frequency_cycles_per_mm": 6.397632782164003,
+          "within_retained_variance_percent": 38.001974762959534
+        },
+        {
+          "frequency_cycles_per_mm": 6.734350297014739,
+          "within_retained_variance_percent": 42.68766237421958
+        },
+        {
+          "frequency_cycles_per_mm": 7.071067811865476,
+          "within_retained_variance_percent": 44.42056544901434
+        },
+        {
+          "frequency_cycles_per_mm": 7.142857142857143,
+          "within_retained_variance_percent": 44.42056544901436
+        },
+        {
+          "frequency_cycles_per_mm": 7.407785326716213,
+          "within_retained_variance_percent": 47.05173857957529
+        },
+        {
+          "frequency_cycles_per_mm": 7.74450284156695,
+          "within_retained_variance_percent": 52.40284684901229
+        },
+        {
+          "frequency_cycles_per_mm": 8.081220356417687,
+          "within_retained_variance_percent": 54.055660196895154
+        },
+        {
+          "frequency_cycles_per_mm": 8.417937871268425,
+          "within_retained_variance_percent": 57.364320926312544
+        },
+        {
+          "frequency_cycles_per_mm": 8.754655386119161,
+          "within_retained_variance_percent": 61.97952879920403
+        },
+        {
+          "frequency_cycles_per_mm": 9.091372900969898,
+          "within_retained_variance_percent": 62.63735981926856
+        },
+        {
+          "frequency_cycles_per_mm": 9.428090415820636,
+          "within_retained_variance_percent": 63.409667783451546
+        },
+        {
+          "frequency_cycles_per_mm": 9.764807930671372,
+          "within_retained_variance_percent": 66.35192378667642
+        },
+        {
+          "frequency_cycles_per_mm": 10.101525445522109,
+          "within_retained_variance_percent": 67.8755540134581
+        },
+        {
+          "frequency_cycles_per_mm": 10.438242960372845,
+          "within_retained_variance_percent": 68.92170045483272
+        },
+        {
+          "frequency_cycles_per_mm": 10.774960475223583,
+          "within_retained_variance_percent": 69.52049209836905
+        },
+        {
+          "frequency_cycles_per_mm": 11.11167799007432,
+          "within_retained_variance_percent": 71.90792452958387
+        },
+        {
+          "frequency_cycles_per_mm": 11.448395504925056,
+          "within_retained_variance_percent": 72.91685168952449
+        },
+        {
+          "frequency_cycles_per_mm": 11.785113019775794,
+          "within_retained_variance_percent": 73.71042678921229
+        },
+        {
+          "frequency_cycles_per_mm": 12.12183053462653,
+          "within_retained_variance_percent": 74.49939385738159
+        },
+        {
+          "frequency_cycles_per_mm": 12.458548049477267,
+          "within_retained_variance_percent": 76.85799444452398
+        },
+        {
+          "frequency_cycles_per_mm": 12.795265564328005,
+          "within_retained_variance_percent": 77.36785612873983
+        },
+        {
+          "frequency_cycles_per_mm": 13.131983079178742,
+          "within_retained_variance_percent": 79.54572081014325
+        },
+        {
+          "frequency_cycles_per_mm": 13.468700594029478,
+          "within_retained_variance_percent": 81.92776101224678
+        },
+        {
+          "frequency_cycles_per_mm": 13.805418108880215,
+          "within_retained_variance_percent": 82.77039136177889
+        },
+        {
+          "frequency_cycles_per_mm": 14.142135623730953,
+          "within_retained_variance_percent": 84.20831056721366
+        },
+        {
+          "frequency_cycles_per_mm": 14.285714285714286,
+          "within_retained_variance_percent": 84.20831056721366
+        },
+        {
+          "frequency_cycles_per_mm": 14.47885313858169,
+          "within_retained_variance_percent": 85.23779886468212
+        },
+        {
+          "frequency_cycles_per_mm": 14.815570653432426,
+          "within_retained_variance_percent": 87.18666725996952
+        },
+        {
+          "frequency_cycles_per_mm": 15.152288168283164,
+          "within_retained_variance_percent": 88.01926066034366
+        },
+        {
+          "frequency_cycles_per_mm": 15.4890056831339,
+          "within_retained_variance_percent": 89.34112112186877
+        },
+        {
+          "frequency_cycles_per_mm": 15.825723197984635,
+          "within_retained_variance_percent": 90.14433092538714
+        },
+        {
+          "frequency_cycles_per_mm": 16.162440712835373,
+          "within_retained_variance_percent": 90.75842184164695
+        },
+        {
+          "frequency_cycles_per_mm": 16.499158227686113,
+          "within_retained_variance_percent": 91.47511274120788
+        },
+        {
+          "frequency_cycles_per_mm": 16.83587574253685,
+          "within_retained_variance_percent": 93.17688216568192
+        },
+        {
+          "frequency_cycles_per_mm": 17.172593257387582,
+          "within_retained_variance_percent": 94.58335093472616
+        },
+        {
+          "frequency_cycles_per_mm": 17.509310772238322,
+          "within_retained_variance_percent": 94.93317355566563
+        },
+        {
+          "frequency_cycles_per_mm": 17.846028287089062,
+          "within_retained_variance_percent": 95.56016050104905
+        },
+        {
+          "frequency_cycles_per_mm": 18.182745801939795,
+          "within_retained_variance_percent": 96.45660753677396
+        },
+        {
+          "frequency_cycles_per_mm": 18.51946331679053,
+          "within_retained_variance_percent": 97.09556061221843
+        },
+        {
+          "frequency_cycles_per_mm": 18.85618083164127,
+          "within_retained_variance_percent": 97.67140305384238
+        },
+        {
+          "frequency_cycles_per_mm": 19.047619047619047,
+          "within_retained_variance_percent": 97.67140305384238
+        },
+        {
+          "frequency_cycles_per_mm": 19.192898346492008,
+          "within_retained_variance_percent": 97.99229346146987
+        },
+        {
+          "frequency_cycles_per_mm": 19.529615861342744,
+          "within_retained_variance_percent": 98.59061867211146
+        },
+        {
+          "frequency_cycles_per_mm": 19.86633337619348,
+          "within_retained_variance_percent": 98.95686508000603
+        },
+        {
+          "frequency_cycles_per_mm": 20.203050891044217,
+          "within_retained_variance_percent": 99.0486840385148
+        },
+        {
+          "frequency_cycles_per_mm": 20.539768405894957,
+          "within_retained_variance_percent": 99.38909780433653
+        },
+        {
+          "frequency_cycles_per_mm": 20.87648592074569,
+          "within_retained_variance_percent": 99.54174916796585
+        },
+        {
+          "frequency_cycles_per_mm": 21.213203435596427,
+          "within_retained_variance_percent": 99.6744938631842
+        },
+        {
+          "frequency_cycles_per_mm": 21.549920950447166,
+          "within_retained_variance_percent": 99.7341204526316
+        },
+        {
+          "frequency_cycles_per_mm": 21.886638465297903,
+          "within_retained_variance_percent": 99.76127021403667
+        },
+        {
+          "frequency_cycles_per_mm": 22.22335598014864,
+          "within_retained_variance_percent": 99.77926430743432
+        },
+        {
+          "frequency_cycles_per_mm": 22.560073494999376,
+          "within_retained_variance_percent": 99.82254991455846
+        },
+        {
+          "frequency_cycles_per_mm": 22.896791009850112,
+          "within_retained_variance_percent": 99.86437705509269
+        },
+        {
+          "frequency_cycles_per_mm": 23.233508524700852,
+          "within_retained_variance_percent": 99.87376421798916
+        },
+        {
+          "frequency_cycles_per_mm": 23.57022603955159,
+          "within_retained_variance_percent": 99.8928815476219
+        },
+        {
+          "frequency_cycles_per_mm": 23.90694355440232,
+          "within_retained_variance_percent": 99.94843830752869
+        },
+        {
+          "frequency_cycles_per_mm": 24.24366106925306,
+          "within_retained_variance_percent": 99.94843830752869
+        },
+        {
+          "frequency_cycles_per_mm": 24.5803785841038,
+          "within_retained_variance_percent": 99.9739499400826
+        },
+        {
+          "frequency_cycles_per_mm": 24.917096098954534,
+          "within_retained_variance_percent": 99.9739499400826
+        },
+        {
+          "frequency_cycles_per_mm": 25.25381361380527,
+          "within_retained_variance_percent": 99.98250783814726
+        },
+        {
+          "frequency_cycles_per_mm": 25.59053112865601,
+          "within_retained_variance_percent": 99.99016011407325
+        },
+        {
+          "frequency_cycles_per_mm": 25.927248643506747,
+          "within_retained_variance_percent": 99.99016011407325
+        },
+        {
+          "frequency_cycles_per_mm": 26.263966158357483,
+          "within_retained_variance_percent": 99.99661105737769
+        },
+        {
+          "frequency_cycles_per_mm": 26.60068367320822,
+          "within_retained_variance_percent": 99.99661105737769
+        },
+        {
+          "frequency_cycles_per_mm": 26.937401188058956,
+          "within_retained_variance_percent": 100.00000000000001
+        }
+      ]
+    },
+    {
+      "surface": "depth3",
+      "grid": "1um",
+      "source_camera_stats": "C:\\Projects\\oled-sparkle\\test-results\\oled-depth3-camera-20261108\\1um\\diamond\\torch\\camera_stats.json",
+      "raw_optical_sha256": "a4e50c3474a7159bc9e581734eff69ca6e0ca6205d77ab6e0ad13eebea4090a3",
+      "headline_sparkle_percent": 32.41436317590759,
+      "parseval_variance_relative_error": 3.12173722507166e-16,
+      "frequency_boundaries": {
+        "exact_green_repeat_140um": {
+          "frequency_cycles_per_mm": 7.142857142857143,
+          "within_retained_variance_percent": 49.592655262156185,
+          "above_retained_variance_percent": 50.40734473784381,
+          "within_component_contrast_percent_total_mean": 22.82685996352366
+        },
+        "nominal_address_pitch_70um": {
+          "frequency_cycles_per_mm": 14.285714285714286,
+          "within_retained_variance_percent": 84.58464903970716,
+          "above_retained_variance_percent": 15.41535096029284,
+          "within_component_contrast_percent_total_mean": 29.811461624269196
+        },
+        "camera_axis_Nyquist_26p25um": {
+          "frequency_cycles_per_mm": 19.047619047619047,
+          "within_retained_variance_percent": 97.53575450741415,
+          "above_retained_variance_percent": 2.4642454925858592,
+          "within_component_contrast_percent_total_mean": 32.01248718808366
+        }
+      },
+      "diamond_only_notch_diagnostic": {
+        "removed_bins": 56,
+        "contrast_percent": 32.87532080748849,
+        "common_union_removed_bins": 89
+      },
+      "Nyquist_decomposition": {
+        "low_variance_over_total": 0.9977343998226029,
+        "high_variance_over_total": 0.009315403624495618,
+        "twice_covariance_over_total": -0.007049803447098404,
+        "low_component_contrast_percent_total_mean": 32.37762336119429,
+        "high_component_contrast_percent_total_mean": 3.12851565308995,
+        "mean_low_over_total": 1.0007743536666132,
+        "variance_balance_relative_error": 1.56086861253583e-16
+      },
+      "phase_range_percent": [
+        32.40994941681401,
+        32.427845350494216
+      ],
+      "nested_ROI_percent": 31.016145728970486,
+      "same_full_mask_center_ROI_percent": 35.613254789335436,
+      "finite_flat_percent": 0.5385464205940038,
+      "cumulative_variance": [
+        {
+          "frequency_cycles_per_mm": 0.0,
+          "within_retained_variance_percent": 0.0
+        },
+        {
+          "frequency_cycles_per_mm": 0.336717514850737,
+          "within_retained_variance_percent": 0.0
+        },
+        {
+          "frequency_cycles_per_mm": 0.673435029701474,
+          "within_retained_variance_percent": 0.0
+        },
+        {
+          "frequency_cycles_per_mm": 1.0101525445522108,
+          "within_retained_variance_percent": 0.0
+        },
+        {
+          "frequency_cycles_per_mm": 1.346870059402948,
+          "within_retained_variance_percent": 0.9319451132487117
+        },
+        {
+          "frequency_cycles_per_mm": 1.6835875742536848,
+          "within_retained_variance_percent": 3.1700827104626192
+        },
+        {
+          "frequency_cycles_per_mm": 2.0203050891044216,
+          "within_retained_variance_percent": 3.1700827104626192
+        },
+        {
+          "frequency_cycles_per_mm": 2.357022603955159,
+          "within_retained_variance_percent": 3.1700827104626192
+        },
+        {
+          "frequency_cycles_per_mm": 2.693740118805896,
+          "within_retained_variance_percent": 11.756610216451856
+        },
+        {
+          "frequency_cycles_per_mm": 3.0304576336566327,
+          "within_retained_variance_percent": 11.756610216451856
+        },
+        {
+          "frequency_cycles_per_mm": 3.3671751485073695,
+          "within_retained_variance_percent": 15.072352686074105
+        },
+        {
+          "frequency_cycles_per_mm": 3.7038926633581064,
+          "within_retained_variance_percent": 17.350953840011613
+        },
+        {
+          "frequency_cycles_per_mm": 4.040610178208843,
+          "within_retained_variance_percent": 21.727052166539156
+        },
+        {
+          "frequency_cycles_per_mm": 4.377327693059581,
+          "within_retained_variance_percent": 25.47597595328254
+        },
+        {
+          "frequency_cycles_per_mm": 4.714045207910318,
+          "within_retained_variance_percent": 25.47597595328254
+        },
+        {
+          "frequency_cycles_per_mm": 5.050762722761054,
+          "within_retained_variance_percent": 33.24938165668851
+        },
+        {
+          "frequency_cycles_per_mm": 5.387480237611792,
+          "within_retained_variance_percent": 36.93221698179396
+        },
+        {
+          "frequency_cycles_per_mm": 5.724197752462528,
+          "within_retained_variance_percent": 36.93221698179396
+        },
+        {
+          "frequency_cycles_per_mm": 6.060915267313265,
+          "within_retained_variance_percent": 42.40990592265388
+        },
+        {
+          "frequency_cycles_per_mm": 6.397632782164003,
+          "within_retained_variance_percent": 44.89713052188835
+        },
+        {
+          "frequency_cycles_per_mm": 6.734350297014739,
+          "within_retained_variance_percent": 47.89390737913661
+        },
+        {
+          "frequency_cycles_per_mm": 7.071067811865476,
+          "within_retained_variance_percent": 49.592655262156185
+        },
+        {
+          "frequency_cycles_per_mm": 7.142857142857143,
+          "within_retained_variance_percent": 49.592655262156185
+        },
+        {
+          "frequency_cycles_per_mm": 7.407785326716213,
+          "within_retained_variance_percent": 51.21323614022051
+        },
+        {
+          "frequency_cycles_per_mm": 7.74450284156695,
+          "within_retained_variance_percent": 52.81292755031743
+        },
+        {
+          "frequency_cycles_per_mm": 8.081220356417687,
+          "within_retained_variance_percent": 53.72065283869694
+        },
+        {
+          "frequency_cycles_per_mm": 8.417937871268425,
+          "within_retained_variance_percent": 55.94454901172736
+        },
+        {
+          "frequency_cycles_per_mm": 8.754655386119161,
+          "within_retained_variance_percent": 58.780570231812916
+        },
+        {
+          "frequency_cycles_per_mm": 9.091372900969898,
+          "within_retained_variance_percent": 59.99227025082925
+        },
+        {
+          "frequency_cycles_per_mm": 9.428090415820636,
+          "within_retained_variance_percent": 60.69374420989079
+        },
+        {
+          "frequency_cycles_per_mm": 9.764807930671372,
+          "within_retained_variance_percent": 63.058589857478935
+        },
+        {
+          "frequency_cycles_per_mm": 10.101525445522109,
+          "within_retained_variance_percent": 64.60503971145911
+        },
+        {
+          "frequency_cycles_per_mm": 10.438242960372845,
+          "within_retained_variance_percent": 67.8883807042631
+        },
+        {
+          "frequency_cycles_per_mm": 10.774960475223583,
+          "within_retained_variance_percent": 68.3701184828739
+        },
+        {
+          "frequency_cycles_per_mm": 11.11167799007432,
+          "within_retained_variance_percent": 70.45858366787125
+        },
+        {
+          "frequency_cycles_per_mm": 11.448395504925056,
+          "within_retained_variance_percent": 71.85673107602672
+        },
+        {
+          "frequency_cycles_per_mm": 11.785113019775794,
+          "within_retained_variance_percent": 73.80216751100528
+        },
+        {
+          "frequency_cycles_per_mm": 12.12183053462653,
+          "within_retained_variance_percent": 75.83707874122953
+        },
+        {
+          "frequency_cycles_per_mm": 12.458548049477267,
+          "within_retained_variance_percent": 77.99784371991936
+        },
+        {
+          "frequency_cycles_per_mm": 12.795265564328005,
+          "within_retained_variance_percent": 78.23387186709513
+        },
+        {
+          "frequency_cycles_per_mm": 13.131983079178742,
+          "within_retained_variance_percent": 79.7003730955129
+        },
+        {
+          "frequency_cycles_per_mm": 13.468700594029478,
+          "within_retained_variance_percent": 82.30234251260406
+        },
+        {
+          "frequency_cycles_per_mm": 13.805418108880215,
+          "within_retained_variance_percent": 83.61255229423477
+        },
+        {
+          "frequency_cycles_per_mm": 14.142135623730953,
+          "within_retained_variance_percent": 84.58464903970716
+        },
+        {
+          "frequency_cycles_per_mm": 14.285714285714286,
+          "within_retained_variance_percent": 84.58464903970716
+        },
+        {
+          "frequency_cycles_per_mm": 14.47885313858169,
+          "within_retained_variance_percent": 86.48987817039813
+        },
+        {
+          "frequency_cycles_per_mm": 14.815570653432426,
+          "within_retained_variance_percent": 88.2098299637146
+        },
+        {
+          "frequency_cycles_per_mm": 15.152288168283164,
+          "within_retained_variance_percent": 89.53238907306586
+        },
+        {
+          "frequency_cycles_per_mm": 15.4890056831339,
+          "within_retained_variance_percent": 90.36643368884214
+        },
+        {
+          "frequency_cycles_per_mm": 15.825723197984635,
+          "within_retained_variance_percent": 91.2492746786009
+        },
+        {
+          "frequency_cycles_per_mm": 16.162440712835373,
+          "within_retained_variance_percent": 92.02663105080423
+        },
+        {
+          "frequency_cycles_per_mm": 16.499158227686113,
+          "within_retained_variance_percent": 92.84009703738438
+        },
+        {
+          "frequency_cycles_per_mm": 16.83587574253685,
+          "within_retained_variance_percent": 94.04746094337634
+        },
+        {
+          "frequency_cycles_per_mm": 17.172593257387582,
+          "within_retained_variance_percent": 94.7655308948442
+        },
+        {
+          "frequency_cycles_per_mm": 17.509310772238322,
+          "within_retained_variance_percent": 94.93995918833294
+        },
+        {
+          "frequency_cycles_per_mm": 17.846028287089062,
+          "within_retained_variance_percent": 95.4895938098333
+        },
+        {
+          "frequency_cycles_per_mm": 18.182745801939795,
+          "within_retained_variance_percent": 96.49527598180613
+        },
+        {
+          "frequency_cycles_per_mm": 18.51946331679053,
+          "within_retained_variance_percent": 96.82606157310316
+        },
+        {
+          "frequency_cycles_per_mm": 18.85618083164127,
+          "within_retained_variance_percent": 97.53575450741415
+        },
+        {
+          "frequency_cycles_per_mm": 19.047619047619047,
+          "within_retained_variance_percent": 97.53575450741415
+        },
+        {
+          "frequency_cycles_per_mm": 19.192898346492008,
+          "within_retained_variance_percent": 97.95005473927009
+        },
+        {
+          "frequency_cycles_per_mm": 19.529615861342744,
+          "within_retained_variance_percent": 98.61662791785837
+        },
+        {
+          "frequency_cycles_per_mm": 19.86633337619348,
+          "within_retained_variance_percent": 98.99885046041096
+        },
+        {
+          "frequency_cycles_per_mm": 20.203050891044217,
+          "within_retained_variance_percent": 99.03406951064915
+        },
+        {
+          "frequency_cycles_per_mm": 20.539768405894957,
+          "within_retained_variance_percent": 99.31918412222669
+        },
+        {
+          "frequency_cycles_per_mm": 20.87648592074569,
+          "within_retained_variance_percent": 99.37193436357802
+        },
+        {
+          "frequency_cycles_per_mm": 21.213203435596427,
+          "within_retained_variance_percent": 99.50214407580145
+        },
+        {
+          "frequency_cycles_per_mm": 21.549920950447166,
+          "within_retained_variance_percent": 99.62084500126907
+        },
+        {
+          "frequency_cycles_per_mm": 21.886638465297903,
+          "within_retained_variance_percent": 99.67532997161204
+        },
+        {
+          "frequency_cycles_per_mm": 22.22335598014864,
+          "within_retained_variance_percent": 99.72520191173527
+        },
+        {
+          "frequency_cycles_per_mm": 22.560073494999376,
+          "within_retained_variance_percent": 99.78261975895748
+        },
+        {
+          "frequency_cycles_per_mm": 22.896791009850112,
+          "within_retained_variance_percent": 99.85045202865687
+        },
+        {
+          "frequency_cycles_per_mm": 23.233508524700852,
+          "within_retained_variance_percent": 99.87417290141822
+        },
+        {
+          "frequency_cycles_per_mm": 23.57022603955159,
+          "within_retained_variance_percent": 99.89395835935252
+        },
+        {
+          "frequency_cycles_per_mm": 23.90694355440232,
+          "within_retained_variance_percent": 99.95182122078593
+        },
+        {
+          "frequency_cycles_per_mm": 24.24366106925306,
+          "within_retained_variance_percent": 99.95182122078593
+        },
+        {
+          "frequency_cycles_per_mm": 24.5803785841038,
+          "within_retained_variance_percent": 99.97936776080427
+        },
+        {
+          "frequency_cycles_per_mm": 24.917096098954534,
+          "within_retained_variance_percent": 99.97936776080427
+        },
+        {
+          "frequency_cycles_per_mm": 25.25381361380527,
+          "within_retained_variance_percent": 99.98289993301017
+        },
+        {
+          "frequency_cycles_per_mm": 25.59053112865601,
+          "within_retained_variance_percent": 99.99669612465146
+        },
+        {
+          "frequency_cycles_per_mm": 25.927248643506747,
+          "within_retained_variance_percent": 99.99669612465146
+        },
+        {
+          "frequency_cycles_per_mm": 26.263966158357483,
+          "within_retained_variance_percent": 99.99863278918531
+        },
+        {
+          "frequency_cycles_per_mm": 26.60068367320822,
+          "within_retained_variance_percent": 99.99863278918531
+        },
+        {
+          "frequency_cycles_per_mm": 26.937401188058956,
+          "within_retained_variance_percent": 100.0
+        }
+      ]
+    },
+    {
+      "surface": "depth3",
+      "grid": "0p5um",
+      "source_camera_stats": "C:\\Projects\\oled-sparkle\\test-results\\oled-depth3-camera-20261108\\0p5um\\diamond\\torch\\camera_stats.json",
+      "raw_optical_sha256": "a1ba0e888a0250acf55dc6d25b4115cb98d35c848f7b49b5c46f080bf0b937d8",
+      "headline_sparkle_percent": 32.5651925226318,
+      "parseval_variance_relative_error": 0.0,
+      "frequency_boundaries": {
+        "exact_green_repeat_140um": {
+          "frequency_cycles_per_mm": 7.142857142857143,
+          "within_retained_variance_percent": 49.41672385051475,
+          "above_retained_variance_percent": 50.58327614948526,
+          "within_component_contrast_percent_total_mean": 22.892363060443525
+        },
+        "nominal_address_pitch_70um": {
+          "frequency_cycles_per_mm": 14.285714285714286,
+          "within_retained_variance_percent": 84.63141101903749,
+          "above_retained_variance_percent": 15.368588980962505,
+          "within_component_contrast_percent_total_mean": 29.958456963675733
+        },
+        "camera_axis_Nyquist_26p25um": {
+          "frequency_cycles_per_mm": 19.047619047619047,
+          "within_retained_variance_percent": 97.51733281414728,
+          "above_retained_variance_percent": 2.482667185852716,
+          "within_component_contrast_percent_total_mean": 32.15840921130397
+        }
+      },
+      "diamond_only_notch_diagnostic": {
+        "removed_bins": 56,
+        "contrast_percent": 33.07077284948785,
+        "common_union_removed_bins": 89
+      },
+      "Nyquist_decomposition": {
+        "low_variance_over_total": 0.9974421116226513,
+        "high_variance_over_total": 0.009264079730831947,
+        "twice_covariance_over_total": -0.006706191353483343,
+        "low_component_contrast_percent_total_mean": 32.5235167913707,
+        "high_component_contrast_percent_total_mean": 3.134402695238889,
+        "mean_low_over_total": 1.0007593226483997,
+        "variance_balance_relative_error": 0.0
+      },
+      "phase_range_percent": [
+        32.5041402751494,
+        32.5651925226318
+      ],
+      "nested_ROI_percent": 29.64651763811998,
+      "same_full_mask_center_ROI_percent": 34.58598332983887,
+      "finite_flat_percent": 0.5394028514491241,
+      "cumulative_variance": [
+        {
+          "frequency_cycles_per_mm": 0.0,
+          "within_retained_variance_percent": 0.0
+        },
+        {
+          "frequency_cycles_per_mm": 0.336717514850737,
+          "within_retained_variance_percent": 0.0
+        },
+        {
+          "frequency_cycles_per_mm": 0.673435029701474,
+          "within_retained_variance_percent": 0.0
+        },
+        {
+          "frequency_cycles_per_mm": 1.0101525445522108,
+          "within_retained_variance_percent": 0.0
+        },
+        {
+          "frequency_cycles_per_mm": 1.346870059402948,
+          "within_retained_variance_percent": 0.7168407791239523
+        },
+        {
+          "frequency_cycles_per_mm": 1.6835875742536848,
+          "within_retained_variance_percent": 3.431304220442456
+        },
+        {
+          "frequency_cycles_per_mm": 2.0203050891044216,
+          "within_retained_variance_percent": 3.431304220442456
+        },
+        {
+          "frequency_cycles_per_mm": 2.357022603955159,
+          "within_retained_variance_percent": 3.431304220442456
+        },
+        {
+          "frequency_cycles_per_mm": 2.693740118805896,
+          "within_retained_variance_percent": 10.823034345785157
+        },
+        {
+          "frequency_cycles_per_mm": 3.0304576336566327,
+          "within_retained_variance_percent": 10.823034345785157
+        },
+        {
+          "frequency_cycles_per_mm": 3.3671751485073695,
+          "within_retained_variance_percent": 14.097402176695981
+        },
+        {
+          "frequency_cycles_per_mm": 3.7038926633581064,
+          "within_retained_variance_percent": 16.40033602449233
+        },
+        {
+          "frequency_cycles_per_mm": 4.040610178208843,
+          "within_retained_variance_percent": 21.387591904628874
+        },
+        {
+          "frequency_cycles_per_mm": 4.377327693059581,
+          "within_retained_variance_percent": 25.17224064105324
+        },
+        {
+          "frequency_cycles_per_mm": 4.714045207910318,
+          "within_retained_variance_percent": 25.17224064105324
+        },
+        {
+          "frequency_cycles_per_mm": 5.050762722761054,
+          "within_retained_variance_percent": 32.474666935187805
+        },
+        {
+          "frequency_cycles_per_mm": 5.387480237611792,
+          "within_retained_variance_percent": 35.78164102515493
+        },
+        {
+          "frequency_cycles_per_mm": 5.724197752462528,
+          "within_retained_variance_percent": 35.78164102515493
+        },
+        {
+          "frequency_cycles_per_mm": 6.060915267313265,
+          "within_retained_variance_percent": 41.37613741125267
+        },
+        {
+          "frequency_cycles_per_mm": 6.397632782164003,
+          "within_retained_variance_percent": 44.29103360586771
+        },
+        {
+          "frequency_cycles_per_mm": 6.734350297014739,
+          "within_retained_variance_percent": 47.370943769631914
+        },
+        {
+          "frequency_cycles_per_mm": 7.071067811865476,
+          "within_retained_variance_percent": 49.41672385051475
+        },
+        {
+          "frequency_cycles_per_mm": 7.142857142857143,
+          "within_retained_variance_percent": 49.41672385051475
+        },
+        {
+          "frequency_cycles_per_mm": 7.407785326716213,
+          "within_retained_variance_percent": 51.213862701165816
+        },
+        {
+          "frequency_cycles_per_mm": 7.74450284156695,
+          "within_retained_variance_percent": 52.97114134288219
+        },
+        {
+          "frequency_cycles_per_mm": 8.081220356417687,
+          "within_retained_variance_percent": 53.89601226694616
+        },
+        {
+          "frequency_cycles_per_mm": 8.417937871268425,
+          "within_retained_variance_percent": 56.19178858028824
+        },
+        {
+          "frequency_cycles_per_mm": 8.754655386119161,
+          "within_retained_variance_percent": 58.87577566808338
+        },
+        {
+          "frequency_cycles_per_mm": 9.091372900969898,
+          "within_retained_variance_percent": 60.171245799596925
+        },
+        {
+          "frequency_cycles_per_mm": 9.428090415820636,
+          "within_retained_variance_percent": 61.01417492324274
+        },
+        {
+          "frequency_cycles_per_mm": 9.764807930671372,
+          "within_retained_variance_percent": 63.47296025176431
+        },
+        {
+          "frequency_cycles_per_mm": 10.101525445522109,
+          "within_retained_variance_percent": 64.94286731058881
+        },
+        {
+          "frequency_cycles_per_mm": 10.438242960372845,
+          "within_retained_variance_percent": 67.92002669880524
+        },
+        {
+          "frequency_cycles_per_mm": 10.774960475223583,
+          "within_retained_variance_percent": 68.54283131658345
+        },
+        {
+          "frequency_cycles_per_mm": 11.11167799007432,
+          "within_retained_variance_percent": 70.51231611904704
+        },
+        {
+          "frequency_cycles_per_mm": 11.448395504925056,
+          "within_retained_variance_percent": 71.73474360218181
+        },
+        {
+          "frequency_cycles_per_mm": 11.785113019775794,
+          "within_retained_variance_percent": 73.74789936134763
+        },
+        {
+          "frequency_cycles_per_mm": 12.12183053462653,
+          "within_retained_variance_percent": 75.62956207572087
+        },
+        {
+          "frequency_cycles_per_mm": 12.458548049477267,
+          "within_retained_variance_percent": 77.75948545557151
+        },
+        {
+          "frequency_cycles_per_mm": 12.795265564328005,
+          "within_retained_variance_percent": 78.04475720064225
+        },
+        {
+          "frequency_cycles_per_mm": 13.131983079178742,
+          "within_retained_variance_percent": 79.578148826549
+        },
+        {
+          "frequency_cycles_per_mm": 13.468700594029478,
+          "within_retained_variance_percent": 82.21181573026642
+        },
+        {
+          "frequency_cycles_per_mm": 13.805418108880215,
+          "within_retained_variance_percent": 83.74859664696449
+        },
+        {
+          "frequency_cycles_per_mm": 14.142135623730953,
+          "within_retained_variance_percent": 84.63141101903751
+        },
+        {
+          "frequency_cycles_per_mm": 14.285714285714286,
+          "within_retained_variance_percent": 84.63141101903749
+        },
+        {
+          "frequency_cycles_per_mm": 14.47885313858169,
+          "within_retained_variance_percent": 86.50328662230059
+        },
+        {
+          "frequency_cycles_per_mm": 14.815570653432426,
+          "within_retained_variance_percent": 88.04840555326655
+        },
+        {
+          "frequency_cycles_per_mm": 15.152288168283164,
+          "within_retained_variance_percent": 89.43326880326386
+        },
+        {
+          "frequency_cycles_per_mm": 15.4890056831339,
+          "within_retained_variance_percent": 90.30198015158332
+        },
+        {
+          "frequency_cycles_per_mm": 15.825723197984635,
+          "within_retained_variance_percent": 91.15259461879688
+        },
+        {
+          "frequency_cycles_per_mm": 16.162440712835373,
+          "within_retained_variance_percent": 91.94890443333905
+        },
+        {
+          "frequency_cycles_per_mm": 16.499158227686113,
+          "within_retained_variance_percent": 92.66292410710903
+        },
+        {
+          "frequency_cycles_per_mm": 16.83587574253685,
+          "within_retained_variance_percent": 93.85710384025423
+        },
+        {
+          "frequency_cycles_per_mm": 17.172593257387582,
+          "within_retained_variance_percent": 94.66418272354429
+        },
+        {
+          "frequency_cycles_per_mm": 17.509310772238322,
+          "within_retained_variance_percent": 94.85831455273274
+        },
+        {
+          "frequency_cycles_per_mm": 17.846028287089062,
+          "within_retained_variance_percent": 95.43780984160485
+        },
+        {
+          "frequency_cycles_per_mm": 18.182745801939795,
+          "within_retained_variance_percent": 96.46915310473686
+        },
+        {
+          "frequency_cycles_per_mm": 18.51946331679053,
+          "within_retained_variance_percent": 96.79859351305241
+        },
+        {
+          "frequency_cycles_per_mm": 18.85618083164127,
+          "within_retained_variance_percent": 97.51733281414728
+        },
+        {
+          "frequency_cycles_per_mm": 19.047619047619047,
+          "within_retained_variance_percent": 97.51733281414728
+        },
+        {
+          "frequency_cycles_per_mm": 19.192898346492008,
+          "within_retained_variance_percent": 97.93499502026361
+        },
+        {
+          "frequency_cycles_per_mm": 19.529615861342744,
+          "within_retained_variance_percent": 98.62346027386366
+        },
+        {
+          "frequency_cycles_per_mm": 19.86633337619348,
+          "within_retained_variance_percent": 99.01331751736726
+        },
+        {
+          "frequency_cycles_per_mm": 20.203050891044217,
+          "within_retained_variance_percent": 99.04813564603639
+        },
+        {
+          "frequency_cycles_per_mm": 20.539768405894957,
+          "within_retained_variance_percent": 99.33165712815266
+        },
+        {
+          "frequency_cycles_per_mm": 20.87648592074569,
+          "within_retained_variance_percent": 99.37652826975192
+        },
+        {
+          "frequency_cycles_per_mm": 21.213203435596427,
+          "within_retained_variance_percent": 99.49280204512199
+        },
+        {
+          "frequency_cycles_per_mm": 21.549920950447166,
+          "within_retained_variance_percent": 99.62135462926908
+        },
+        {
+          "frequency_cycles_per_mm": 21.886638465297903,
+          "within_retained_variance_percent": 99.67118489839456
+        },
+        {
+          "frequency_cycles_per_mm": 22.22335598014864,
+          "within_retained_variance_percent": 99.73290236526151
+        },
+        {
+          "frequency_cycles_per_mm": 22.560073494999376,
+          "within_retained_variance_percent": 99.7916243982689
+        },
+        {
+          "frequency_cycles_per_mm": 22.896791009850112,
+          "within_retained_variance_percent": 99.8567293304391
+        },
+        {
+          "frequency_cycles_per_mm": 23.233508524700852,
+          "within_retained_variance_percent": 99.87544049233674
+        },
+        {
+          "frequency_cycles_per_mm": 23.57022603955159,
+          "within_retained_variance_percent": 99.89348955883348
+        },
+        {
+          "frequency_cycles_per_mm": 23.90694355440232,
+          "within_retained_variance_percent": 99.95627345215831
+        },
+        {
+          "frequency_cycles_per_mm": 24.24366106925306,
+          "within_retained_variance_percent": 99.95627345215831
+        },
+        {
+          "frequency_cycles_per_mm": 24.5803785841038,
+          "within_retained_variance_percent": 99.98082113179592
+        },
+        {
+          "frequency_cycles_per_mm": 24.917096098954534,
+          "within_retained_variance_percent": 99.98082113179592
+        },
+        {
+          "frequency_cycles_per_mm": 25.25381361380527,
+          "within_retained_variance_percent": 99.98271236847961
+        },
+        {
+          "frequency_cycles_per_mm": 25.59053112865601,
+          "within_retained_variance_percent": 99.99633890046117
+        },
+        {
+          "frequency_cycles_per_mm": 25.927248643506747,
+          "within_retained_variance_percent": 99.99633890046117
+        },
+        {
+          "frequency_cycles_per_mm": 26.263966158357483,
+          "within_retained_variance_percent": 99.99798199977336
+        },
+        {
+          "frequency_cycles_per_mm": 26.60068367320822,
+          "within_retained_variance_percent": 99.99798199977336
+        },
+        {
+          "frequency_cycles_per_mm": 26.937401188058956,
+          "within_retained_variance_percent": 100.0
+        }
+      ]
+    }
+  ]
+}

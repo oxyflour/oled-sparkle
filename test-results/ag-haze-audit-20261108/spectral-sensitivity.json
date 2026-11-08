@@ -1,0 +1,2515 @@
+{
+  "kind": "illustrative-phase-screen-spectral-sensitivity",
+  "input": {
+    "path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag-pitch0p5\\heightfield.png",
+    "sha256": "9a495dc565e3bb2b5ef725e9950f05a8958cc70e1364978b352607b1d91c4c3d",
+    "height_range_um": 0.5361845861372564,
+    "height_pitch_um": 0.5,
+    "periodicity": "source metadata",
+    "roughness": {
+      "Sa_um": 0.10000000480208875,
+      "Sq_um": 0.11851254239602815,
+      "Sz_um": 0.5155668647560674,
+      "height_min_um": 0.010308883524601242,
+      "height_max_um": 0.5258757482806686,
+      "rms_slope": 0.03302164002728051,
+      "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+    },
+    "sidecar_path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag-pitch0p5\\heightfield.source.json",
+    "sidecar_sha256": "fbaccda92c79fd07ebd9ac07a725f562f2a550bdbb1a7f786277fcc86cdd4033"
+  },
+  "model": "Existing scalar phase-screen; uniform normal incidence, n_out=1, acceptance 2.5deg. No change to surface; no new native backend runs.",
+  "scope": "D65/V-weighted illustrative surface-model ratio over 380-780nm. The 380-780 range is truncated; no measured source, substrate identification, angle-dependent Fresnel, instrument corrections or actual standard luminous-haze claim. N-BK7 is an illustrative dispersion example, not identification of the paper glass.",
+  "transmitted_power_weight": "Q(lambda)=normal-incidence flat-interface Fresnel power T0(n(lambda))*represented_scalar_forward_flux. It is an explicit approximate weight, not measured absolute transmission. Integrate D65*V*Q*H / D65*V*Q using trapezoidal quadrature.",
+  "dispersion": {
+    "source": "https://media.schott.com/api/public/content/41e799d0bf874807a0bb8e702fbb75b5?v=54856406",
+    "formula": "n^2=1+sum(B_i*l_um^2/(l_um^2-C_i))",
+    "B": [
+      1.03961212,
+      0.231792344,
+      1.01046945
+    ],
+    "C_um2": [
+      0.006000699,
+      0.0200179144,
+      103.560653
+    ]
+  },
+  "spectral_inputs": {
+    "CIE_std_illum_D65.csv": {
+      "source": "https://files.cie.co.at/Publications-datasets/CIE_std_illum_D65.csv",
+      "sha256": "e76f210bffff3d552ef7113025da5f325d5dfec200dd4b878b1a2f3a507032cb"
+    },
+    "CIE_sle_photopic.csv": {
+      "source": "https://files.cie.co.at/Publications-datasets/CIE_sle_photopic.csv",
+      "sha256": "ee5d5d17922ae645d4af52cacf6a50bdb9385749f9d2181ca312eb2b08febac2"
+    }
+  },
+  "calculator_sha256": "a8180f230da7a0e538c3c8b035bdba5c92d9ddf5d8cb566ff7d471a2465cb0a4",
+  "elapsed_seconds": 177.34019439993426,
+  "summaries": [
+    {
+      "model": "n1p5",
+      "D65_V_weighted_380_780nm_percent": 2.8679846747274933,
+      "10nm_quadrature_percent": 2.8677571624442093,
+      "minimum_monochromatic_percent": 1.9903683948312842,
+      "maximum_monochromatic_percent": 3.902117976848224,
+      "n_at_530nm": 1.5
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "D65_V_weighted_380_780nm_percent": 3.1465497609266184,
+      "10nm_quadrature_percent": 3.1463009565467193,
+      "minimum_monochromatic_percent": 2.243427341566945,
+      "maximum_monochromatic_percent": 4.223821483865958,
+      "n_at_530nm": 1.5195839564828153
+    },
+    {
+      "model": "BK7_dispersion",
+      "D65_V_weighted_380_780nm_percent": 3.1287938496620127,
+      "10nm_quadrature_percent": 3.1285502982738866,
+      "minimum_monochromatic_percent": 2.440132331013879,
+      "maximum_monochromatic_percent": 4.0841614029070925,
+      "n_at_530nm": 1.5195839564828153
+    }
+  ],
+  "records": [
+    {
+      "model": "n1p5",
+      "wavelength_nm": 380,
+      "n_in": 1.5,
+      "haze_percent": 1.9903683948312842,
+      "represented_scalar_forward_flux": 0.9998619695220954,
+      "flat_Fresnel_times_scalar_flux": 0.9598674907412116,
+      "D65": 49.9755,
+      "V_lambda": 3.9e-05
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 385,
+      "n_in": 1.5,
+      "haze_percent": 2.0100057654180867,
+      "represented_scalar_forward_flux": 0.9998619688614518,
+      "flat_Fresnel_times_scalar_flux": 0.9598674901069937,
+      "D65": 52.3118,
+      "V_lambda": 6.4e-05
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 390,
+      "n_in": 1.5,
+      "haze_percent": 2.0331672585356557,
+      "represented_scalar_forward_flux": 0.9998619681921428,
+      "flat_Fresnel_times_scalar_flux": 0.959867489464457,
+      "D65": 54.6482,
+      "V_lambda": 0.00012
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 395,
+      "n_in": 1.5,
+      "haze_percent": 2.0562164486682715,
+      "represented_scalar_forward_flux": 0.9998619675141671,
+      "flat_Fresnel_times_scalar_flux": 0.9598674888136004,
+      "D65": 68.7015,
+      "V_lambda": 0.000217
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 400,
+      "n_in": 1.5,
+      "haze_percent": 2.0800376113074126,
+      "represented_scalar_forward_flux": 0.9998619668275224,
+      "flat_Fresnel_times_scalar_flux": 0.9598674881544215,
+      "D65": 82.7549,
+      "V_lambda": 0.000396
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 405,
+      "n_in": 1.5,
+      "haze_percent": 2.101407455733525,
+      "represented_scalar_forward_flux": 0.9998619661322079,
+      "flat_Fresnel_times_scalar_flux": 0.9598674874869195,
+      "D65": 87.1204,
+      "V_lambda": 0.00064
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 410,
+      "n_in": 1.5,
+      "haze_percent": 2.1246564579914655,
+      "represented_scalar_forward_flux": 0.9998619654282237,
+      "flat_Fresnel_times_scalar_flux": 0.9598674868110947,
+      "D65": 91.486,
+      "V_lambda": 0.00121
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 415,
+      "n_in": 1.5,
+      "haze_percent": 2.1500873672732337,
+      "represented_scalar_forward_flux": 0.9998619647155669,
+      "flat_Fresnel_times_scalar_flux": 0.9598674861269442,
+      "D65": 92.4589,
+      "V_lambda": 0.00218
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 420,
+      "n_in": 1.5,
+      "haze_percent": 2.1745055328924363,
+      "represented_scalar_forward_flux": 0.999861963994237,
+      "flat_Fresnel_times_scalar_flux": 0.9598674854344674,
+      "D65": 93.4318,
+      "V_lambda": 0.004
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 425,
+      "n_in": 1.5,
+      "haze_percent": 2.1990715699702337,
+      "represented_scalar_forward_flux": 0.9998619632642329,
+      "flat_Fresnel_times_scalar_flux": 0.9598674847336636,
+      "D65": 90.057,
+      "V_lambda": 0.0073
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 430,
+      "n_in": 1.5,
+      "haze_percent": 2.2237873815496005,
+      "represented_scalar_forward_flux": 0.9998619625255529,
+      "flat_Fresnel_times_scalar_flux": 0.9598674840245308,
+      "D65": 86.6823,
+      "V_lambda": 0.0116
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 435,
+      "n_in": 1.5,
+      "haze_percent": 2.2460844689895256,
+      "represented_scalar_forward_flux": 0.9998619617781952,
+      "flat_Fresnel_times_scalar_flux": 0.9598674833070674,
+      "D65": 95.7736,
+      "V_lambda": 0.01684
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 440,
+      "n_in": 1.5,
+      "haze_percent": 2.2696040674195967,
+      "represented_scalar_forward_flux": 0.99986196102216,
+      "flat_Fresnel_times_scalar_flux": 0.9598674825812735,
+      "D65": 104.865,
+      "V_lambda": 0.023
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 445,
+      "n_in": 1.5,
+      "haze_percent": 2.295577810314262,
+      "represented_scalar_forward_flux": 0.9998619602574442,
+      "flat_Fresnel_times_scalar_flux": 0.9598674818471464,
+      "D65": 110.936,
+      "V_lambda": 0.0298
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 450,
+      "n_in": 1.5,
+      "haze_percent": 2.3324394780383746,
+      "represented_scalar_forward_flux": 0.999861959484048,
+      "flat_Fresnel_times_scalar_flux": 0.959867481104686,
+      "D65": 117.008,
+      "V_lambda": 0.038
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 455,
+      "n_in": 1.5,
+      "haze_percent": 2.3584000767644824,
+      "represented_scalar_forward_flux": 0.9998619587019688,
+      "flat_Fresnel_times_scalar_flux": 0.95986748035389,
+      "D65": 117.41,
+      "V_lambda": 0.048
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 460,
+      "n_in": 1.5,
+      "haze_percent": 2.3867503489767254,
+      "represented_scalar_forward_flux": 0.999861957911206,
+      "flat_Fresnel_times_scalar_flux": 0.9598674795947577,
+      "D65": 117.812,
+      "V_lambda": 0.06
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 465,
+      "n_in": 1.5,
+      "haze_percent": 2.415675822502067,
+      "represented_scalar_forward_flux": 0.9998619571117583,
+      "flat_Fresnel_times_scalar_flux": 0.959867478827288,
+      "D65": 116.336,
+      "V_lambda": 0.0739
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 470,
+      "n_in": 1.5,
+      "haze_percent": 2.4388775044729716,
+      "represented_scalar_forward_flux": 0.9998619563036235,
+      "flat_Fresnel_times_scalar_flux": 0.9598674780514785,
+      "D65": 114.861,
+      "V_lambda": 0.09098
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 475,
+      "n_in": 1.5,
+      "haze_percent": 2.4706043497559236,
+      "represented_scalar_forward_flux": 0.9998619554868003,
+      "flat_Fresnel_times_scalar_flux": 0.9598674772673284,
+      "D65": 115.392,
+      "V_lambda": 0.1126
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 480,
+      "n_in": 1.5,
+      "haze_percent": 2.493640729785161,
+      "represented_scalar_forward_flux": 0.9998619546612884,
+      "flat_Fresnel_times_scalar_flux": 0.9598674764748368,
+      "D65": 115.923,
+      "V_lambda": 0.13902
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 485,
+      "n_in": 1.5,
+      "haze_percent": 2.520207608365707,
+      "represented_scalar_forward_flux": 0.9998619538270849,
+      "flat_Fresnel_times_scalar_flux": 0.9598674756740014,
+      "D65": 112.367,
+      "V_lambda": 0.1693
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 490,
+      "n_in": 1.5,
+      "haze_percent": 2.5514946584003515,
+      "represented_scalar_forward_flux": 0.999861952984189,
+      "flat_Fresnel_times_scalar_flux": 0.9598674748648214,
+      "D65": 108.811,
+      "V_lambda": 0.20802
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 495,
+      "n_in": 1.5,
+      "haze_percent": 2.563794284397677,
+      "represented_scalar_forward_flux": 0.9998619521325987,
+      "flat_Fresnel_times_scalar_flux": 0.9598674740472947,
+      "D65": 109.082,
+      "V_lambda": 0.2586
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 500,
+      "n_in": 1.5,
+      "haze_percent": 2.586705551910885,
+      "represented_scalar_forward_flux": 0.9998619512723134,
+      "flat_Fresnel_times_scalar_flux": 0.9598674732214207,
+      "D65": 109.354,
+      "V_lambda": 0.323
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 505,
+      "n_in": 1.5,
+      "haze_percent": 2.607210980302346,
+      "represented_scalar_forward_flux": 0.9998619504033307,
+      "flat_Fresnel_times_scalar_flux": 0.9598674723871974,
+      "D65": 108.578,
+      "V_lambda": 0.4073
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 510,
+      "n_in": 1.5,
+      "haze_percent": 2.6339842603121704,
+      "represented_scalar_forward_flux": 0.99986194952565,
+      "flat_Fresnel_times_scalar_flux": 0.9598674715446239,
+      "D65": 107.802,
+      "V_lambda": 0.503
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 515,
+      "n_in": 1.5,
+      "haze_percent": 2.6661671978266575,
+      "represented_scalar_forward_flux": 0.9998619486392686,
+      "flat_Fresnel_times_scalar_flux": 0.9598674706936978,
+      "D65": 106.296,
+      "V_lambda": 0.6082
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 520,
+      "n_in": 1.5,
+      "haze_percent": 2.6861285909519266,
+      "represented_scalar_forward_flux": 0.9998619477441851,
+      "flat_Fresnel_times_scalar_flux": 0.9598674698344177,
+      "D65": 104.79,
+      "V_lambda": 0.71
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 525,
+      "n_in": 1.5,
+      "haze_percent": 2.706860209675468,
+      "represented_scalar_forward_flux": 0.9998619468403989,
+      "flat_Fresnel_times_scalar_flux": 0.9598674689667829,
+      "D65": 106.239,
+      "V_lambda": 0.7932
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 530,
+      "n_in": 1.5,
+      "haze_percent": 2.730997434174413,
+      "represented_scalar_forward_flux": 0.9998619459279076,
+      "flat_Fresnel_times_scalar_flux": 0.9598674680907913,
+      "D65": 107.689,
+      "V_lambda": 0.862
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 535,
+      "n_in": 1.5,
+      "haze_percent": 2.7663614044807354,
+      "represented_scalar_forward_flux": 0.99986194500671,
+      "flat_Fresnel_times_scalar_flux": 0.9598674672064416,
+      "D65": 106.047,
+      "V_lambda": 0.9148501
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 540,
+      "n_in": 1.5,
+      "haze_percent": 2.7938771344207303,
+      "represented_scalar_forward_flux": 0.9998619440768041,
+      "flat_Fresnel_times_scalar_flux": 0.9598674663137319,
+      "D65": 104.405,
+      "V_lambda": 0.954
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 545,
+      "n_in": 1.5,
+      "haze_percent": 2.830359688629896,
+      "represented_scalar_forward_flux": 0.9998619431381879,
+      "flat_Fresnel_times_scalar_flux": 0.9598674654126603,
+      "D65": 104.225,
+      "V_lambda": 0.9803
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 550,
+      "n_in": 1.5,
+      "haze_percent": 2.848152841699086,
+      "represented_scalar_forward_flux": 0.9998619421908608,
+      "flat_Fresnel_times_scalar_flux": 0.9598674645032264,
+      "D65": 104.046,
+      "V_lambda": 0.9949501
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 555,
+      "n_in": 1.5,
+      "haze_percent": 2.866127331815198,
+      "represented_scalar_forward_flux": 0.9998619412348196,
+      "flat_Fresnel_times_scalar_flux": 0.9598674635854268,
+      "D65": 102.023,
+      "V_lambda": 1.0
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 560,
+      "n_in": 1.5,
+      "haze_percent": 2.8915416133202814,
+      "represented_scalar_forward_flux": 0.9998619402700641,
+      "flat_Fresnel_times_scalar_flux": 0.9598674626592616,
+      "D65": 100.0,
+      "V_lambda": 0.995
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 565,
+      "n_in": 1.5,
+      "haze_percent": 2.9037581015910368,
+      "represented_scalar_forward_flux": 0.9998619392965914,
+      "flat_Fresnel_times_scalar_flux": 0.9598674617247277,
+      "D65": 98.1671,
+      "V_lambda": 0.9786
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 570,
+      "n_in": 1.5,
+      "haze_percent": 2.9347730991337815,
+      "represented_scalar_forward_flux": 0.9998619383144007,
+      "flat_Fresnel_times_scalar_flux": 0.9598674607818247,
+      "D65": 96.3342,
+      "V_lambda": 0.952
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 575,
+      "n_in": 1.5,
+      "haze_percent": 2.955519985897026,
+      "represented_scalar_forward_flux": 0.9998619373234897,
+      "flat_Fresnel_times_scalar_flux": 0.9598674598305501,
+      "D65": 96.0611,
+      "V_lambda": 0.9154
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 580,
+      "n_in": 1.5,
+      "haze_percent": 2.9826758512182745,
+      "represented_scalar_forward_flux": 0.9998619363238569,
+      "flat_Fresnel_times_scalar_flux": 0.9598674588709026,
+      "D65": 95.788,
+      "V_lambda": 0.87
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 585,
+      "n_in": 1.5,
+      "haze_percent": 3.011009959434723,
+      "represented_scalar_forward_flux": 0.9998619353154998,
+      "flat_Fresnel_times_scalar_flux": 0.9598674579028798,
+      "D65": 92.2368,
+      "V_lambda": 0.8163
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 590,
+      "n_in": 1.5,
+      "haze_percent": 3.0308782673545887,
+      "represented_scalar_forward_flux": 0.9998619342984172,
+      "flat_Fresnel_times_scalar_flux": 0.9598674569264805,
+      "D65": 88.6856,
+      "V_lambda": 0.757
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 595,
+      "n_in": 1.5,
+      "haze_percent": 3.0510278162227498,
+      "represented_scalar_forward_flux": 0.9998619332726073,
+      "flat_Fresnel_times_scalar_flux": 0.959867455941703,
+      "D65": 89.3459,
+      "V_lambda": 0.6949
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 600,
+      "n_in": 1.5,
+      "haze_percent": 3.0759552655404447,
+      "represented_scalar_forward_flux": 0.9998619322380682,
+      "flat_Fresnel_times_scalar_flux": 0.9598674549485454,
+      "D65": 90.0062,
+      "V_lambda": 0.631
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 605,
+      "n_in": 1.5,
+      "haze_percent": 3.0959044876389457,
+      "represented_scalar_forward_flux": 0.999861931194798,
+      "flat_Fresnel_times_scalar_flux": 0.9598674539470061,
+      "D65": 89.8026,
+      "V_lambda": 0.5668
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 610,
+      "n_in": 1.5,
+      "haze_percent": 3.11707477520042,
+      "represented_scalar_forward_flux": 0.9998619301427949,
+      "flat_Fresnel_times_scalar_flux": 0.9598674529370831,
+      "D65": 89.5991,
+      "V_lambda": 0.503
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 615,
+      "n_in": 1.5,
+      "haze_percent": 3.148844777605736,
+      "represented_scalar_forward_flux": 0.9998619290820566,
+      "flat_Fresnel_times_scalar_flux": 0.9598674519187743,
+      "D65": 88.6489,
+      "V_lambda": 0.4412
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 620,
+      "n_in": 1.5,
+      "haze_percent": 3.1540891597659386,
+      "represented_scalar_forward_flux": 0.9998619280125813,
+      "flat_Fresnel_times_scalar_flux": 0.959867450892078,
+      "D65": 87.6987,
+      "V_lambda": 0.381
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 625,
+      "n_in": 1.5,
+      "haze_percent": 3.1921097408271897,
+      "represented_scalar_forward_flux": 0.9998619269343676,
+      "flat_Fresnel_times_scalar_flux": 0.9598674498569929,
+      "D65": 85.4936,
+      "V_lambda": 0.321
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 630,
+      "n_in": 1.5,
+      "haze_percent": 3.2172278139884702,
+      "represented_scalar_forward_flux": 0.9998619258474124,
+      "flat_Fresnel_times_scalar_flux": 0.9598674488135158,
+      "D65": 83.2886,
+      "V_lambda": 0.265
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 635,
+      "n_in": 1.5,
+      "haze_percent": 3.2266836901235156,
+      "represented_scalar_forward_flux": 0.9998619247517149,
+      "flat_Fresnel_times_scalar_flux": 0.9598674477616462,
+      "D65": 83.4939,
+      "V_lambda": 0.217
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 640,
+      "n_in": 1.5,
+      "haze_percent": 3.2480972347207624,
+      "represented_scalar_forward_flux": 0.9998619236472726,
+      "flat_Fresnel_times_scalar_flux": 0.9598674467013816,
+      "D65": 83.6992,
+      "V_lambda": 0.175
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 645,
+      "n_in": 1.5,
+      "haze_percent": 3.2766293867920266,
+      "represented_scalar_forward_flux": 0.9998619225340838,
+      "flat_Fresnel_times_scalar_flux": 0.9598674456327204,
+      "D65": 81.863,
+      "V_lambda": 0.1382
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 650,
+      "n_in": 1.5,
+      "haze_percent": 3.3102390714424126,
+      "represented_scalar_forward_flux": 0.9998619214121457,
+      "flat_Fresnel_times_scalar_flux": 0.9598674445556599,
+      "D65": 80.0268,
+      "V_lambda": 0.107
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 655,
+      "n_in": 1.5,
+      "haze_percent": 3.3346827870355455,
+      "represented_scalar_forward_flux": 0.9998619202814573,
+      "flat_Fresnel_times_scalar_flux": 0.9598674434701989,
+      "D65": 80.1207,
+      "V_lambda": 0.0816
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 660,
+      "n_in": 1.5,
+      "haze_percent": 3.3530085024564644,
+      "represented_scalar_forward_flux": 0.999861919142015,
+      "flat_Fresnel_times_scalar_flux": 0.9598674423763344,
+      "D65": 80.2146,
+      "V_lambda": 0.061
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 665,
+      "n_in": 1.5,
+      "haze_percent": 3.3798707025235926,
+      "represented_scalar_forward_flux": 0.9998619179938184,
+      "flat_Fresnel_times_scalar_flux": 0.9598674412740656,
+      "D65": 81.2462,
+      "V_lambda": 0.04458
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 670,
+      "n_in": 1.5,
+      "haze_percent": 3.408502241227966,
+      "represented_scalar_forward_flux": 0.9998619168368641,
+      "flat_Fresnel_times_scalar_flux": 0.9598674401633895,
+      "D65": 82.2778,
+      "V_lambda": 0.032
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 675,
+      "n_in": 1.5,
+      "haze_percent": 3.432792876896637,
+      "represented_scalar_forward_flux": 0.9998619156711501,
+      "flat_Fresnel_times_scalar_flux": 0.959867439044304,
+      "D65": 80.281,
+      "V_lambda": 0.0232
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 680,
+      "n_in": 1.5,
+      "haze_percent": 3.460004131423817,
+      "represented_scalar_forward_flux": 0.9998619144966743,
+      "flat_Fresnel_times_scalar_flux": 0.9598674379168073,
+      "D65": 78.2842,
+      "V_lambda": 0.017
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 685,
+      "n_in": 1.5,
+      "haze_percent": 3.4838406961183908,
+      "represented_scalar_forward_flux": 0.9998619133134359,
+      "flat_Fresnel_times_scalar_flux": 0.9598674367808984,
+      "D65": 74.0027,
+      "V_lambda": 0.01192
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 690,
+      "n_in": 1.5,
+      "haze_percent": 3.502240409804947,
+      "represented_scalar_forward_flux": 0.9998619121214298,
+      "flat_Fresnel_times_scalar_flux": 0.9598674356365726,
+      "D65": 69.7213,
+      "V_lambda": 0.00821
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 695,
+      "n_in": 1.5,
+      "haze_percent": 3.5404941762133895,
+      "represented_scalar_forward_flux": 0.9998619109206555,
+      "flat_Fresnel_times_scalar_flux": 0.9598674344838292,
+      "D65": 70.6652,
+      "V_lambda": 0.005723
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 700,
+      "n_in": 1.5,
+      "haze_percent": 3.5594564173136853,
+      "represented_scalar_forward_flux": 0.9998619097111101,
+      "flat_Fresnel_times_scalar_flux": 0.9598674333226657,
+      "D65": 71.6091,
+      "V_lambda": 0.004102
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 705,
+      "n_in": 1.5,
+      "haze_percent": 3.5781427524655043,
+      "represented_scalar_forward_flux": 0.999861908492791,
+      "flat_Fresnel_times_scalar_flux": 0.9598674321530793,
+      "D65": 72.979,
+      "V_lambda": 0.002929
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 710,
+      "n_in": 1.5,
+      "haze_percent": 3.58864940175436,
+      "represented_scalar_forward_flux": 0.9998619072656952,
+      "flat_Fresnel_times_scalar_flux": 0.9598674309750674,
+      "D65": 74.349,
+      "V_lambda": 0.002091
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 715,
+      "n_in": 1.5,
+      "haze_percent": 3.615108802764934,
+      "represented_scalar_forward_flux": 0.9998619060298188,
+      "flat_Fresnel_times_scalar_flux": 0.959867429788626,
+      "D65": 67.9765,
+      "V_lambda": 0.001484
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 720,
+      "n_in": 1.5,
+      "haze_percent": 3.628392020055013,
+      "represented_scalar_forward_flux": 0.9998619047851613,
+      "flat_Fresnel_times_scalar_flux": 0.9598674285937548,
+      "D65": 61.604,
+      "V_lambda": 0.001047
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 725,
+      "n_in": 1.5,
+      "haze_percent": 3.656195617740226,
+      "represented_scalar_forward_flux": 0.999861903531721,
+      "flat_Fresnel_times_scalar_flux": 0.9598674273904522,
+      "D65": 65.7448,
+      "V_lambda": 0.00074
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 730,
+      "n_in": 1.5,
+      "haze_percent": 3.697558110408539,
+      "represented_scalar_forward_flux": 0.9998619022694956,
+      "flat_Fresnel_times_scalar_flux": 0.9598674261787157,
+      "D65": 69.8856,
+      "V_lambda": 0.00052
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 735,
+      "n_in": 1.5,
+      "haze_percent": 3.7071803076882883,
+      "represented_scalar_forward_flux": 0.9998619009984833,
+      "flat_Fresnel_times_scalar_flux": 0.9598674249585439,
+      "D65": 72.4863,
+      "V_lambda": 0.0003611
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 740,
+      "n_in": 1.5,
+      "haze_percent": 3.7164058223484466,
+      "represented_scalar_forward_flux": 0.999861899718683,
+      "flat_Fresnel_times_scalar_flux": 0.9598674237299356,
+      "D65": 75.087,
+      "V_lambda": 0.0002492
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 745,
+      "n_in": 1.5,
+      "haze_percent": 3.736269403177077,
+      "represented_scalar_forward_flux": 0.9998618984300914,
+      "flat_Fresnel_times_scalar_flux": 0.9598674224928877,
+      "D65": 69.3398,
+      "V_lambda": 0.0001719
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 750,
+      "n_in": 1.5,
+      "haze_percent": 3.748677226351648,
+      "represented_scalar_forward_flux": 0.9998618971327085,
+      "flat_Fresnel_times_scalar_flux": 0.9598674212474001,
+      "D65": 63.5927,
+      "V_lambda": 0.00012
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 755,
+      "n_in": 1.5,
+      "haze_percent": 3.7832368002265215,
+      "represented_scalar_forward_flux": 0.9998618958265311,
+      "flat_Fresnel_times_scalar_flux": 0.9598674199934698,
+      "D65": 55.0054,
+      "V_lambda": 8.48e-05
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 760,
+      "n_in": 1.5,
+      "haze_percent": 3.801576371859914,
+      "represented_scalar_forward_flux": 0.9998618945115584,
+      "flat_Fresnel_times_scalar_flux": 0.959867418731096,
+      "D65": 46.4182,
+      "V_lambda": 6e-05
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 765,
+      "n_in": 1.5,
+      "haze_percent": 3.814558852648466,
+      "represented_scalar_forward_flux": 0.9998618931877863,
+      "flat_Fresnel_times_scalar_flux": 0.9598674174602748,
+      "D65": 56.6118,
+      "V_lambda": 4.24e-05
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 770,
+      "n_in": 1.5,
+      "haze_percent": 3.830337331773802,
+      "represented_scalar_forward_flux": 0.9998618918552145,
+      "flat_Fresnel_times_scalar_flux": 0.9598674161810058,
+      "D65": 66.8054,
+      "V_lambda": 3e-05
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 775,
+      "n_in": 1.5,
+      "haze_percent": 3.8712699120004563,
+      "represented_scalar_forward_flux": 0.9998618905138403,
+      "flat_Fresnel_times_scalar_flux": 0.9598674148932866,
+      "D65": 65.0941,
+      "V_lambda": 2.12e-05
+    },
+    {
+      "model": "n1p5",
+      "wavelength_nm": 780,
+      "n_in": 1.5,
+      "haze_percent": 3.902117976848224,
+      "represented_scalar_forward_flux": 0.999861889163661,
+      "flat_Fresnel_times_scalar_flux": 0.9598674135971146,
+      "D65": 63.3828,
+      "V_lambda": 1.499e-05
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 380,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 2.243427341566945,
+      "represented_scalar_forward_flux": 0.9998509428941516,
+      "flat_Fresnel_times_scalar_flux": 0.9573313539708214,
+      "D65": 49.9755,
+      "V_lambda": 3.9e-05
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 385,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 2.263449498375075,
+      "represented_scalar_forward_flux": 0.9998509421806074,
+      "flat_Fresnel_times_scalar_flux": 0.9573313532876213,
+      "D65": 52.3118,
+      "V_lambda": 6.4e-05
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 390,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 2.2869794013729536,
+      "represented_scalar_forward_flux": 0.9998509414577035,
+      "flat_Fresnel_times_scalar_flux": 0.9573313525954595,
+      "D65": 54.6482,
+      "V_lambda": 0.00012
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 395,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 2.3108000198699092,
+      "represented_scalar_forward_flux": 0.9998509407254382,
+      "flat_Fresnel_times_scalar_flux": 0.9573313518943346,
+      "D65": 68.7015,
+      "V_lambda": 0.000217
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 400,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 2.3354633047837283,
+      "represented_scalar_forward_flux": 0.9998509399838107,
+      "flat_Fresnel_times_scalar_flux": 0.9573313511842454,
+      "D65": 82.7549,
+      "V_lambda": 0.000396
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 405,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 2.3570870302312406,
+      "represented_scalar_forward_flux": 0.999850939232819,
+      "flat_Fresnel_times_scalar_flux": 0.9573313504651904,
+      "D65": 87.1204,
+      "V_lambda": 0.00064
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 410,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 2.3807038470666404,
+      "represented_scalar_forward_flux": 0.9998509384724628,
+      "flat_Fresnel_times_scalar_flux": 0.9573313497371689,
+      "D65": 91.486,
+      "V_lambda": 0.00121
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 415,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 2.407058008302101,
+      "represented_scalar_forward_flux": 0.9998509377027398,
+      "flat_Fresnel_times_scalar_flux": 0.9573313490001792,
+      "D65": 92.4589,
+      "V_lambda": 0.00218
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 420,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 2.4319826003609717,
+      "represented_scalar_forward_flux": 0.9998509369236495,
+      "flat_Fresnel_times_scalar_flux": 0.9573313482542204,
+      "D65": 93.4318,
+      "V_lambda": 0.004
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 425,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 2.4571581901895203,
+      "represented_scalar_forward_flux": 0.9998509361351897,
+      "flat_Fresnel_times_scalar_flux": 0.9573313474992906,
+      "D65": 90.057,
+      "V_lambda": 0.0073
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 430,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 2.482721818113801,
+      "represented_scalar_forward_flux": 0.9998509353373596,
+      "flat_Fresnel_times_scalar_flux": 0.957331346735389,
+      "D65": 86.6823,
+      "V_lambda": 0.0116
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 435,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 2.5054834816537976,
+      "represented_scalar_forward_flux": 0.9998509345301574,
+      "flat_Fresnel_times_scalar_flux": 0.9573313459625138,
+      "D65": 95.7736,
+      "V_lambda": 0.01684
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 440,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 2.5292620547172855,
+      "represented_scalar_forward_flux": 0.999850933713582,
+      "flat_Fresnel_times_scalar_flux": 0.9573313451806641,
+      "D65": 104.865,
+      "V_lambda": 0.023
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 445,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 2.556020346083943,
+      "represented_scalar_forward_flux": 0.9998509328876319,
+      "flat_Fresnel_times_scalar_flux": 0.9573313443898382,
+      "D65": 110.936,
+      "V_lambda": 0.0298
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 450,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 2.5948037997423166,
+      "represented_scalar_forward_flux": 0.9998509320523054,
+      "flat_Fresnel_times_scalar_flux": 0.9573313435900347,
+      "D65": 117.008,
+      "V_lambda": 0.038
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 455,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 2.6212891083630043,
+      "represented_scalar_forward_flux": 0.9998509312076009,
+      "flat_Fresnel_times_scalar_flux": 0.9573313427812521,
+      "D65": 117.41,
+      "V_lambda": 0.048
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 460,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 2.650516342741133,
+      "represented_scalar_forward_flux": 0.9998509303535171,
+      "flat_Fresnel_times_scalar_flux": 0.957331341963489,
+      "D65": 117.812,
+      "V_lambda": 0.06
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 465,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 2.680555864340735,
+      "represented_scalar_forward_flux": 0.999850929490053,
+      "flat_Fresnel_times_scalar_flux": 0.9573313411367446,
+      "D65": 116.336,
+      "V_lambda": 0.0739
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 470,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 2.704168768322557,
+      "represented_scalar_forward_flux": 0.9998509286172065,
+      "flat_Fresnel_times_scalar_flux": 0.9573313403010166,
+      "D65": 114.861,
+      "V_lambda": 0.09098
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 475,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 2.7371021246943603,
+      "represented_scalar_forward_flux": 0.9998509277349756,
+      "flat_Fresnel_times_scalar_flux": 0.9573313394563034,
+      "D65": 115.392,
+      "V_lambda": 0.1126
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 480,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 2.760895305710542,
+      "represented_scalar_forward_flux": 0.9998509268433599,
+      "flat_Fresnel_times_scalar_flux": 0.9573313386026044,
+      "D65": 115.923,
+      "V_lambda": 0.13902
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 485,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 2.7881868452486813,
+      "represented_scalar_forward_flux": 0.9998509259423574,
+      "flat_Fresnel_times_scalar_flux": 0.957331337739918,
+      "D65": 112.367,
+      "V_lambda": 0.1693
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 490,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 2.8206417743699554,
+      "represented_scalar_forward_flux": 0.9998509250319655,
+      "flat_Fresnel_times_scalar_flux": 0.9573313368682413,
+      "D65": 108.811,
+      "V_lambda": 0.20802
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 495,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 2.832697867736335,
+      "represented_scalar_forward_flux": 0.9998509241121838,
+      "flat_Fresnel_times_scalar_flux": 0.9573313359875741,
+      "D65": 109.082,
+      "V_lambda": 0.2586
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 500,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 2.8563556529313288,
+      "represented_scalar_forward_flux": 0.99985092318301,
+      "flat_Fresnel_times_scalar_flux": 0.9573313350979145,
+      "D65": 109.354,
+      "V_lambda": 0.323
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 505,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 2.876869396737314,
+      "represented_scalar_forward_flux": 0.9998509222444425,
+      "flat_Fresnel_times_scalar_flux": 0.9573313341992603,
+      "D65": 108.578,
+      "V_lambda": 0.4073
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 510,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 2.904306254355841,
+      "represented_scalar_forward_flux": 0.9998509212964802,
+      "flat_Fresnel_times_scalar_flux": 0.957331333291611,
+      "D65": 107.802,
+      "V_lambda": 0.503
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 515,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 2.9378519974547777,
+      "represented_scalar_forward_flux": 0.9998509203391215,
+      "flat_Fresnel_times_scalar_flux": 0.9573313323749648,
+      "D65": 106.296,
+      "V_lambda": 0.6082
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 520,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 2.9580575774469855,
+      "represented_scalar_forward_flux": 0.9998509193723636,
+      "flat_Fresnel_times_scalar_flux": 0.9573313314493193,
+      "D65": 104.79,
+      "V_lambda": 0.71
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 525,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 2.979329265718446,
+      "represented_scalar_forward_flux": 0.9998509183962055,
+      "flat_Fresnel_times_scalar_flux": 0.9573313305146732,
+      "D65": 106.239,
+      "V_lambda": 0.7932
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 530,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.004284571692334,
+      "represented_scalar_forward_flux": 0.9998509174106457,
+      "flat_Fresnel_times_scalar_flux": 0.9573313295710252,
+      "D65": 107.689,
+      "V_lambda": 0.862
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 535,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.041292554030781,
+      "represented_scalar_forward_flux": 0.9998509164156817,
+      "flat_Fresnel_times_scalar_flux": 0.957331328618373,
+      "D65": 106.047,
+      "V_lambda": 0.9148501
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 540,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.0697455605382737,
+      "represented_scalar_forward_flux": 0.9998509154113118,
+      "flat_Fresnel_times_scalar_flux": 0.9573313276567148,
+      "D65": 104.405,
+      "V_lambda": 0.954
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 545,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.1081205495685524,
+      "represented_scalar_forward_flux": 0.9998509143975347,
+      "flat_Fresnel_times_scalar_flux": 0.9573313266860496,
+      "D65": 104.225,
+      "V_lambda": 0.9803
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 550,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.126506629758394,
+      "represented_scalar_forward_flux": 0.9998509133743485,
+      "flat_Fresnel_times_scalar_flux": 0.9573313257063754,
+      "D65": 104.046,
+      "V_lambda": 0.9949501
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 555,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.144753637211467,
+      "represented_scalar_forward_flux": 0.9998509123417518,
+      "flat_Fresnel_times_scalar_flux": 0.9573313247176908,
+      "D65": 102.023,
+      "V_lambda": 1.0
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 560,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.1707834442269833,
+      "represented_scalar_forward_flux": 0.9998509112997414,
+      "flat_Fresnel_times_scalar_flux": 0.9573313237199927,
+      "D65": 100.0,
+      "V_lambda": 0.995
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 565,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.1827840610417066,
+      "represented_scalar_forward_flux": 0.9998509102483171,
+      "flat_Fresnel_times_scalar_flux": 0.9573313227132813,
+      "D65": 98.1671,
+      "V_lambda": 0.9786
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 570,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.2150855733000987,
+      "represented_scalar_forward_flux": 0.9998509091874759,
+      "flat_Fresnel_times_scalar_flux": 0.9573313216975533,
+      "D65": 96.3342,
+      "V_lambda": 0.952
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 575,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.236653003173531,
+      "represented_scalar_forward_flux": 0.9998509081172158,
+      "flat_Fresnel_times_scalar_flux": 0.957331320672807,
+      "D65": 96.0611,
+      "V_lambda": 0.9154
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 580,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.264958683863937,
+      "represented_scalar_forward_flux": 0.9998509070375354,
+      "flat_Fresnel_times_scalar_flux": 0.9573313196390411,
+      "D65": 95.788,
+      "V_lambda": 0.87
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 585,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.294495584513504,
+      "represented_scalar_forward_flux": 0.9998509059484328,
+      "flat_Fresnel_times_scalar_flux": 0.9573313185962536,
+      "D65": 92.2368,
+      "V_lambda": 0.8163
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 590,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.31492658564425,
+      "represented_scalar_forward_flux": 0.9998509048499051,
+      "flat_Fresnel_times_scalar_flux": 0.9573313175444418,
+      "D65": 88.6856,
+      "V_lambda": 0.757
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 595,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.335562684304356,
+      "represented_scalar_forward_flux": 0.9998509037419516,
+      "flat_Fresnel_times_scalar_flux": 0.957331316483605,
+      "D65": 89.3459,
+      "V_lambda": 0.6949
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 600,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.3616689781331615,
+      "represented_scalar_forward_flux": 0.9998509026245704,
+      "flat_Fresnel_times_scalar_flux": 0.9573313154137415,
+      "D65": 90.0062,
+      "V_lambda": 0.631
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 605,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.382111571954421,
+      "represented_scalar_forward_flux": 0.9998509014977582,
+      "flat_Fresnel_times_scalar_flux": 0.9573313143348481,
+      "D65": 89.8026,
+      "V_lambda": 0.5668
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 610,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.4038750223286898,
+      "represented_scalar_forward_flux": 0.9998509003615131,
+      "flat_Fresnel_times_scalar_flux": 0.9573313132469229,
+      "D65": 89.5991,
+      "V_lambda": 0.503
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 615,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.4373493461403655,
+      "represented_scalar_forward_flux": 0.9998508992158339,
+      "flat_Fresnel_times_scalar_flux": 0.9573313121499647,
+      "D65": 88.6489,
+      "V_lambda": 0.4412
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 620,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.4420464406933085,
+      "represented_scalar_forward_flux": 0.9998508980607177,
+      "flat_Fresnel_times_scalar_flux": 0.9573313110439708,
+      "D65": 87.6987,
+      "V_lambda": 0.381
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 625,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.4819752033540814,
+      "represented_scalar_forward_flux": 0.9998508968961639,
+      "flat_Fresnel_times_scalar_flux": 0.9573313099289408,
+      "D65": 85.4936,
+      "V_lambda": 0.321
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 630,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.50821098658086,
+      "represented_scalar_forward_flux": 0.999850895722169,
+      "flat_Fresnel_times_scalar_flux": 0.9573313088048712,
+      "D65": 83.2886,
+      "V_lambda": 0.265
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 635,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.517637315739446,
+      "represented_scalar_forward_flux": 0.999850894538731,
+      "flat_Fresnel_times_scalar_flux": 0.9573313076717599,
+      "D65": 83.4939,
+      "V_lambda": 0.217
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 640,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.539733648533888,
+      "represented_scalar_forward_flux": 0.9998508933458475,
+      "flat_Fresnel_times_scalar_flux": 0.957331306529605,
+      "D65": 83.6992,
+      "V_lambda": 0.175
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 645,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.5695966396602854,
+      "represented_scalar_forward_flux": 0.9998508921435174,
+      "flat_Fresnel_times_scalar_flux": 0.957331305378405,
+      "D65": 81.863,
+      "V_lambda": 0.1382
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 650,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.604906498806922,
+      "represented_scalar_forward_flux": 0.9998508909317373,
+      "flat_Fresnel_times_scalar_flux": 0.9573313042181569,
+      "D65": 80.0268,
+      "V_lambda": 0.107
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 655,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.6303312992069636,
+      "represented_scalar_forward_flux": 0.9998508897105054,
+      "flat_Fresnel_times_scalar_flux": 0.957331303048859,
+      "D65": 80.1207,
+      "V_lambda": 0.0816
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 660,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.6492747941264776,
+      "represented_scalar_forward_flux": 0.99985088847982,
+      "flat_Fresnel_times_scalar_flux": 0.9573313018705096,
+      "D65": 80.2146,
+      "V_lambda": 0.061
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 665,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.677379041479417,
+      "represented_scalar_forward_flux": 0.9998508872396781,
+      "flat_Fresnel_times_scalar_flux": 0.957331300683106,
+      "D65": 81.2462,
+      "V_lambda": 0.04458
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 670,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.707408490906363,
+      "represented_scalar_forward_flux": 0.999850885990077,
+      "flat_Fresnel_times_scalar_flux": 0.9573312994866453,
+      "D65": 82.2778,
+      "V_lambda": 0.032
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 675,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.7327033680761073,
+      "represented_scalar_forward_flux": 0.9998508847310157,
+      "flat_Fresnel_times_scalar_flux": 0.9573312982811268,
+      "D65": 80.281,
+      "V_lambda": 0.0232
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 680,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.7612685292288615,
+      "represented_scalar_forward_flux": 0.9998508834624904,
+      "flat_Fresnel_times_scalar_flux": 0.9573312970665467,
+      "D65": 78.2842,
+      "V_lambda": 0.017
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 685,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.7863118234160407,
+      "represented_scalar_forward_flux": 0.9998508821844996,
+      "flat_Fresnel_times_scalar_flux": 0.9573312958429037,
+      "D65": 74.0027,
+      "V_lambda": 0.01192
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 690,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.805375482581279,
+      "represented_scalar_forward_flux": 0.9998508808970404,
+      "flat_Fresnel_times_scalar_flux": 0.9573312946101948,
+      "D65": 69.7213,
+      "V_lambda": 0.00821
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 695,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.845640222668827,
+      "represented_scalar_forward_flux": 0.9998508796001103,
+      "flat_Fresnel_times_scalar_flux": 0.9573312933684179,
+      "D65": 70.6652,
+      "V_lambda": 0.005723
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 700,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.8651827181911163,
+      "represented_scalar_forward_flux": 0.999850878293707,
+      "flat_Fresnel_times_scalar_flux": 0.9573312921175706,
+      "D65": 71.6091,
+      "V_lambda": 0.004102
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 705,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.8847182728261775,
+      "represented_scalar_forward_flux": 0.9998508769778269,
+      "flat_Fresnel_times_scalar_flux": 0.9573312908576496,
+      "D65": 72.979,
+      "V_lambda": 0.002929
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 710,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.8954339026100557,
+      "represented_scalar_forward_flux": 0.9998508756524669,
+      "flat_Fresnel_times_scalar_flux": 0.9573312895886517,
+      "D65": 74.349,
+      "V_lambda": 0.002091
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 715,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.9231597441250443,
+      "represented_scalar_forward_flux": 0.999850874317624,
+      "flat_Fresnel_times_scalar_flux": 0.9573312883105742,
+      "D65": 67.9765,
+      "V_lambda": 0.001484
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 720,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.936723883262217,
+      "represented_scalar_forward_flux": 0.9998508729732963,
+      "flat_Fresnel_times_scalar_flux": 0.9573312870234154,
+      "D65": 61.604,
+      "V_lambda": 0.001047
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 725,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.9658955641631217,
+      "represented_scalar_forward_flux": 0.999850871619482,
+      "flat_Fresnel_times_scalar_flux": 0.9573312857271733,
+      "D65": 65.7448,
+      "V_lambda": 0.00074
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 730,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 4.009559266517399,
+      "represented_scalar_forward_flux": 0.9998508702561788,
+      "flat_Fresnel_times_scalar_flux": 0.9573312844218458,
+      "D65": 69.8856,
+      "V_lambda": 0.00052
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 735,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 4.019348600416383,
+      "represented_scalar_forward_flux": 0.9998508688833861,
+      "flat_Fresnel_times_scalar_flux": 0.9573312831074324,
+      "D65": 72.4863,
+      "V_lambda": 0.0003611
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 740,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 4.028850842624861,
+      "represented_scalar_forward_flux": 0.9998508675011007,
+      "flat_Fresnel_times_scalar_flux": 0.95733128178393,
+      "D65": 75.087,
+      "V_lambda": 0.0002492
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 745,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 4.0495204548856245,
+      "represented_scalar_forward_flux": 0.9998508661093206,
+      "flat_Fresnel_times_scalar_flux": 0.9573312804513365,
+      "D65": 69.3398,
+      "V_lambda": 0.0001719
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 750,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 4.062433438820831,
+      "represented_scalar_forward_flux": 0.9998508647080442,
+      "flat_Fresnel_times_scalar_flux": 0.9573312791096508,
+      "D65": 63.5927,
+      "V_lambda": 0.00012
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 755,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 4.099036907037447,
+      "represented_scalar_forward_flux": 0.9998508632972695,
+      "flat_Fresnel_times_scalar_flux": 0.9573312777588705,
+      "D65": 55.0054,
+      "V_lambda": 8.48e-05
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 760,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 4.118012841424314,
+      "represented_scalar_forward_flux": 0.9998508618769945,
+      "flat_Fresnel_times_scalar_flux": 0.957331276398994,
+      "D65": 46.4182,
+      "V_lambda": 6e-05
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 765,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 4.131595859673608,
+      "represented_scalar_forward_flux": 0.9998508604472167,
+      "flat_Fresnel_times_scalar_flux": 0.9573312750300189,
+      "D65": 56.6118,
+      "V_lambda": 4.24e-05
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 770,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 4.147974659472799,
+      "represented_scalar_forward_flux": 0.9998508590079338,
+      "flat_Fresnel_times_scalar_flux": 0.9573312736519428,
+      "D65": 66.8054,
+      "V_lambda": 3e-05
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 775,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 4.191241087967402,
+      "represented_scalar_forward_flux": 0.9998508575591428,
+      "flat_Fresnel_times_scalar_flux": 0.957331272264763,
+      "D65": 65.0941,
+      "V_lambda": 2.12e-05
+    },
+    {
+      "model": "BK7_frozen_at_530nm",
+      "wavelength_nm": 780,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 4.223821483865958,
+      "represented_scalar_forward_flux": 0.9998508561008416,
+      "flat_Fresnel_times_scalar_flux": 0.9573312708684774,
+      "D65": 63.3828,
+      "V_lambda": 1.499e-05
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 380,
+      "n_in": 1.533744866768376,
+      "haze_percent": 2.440132331013879,
+      "represented_scalar_forward_flux": 0.9998427055856289,
+      "flat_Fresnel_times_scalar_flux": 0.9554743491281168,
+      "D65": 49.9755,
+      "V_lambda": 3.9e-05
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 385,
+      "n_in": 1.532974450564833,
+      "haze_percent": 2.4493209663065403,
+      "represented_scalar_forward_flux": 0.9998431586824593,
+      "flat_Fresnel_times_scalar_flux": 0.9555758578433542,
+      "D65": 52.3118,
+      "V_lambda": 6.4e-05
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 390,
+      "n_in": 1.532236138877782,
+      "haze_percent": 2.462465327692908,
+      "represented_scalar_forward_flux": 0.999843592245393,
+      "flat_Fresnel_times_scalar_flux": 0.9556730854439425,
+      "D65": 54.6482,
+      "V_lambda": 0.00012
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 395,
+      "n_in": 1.531528075414693,
+      "haze_percent": 2.4766282648950977,
+      "represented_scalar_forward_flux": 0.9998440074426234,
+      "flat_Fresnel_times_scalar_flux": 0.955766282590783,
+      "D65": 68.7015,
+      "V_lambda": 0.000217
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 400,
+      "n_in": 1.530848539005271,
+      "haze_percent": 2.4920717583196828,
+      "represented_scalar_forward_flux": 0.9998444053541602,
+      "flat_Fresnel_times_scalar_flux": 0.9558556814583785,
+      "D65": 82.7549,
+      "V_lambda": 0.000396
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 405,
+      "n_in": 1.5301959316722336,
+      "haze_percent": 2.5044834701526657,
+      "represented_scalar_forward_flux": 0.9998447869799012,
+      "flat_Fresnel_times_scalar_flux": 0.9559414973878396,
+      "D65": 87.1204,
+      "V_lambda": 0.00064
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 410,
+      "n_in": 1.5295687679414323,
+      "haze_percent": 2.5193227158317137,
+      "represented_scalar_forward_flux": 0.9998451532468391,
+      "flat_Fresnel_times_scalar_flux": 0.9560239303661017,
+      "D65": 91.486,
+      "V_lambda": 0.00121
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 415,
+      "n_in": 1.5289656652432242,
+      "haze_percent": 2.537543315317322,
+      "represented_scalar_forward_flux": 0.9998455050155035,
+      "flat_Fresnel_times_scalar_flux": 0.9561031663523479,
+      "D65": 92.4589,
+      "V_lambda": 0.00218
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 420,
+      "n_in": 1.52838533527698,
+      "haze_percent": 2.554425944968167,
+      "represented_scalar_forward_flux": 0.9998458430857375,
+      "flat_Fresnel_times_scalar_flux": 0.9561793784697667,
+      "D65": 93.4318,
+      "V_lambda": 0.004
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 425,
+      "n_in": 1.527826576227612,
+      "haze_percent": 2.571915510907281,
+      "represented_scalar_forward_flux": 0.9998461682018802,
+      "flat_Fresnel_times_scalar_flux": 0.9562527280783448,
+      "D65": 90.057,
+      "V_lambda": 0.0073
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 430,
+      "n_in": 1.5272882657374804,
+      "haze_percent": 2.590171309541663,
+      "represented_scalar_forward_flux": 0.999846481057434,
+      "flat_Fresnel_times_scalar_flux": 0.9563233657423387,
+      "D65": 86.6823,
+      "V_lambda": 0.0116
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 435,
+      "n_in": 1.5267693545494214,
+      "haze_percent": 2.6057270083926696,
+      "represented_scalar_forward_flux": 0.999846782299268,
+      "flat_Fresnel_times_scalar_flux": 0.9563914321042934,
+      "D65": 95.7736,
+      "V_lambda": 0.01684
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 440,
+      "n_in": 1.526268860747244,
+      "haze_percent": 2.622479079990118,
+      "represented_scalar_forward_flux": 0.9998470725314126,
+      "flat_Fresnel_times_scalar_flux": 0.9564570586759751,
+      "D65": 104.865,
+      "V_lambda": 0.023
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 445,
+      "n_in": 1.5257858645291849,
+      "haze_percent": 2.642642063781408,
+      "represented_scalar_forward_flux": 0.9998473523184966,
+      "flat_Fresnel_times_scalar_flux": 0.9565203685552858,
+      "D65": 110.936,
+      "V_lambda": 0.0298
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 450,
+      "n_in": 1.5253195034576579,
+      "haze_percent": 2.675388565060065,
+      "represented_scalar_forward_flux": 0.9998476221888547,
+      "flat_Fresnel_times_scalar_flux": 0.9565814770771093,
+      "D65": 117.008,
+      "V_lambda": 0.038
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 455,
+      "n_in": 1.5248689681354528,
+      "haze_percent": 2.6955939436824967,
+      "represented_scalar_forward_flux": 0.9998478826373494,
+      "flat_Fresnel_times_scalar_flux": 0.9566404924050758,
+      "D65": 117.41,
+      "V_lambda": 0.048
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 460,
+      "n_in": 1.5244334982644143,
+      "haze_percent": 2.7188383389636703,
+      "represented_scalar_forward_flux": 0.9998481341279382,
+      "flat_Fresnel_times_scalar_flux": 0.9566975160704067,
+      "D65": 117.812,
+      "V_lambda": 0.06
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 465,
+      "n_in": 1.5240123790477558,
+      "haze_percent": 2.7431332731241573,
+      "represented_scalar_forward_flux": 0.9998483770960044,
+      "flat_Fresnel_times_scalar_flux": 0.9567526434632573,
+      "D65": 116.336,
+      "V_lambda": 0.0739
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 470,
+      "n_in": 1.5236049379016126,
+      "haze_percent": 2.7610102985297504,
+      "represented_scalar_forward_flux": 0.9998486119504882,
+      "flat_Fresnel_times_scalar_flux": 0.9568059642813782,
+      "D65": 114.861,
+      "V_lambda": 0.09098
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 475,
+      "n_in": 1.5232105414453274,
+      "haze_percent": 2.7885413409871553,
+      "represented_scalar_forward_flux": 0.9998488390758249,
+      "flat_Fresnel_times_scalar_flux": 0.95685756294033,
+      "D65": 115.392,
+      "V_lambda": 0.1126
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 480,
+      "n_in": 1.522828592743353,
+      "haze_percent": 2.807000375165266,
+      "represented_scalar_forward_flux": 0.9998490588337212,
+      "flat_Fresnel_times_scalar_flux": 0.9569075189490488,
+      "D65": 115.923,
+      "V_lambda": 0.13902
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 485,
+      "n_in": 1.5224585287746346,
+      "haze_percent": 2.8291010684228444,
+      "represented_scalar_forward_flux": 0.999849271564778,
+      "flat_Fresnel_times_scalar_flux": 0.9569559072541037,
+      "D65": 112.367,
+      "V_lambda": 0.1693
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 490,
+      "n_in": 1.5220998181079528,
+      "haze_percent": 2.8565693776824315,
+      "represented_scalar_forward_flux": 0.9998494775899787,
+      "flat_Fresnel_times_scalar_flux": 0.9570027985556507,
+      "D65": 108.811,
+      "V_lambda": 0.20802
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 495,
+      "n_in": 1.5217519587639887,
+      "haze_percent": 2.8636024430304325,
+      "represented_scalar_forward_flux": 0.9998496772120529,
+      "flat_Fresnel_times_scalar_flux": 0.9570482595977426,
+      "D65": 109.082,
+      "V_lambda": 0.2586
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 500,
+      "n_in": 1.5214144762469228,
+      "haze_percent": 2.8824985926896605,
+      "represented_scalar_forward_flux": 0.9998498707167319,
+      "flat_Fresnel_times_scalar_flux": 0.9570923534353887,
+      "D65": 109.354,
+      "V_lambda": 0.323
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 505,
+      "n_in": 1.5210869217301393,
+      "haze_percent": 2.898314847375235,
+      "represented_scalar_forward_flux": 0.9998500583738995,
+      "flat_Fresnel_times_scalar_flux": 0.9571351396804919,
+      "D65": 108.578,
+      "V_lambda": 0.4073
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 510,
+      "n_in": 1.5207688703822093,
+      "haze_percent": 2.921239905051859,
+      "represented_scalar_forward_flux": 0.9998502404386519,
+      "flat_Fresnel_times_scalar_flux": 0.9571766747285821,
+      "D65": 107.802,
+      "V_lambda": 0.503
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 515,
+      "n_in": 1.5204599198207185,
+      "haze_percent": 2.9504225048478916,
+      "represented_scalar_forward_flux": 0.9998504171522797,
+      "flat_Fresnel_times_scalar_flux": 0.9572170119680691,
+      "D65": 106.296,
+      "V_lambda": 0.6082
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 520,
+      "n_in": 1.5201596886827433,
+      "haze_percent": 2.96632026700183,
+      "represented_scalar_forward_flux": 0.9998505887431652,
+      "flat_Fresnel_times_scalar_flux": 0.957256201973545,
+      "D65": 104.79,
+      "V_lambda": 0.71
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 525,
+      "n_in": 1.5198678153018936,
+      "haze_percent": 2.9834081311952265,
+      "represented_scalar_forward_flux": 0.9998507554276183,
+      "flat_Fresnel_times_scalar_flux": 0.9572942926845478,
+      "D65": 106.239,
+      "V_lambda": 0.7932
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 530,
+      "n_in": 1.5195839564828153,
+      "haze_percent": 3.004284571692334,
+      "represented_scalar_forward_flux": 0.9998509174106457,
+      "flat_Fresnel_times_scalar_flux": 0.9573313295710252,
+      "D65": 107.689,
+      "V_lambda": 0.862
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 535,
+      "n_in": 1.5193077863649287,
+      "haze_percent": 3.0372944498618377,
+      "represented_scalar_forward_flux": 0.9998510748866621,
+      "flat_Fresnel_times_scalar_flux": 0.9573673557866373,
+      "D65": 106.047,
+      "V_lambda": 0.9148501
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 540,
+      "n_in": 1.5190389953679542,
+      "haze_percent": 3.061835016014036,
+      "represented_scalar_forward_flux": 0.999851228040154,
+      "flat_Fresnel_times_scalar_flux": 0.9574024123109248,
+      "D65": 104.405,
+      "V_lambda": 0.954
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 545,
+      "n_in": 1.5187772892124858,
+      "haze_percent": 3.0963392109497825,
+      "represented_scalar_forward_flux": 0.9998513770462862,
+      "flat_Fresnel_times_scalar_flux": 0.9574365380812618,
+      "D65": 104.225,
+      "V_lambda": 0.9803
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 550,
+      "n_in": 1.5185223880094905,
+      "haze_percent": 3.1109785507454673,
+      "represented_scalar_forward_flux": 0.9998515220714728,
+      "flat_Fresnel_times_scalar_flux": 0.9574697701154424,
+      "D65": 104.046,
+      "V_lambda": 0.9949501
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 555,
+      "n_in": 1.5182740254131817,
+      "haze_percent": 3.1255857676730057,
+      "represented_scalar_forward_flux": 0.999851663273903,
+      "flat_Fresnel_times_scalar_flux": 0.9575021436256543,
+      "D65": 102.023,
+      "V_lambda": 1.0
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 560,
+      "n_in": 1.5180319478322106,
+      "haze_percent": 3.148038252150605,
+      "represented_scalar_forward_flux": 0.9998518008040335,
+      "flat_Fresnel_times_scalar_flux": 0.9575336921245435,
+      "D65": 100.0,
+      "V_lambda": 0.995
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 565,
+      "n_in": 1.5177959136945849,
+      "haze_percent": 3.1566152464984523,
+      "represented_scalar_forward_flux": 0.9998519348050405,
+      "flat_Fresnel_times_scalar_flux": 0.957564447523982,
+      "D65": 98.1671,
+      "V_lambda": 0.9786
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 570,
+      "n_in": 1.5175656927621177,
+      "haze_percent": 3.1854296240722237,
+      "represented_scalar_forward_flux": 0.9998520654132467,
+      "flat_Fresnel_times_scalar_flux": 0.9575944402271288,
+      "D65": 96.3342,
+      "V_lambda": 0.952
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 575,
+      "n_in": 1.5173410654905912,
+      "haze_percent": 3.2036172958188063,
+      "represented_scalar_forward_flux": 0.9998521927585161,
+      "flat_Fresnel_times_scalar_flux": 0.9576236992143001,
+      "D65": 96.0611,
+      "V_lambda": 0.9154
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 580,
+      "n_in": 1.5171218224321432,
+      "haze_percent": 3.228565641983436,
+      "represented_scalar_forward_flux": 0.9998523169646223,
+      "flat_Fresnel_times_scalar_flux": 0.9576522521231208,
+      "D65": 95.788,
+      "V_lambda": 0.87
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 585,
+      "n_in": 1.5169077636766881,
+      "haze_percent": 3.2547919216943013,
+      "represented_scalar_forward_flux": 0.9998524381495935,
+      "flat_Fresnel_times_scalar_flux": 0.9576801253234011,
+      "D65": 92.2368,
+      "V_lambda": 0.8163
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 590,
+      "n_in": 1.5166986983294526,
+      "haze_percent": 3.2720578975728616,
+      "represented_scalar_forward_flux": 0.9998525564260325,
+      "flat_Fresnel_times_scalar_flux": 0.9577073439871273,
+      "D65": 88.6856,
+      "V_lambda": 0.757
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 595,
+      "n_in": 1.5164944440219574,
+      "haze_percent": 3.28960392531382,
+      "represented_scalar_forward_flux": 0.9998526719014185,
+      "flat_Fresnel_times_scalar_flux": 0.9577339321539428,
+      "D65": 89.3459,
+      "V_lambda": 0.6949
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 600,
+      "n_in": 1.5162948264539904,
+      "haze_percent": 3.312560910264722,
+      "represented_scalar_forward_flux": 0.999852784678387,
+      "flat_Fresnel_times_scalar_flux": 0.9577599127924368,
+      "D65": 90.0062,
+      "V_lambda": 0.631
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 605,
+      "n_in": 1.5160996789643275,
+      "haze_percent": 3.3300249787935705,
+      "represented_scalar_forward_flux": 0.9998528948549936,
+      "flat_Fresnel_times_scalar_flux": 0.9577853078575629,
+      "D65": 89.8026,
+      "V_lambda": 0.5668
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 610,
+      "n_in": 1.515908842128136,
+      "haze_percent": 3.3488475225431356,
+      "represented_scalar_forward_flux": 0.9998530025249582,
+      "flat_Fresnel_times_scalar_flux": 0.9578101383444555,
+      "D65": 89.5991,
+      "V_lambda": 0.503
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 615,
+      "n_in": 1.5157221633791609,
+      "haze_percent": 3.379209017272718,
+      "represented_scalar_forward_flux": 0.9998531077778983,
+      "flat_Fresnel_times_scalar_flux": 0.9578344243389115,
+      "D65": 88.6489,
+      "V_lambda": 0.4412
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 620,
+      "n_in": 1.515539496654952,
+      "haze_percent": 3.3812957114517994,
+      "represented_scalar_forward_flux": 0.9998532106995441,
+      "flat_Fresnel_times_scalar_flux": 0.9578581850647693,
+      "D65": 87.6987,
+      "V_lambda": 0.381
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 625,
+      "n_in": 1.5153607020635234,
+      "haze_percent": 3.418148817224914,
+      "represented_scalar_forward_flux": 0.9998533113719407,
+      "flat_Fresnel_times_scalar_flux": 0.9578814389283985,
+      "D65": 85.4936,
+      "V_lambda": 0.321
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 630,
+      "n_in": 1.5151856455699635,
+      "haze_percent": 3.441509757864035,
+      "represented_scalar_forward_flux": 0.9998534098736394,
+      "flat_Fresnel_times_scalar_flux": 0.9579042035605129,
+      "D65": 83.2886,
+      "V_lambda": 0.265
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 635,
+      "n_in": 1.515014198701631,
+      "haze_percent": 3.4483678635475568,
+      "represented_scalar_forward_flux": 0.9998535062798787,
+      "flat_Fresnel_times_scalar_flux": 0.9579264958554857,
+      "D65": 83.4939,
+      "V_lambda": 0.217
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 640,
+      "n_in": 1.514846238270676,
+      "haze_percent": 3.467778656835015,
+      "represented_scalar_forward_flux": 0.999853600662749,
+      "flat_Fresnel_times_scalar_flux": 0.957948332008331,
+      "D65": 83.6992,
+      "V_lambda": 0.175
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 645,
+      "n_in": 1.5146816461127224,
+      "haze_percent": 3.4948314014391326,
+      "represented_scalar_forward_flux": 0.9998536930913531,
+      "flat_Fresnel_times_scalar_flux": 0.9579697275495207,
+      "D65": 81.863,
+      "V_lambda": 0.1382
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 650,
+      "n_in": 1.514520308840633,
+      "haze_percent": 3.5272632116400153,
+      "represented_scalar_forward_flux": 0.999853783631957,
+      "flat_Fresnel_times_scalar_flux": 0.9579906973777785,
+      "D65": 80.0268,
+      "V_lambda": 0.107
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 655,
+      "n_in": 1.5143621176123667,
+      "haze_percent": 3.550025596582171,
+      "represented_scalar_forward_flux": 0.9998538723481255,
+      "flat_Fresnel_times_scalar_flux": 0.9580112557909781,
+      "D65": 80.1207,
+      "V_lambda": 0.0816
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 660,
+      "n_in": 1.5142069679119996,
+      "haze_percent": 3.5664382149137444,
+      "represented_scalar_forward_flux": 0.9998539593008589,
+      "flat_Fresnel_times_scalar_flux": 0.958031416515282,
+      "D65": 80.2146,
+      "V_lambda": 0.061
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 665,
+      "n_in": 1.5140547593430622,
+      "haze_percent": 3.5918703979987083,
+      "represented_scalar_forward_flux": 0.9998540445487155,
+      "flat_Fresnel_times_scalar_flux": 0.9580511927326294,
+      "D65": 81.2462,
+      "V_lambda": 0.04458
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 670,
+      "n_in": 1.5139053954333967,
+      "haze_percent": 3.619207513073639,
+      "represented_scalar_forward_flux": 0.9998541281479292,
+      "flat_Fresnel_times_scalar_flux": 0.9580705971066783,
+      "D65": 82.2778,
+      "V_lambda": 0.032
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 675,
+      "n_in": 1.5137587834508024,
+      "haze_percent": 3.6419514743169565,
+      "represented_scalar_forward_flux": 0.9998542101525218,
+      "flat_Fresnel_times_scalar_flux": 0.9580896418073083,
+      "D65": 80.281,
+      "V_lambda": 0.0232
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 680,
+      "n_in": 1.513614834228787,
+      "haze_percent": 3.667883683512327,
+      "represented_scalar_forward_flux": 0.999854290614407,
+      "flat_Fresnel_times_scalar_flux": 0.9581083385337672,
+      "D65": 78.2842,
+      "V_lambda": 0.017
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 685,
+      "n_in": 1.5134734620017918,
+      "haze_percent": 3.6903600000951715,
+      "represented_scalar_forward_flux": 0.9998543695834895,
+      "flat_Fresnel_times_scalar_flux": 0.9581266985365536,
+      "D65": 74.0027,
+      "V_lambda": 0.01192
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 690,
+      "n_in": 1.5133345842492991,
+      "haze_percent": 3.7070561759027387,
+      "represented_scalar_forward_flux": 0.9998544471077555,
+      "flat_Fresnel_times_scalar_flux": 0.9581447326381071,
+      "D65": 69.7213,
+      "V_lambda": 0.00821
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 695,
+      "n_in": 1.5131981215482762,
+      "haze_percent": 3.744541227864395,
+      "represented_scalar_forward_flux": 0.9998545232333678,
+      "flat_Fresnel_times_scalar_flux": 0.9581624512523946,
+      "D65": 70.6652,
+      "V_lambda": 0.005723
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 700,
+      "n_in": 1.5130639974334505,
+      "haze_percent": 3.761794573344035,
+      "represented_scalar_forward_flux": 0.9998545980047443,
+      "flat_Fresnel_times_scalar_flux": 0.9581798644034425,
+      "D65": 71.6091,
+      "V_lambda": 0.004102
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 705,
+      "n_in": 1.5129321382649317,
+      "haze_percent": 3.7789729106476693,
+      "represented_scalar_forward_flux": 0.9998546714646386,
+      "flat_Fresnel_times_scalar_flux": 0.9581969817428871,
+      "D65": 72.979,
+      "V_lambda": 0.002929
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 710,
+      "n_in": 1.5128024731027472,
+      "haze_percent": 3.787579582366537,
+      "represented_scalar_forward_flux": 0.999854743654213,
+      "flat_Fresnel_times_scalar_flux": 0.9582138125666088,
+      "D65": 74.349,
+      "V_lambda": 0.002091
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 715,
+      "n_in": 1.5126749335878793,
+      "haze_percent": 3.812853585378325,
+      "represented_scalar_forward_flux": 0.9998548146131144,
+      "flat_Fresnel_times_scalar_flux": 0.9582303658304971,
+      "D65": 67.9765,
+      "V_lambda": 0.001484
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 720,
+      "n_in": 1.5125494538294082,
+      "haze_percent": 3.8243401980746823,
+      "represented_scalar_forward_flux": 0.9998548843795383,
+      "flat_Fresnel_times_scalar_flux": 0.9582466501654008,
+      "D65": 61.604,
+      "V_lambda": 0.001047
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 725,
+      "n_in": 1.512425970297418,
+      "haze_percent": 3.851062161128146,
+      "represented_scalar_forward_flux": 0.9998549529902961,
+      "flat_Fresnel_times_scalar_flux": 0.95826267389131,
+      "D65": 65.7448,
+      "V_lambda": 0.00074
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 730,
+      "n_in": 1.5123044217213173,
+      "haze_percent": 3.8919418755894903,
+      "represented_scalar_forward_flux": 0.9998550204808692,
+      "flat_Fresnel_times_scalar_flux": 0.9582784450308122,
+      "D65": 69.8856,
+      "V_lambda": 0.00052
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 735,
+      "n_in": 1.512184748993267,
+      "haze_percent": 3.8997589122040375,
+      "represented_scalar_forward_flux": 0.9998550868854721,
+      "flat_Fresnel_times_scalar_flux": 0.9582939713218794,
+      "D65": 72.4863,
+      "V_lambda": 0.0003611
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 740,
+      "n_in": 1.5120668950764227,
+      "haze_percent": 3.9072720803861007,
+      "represented_scalar_forward_flux": 0.9998551522371043,
+      "flat_Fresnel_times_scalar_flux": 0.9583092602300034,
+      "D65": 75.087,
+      "V_lambda": 0.0002492
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 745,
+      "n_in": 1.5119508049177142,
+      "haze_percent": 3.9257744140379334,
+      "represented_scalar_forward_flux": 0.9998552165676053,
+      "flat_Fresnel_times_scalar_flux": 0.958324318959735,
+      "D65": 69.3398,
+      "V_lambda": 0.0001719
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 750,
+      "n_in": 1.5118364253649101,
+      "haze_percent": 3.9366544185344865,
+      "represented_scalar_forward_flux": 0.9998552799076977,
+      "flat_Fresnel_times_scalar_flux": 0.9583391544656453,
+      "D65": 63.5927,
+      "V_lambda": 0.00012
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 755,
+      "n_in": 1.5117237050877221,
+      "haze_percent": 3.9706255565055835,
+      "represented_scalar_forward_flux": 0.9998553422870404,
+      "flat_Fresnel_times_scalar_flux": 0.9583537734627591,
+      "D65": 55.0054,
+      "V_lambda": 8.48e-05
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 760,
+      "n_in": 1.5116125945027288,
+      "haze_percent": 3.98755336856318,
+      "represented_scalar_forward_flux": 0.9998554037342697,
+      "flat_Fresnel_times_scalar_flux": 0.9583681824364745,
+      "D65": 46.4182,
+      "V_lambda": 6e-05
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 765,
+      "n_in": 1.5115030457019054,
+      "haze_percent": 3.999115647834193,
+      "represented_scalar_forward_flux": 0.999855464277042,
+      "flat_Fresnel_times_scalar_flux": 0.9583823876520025,
+      "D65": 56.6118,
+      "V_lambda": 4.24e-05
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 770,
+      "n_in": 1.511395012384562,
+      "haze_percent": 4.013495737996065,
+      "represented_scalar_forward_flux": 0.9998555239420743,
+      "flat_Fresnel_times_scalar_flux": 0.9583963951633597,
+      "D65": 66.8054,
+      "V_lambda": 3e-05
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 775,
+      "n_in": 1.5112884497925037,
+      "haze_percent": 4.0540435203932805,
+      "represented_scalar_forward_flux": 0.9998555827551844,
+      "flat_Fresnel_times_scalar_flux": 0.9584102108219287,
+      "D65": 65.0941,
+      "V_lambda": 2.12e-05
+    },
+    {
+      "model": "BK7_dispersion",
+      "wavelength_nm": 780,
+      "n_in": 1.5111833146482414,
+      "haze_percent": 4.0841614029070925,
+      "represented_scalar_forward_flux": 0.999855640741324,
+      "flat_Fresnel_times_scalar_flux": 0.9584238402846122,
+      "D65": 63.3828,
+      "V_lambda": 1.499e-05
+    }
+  ],
+  "execution_context": {
+    "python": "3.12.12 (main, Dec  9 2025, 19:02:55) [MSC v.1944 64 bit (AMD64)]",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "device": "CPU; no new native GPU solves"
+  }
+}

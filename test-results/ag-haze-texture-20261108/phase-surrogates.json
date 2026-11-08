@@ -1,0 +1,232 @@
+{
+  "kind": "same-height-PSD-phase-surrogates",
+  "source": {
+    "path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag-pitch0p5\\heightfield.png",
+    "sha256": "9a495dc565e3bb2b5ef725e9950f05a8958cc70e1364978b352607b1d91c4c3d",
+    "height_range_um": 0.5361845861372564,
+    "height_pitch_um": 0.5,
+    "periodicity": "source metadata",
+    "roughness": {
+      "Sa_um": 0.10000000480208875,
+      "Sq_um": 0.11851254239602815,
+      "Sz_um": 0.5155668647560674,
+      "height_min_um": 0.010308883524601242,
+      "height_max_um": 0.5258757482806686,
+      "rms_slope": 0.03302164002728051,
+      "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+    },
+    "sidecar_path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag-pitch0p5\\heightfield.source.json",
+    "sidecar_sha256": "fbaccda92c79fd07ebd9ac07a725f562f2a550bdbb1a7f786277fcc86cdd4033"
+  },
+  "scope": "Keep the exact 2D height Fourier magnitudes and Sq, randomize conjugate-symmetric Fourier phases using real Gaussian noise. Height PDF and higher spatial correlations change; this is not an isolated height-PDF test or a claim of measured AG. Surrogates are in-memory statistical controls, not material designs.",
+  "formula": "g=Re IFFT(abs(FFT(h-mean(h))) * FFT(real Gaussian noise)/abs(FFT(real Gaussian noise))); set DC=0",
+  "records": [
+    {
+      "seed": 101,
+      "same_height_PSD_relative_L2": 3.9414768332785926e-16,
+      "Sq_um": 0.11851254239602815,
+      "Sa_um": 0.09470950846064523,
+      "wave": {
+        "haze_percent": 2.8987754719227197,
+        "wavelength_nm": 530.0,
+        "n_in": 1.5,
+        "n_out": 1.0,
+        "acceptance_half_angle_deg": 2.5,
+        "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+        "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+        "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+        "height_grid_yx": [
+          2000,
+          2000
+        ],
+        "height_pitch_um": 0.5,
+        "field_um_xy": [
+          1000.0,
+          1000.0
+        ],
+        "represented_scalar_forward_flux": 0.9998619518150345,
+        "zero_order_forward_flux_percent": 61.022097550999845,
+        "within_cone_nonzero_order_flux_percent": 36.079126977077415,
+        "nonzero_order_forward_flux_percent": 38.97790244900015,
+        "haze_without_cosine_weight_percent": 2.903090796368471,
+        "parseval_relative_error": 4.440892098500626e-16,
+        "evanescent_field_power_percent": 0.0,
+        "spectral_edge_field_power_percent": 3.7016843070326702e-09,
+        "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+        "complete_azimuth_angle_limit_deg": 32.00545482776425,
+        "near_axis_angle_step_deg_xy": [
+          0.03036676456360444,
+          0.03036676456360444
+        ],
+        "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+        "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+        "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim"
+      },
+      "surface": {
+        "height_skewness": -0.021317824592940616,
+        "height_kurtosis": 2.9714934382679434,
+        "circular_radial_acf_first_1e_length_um": 7.32222478844875,
+        "acf_definition": "Circular height covariance / Sq^2; nearest-radius shells at their mean actual radii; first 1/e crossing with linear interpolation, no Gaussian fit",
+        "spectral_rms_slope": 0.03322418609199832,
+        "height_variance_above_acceptance_frequency_percent": 4.025717638394614,
+        "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+        "acceptance_lateral_period_um": 12.150560381808274,
+        "phase_rms_rad": 0.7024870425464357,
+        "facet_model": {
+          "definition": "Projected-area statistics of the original periodic triangular facets; float64 analytic Snell/Fresnel, no native ray execution",
+          "rms_slope": 0.03317314898204481,
+          "slope_quantiles": {
+            "p50": 0.02766394208661404,
+            "p90": 0.05032244178555132,
+            "p99": 0.07097147386533854,
+            "p99_9": 0.08588598751319368
+          },
+          "slope_threshold_for_acceptance": 0.08707302627624788,
+          "area_above_slope_threshold_percent": 0.08195000000000001,
+          "single_hit_haze_percent": 0.08194948742738072,
+          "transmission_fraction": 0.9599998008321265,
+          "total_internal_reflection_area_percent": 0.0
+        },
+        "interpretation": "Height PSD is not angular optical power. Phase RMS need not be small; no first-order height-PSD haze formula is assumed."
+      }
+    },
+    {
+      "seed": 102,
+      "same_height_PSD_relative_L2": 3.93768348737451e-16,
+      "Sq_um": 0.11851254239602815,
+      "Sa_um": 0.094489163737741,
+      "wave": {
+        "haze_percent": 2.9190873260473436,
+        "wavelength_nm": 530.0,
+        "n_in": 1.5,
+        "n_out": 1.0,
+        "acceptance_half_angle_deg": 2.5,
+        "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+        "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+        "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+        "height_grid_yx": [
+          2000,
+          2000
+        ],
+        "height_pitch_um": 0.5,
+        "field_um_xy": [
+          1000.0,
+          1000.0
+        ],
+        "represented_scalar_forward_flux": 0.9998619517198397,
+        "zero_order_forward_flux_percent": 61.06408878645251,
+        "within_cone_nonzero_order_flux_percent": 36.016823887500166,
+        "nonzero_order_forward_flux_percent": 38.93591121354749,
+        "haze_without_cosine_weight_percent": 2.923422006097675,
+        "parseval_relative_error": 1.1102230246251565e-16,
+        "evanescent_field_power_percent": 0.0,
+        "spectral_edge_field_power_percent": 3.7037080034058653e-09,
+        "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+        "complete_azimuth_angle_limit_deg": 32.00545482776425,
+        "near_axis_angle_step_deg_xy": [
+          0.03036676456360444,
+          0.03036676456360444
+        ],
+        "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+        "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+        "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim"
+      },
+      "surface": {
+        "height_skewness": -0.008139580287017126,
+        "height_kurtosis": 3.002800754391174,
+        "circular_radial_acf_first_1e_length_um": 7.322224788448751,
+        "acf_definition": "Circular height covariance / Sq^2; nearest-radius shells at their mean actual radii; first 1/e crossing with linear interpolation, no Gaussian fit",
+        "spectral_rms_slope": 0.03322418609199832,
+        "height_variance_above_acceptance_frequency_percent": 4.025717638394615,
+        "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+        "acceptance_lateral_period_um": 12.150560381808274,
+        "phase_rms_rad": 0.7024870425464357,
+        "facet_model": {
+          "definition": "Projected-area statistics of the original periodic triangular facets; float64 analytic Snell/Fresnel, no native ray execution",
+          "rms_slope": 0.03317314898204482,
+          "slope_quantiles": {
+            "p50": 0.027620225689696368,
+            "p90": 0.05034412774709302,
+            "p99": 0.07105972813979675,
+            "p99_9": 0.0866629405366372
+          },
+          "slope_threshold_for_acceptance": 0.08707302627624788,
+          "area_above_slope_threshold_percent": 0.09385,
+          "single_hit_haze_percent": 0.09384939117752004,
+          "transmission_fraction": 0.9599997998021338,
+          "total_internal_reflection_area_percent": 0.0
+        },
+        "interpretation": "Height PSD is not angular optical power. Phase RMS need not be small; no first-order height-PSD haze formula is assumed."
+      }
+    },
+    {
+      "seed": 103,
+      "same_height_PSD_relative_L2": 3.944943664385962e-16,
+      "Sq_um": 0.11851254239602815,
+      "Sa_um": 0.09470392026399174,
+      "wave": {
+        "haze_percent": 2.9083142646865734,
+        "wavelength_nm": 530.0,
+        "n_in": 1.5,
+        "n_out": 1.0,
+        "acceptance_half_angle_deg": 2.5,
+        "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+        "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+        "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+        "height_grid_yx": [
+          2000,
+          2000
+        ],
+        "height_pitch_um": 0.5,
+        "field_um_xy": [
+          1000.0,
+          1000.0
+        ],
+        "represented_scalar_forward_flux": 0.9998619516603044,
+        "zero_order_forward_flux_percent": 61.057390868933616,
+        "within_cone_nonzero_order_flux_percent": 36.03429486637978,
+        "nonzero_order_forward_flux_percent": 38.94260913106638,
+        "haze_without_cosine_weight_percent": 2.912645409725474,
+        "parseval_relative_error": 2.220446049250313e-16,
+        "evanescent_field_power_percent": 0.0,
+        "spectral_edge_field_power_percent": 3.701048128343596e-09,
+        "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+        "complete_azimuth_angle_limit_deg": 32.00545482776425,
+        "near_axis_angle_step_deg_xy": [
+          0.03036676456360444,
+          0.03036676456360444
+        ],
+        "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+        "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+        "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim"
+      },
+      "surface": {
+        "height_skewness": 0.006878885359462794,
+        "height_kurtosis": 3.0021873139034327,
+        "circular_radial_acf_first_1e_length_um": 7.32222478844875,
+        "acf_definition": "Circular height covariance / Sq^2; nearest-radius shells at their mean actual radii; first 1/e crossing with linear interpolation, no Gaussian fit",
+        "spectral_rms_slope": 0.03322418609199832,
+        "height_variance_above_acceptance_frequency_percent": 4.025717638394614,
+        "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+        "acceptance_lateral_period_um": 12.150560381808274,
+        "phase_rms_rad": 0.7024870425464357,
+        "facet_model": {
+          "definition": "Projected-area statistics of the original periodic triangular facets; float64 analytic Snell/Fresnel, no native ray execution",
+          "rms_slope": 0.03317314898204482,
+          "slope_quantiles": {
+            "p50": 0.027579976265239486,
+            "p90": 0.05043827479765615,
+            "p99": 0.07100503586996468,
+            "p99_9": 0.08719569028885515
+          },
+          "slope_threshold_for_acceptance": 0.08707302627624788,
+          "area_above_slope_threshold_percent": 0.101675,
+          "single_hit_haze_percent": 0.1016743392730953,
+          "transmission_fraction": 0.9599997991826323,
+          "total_internal_reflection_area_percent": 0.0
+        },
+        "interpretation": "Height PSD is not angular optical power. Phase RMS need not be small; no first-order height-PSD haze formula is assumed."
+      }
+    }
+  ]
+}

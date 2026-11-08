@@ -1,0 +1,63 @@
+{
+  "haze_percent": 54.691701580351825,
+  "wavelength_nm": 530.0,
+  "acceptance_half_angle_deg": 2.5,
+  "n_in": 1.5,
+  "n_out": 1.0,
+  "physics_group": "geometric_rays",
+  "height_grid_yx": [
+    1000,
+    1000
+  ],
+  "height_pitch_um": 1.0,
+  "field_um_xy": [
+    1000.0,
+    1000.0
+  ],
+  "incident_rays": 2000000,
+  "hit_rays": 2000000,
+  "transmitted_rays": 2000000,
+  "mesh_vertices": 1002001,
+  "mesh_faces": 2000000,
+  "transmission_fraction": 0.9599806979571283,
+  "reflection_fraction": 0.04001930162853003,
+  "energy_balance_error": 4.1434167208365125e-10,
+  "definition": "100 * transmitted ray power outside acceptance cone / all forward transmitted ray power",
+  "boundary": "Periodically closed height mesh, N*dx projected area, two triangle-centroid rays per original grid cell",
+  "model_status": "Single-interface geometric refraction with native unpolarized Fresnel transmission; no diffraction or multiple scattering",
+  "backend": "mitsuba",
+  "surface_id": "1um",
+  "input": {
+    "path": "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\1um\\heightfield.png",
+    "sha256": "694b7c6d3914cf62ea9585d340dd62f2e70771c4f555276215903d9ac399d975",
+    "height_range_um": 1.04,
+    "height_pitch_um": 1.0,
+    "periodicity": "source metadata",
+    "roughness": {
+      "Sa_um": 0.12840640606536477,
+      "Sq_um": 0.15925484394358616,
+      "Sz_um": 0.9975811963158776,
+      "height_min_um": 0.02221713657490909,
+      "height_max_um": 1.0197983328907867,
+      "rms_slope": 0.09867374404588064,
+      "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+    },
+    "sidecar_path": "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\1um\\heightfield.source.json",
+    "sidecar_sha256": "53dc09a748fc5121103e78c168a78183110c727a486aecc149dfc3839ee1c256"
+  },
+  "reference_numpy_percent": 41.206718698570114,
+  "difference_vs_numpy_percentage_points": 13.484982881781711,
+  "execution_context": {
+    "library": "Mitsuba",
+    "library_version": "3.9.1",
+    "variant": "cuda_ad_rgb",
+    "native_operations": "create_mitsuba_mesh -> ray_intersect -> fresnel -> refract",
+    "ray_chunk": 65536,
+    "normal": "geometric triangle normal"
+  },
+  "solver_seconds": 4.252429999876767,
+  "started_at_utc": "2026-11-08T10:09:21.251427+00:00",
+  "finished_at_utc": "2026-11-08T10:09:26.068703+00:00",
+  "flat_control_percent": 0.0,
+  "angular_curve_csv": "1um/mitsuba/530nm/angular.csv"
+}

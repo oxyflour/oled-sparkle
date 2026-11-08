@@ -1,0 +1,132 @@
+{
+  "haze_percent": 41.19987285026296,
+  "wavelength_nm": 530.0,
+  "n_in": 1.5,
+  "n_out": 1.0,
+  "acceptance_half_angle_deg": 2.5,
+  "definition": "100 * scalar forward flux outside acceptance cone / all represented propagating scalar forward flux",
+  "phase_model": "exp(i*2*pi*(n_in-n_out)*(h-mean(h))/vacuum_wavelength)",
+  "flux_weight": "|normalized FFT(field)|^2 * cos(theta); Cartesian frequency bins",
+  "height_grid_yx": [
+    2000,
+    2000
+  ],
+  "height_pitch_um": 0.5,
+  "field_um_xy": [
+    1000.0,
+    1000.0
+  ],
+  "represented_scalar_forward_flux": 0.9985160326817043,
+  "zero_order_forward_flux_percent": 41.61402416741634,
+  "within_cone_nonzero_order_flux_percent": 17.186102982320715,
+  "nonzero_order_forward_flux_percent": 58.38597583258366,
+  "haze_without_cosine_weight_percent": 41.27907343100045,
+  "parseval_relative_error": 3.3306690738754696e-16,
+  "evanescent_field_power_percent": 0.0,
+  "spectral_edge_field_power_percent": 5.993887239891045e-08,
+  "spectral_edge_definition": "Diagnostic only: outer 10% of either Cartesian frequency axis; no bins are filtered by this diagnostic",
+  "complete_azimuth_angle_limit_deg": 32.00545482776425,
+  "near_axis_angle_step_deg_xy": [
+    0.03036676456360444,
+    0.03036676456360444
+  ],
+  "acceptance_frequency_cycles_per_um": 0.08230073087799245,
+  "boundary": "Periodic continuation; no aperture, zero padding, apodization or detrending beyond mean removal",
+  "model_status": "Monochromatic surface-only scalar estimate; no standard-conformity or measured-material claim",
+  "physics_group": "scalar_phase_screen_wave",
+  "angular_power_relative_L2_vs_numpy": 4.0079829538634644e-16,
+  "backend": "chromatix",
+  "surface_id": "0p5um",
+  "input": {
+    "path": "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\0p5um\\heightfield.png",
+    "sha256": "16a45aba4bc32eff710a98bde0619a6ee7aac643750af3d9b03d6c46dd31ea9b",
+    "height_range_um": 1.04,
+    "height_pitch_um": 0.5,
+    "periodicity": "source metadata",
+    "roughness": {
+      "Sa_um": 0.12840444439753476,
+      "Sq_um": 0.15924351373229473,
+      "Sz_um": 1.0000091386075383,
+      "height_min_um": 0.019995422206875446,
+      "height_max_um": 1.0200045608144137,
+      "rms_slope": 0.10611445520559629,
+      "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+    },
+    "sidecar_path": "C:\\Projects\\oled-sparkle\\test-results\\ag-spacing6p9-sz1um-20261108\\inputs\\0p5um\\heightfield.source.json",
+    "sidecar_sha256": "aa3b08e0988d5aabfac564147694cfbad8ea03376117c58946f7661a8435c8c8"
+  },
+  "reference_numpy_percent": 41.199872850262956,
+  "difference_vs_numpy_percentage_points": 7.105427357601002e-15,
+  "execution_context": {
+    "library": "Chromatix",
+    "library_version": "0.6.0",
+    "jax_version": "0.12.0.1",
+    "default_backend": "gpu",
+    "devices": [
+      "cuda:0"
+    ],
+    "dtype": "float64",
+    "native_operations": "plane_wave -> phase_change -> asm_propagate -> JAX angular FFT",
+    "output_propagation_um": 100.0,
+    "environment": {
+      "python": "3.12.12 (main, Dec  5 2025, 20:21:41) [Clang 21.1.4 ]",
+      "executable": "/home/oxyflour/.venvs/oled-sparkle-chromatix/bin/python",
+      "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+      "processor": "x86_64",
+      "logical_cpus": 12,
+      "versions": {
+        "numpy": "2.5.4",
+        "Pillow": "13.0.0",
+        "torch": null,
+        "torchoptics": null,
+        "jax": "0.12.0.1",
+        "jaxlib": "0.12.0.1",
+        "jax-cuda13-plugin": "0.12.0.1",
+        "jax-cuda13-pjrt": "0.12.0.1",
+        "chromatix": "0.6.0",
+        "mitsuba": null,
+        "drjit": null
+      },
+      "environment_settings": {
+        "PYTHONPATH": null,
+        "OMP_NUM_THREADS": null,
+        "MKL_NUM_THREADS": null,
+        "JAX_PLATFORMS": "cuda",
+        "JAX_ENABLE_X64": null,
+        "DRJIT_LIBLLVM_PATH": null,
+        "SPARKLE_WSL_DISTRO": null,
+        "SPARKLE_WSL_PYTHON": null,
+        "XLA_PYTHON_CLIENT_PREALLOCATE": "false",
+        "XLA_PYTHON_CLIENT_MEM_FRACTION": "0.10"
+      }
+    },
+    "worker_solver_elapsed_seconds": 3.275387531146407,
+    "runtime": "wsl",
+    "wsl_distribution": "Ubuntu-22.04",
+    "worker_script": "/mnt/c/Projects/oled-sparkle/oled-ag-sparkle/scripts/chromatix_wsl.py",
+    "worker_command": [
+      "wsl.exe",
+      "--distribution",
+      "Ubuntu-22.04",
+      "--exec",
+      "env",
+      "-u",
+      "PYTHONPATH",
+      "-u",
+      "LD_LIBRARY_PATH",
+      "JAX_PLATFORMS=cuda",
+      "XLA_PYTHON_CLIENT_PREALLOCATE=false",
+      "XLA_PYTHON_CLIENT_MEM_FRACTION=0.10",
+      "PYTHONUNBUFFERED=1",
+      "/home/oxyflour/.venvs/oled-sparkle-chromatix/bin/python",
+      "/mnt/c/Projects/oled-sparkle/oled-ag-sparkle/scripts/chromatix_wsl.py",
+      "--request-dir",
+      "/mnt/c/Users/oxyfl/AppData/Local/Temp/chromatix-wsl-4ogysyu4"
+    ]
+  },
+  "solver_seconds": 7.506945299915969,
+  "started_at_utc": "2026-11-08T10:09:30.812359+00:00",
+  "finished_at_utc": "2026-11-08T10:09:45.381101+00:00",
+  "flat_control_percent": 6.484724724348197e-31,
+  "angular_curve_csv": "0p5um/chromatix/530nm/angular.csv"
+}

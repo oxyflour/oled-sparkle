@@ -1,0 +1,32 @@
+{
+  "source": "Controlled spacing counterfactual at fixed physical rounding and Sq; not measured glass",
+  "assigned_texel_um": 0.5,
+  "height_range_um": 0.5361846080994543,
+  "periodic_domain_um": 1000.0,
+  "sha256": "9a495dc565e3bb2b5ef725e9950f05a8958cc70e1364978b352607b1d91c4c3d",
+  "source_input": {
+    "path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag-pitch0p5\\heightfield.png",
+    "sha256": "9a495dc565e3bb2b5ef725e9950f05a8958cc70e1364978b352607b1d91c4c3d",
+    "height_range_um": 0.5361845861372564,
+    "height_pitch_um": 0.5,
+    "periodicity": "source metadata",
+    "roughness": {
+      "Sa_um": 0.10000000480208875,
+      "Sq_um": 0.11851254239602815,
+      "Sz_um": 0.5155668647560674,
+      "height_min_um": 0.010308883524601242,
+      "height_max_um": 0.5258757482806686,
+      "rms_slope": 0.03302164002728051,
+      "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+    },
+    "sidecar_path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag-pitch0p5\\heightfield.source.json",
+    "sidecar_sha256": "fbaccda92c79fd07ebd9ac07a725f562f2a550bdbb1a7f786277fcc86cdd4033"
+  },
+  "lateral_scale": 1.0,
+  "nominal_site_spacing_um": 25.0,
+  "rounding_sigma_um": 1.2,
+  "profile_power": 2.0,
+  "raw_to_um_scale": 0.4030294851058235,
+  "target_Sq_um": 0.11851254239602814,
+  "source_sites": "oled-ag-sparkle/assets/oled-1mm-etched-ag/sites.csv"
+}

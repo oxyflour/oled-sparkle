@@ -1,0 +1,54 @@
+{
+  "metric_definition": "100 * std(I_ROI, ddof=0) / mean(I_ROI)",
+  "backends": [
+    {
+      "backend": "torch",
+      "physics": "scalar_wave",
+      "sparkle_cv_pct": 24.871593373311164,
+      "roi_pixels": 441,
+      "analysis_pixel_pitch_um": 26.249999999999996,
+      "analysis_rows": 21,
+      "analysis_columns": 21,
+      "mean_brightness": 0.00017323330203207883,
+      "std_brightness": 4.308588246857863e-05,
+      "elapsed_s": 33.627541
+    },
+    {
+      "backend": "torchoptics",
+      "physics": "scalar_wave",
+      "sparkle_cv_pct": 24.87156216157906,
+      "roi_pixels": 441,
+      "analysis_pixel_pitch_um": 26.249999999999996,
+      "analysis_rows": 21,
+      "analysis_columns": 21,
+      "mean_brightness": 0.000173233327124643,
+      "std_brightness": 4.308583464037718e-05,
+      "elapsed_s": 30.197525
+    },
+    {
+      "backend": "chromatix",
+      "physics": "scalar_wave",
+      "sparkle_cv_pct": 24.871637047640903,
+      "roi_pixels": 441,
+      "analysis_pixel_pitch_um": 26.249999999999996,
+      "analysis_rows": 21,
+      "analysis_columns": 21,
+      "mean_brightness": 0.00017323327688962702,
+      "std_brightness": 4.308595187372282e-05,
+      "elapsed_s": 76.642303
+    },
+    {
+      "backend": "mitsuba",
+      "physics": "geometric_rays",
+      "sparkle_cv_pct": 51.63425129279423,
+      "roi_pixels": 441,
+      "analysis_pixel_pitch_um": 26.249999999999996,
+      "analysis_rows": 21,
+      "analysis_columns": 21,
+      "mean_brightness": 0.9935564500018642,
+      "std_brightness": 0.513015434129728,
+      "elapsed_s": 1.122203
+    }
+  ],
+  "important": "Statistics use area-averaged floating-point brightness pixels at the requested physical pixel size, before PNG display scaling."
+}

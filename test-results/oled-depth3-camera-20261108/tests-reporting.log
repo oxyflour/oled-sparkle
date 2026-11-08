@@ -1,0 +1,11 @@
+test_escape_and_missing_values_round_trip (test_reporting.HtmlReportingTest.test_escape_and_missing_values_round_trip) ... ok
+test_failed_solver_still_writes_input_snapshot_and_html (test_reporting.HtmlReportingTest.test_failed_solver_still_writes_input_snapshot_and_html) ... ok
+test_input_gallery_preserves_originals_is_visible_and_deduplicated (test_reporting.HtmlReportingTest.test_input_gallery_preserves_originals_is_visible_and_deduplicated) ... ok
+test_remote_chromatix_context_does_not_require_parent_jax (test_reporting.HtmlReportingTest.test_remote_chromatix_context_does_not_require_parent_jax) ... ok
+test_report_shows_detector_pixels_and_keeps_both_float_grids (test_reporting.HtmlReportingTest.test_report_shows_detector_pixels_and_keeps_both_float_grids) ... ok
+test_stale_and_skipped_outputs_are_excluded (test_reporting.HtmlReportingTest.test_stale_and_skipped_outputs_are_excluded) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 3.689s
+
+OK
