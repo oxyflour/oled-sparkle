@@ -7,8 +7,8 @@
 | 入口（位于 `oled-ag-sparkle/scripts/`） | 职责与用法 |
 |---|---|
 | `run_oled_demo.py` | 当前默认 OLED 用例。默认蚀刻 AG、1 µm 网格、四后端；`--height-surface` 选择表面，`--pitch-um .5` 作网格复核。输出原始亮度 CV。 |
-| `run_sms_reference.py` | 全绿、无 LDF 的分离闪点流程。`--stage all` 完成输入、固定方案、六次光学计算和报告；`prepare/main/fine/old-na` 可分阶段运行。 |
-| `generate_report.py` | 唯一报告 CLI。默认重建原始亮度报告；`--kind sms-reference` 从保存的六次计算重建分离闪点报告，不重跑光学。 |
+| `run_sms_reference.py` | 全绿、无 LDF 的分离闪点流程。默认 `--stage all` 运行六个参考工况；加 `--layouts` 进行统一间距、亮度与测量带宽的多排列比较。 |
+| `generate_report.py` | 唯一报告 CLI。默认重建原始亮度报告；`--kind sms-reference` 按 `protocol.json` 重建原参考流程或多排列分离闪点报告，不重跑光学。 |
 | `sparkle_multibackend.py` | 自定义输入的通用四后端求解 CLI，支持 `--help` 查看所有物理与数值参数。 |
 | `run_legacy_demo.py` | 仅保留历史测试素材，必须指定 `--example quick` 或 `--example 1mm`；默认只选 Torch。当前 OLED 用例使用 `run_oled_demo.py`。 |
 | `prepare_etched_ag.py`、`prepare_random_pits.py`、`prepare_oled_1mm.py`、`prepare_tiled_emission.py` | 输入生成器，由运行器调用；需要单独生成或修改输入时才直接使用。 |
@@ -17,9 +17,48 @@
 
 `run_legacy_demo.py` 中的 `quick` 是 128×128、2 µm 采样的合成小网格，用于 CLI、报告及后端回归测试；`1mm` 是 2000×2000、0.5 µm 采样的旧合成粗糙面，搭配普通像素或合成绿色子像素光源，用于旧参数检查和历史复现。两者保留原始测试参数。
 
-## 当前闪点报告与复现
+## 四种 OLED 排列：先相机采样，再去周期
 
-当前主报告使用**全绿画面、不加 LDF**，按三次 140 µm 移动平均（MWA）分离 OLED 周期纹理，随后对全部 441 个测量像素计算 `sparkle (%) = 100 × std(I, ddof=0) / mean(I)`。三个波动后端约为 **5.292%**，Mitsuba 为 **5.409%**，0.5 µm 网格的 Torch 复核为 **5.136%**。这些是固定参考测量方法下的仿真值，尚未按原论文的实际仪器参数校准；其他方法、孔径对照和原始统计保留在报告附录。
+[相机过程比较报告](test-results/oled-camera-comparison/sparkle.html)采用现有相机参数：50 mm、F/8、400 mm 物距、3.75 µm 单色像元。薄透镜放大率为 1/7，物方像元为 26.25 µm；理想圆形光瞳的衍射已在波动求解器内实施。逐源计算 AG 传播及成像后，**先做方形感光区的面积积分和离散采样，再做周期分离**。未使用额外 MWA、低通或 LDF；采用无像差、100% 填充率、线性、无噪声和无量化的明确理想模型，没有实测镜头 MTF。
+
+沿用同一蚀刻 AG、1 mm 输入场、OLED–AG 间距 500 µm 和 530 nm 全绿光。名义逻辑像素间距 **P=70 µm** 定义为每个逻辑地址的面积 P²，并非子像素最近邻距离。2 µm 发光纹理在 sRGB 解码后将全场 G 均值归一至 1，`--emission-scale` 在求解器中施加，不裁剪峰值，阈值为 0。三个新增排列是公开图示启发的几何近似；钻石保留原始单元。
+
+| 排列 | 精确 G 周期 X×Y [µm] | 1 µm 网格对比度 [%] | 0.5 µm 复核 [%] |
+|---|---:|---:|---:|
+| diamond | 140×140 | 24.016988 | 23.977983 |
+| rgb-stripe | 70×70 | 8.880589 | 8.715334 |
+| rgb-delta | 210×140 | 26.721904 | 26.486939 |
+| windmill | 140×140 | 24.147108 | 24.082596 |
+
+去周期采用 [IEC 62977-3-9:2023](https://webstore.iec.ch/en/publication/64780) 信息性附录 B 所列的**频域掩膜方法**，相机 MTF、采样混叠及采样后去周期的依据见 [Becker 2021 §3.1–3.4](https://www.display-messtechnik.de/fileadmin/template/main/docs/10-Years-SparkleMeasurement--edC-2021-V2.pdf)。标准没有指定本实现的具体掩膜。本实现按精确周期枚举光学强度带宽内的倒格矢，模采样频率折回基带，再取四种排列频点的并集。所有排列剔除相同的精确 DFT bin，保留 DC；不根据输出幅度、目标读数或峰值阈值调整。周期和随机分量重合的 bin 无法分辨，会一同剔除。
+
+中心 ROI 为 **840×840 µm = 32×32 像元**，同时包含所有精确周期的整数倍；共同掩膜剔除 89 个、保留 934 个非 DC bin。光学强度截止为 29.480 cycles/mm，传感器 Nyquist 为 19.048 cycles/mm，故必须考虑采样折叠。最终直接从去周期后的传感器浮点数组计算 `100×std(ddof=0)/mean`，不截断负值、不再次积分。这是声明频率选择下的**相机域随机对比度**，未加视觉 CSF 权重，不是校准的 SMS-1000 读数，也不宣称完整 IEC 符合性。
+
+三个波动后端复用经哈希校验的原理想光瞳浮点结果，最大相对 L2 差约 1.37×10⁻⁵。0.5 µm 网格差异最大 0.235 个百分点；该检查未细化 2 µm 的点源间距。实际离散光瞳与解析圆形光瞳的轴向 MTF 最大绝对差为 0.00333。有限视场无 AG 控制残余最高 0.642%，无限周期无 AG 控制低于 3×10⁻¹³%。这些残余不从主结果扣除。报告另列四种传感器相位、完整去周期图的中心子区，以及独立 420 µm ROI 的检查；独立小 ROI 同时改变 DFT bin 宽度，不能把其差异全归为空间不均匀。单个 AG 实现及小视场的结果不代表商业面板排名；钻石与风车的差距也小于这些敏感性。
+
+从仓库根目录复现本次采样分析，不重跑已完成的光学段：
+
+```powershell
+.venv\Scripts\python.exe oled-ag-sparkle\scripts\run_sms_reference.py --layouts diamond rgb-stripe rgb-delta windmill --measurement sampled-camera --reuse-optics test-results\oled-layout-comparison --stage all --out test-results\oled-camera-new
+```
+
+`--reuse-optics` 仅接受相同相机、布局、间距及求解器版本；冻结来源 protocol、run、stats 和原始亮度文件的 SHA-256，并写入**新的**结果目录。省略此参数可从现有入口重算光学；默认主网格 `--backend all` 会运行四后端，加四次 0.5 µm Torch 共 20 次，其中 Mitsuba 几何光线结果缺少衍射，不进入此次相机报告；`--backend torch` 可缩小运行范围。CUDA 环境配置见下文。`--stage prepare/main/fine` 可分段运行新光学批次；复用批次的 prepare 只固定采样方案，之后用报告 CLI 重评。固定的 840 µm ROI 要求输入周期与之相容。
+
+只重建本次已有报告：
+
+```powershell
+.venv\Scripts\python.exe oled-ag-sparkle\scripts\generate_report.py --kind sms-reference --results test-results\oled-camera-comparison
+```
+
+`test-results/oled-camera-comparison/` 只保存本次直接需要的结果：`protocol.json` 固定测量方法及光学来源；`summary.json` 和逐运行 `camera_stats.json` 保存审计和统计；`camera_pixels.npy` 保存积分采样结果，`camera_separated.npy` 保存去周期结果，`camera_frequency_mask.npy` 保存掩膜；`controls/` 保存有限/无限周期无 AG 控制；PNG 和 `sparkle.html` 由已有报告 CLI 生成。没有新增脚本或入口，原光学数组和历史报告保持原样。
+
+旧[共同 MWA 报告](test-results/oled-layout-comparison/sparkle.html)保留用于追溯，明确以 `--measurement optical-mwa` 选择历史方案。其 70/140/210 µm 拼接窗口不作为本次相机评价方法。历史钻石按三次 140 µm MWA 为 **5.291803%**，本批次同口径为 **5.287834%**；不能把这些数值等同于保留更多相机频带的本次结果。
+
+`assets/oled-layouts/<layout>/` 继续由 `prepare_tiled_emission.py` 维护：RGB 周期单元、1 mm RGB/full-green 输入与 `.source.json` 保存几何、周期、亮度倍率和哈希。`assets/oled-layout-reference/` 保存公开参考图及来源，参考图不直接作为光学强度。单独生成输入可用 `prepare_tiled_emission.py --layout rgb-delta`。
+
+## 单排列 MWA 参考报告与复现
+
+以下保留的单排列参考报告使用**全绿画面、不加 LDF**，按三次 140 µm 移动平均（MWA）分离 OLED 周期纹理，随后对全部 441 个测量像素计算 `sparkle (%) = 100 × std(I, ddof=0) / mean(I)`。三个波动后端约为 **5.292%**，Mitsuba 为 **5.409%**，0.5 µm 网格的 Torch 复核为 **5.136%**。这些是固定参考测量方法下的仿真值，尚未按原论文的实际仪器参数校准；其他方法、孔径对照和原始统计保留在报告附录。
 
 直接查看[本批次闪点报告](test-results/oled-sms-current/sparkle.html)。四后端在同一 GPU 上串行重跑，主工况运行 ID 为 `87e679353334459a9bedb168895129e3`，批次为 `30ef6b2cac9c4acda85c13c9b523de0c`。
 

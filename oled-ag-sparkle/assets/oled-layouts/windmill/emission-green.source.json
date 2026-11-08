@@ -1,0 +1,309 @@
+{
+  "layout": "windmill",
+  "nominal_pixel_pitch_um": 70.0,
+  "nominal_pitch_definition": "square logical-address pitch P; cell area/P^2 addresses; not nearest-neighbor subpixel spacing",
+  "nominal_addresses_per_cell": 4,
+  "full_cell_um_xy": [
+    140.0,
+    140.0
+  ],
+  "full_rgb_period_um_xy": [
+    140.0,
+    140.0
+  ],
+  "green_period_um_xy": [
+    140.0,
+    140.0
+  ],
+  "geometry": {
+    "method": "Idealized polygons inspired by public diagrams; proportions are model assumptions",
+    "area_samples_per_axis": 8,
+    "sites_in_nominal_pitch_units": [
+      {
+        "channel": "R",
+        "center_xy": [
+          0.75,
+          0.75
+        ],
+        "vertices_relative_xy": [
+          [
+            0,
+            -0.23
+          ],
+          [
+            0.23,
+            0
+          ],
+          [
+            0,
+            0.23
+          ],
+          [
+            -0.23,
+            0
+          ]
+        ]
+      },
+      {
+        "channel": "R",
+        "center_xy": [
+          1.75,
+          1.75
+        ],
+        "vertices_relative_xy": [
+          [
+            0,
+            -0.23
+          ],
+          [
+            0.23,
+            0
+          ],
+          [
+            0,
+            0.23
+          ],
+          [
+            -0.23,
+            0
+          ]
+        ]
+      },
+      {
+        "channel": "B",
+        "center_xy": [
+          1.75,
+          0.75
+        ],
+        "vertices_relative_xy": [
+          [
+            0,
+            -0.34
+          ],
+          [
+            0.34,
+            0
+          ],
+          [
+            0,
+            0.34
+          ],
+          [
+            -0.34,
+            0
+          ]
+        ]
+      },
+      {
+        "channel": "B",
+        "center_xy": [
+          0.75,
+          1.75
+        ],
+        "vertices_relative_xy": [
+          [
+            0,
+            -0.34
+          ],
+          [
+            0.34,
+            0
+          ],
+          [
+            0,
+            0.34
+          ],
+          [
+            -0.34,
+            0
+          ]
+        ]
+      },
+      {
+        "channel": "G",
+        "center_xy": [
+          0.25,
+          0.25
+        ],
+        "vertices_relative_xy": [
+          [
+            -0.16,
+            -0.08
+          ],
+          [
+            -0.08,
+            -0.16
+          ],
+          [
+            -0.02,
+            -0.16
+          ],
+          [
+            0.16,
+            0.02
+          ],
+          [
+            0.16,
+            0.08
+          ],
+          [
+            0.08,
+            0.16
+          ],
+          [
+            0.02,
+            0.16
+          ],
+          [
+            -0.16,
+            -0.02
+          ]
+        ]
+      },
+      {
+        "channel": "G",
+        "center_xy": [
+          1.25,
+          0.25
+        ],
+        "vertices_relative_xy": [
+          [
+            -0.16,
+            0.08
+          ],
+          [
+            -0.08,
+            0.16
+          ],
+          [
+            -0.02,
+            0.16
+          ],
+          [
+            0.16,
+            -0.02
+          ],
+          [
+            0.16,
+            -0.08
+          ],
+          [
+            0.08,
+            -0.16
+          ],
+          [
+            0.02,
+            -0.16
+          ],
+          [
+            -0.16,
+            0.02
+          ]
+        ]
+      },
+      {
+        "channel": "G",
+        "center_xy": [
+          0.25,
+          1.25
+        ],
+        "vertices_relative_xy": [
+          [
+            -0.16,
+            0.08
+          ],
+          [
+            -0.08,
+            0.16
+          ],
+          [
+            -0.02,
+            0.16
+          ],
+          [
+            0.16,
+            -0.02
+          ],
+          [
+            0.16,
+            -0.08
+          ],
+          [
+            0.08,
+            -0.16
+          ],
+          [
+            0.02,
+            -0.16
+          ],
+          [
+            -0.16,
+            0.02
+          ]
+        ]
+      },
+      {
+        "channel": "G",
+        "center_xy": [
+          1.25,
+          1.25
+        ],
+        "vertices_relative_xy": [
+          [
+            -0.16,
+            -0.08
+          ],
+          [
+            -0.08,
+            -0.16
+          ],
+          [
+            -0.02,
+            -0.16
+          ],
+          [
+            0.16,
+            0.02
+          ],
+          [
+            0.16,
+            0.08
+          ],
+          [
+            0.08,
+            0.16
+          ],
+          [
+            0.02,
+            0.16
+          ],
+          [
+            -0.16,
+            -0.02
+          ]
+        ]
+      }
+    ]
+  },
+  "title": "windmill: equal nominal pitch / full-green comparison input",
+  "source_page": "https://www.aibangled.com/a/2255",
+  "reference_image": "assets/oled-layout-reference/tianma-windmill.png",
+  "reference_image_sha256": "786fec3786349214935e0a3223259d5fd6b0ad015e60e90d35cff9483fb4e143",
+  "assigned_field_um": [
+    1000.0,
+    1000.0
+  ],
+  "assigned_emission_texel_um": 2.0,
+  "tile_repeats_yx": [
+    8,
+    8
+  ],
+  "phase": "repeat-cell origin at top-left of the common field",
+  "intensity_model": "Full green, sRGB-decoded at 530 nm; linear gain applied by solver, without PNG clipping",
+  "unscaled_field_linear_green_mean": 0.06775642775499821,
+  "target_field_linear_green_mean": 1.0,
+  "linear_emission_scale": 14.758747371037911,
+  "normalization_domain": "entire finite emission field, including partial edge cells",
+  "scale_note": "Nominal P and aperture proportions are explicit model assumptions, not measured phone calibration.",
+  "sha256": "d18d0f488251f0b7db3c704ae45769744062facd6a9b53ff729f7d10f0b33fb8"
+}

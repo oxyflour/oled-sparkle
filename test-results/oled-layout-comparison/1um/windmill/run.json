@@ -1,0 +1,595 @@
+{
+  "schema_version": 1,
+  "run_id": "bfa8a5ee930d4793bccc11017c5a1064",
+  "status": "complete",
+  "started_at_utc": "2026-11-08T03:20:04.063417+00:00",
+  "parameter_provenance": "captured_from_actual_cli_with_defaults",
+  "parameters": {
+    "height": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag\\heightfield.png",
+    "height_pitch_um": 1.0,
+    "height_range_um": 0.5361845861372564,
+    "emission": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-layouts\\windmill\\emission-green.png",
+    "emission_pitch_um": 2.0,
+    "analysis_pitch_um": 26.25,
+    "emission_channel": "green",
+    "gamma_decode": true,
+    "emission_scale": 14.758747371037911,
+    "emission_offset_x_um": 0.0,
+    "emission_offset_y_um": 0.0,
+    "gap_um": 500.0,
+    "wavelength_nm": 530.0,
+    "n_stack": 1.5,
+    "n_out": 1.0,
+    "na": 0.00781226159233428,
+    "source_samples": 1,
+    "emission_threshold": 0.0,
+    "source_margin_um": 0.0,
+    "max_sources": 100000,
+    "pad_px": 140,
+    "batch": 16,
+    "backend": "all",
+    "backend_workers": 1,
+    "device": "cuda",
+    "ray_radial": 24,
+    "ray_angular": 64,
+    "ray_chunk": 65536,
+    "mesh_stride": 1,
+    "mitsuba_variant": "cuda_ad_rgb",
+    "roi_margin_um": 220.0,
+    "progress_every": 400,
+    "out": "C:\\Projects\\oled-sparkle\\test-results\\oled-layout-comparison\\1um\\windmill",
+    "skip_unavailable": false,
+    "dry_run": false
+  },
+  "argv": [
+    "--height",
+    "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag\\heightfield.png",
+    "--height-pitch-um",
+    "1.0",
+    "--height-range-um",
+    "0.5361845861372564",
+    "--emission",
+    "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-layouts\\windmill\\emission-green.png",
+    "--emission-pitch-um",
+    "2.0",
+    "--gamma-decode",
+    "--wavelength-nm",
+    "530",
+    "--gap-um",
+    "500",
+    "--n-stack",
+    "1.5",
+    "--n-out",
+    "1",
+    "--na",
+    "0.00781226159233428",
+    "--source-samples",
+    "1",
+    "--max-sources",
+    "100000",
+    "--pad-px",
+    "140",
+    "--batch",
+    "16",
+    "--device",
+    "cuda",
+    "--backend",
+    "all",
+    "--backend-workers",
+    "1",
+    "--mitsuba-variant",
+    "cuda_ad_rgb",
+    "--ray-radial",
+    "24",
+    "--ray-angular",
+    "64",
+    "--analysis-pitch-um",
+    "26.25",
+    "--roi-margin-um",
+    "220",
+    "--progress-every",
+    "400",
+    "--out",
+    "C:\\Projects\\oled-sparkle\\test-results\\oled-layout-comparison\\1um\\windmill",
+    "--emission-scale",
+    "14.758747371037911",
+    "--emission-threshold",
+    "0.0",
+    "--emission-channel",
+    "green"
+  ],
+  "command_display": "C:\\Projects\\oled-sparkle\\.venv\\Scripts\\python.exe C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\scripts\\sparkle_multibackend.py --height C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag\\heightfield.png --height-pitch-um 1.0 --height-range-um 0.5361845861372564 --emission C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-layouts\\windmill\\emission-green.png --emission-pitch-um 2.0 --gamma-decode --wavelength-nm 530 --gap-um 500 --n-stack 1.5 --n-out 1 --na 0.00781226159233428 --source-samples 1 --max-sources 100000 --pad-px 140 --batch 16 --device cuda --backend all --backend-workers 1 --mitsuba-variant cuda_ad_rgb --ray-radial 24 --ray-angular 64 --analysis-pitch-um 26.25 --roi-margin-um 220 --progress-every 400 --out C:\\Projects\\oled-sparkle\\test-results\\oled-layout-comparison\\1um\\windmill --emission-scale 14.758747371037911 --emission-threshold 0.0 --emission-channel green",
+  "solver": {
+    "path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\scripts\\sparkle_multibackend.py",
+    "sha256": "fa1e10c2ff4e2e9039436ba692aa7365905d202c6f99d8d35549c07b61a9183d"
+  },
+  "input_files": {
+    "height": {
+      "path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag\\heightfield.png",
+      "pitch_um_per_texel": 1.0,
+      "sha256": "de8f07d6beac7e0817332b18ae12ee9ccf8008e4a4c8f4a0f87646306f2d5c7e",
+      "file_bytes": 1756787,
+      "format": "PNG",
+      "mode": "I;16",
+      "width_px": 1000,
+      "height_px": 1000,
+      "array_shape": [
+        1000,
+        1000
+      ],
+      "dtype": "uint16",
+      "raw_min": 1324.0,
+      "raw_max": 64272.0,
+      "raw_std": 14485.07770759142,
+      "physical_width_um": 1000.0,
+      "physical_height_um": 1000.0,
+      "provenance": {
+        "source": "Synthetic rounded Voronoi-bowl proxy; scripts/prepare_etched_ag.py",
+        "model_status": "Illustrative morphology, not measured glass or a calibrated commercial product.",
+        "morphology_reference_url": "https://sid.org/Portals/sid/Files/SID-Digest/docs/68-2.pdf",
+        "roughness_order_of_magnitude_reference_url": "https://www.agc-yourglass.com/sites/default/files/agc_docs/Factsheet_Anti-glare_1020_EN.pdf",
+        "reference_interpretation": "Irregular polygonal etched features motivate the proxy. AGC line Ra/Rsm specifications are not equal to generated areal Sa or equivalent cell diameter.",
+        "assigned_field_um": [
+          1000.0,
+          1000.0
+        ],
+        "assigned_texel_um": 1.0,
+        "height_range_um": 0.5361845861372564,
+        "png_bits_per_channel": 16,
+        "sha256": "de8f07d6beac7e0817332b18ae12ee9ccf8008e4a4c8f4a0f87646306f2d5c7e",
+        "seed": 20261107,
+        "cell_count": 1600,
+        "nominal_site_spacing_um": 25.0,
+        "minimum_site_separation_um": 7.5,
+        "relative_depth_distribution": "Uniform [0.7, 1.3], assigned independently to each cell",
+        "raw_profile": "-depth_i * (1 - (d_nearest / d_second_nearest)^2)^2",
+        "rounding": {
+          "gaussian_sigma_um": 1.2,
+          "boundary": "periodic wrap"
+        },
+        "periodic_domain_um": 1000.0,
+        "calibration": {
+          "reference_pitch_um": 0.5,
+          "target_Sa_um": 0.1,
+          "raw_to_um_scale": 0.40302946859767835,
+          "raw_black_level": -1.3055529717873606,
+          "encoding": "uint16 / 65535 * height_range_um; black is low, white is high",
+          "no_per_output_grid_rescaling": true
+        },
+        "equivalent_cell_diameter_um": {
+          "definition": "2*sqrt(Voronoi cell area/pi), not Rsm or nearest-neighbor spacing",
+          "mean": 27.557867411047877,
+          "p10": 19.802170158196347,
+          "p50": 27.250999329690345,
+          "p90": 35.45472563305237
+        },
+        "measured_surface": {
+          "Sa_um": 0.099999276207844,
+          "Sq_um": 0.11851186992921194,
+          "Sz_um": 0.5150186515322807,
+          "height_min_um": 0.010832507698874302,
+          "height_max_um": 0.525851159231155,
+          "rms_slope": 0.03243637791250601,
+          "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+        },
+        "maximum_quantization_error_um": 4.0908233388536885e-06,
+        "generation_elapsed_seconds": 5.031804800033569
+      },
+      "png_bits_per_channel": 16,
+      "png_color_type": 0
+    },
+    "emission": {
+      "path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-layouts\\windmill\\emission-green.png",
+      "pitch_um_per_texel": 2.0,
+      "sha256": "d18d0f488251f0b7db3c704ae45769744062facd6a9b53ff729f7d10f0b33fb8",
+      "file_bytes": 4413,
+      "format": "PNG",
+      "mode": "RGB",
+      "width_px": 500,
+      "height_px": 500,
+      "array_shape": [
+        500,
+        500,
+        3
+      ],
+      "dtype": "uint8",
+      "raw_min": 0.0,
+      "raw_max": 255.0,
+      "raw_std": 38.04550627480602,
+      "physical_width_um": 1000.0,
+      "physical_height_um": 1000.0,
+      "provenance": {
+        "layout": "windmill",
+        "nominal_pixel_pitch_um": 70.0,
+        "nominal_pitch_definition": "square logical-address pitch P; cell area/P^2 addresses; not nearest-neighbor subpixel spacing",
+        "nominal_addresses_per_cell": 4,
+        "full_cell_um_xy": [
+          140.0,
+          140.0
+        ],
+        "full_rgb_period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "green_period_um_xy": [
+          140.0,
+          140.0
+        ],
+        "geometry": {
+          "method": "Idealized polygons inspired by public diagrams; proportions are model assumptions",
+          "area_samples_per_axis": 8,
+          "sites_in_nominal_pitch_units": [
+            {
+              "channel": "R",
+              "center_xy": [
+                0.75,
+                0.75
+              ],
+              "vertices_relative_xy": [
+                [
+                  0,
+                  -0.23
+                ],
+                [
+                  0.23,
+                  0
+                ],
+                [
+                  0,
+                  0.23
+                ],
+                [
+                  -0.23,
+                  0
+                ]
+              ]
+            },
+            {
+              "channel": "R",
+              "center_xy": [
+                1.75,
+                1.75
+              ],
+              "vertices_relative_xy": [
+                [
+                  0,
+                  -0.23
+                ],
+                [
+                  0.23,
+                  0
+                ],
+                [
+                  0,
+                  0.23
+                ],
+                [
+                  -0.23,
+                  0
+                ]
+              ]
+            },
+            {
+              "channel": "B",
+              "center_xy": [
+                1.75,
+                0.75
+              ],
+              "vertices_relative_xy": [
+                [
+                  0,
+                  -0.34
+                ],
+                [
+                  0.34,
+                  0
+                ],
+                [
+                  0,
+                  0.34
+                ],
+                [
+                  -0.34,
+                  0
+                ]
+              ]
+            },
+            {
+              "channel": "B",
+              "center_xy": [
+                0.75,
+                1.75
+              ],
+              "vertices_relative_xy": [
+                [
+                  0,
+                  -0.34
+                ],
+                [
+                  0.34,
+                  0
+                ],
+                [
+                  0,
+                  0.34
+                ],
+                [
+                  -0.34,
+                  0
+                ]
+              ]
+            },
+            {
+              "channel": "G",
+              "center_xy": [
+                0.25,
+                0.25
+              ],
+              "vertices_relative_xy": [
+                [
+                  -0.16,
+                  -0.08
+                ],
+                [
+                  -0.08,
+                  -0.16
+                ],
+                [
+                  -0.02,
+                  -0.16
+                ],
+                [
+                  0.16,
+                  0.02
+                ],
+                [
+                  0.16,
+                  0.08
+                ],
+                [
+                  0.08,
+                  0.16
+                ],
+                [
+                  0.02,
+                  0.16
+                ],
+                [
+                  -0.16,
+                  -0.02
+                ]
+              ]
+            },
+            {
+              "channel": "G",
+              "center_xy": [
+                1.25,
+                0.25
+              ],
+              "vertices_relative_xy": [
+                [
+                  -0.16,
+                  0.08
+                ],
+                [
+                  -0.08,
+                  0.16
+                ],
+                [
+                  -0.02,
+                  0.16
+                ],
+                [
+                  0.16,
+                  -0.02
+                ],
+                [
+                  0.16,
+                  -0.08
+                ],
+                [
+                  0.08,
+                  -0.16
+                ],
+                [
+                  0.02,
+                  -0.16
+                ],
+                [
+                  -0.16,
+                  0.02
+                ]
+              ]
+            },
+            {
+              "channel": "G",
+              "center_xy": [
+                0.25,
+                1.25
+              ],
+              "vertices_relative_xy": [
+                [
+                  -0.16,
+                  0.08
+                ],
+                [
+                  -0.08,
+                  0.16
+                ],
+                [
+                  -0.02,
+                  0.16
+                ],
+                [
+                  0.16,
+                  -0.02
+                ],
+                [
+                  0.16,
+                  -0.08
+                ],
+                [
+                  0.08,
+                  -0.16
+                ],
+                [
+                  0.02,
+                  -0.16
+                ],
+                [
+                  -0.16,
+                  0.02
+                ]
+              ]
+            },
+            {
+              "channel": "G",
+              "center_xy": [
+                1.25,
+                1.25
+              ],
+              "vertices_relative_xy": [
+                [
+                  -0.16,
+                  -0.08
+                ],
+                [
+                  -0.08,
+                  -0.16
+                ],
+                [
+                  -0.02,
+                  -0.16
+                ],
+                [
+                  0.16,
+                  0.02
+                ],
+                [
+                  0.16,
+                  0.08
+                ],
+                [
+                  0.08,
+                  0.16
+                ],
+                [
+                  0.02,
+                  0.16
+                ],
+                [
+                  -0.16,
+                  -0.02
+                ]
+              ]
+            }
+          ]
+        },
+        "title": "windmill: equal nominal pitch / full-green comparison input",
+        "source_page": "https://www.aibangled.com/a/2255",
+        "reference_image": "assets/oled-layout-reference/tianma-windmill.png",
+        "reference_image_sha256": "786fec3786349214935e0a3223259d5fd6b0ad015e60e90d35cff9483fb4e143",
+        "assigned_field_um": [
+          1000.0,
+          1000.0
+        ],
+        "assigned_emission_texel_um": 2.0,
+        "tile_repeats_yx": [
+          8,
+          8
+        ],
+        "phase": "repeat-cell origin at top-left of the common field",
+        "intensity_model": "Full green, sRGB-decoded at 530 nm; linear gain applied by solver, without PNG clipping",
+        "unscaled_field_linear_green_mean": 0.06775642775499821,
+        "target_field_linear_green_mean": 1.0,
+        "linear_emission_scale": 14.758747371037911,
+        "normalization_domain": "entire finite emission field, including partial edge cells",
+        "scale_note": "Nominal P and aperture proportions are explicit model assumptions, not measured phone calibration.",
+        "sha256": "d18d0f488251f0b7db3c704ae45769744062facd6a9b53ff729f7d10f0b33fb8"
+      },
+      "png_bits_per_channel": 8,
+      "png_color_type": 2
+    }
+  },
+  "environment": {
+    "python": "3.12.12 (main, Dec  9 2025, 19:02:55) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Projects\\oled-sparkle\\.venv\\Scripts\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "processor": "Intel64 Family 6 Model 158 Stepping 10, GenuineIntel",
+    "logical_cpus": 12,
+    "versions": {
+      "numpy": "2.5.4",
+      "Pillow": "13.0.0",
+      "torch": "2.13.0+cu130",
+      "torchoptics": "1.0.2",
+      "jax": "0.12.0.1",
+      "jaxlib": "0.12.0.1",
+      "jax-cuda13-plugin": null,
+      "jax-cuda13-pjrt": null,
+      "chromatix": "0.6.0",
+      "mitsuba": "3.9.1",
+      "drjit": "1.5.0"
+    },
+    "environment_settings": {
+      "PYTHONPATH": "C:\\Users\\oxyfl\\AppData\\Local\\uv\\cache\\archive-v0\\4WYk6cbWPUV3KB3ITqhyH",
+      "OMP_NUM_THREADS": "2",
+      "MKL_NUM_THREADS": "2",
+      "JAX_PLATFORMS": null,
+      "JAX_ENABLE_X64": null,
+      "DRJIT_LIBLLVM_PATH": null,
+      "SPARKLE_WSL_DISTRO": null,
+      "SPARKLE_WSL_PYTHON": null,
+      "XLA_PYTHON_CLIENT_PREALLOCATE": null,
+      "XLA_PYTHON_CLIENT_MEM_FRACTION": null
+    }
+  },
+  "backend_runs": {
+    "torch": {
+      "status": "complete",
+      "solver_elapsed_seconds": 12.902761599980295
+    },
+    "torchoptics": {
+      "status": "complete",
+      "solver_elapsed_seconds": 11.32194390008226
+    },
+    "chromatix": {
+      "status": "complete",
+      "solver_elapsed_seconds": 27.45537059986964
+    },
+    "mitsuba": {
+      "status": "complete",
+      "solver_elapsed_seconds": 0.9633468999527395
+    }
+  },
+  "timing_definition": "Solver elapsed includes any library/JIT/device setup occurring inside the solver; excludes postprocessing and HTML writing. Run wall time is measured up to report generation.",
+  "results_directory": "C:\\Projects\\oled-sparkle\\test-results\\oled-layout-comparison\\1um\\windmill",
+  "comparison_written": true,
+  "effective_model": {
+    "height_grid": [
+      1000,
+      1000
+    ],
+    "fft_grid": [
+      1280,
+      1280
+    ],
+    "field_width_um": 1000.0,
+    "field_height_um": 1000.0,
+    "analysis_pixel_pitch_um": 26.249999999999996,
+    "wave_source_modes": 20890,
+    "wave_source_node_pitch_um": 2.0,
+    "one_complex64_field_mib": 12.5,
+    "ray_queries": 1536000000,
+    "pupil_nodes": 1536,
+    "height_min_um": 0.010832509025931358,
+    "height_max_um": 0.5258511900901794,
+    "height_rms_about_mean_um": 0.1185118705034256,
+    "linear_emission_min": 0.0,
+    "linear_emission_max": 14.758747100830078,
+    "linear_emission_mean": 1.0,
+    "active_emission_texels": 20890,
+    "resolved_torch_device_setting": "cuda"
+  },
+  "finished_at_utc": "2026-11-08T03:20:57.364833+00:00",
+  "wall_elapsed_seconds": 53.305098
+}

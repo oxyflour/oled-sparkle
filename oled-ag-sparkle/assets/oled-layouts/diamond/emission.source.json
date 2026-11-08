@@ -1,0 +1,48 @@
+{
+  "layout": "diamond",
+  "nominal_pixel_pitch_um": 70.0,
+  "nominal_pitch_definition": "square logical-address pitch P; cell area/P^2 addresses; not nearest-neighbor subpixel spacing",
+  "nominal_addresses_per_cell": 4,
+  "full_cell_um_xy": [
+    140.0,
+    140.0
+  ],
+  "full_rgb_period_um_xy": [
+    140.0,
+    140.0
+  ],
+  "green_period_um_xy": [
+    140.0,
+    140.0
+  ],
+  "geometry": {
+    "method": "Existing sourced repeat cell",
+    "source_cell_crop_xyxy": [
+      26,
+      58,
+      96,
+      128
+    ]
+  },
+  "title": "diamond: equal nominal pitch / full-green comparison input",
+  "source_page": "https://global.samsungdisplay.com/29043/",
+  "reference_image": "assets/oled-diamond/emission.png",
+  "reference_image_sha256": "b753ba45e3407bd06e495d1c896b1595cc5955d704c16c9433ece9f15e9d454b",
+  "assigned_field_um": [
+    1000.0,
+    1000.0
+  ],
+  "assigned_emission_texel_um": 2.0,
+  "tile_repeats_yx": [
+    8,
+    8
+  ],
+  "phase": "repeat-cell origin at top-left of the common field",
+  "intensity_model": "Full green, sRGB-decoded at 530 nm; linear gain applied by solver, without PNG clipping",
+  "unscaled_field_linear_green_mean": 0.06639743060677313,
+  "target_field_linear_green_mean": 1.0,
+  "linear_emission_scale": 15.060823752688876,
+  "normalization_domain": "entire finite emission field, including partial edge cells",
+  "scale_note": "Nominal P and aperture proportions are explicit model assumptions, not measured phone calibration.",
+  "sha256": "adaf09b5d4054d17cd74ad2a93b1138a3c8ba4ace08581ecc930a380e0619b3f"
+}

@@ -13,3 +13,6 @@
 *.zip binary
 # Standalone reports contain embedded images and raw arrays; avoid huge text diffs.
 test-results/**/report.html binary
+# Frozen comparison manifests hash JSON bytes; preserve their captured line endings.
+test-results/oled-layout-comparison/**/*.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+test-results/oled-camera-comparison/**/*.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

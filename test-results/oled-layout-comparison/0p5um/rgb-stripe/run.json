@@ -1,0 +1,394 @@
+{
+  "schema_version": 1,
+  "run_id": "ead4b3d7fa434f3ebeb91c7cf6074d64",
+  "status": "complete",
+  "started_at_utc": "2026-11-08T03:23:34.225120+00:00",
+  "parameter_provenance": "captured_from_actual_cli_with_defaults",
+  "parameters": {
+    "height": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag-pitch0p5\\heightfield.png",
+    "height_pitch_um": 0.5,
+    "height_range_um": 0.5361845861372564,
+    "emission": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-layouts\\rgb-stripe\\emission-green.png",
+    "emission_pitch_um": 2.0,
+    "analysis_pitch_um": 26.25,
+    "emission_channel": "green",
+    "gamma_decode": true,
+    "emission_scale": 3.9757901331043612,
+    "emission_offset_x_um": 0.0,
+    "emission_offset_y_um": 0.0,
+    "gap_um": 500.0,
+    "wavelength_nm": 530.0,
+    "n_stack": 1.5,
+    "n_out": 1.0,
+    "na": 0.00781226159233428,
+    "source_samples": 1,
+    "emission_threshold": 0.0,
+    "source_margin_um": 0.0,
+    "max_sources": 100000,
+    "pad_px": 280,
+    "batch": 8,
+    "backend": "torch",
+    "backend_workers": 1,
+    "device": "cuda",
+    "ray_radial": 24,
+    "ray_angular": 64,
+    "ray_chunk": 65536,
+    "mesh_stride": 1,
+    "mitsuba_variant": "cuda_ad_rgb",
+    "roi_margin_um": 220.0,
+    "progress_every": 400,
+    "out": "C:\\Projects\\oled-sparkle\\test-results\\oled-layout-comparison\\0p5um\\rgb-stripe",
+    "skip_unavailable": false,
+    "dry_run": false
+  },
+  "argv": [
+    "--height",
+    "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag-pitch0p5\\heightfield.png",
+    "--height-pitch-um",
+    "0.5",
+    "--height-range-um",
+    "0.5361845861372564",
+    "--emission",
+    "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-layouts\\rgb-stripe\\emission-green.png",
+    "--emission-pitch-um",
+    "2.0",
+    "--gamma-decode",
+    "--wavelength-nm",
+    "530",
+    "--gap-um",
+    "500",
+    "--n-stack",
+    "1.5",
+    "--n-out",
+    "1",
+    "--na",
+    "0.00781226159233428",
+    "--source-samples",
+    "1",
+    "--max-sources",
+    "100000",
+    "--pad-px",
+    "280",
+    "--batch",
+    "8",
+    "--device",
+    "cuda",
+    "--backend",
+    "torch",
+    "--backend-workers",
+    "1",
+    "--mitsuba-variant",
+    "cuda_ad_rgb",
+    "--ray-radial",
+    "24",
+    "--ray-angular",
+    "64",
+    "--analysis-pitch-um",
+    "26.25",
+    "--roi-margin-um",
+    "220",
+    "--progress-every",
+    "400",
+    "--out",
+    "C:\\Projects\\oled-sparkle\\test-results\\oled-layout-comparison\\0p5um\\rgb-stripe",
+    "--emission-scale",
+    "3.9757901331043612",
+    "--emission-threshold",
+    "0.0",
+    "--emission-channel",
+    "green"
+  ],
+  "command_display": "C:\\Projects\\oled-sparkle\\.venv\\Scripts\\python.exe C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\scripts\\sparkle_multibackend.py --height C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag-pitch0p5\\heightfield.png --height-pitch-um 0.5 --height-range-um 0.5361845861372564 --emission C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-layouts\\rgb-stripe\\emission-green.png --emission-pitch-um 2.0 --gamma-decode --wavelength-nm 530 --gap-um 500 --n-stack 1.5 --n-out 1 --na 0.00781226159233428 --source-samples 1 --max-sources 100000 --pad-px 280 --batch 8 --device cuda --backend torch --backend-workers 1 --mitsuba-variant cuda_ad_rgb --ray-radial 24 --ray-angular 64 --analysis-pitch-um 26.25 --roi-margin-um 220 --progress-every 400 --out C:\\Projects\\oled-sparkle\\test-results\\oled-layout-comparison\\0p5um\\rgb-stripe --emission-scale 3.9757901331043612 --emission-threshold 0.0 --emission-channel green",
+  "solver": {
+    "path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\scripts\\sparkle_multibackend.py",
+    "sha256": "fa1e10c2ff4e2e9039436ba692aa7365905d202c6f99d8d35549c07b61a9183d"
+  },
+  "input_files": {
+    "height": {
+      "path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-1mm-etched-ag-pitch0p5\\heightfield.png",
+      "pitch_um_per_texel": 0.5,
+      "sha256": "9a495dc565e3bb2b5ef725e9950f05a8958cc70e1364978b352607b1d91c4c3d",
+      "file_bytes": 6584809,
+      "format": "PNG",
+      "mode": "I;16",
+      "width_px": 2000,
+      "height_px": 2000,
+      "array_shape": [
+        2000,
+        2000
+      ],
+      "dtype": "uint16",
+      "raw_min": 1260.0,
+      "raw_max": 64275.0,
+      "raw_std": 14485.159327561545,
+      "physical_width_um": 1000.0,
+      "physical_height_um": 1000.0,
+      "provenance": {
+        "source": "Synthetic rounded Voronoi-bowl proxy; scripts/prepare_etched_ag.py",
+        "model_status": "Illustrative morphology, not measured glass or a calibrated commercial product.",
+        "morphology_reference_url": "https://sid.org/Portals/sid/Files/SID-Digest/docs/68-2.pdf",
+        "roughness_order_of_magnitude_reference_url": "https://www.agc-yourglass.com/sites/default/files/agc_docs/Factsheet_Anti-glare_1020_EN.pdf",
+        "reference_interpretation": "Irregular polygonal etched features motivate the proxy. AGC line Ra/Rsm specifications are not equal to generated areal Sa or equivalent cell diameter.",
+        "assigned_field_um": [
+          1000.0,
+          1000.0
+        ],
+        "assigned_texel_um": 0.5,
+        "height_range_um": 0.5361845861372564,
+        "png_bits_per_channel": 16,
+        "sha256": "9a495dc565e3bb2b5ef725e9950f05a8958cc70e1364978b352607b1d91c4c3d",
+        "seed": 20261107,
+        "cell_count": 1600,
+        "nominal_site_spacing_um": 25.0,
+        "minimum_site_separation_um": 7.5,
+        "relative_depth_distribution": "Uniform [0.7, 1.3], assigned independently to each cell",
+        "raw_profile": "-depth_i * (1 - (d_nearest / d_second_nearest)^2)^2",
+        "rounding": {
+          "gaussian_sigma_um": 1.2,
+          "boundary": "periodic wrap"
+        },
+        "periodic_domain_um": 1000.0,
+        "calibration": {
+          "reference_pitch_um": 0.5,
+          "target_Sa_um": 0.1,
+          "raw_to_um_scale": 0.40302946859767835,
+          "raw_black_level": -1.3055529717873606,
+          "encoding": "uint16 / 65535 * height_range_um; black is low, white is high",
+          "no_per_output_grid_rescaling": true
+        },
+        "equivalent_cell_diameter_um": {
+          "definition": "2*sqrt(Voronoi cell area/pi), not Rsm or nearest-neighbor spacing",
+          "mean": 27.557867411047877,
+          "p10": 19.802170158196347,
+          "p50": 27.250999329690345,
+          "p90": 35.45472563305237
+        },
+        "measured_surface": {
+          "Sa_um": 0.10000000083394968,
+          "Sq_um": 0.11851253771543155,
+          "Sz_um": 0.5155668222390969,
+          "height_min_um": 0.010308881949079774,
+          "height_max_um": 0.5258757041881766,
+          "rms_slope": 0.033021638721269383,
+          "definition": "Areal Sa/Sq relative to the mean plane; Sz is sampled peak-to-valley, not PNG encoding range."
+        },
+        "maximum_quantization_error_um": 4.0908242979753595e-06,
+        "generation_elapsed_seconds": 4.409849599935114
+      },
+      "png_bits_per_channel": 16,
+      "png_color_type": 0
+    },
+    "emission": {
+      "path": "C:\\Projects\\oled-sparkle\\oled-ag-sparkle\\assets\\oled-layouts\\rgb-stripe\\emission-green.png",
+      "pitch_um_per_texel": 2.0,
+      "sha256": "6212f9e02c6521587748199366a85586b8882628f34af24aa49ae5847ce97884",
+      "file_bytes": 2563,
+      "format": "PNG",
+      "mode": "RGB",
+      "width_px": 500,
+      "height_px": 500,
+      "array_shape": [
+        500,
+        500,
+        3
+      ],
+      "dtype": "uint8",
+      "raw_min": 0.0,
+      "raw_max": 255.0,
+      "raw_std": 70.69961198959824,
+      "physical_width_um": 1000.0,
+      "physical_height_um": 1000.0,
+      "provenance": {
+        "layout": "rgb-stripe",
+        "nominal_pixel_pitch_um": 70.0,
+        "nominal_pitch_definition": "square logical-address pitch P; cell area/P^2 addresses; not nearest-neighbor subpixel spacing",
+        "nominal_addresses_per_cell": 1,
+        "full_cell_um_xy": [
+          70.0,
+          70.0
+        ],
+        "full_rgb_period_um_xy": [
+          70.0,
+          70.0
+        ],
+        "green_period_um_xy": [
+          70.0,
+          70.0
+        ],
+        "geometry": {
+          "method": "Idealized polygons inspired by public diagrams; proportions are model assumptions",
+          "area_samples_per_axis": 8,
+          "sites_in_nominal_pitch_units": [
+            {
+              "channel": "R",
+              "center_xy": [
+                0.16666666666666666,
+                0.5
+              ],
+              "vertices_relative_xy": [
+                [
+                  -0.145,
+                  -0.44
+                ],
+                [
+                  0.145,
+                  -0.44
+                ],
+                [
+                  0.145,
+                  0.44
+                ],
+                [
+                  -0.145,
+                  0.44
+                ]
+              ]
+            },
+            {
+              "channel": "G",
+              "center_xy": [
+                0.5,
+                0.5
+              ],
+              "vertices_relative_xy": [
+                [
+                  -0.145,
+                  -0.44
+                ],
+                [
+                  0.145,
+                  -0.44
+                ],
+                [
+                  0.145,
+                  0.44
+                ],
+                [
+                  -0.145,
+                  0.44
+                ]
+              ]
+            },
+            {
+              "channel": "B",
+              "center_xy": [
+                0.8333333333333334,
+                0.5
+              ],
+              "vertices_relative_xy": [
+                [
+                  -0.145,
+                  -0.44
+                ],
+                [
+                  0.145,
+                  -0.44
+                ],
+                [
+                  0.145,
+                  0.44
+                ],
+                [
+                  -0.145,
+                  0.44
+                ]
+              ]
+            }
+          ]
+        },
+        "title": "rgb-stripe: equal nominal pitch / full-green comparison input",
+        "source_page": "https://wx4.sinaimg.cn/large/006fnRbbgy1gjq5m7x6afj30zq0k3tc4.jpg",
+        "reference_image": "assets/oled-layout-reference/tcl-layouts.jpg",
+        "reference_image_sha256": "6e911bce6d48faa1aadfd0d70d5a962e8fe76d7440cee8927ce8868018afd738",
+        "assigned_field_um": [
+          1000.0,
+          1000.0
+        ],
+        "assigned_emission_texel_um": 2.0,
+        "tile_repeats_yx": [
+          15,
+          15
+        ],
+        "phase": "repeat-cell origin at top-left of the common field",
+        "intensity_model": "Full green, sRGB-decoded at 530 nm; linear gain applied by solver, without PNG clipping",
+        "unscaled_field_linear_green_mean": 0.2515223305358887,
+        "target_field_linear_green_mean": 1.0,
+        "linear_emission_scale": 3.9757901331043612,
+        "normalization_domain": "entire finite emission field, including partial edge cells",
+        "scale_note": "Nominal P and aperture proportions are explicit model assumptions, not measured phone calibration.",
+        "sha256": "6212f9e02c6521587748199366a85586b8882628f34af24aa49ae5847ce97884"
+      },
+      "png_bits_per_channel": 8,
+      "png_color_type": 2
+    }
+  },
+  "environment": {
+    "python": "3.12.12 (main, Dec  9 2025, 19:02:55) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Projects\\oled-sparkle\\.venv\\Scripts\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "processor": "Intel64 Family 6 Model 158 Stepping 10, GenuineIntel",
+    "logical_cpus": 12,
+    "versions": {
+      "numpy": "2.5.4",
+      "Pillow": "13.0.0",
+      "torch": "2.13.0+cu130",
+      "torchoptics": "1.0.2",
+      "jax": "0.12.0.1",
+      "jaxlib": "0.12.0.1",
+      "jax-cuda13-plugin": null,
+      "jax-cuda13-pjrt": null,
+      "chromatix": "0.6.0",
+      "mitsuba": "3.9.1",
+      "drjit": "1.5.0"
+    },
+    "environment_settings": {
+      "PYTHONPATH": "C:\\Users\\oxyfl\\AppData\\Local\\uv\\cache\\archive-v0\\4WYk6cbWPUV3KB3ITqhyH",
+      "OMP_NUM_THREADS": "2",
+      "MKL_NUM_THREADS": "2",
+      "JAX_PLATFORMS": null,
+      "JAX_ENABLE_X64": null,
+      "DRJIT_LIBLLVM_PATH": null,
+      "SPARKLE_WSL_DISTRO": null,
+      "SPARKLE_WSL_PYTHON": null,
+      "XLA_PYTHON_CLIENT_PREALLOCATE": null,
+      "XLA_PYTHON_CLIENT_MEM_FRACTION": null
+    }
+  },
+  "backend_runs": {
+    "torch": {
+      "status": "complete",
+      "solver_elapsed_seconds": 130.58593299984932
+    }
+  },
+  "timing_definition": "Solver elapsed includes any library/JIT/device setup occurring inside the solver; excludes postprocessing and HTML writing. Run wall time is measured up to report generation.",
+  "results_directory": "C:\\Projects\\oled-sparkle\\test-results\\oled-layout-comparison\\0p5um\\rgb-stripe",
+  "comparison_written": true,
+  "effective_model": {
+    "height_grid": [
+      2000,
+      2000
+    ],
+    "fft_grid": [
+      2560,
+      2560
+    ],
+    "field_width_um": 1000.0,
+    "field_height_um": 1000.0,
+    "analysis_pixel_pitch_um": 26.249999999999996,
+    "wave_source_modes": 68068,
+    "wave_source_node_pitch_um": 2.0,
+    "one_complex64_field_mib": 50.0,
+    "ray_queries": 6144000000,
+    "pupil_nodes": 1536,
+    "height_min_um": 0.010308883152902126,
+    "height_max_um": 0.5258757472038269,
+    "height_rms_about_mean_um": 0.11851254105567932,
+    "linear_emission_min": 0.0,
+    "linear_emission_max": 3.975790023803711,
+    "linear_emission_mean": 1.0,
+    "active_emission_texels": 68068,
+    "resolved_torch_device_setting": "cuda"
+  },
+  "finished_at_utc": "2026-11-08T03:25:45.537330+00:00",
+  "wall_elapsed_seconds": 131.324676
+}

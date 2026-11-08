@@ -1,0 +1,18 @@
+{
+  "purpose": "Public reference diagrams for the representative RGB-stripe, RGB-Delta and Windmill geometry in prepare_tiled_emission.layout_cell; not directly used as optical intensities.",
+  "tcl-layouts.jpg": {
+    "author": "TCL CSOT / TCL 华星",
+    "source_page": "https://m.weibo.cn/detail/4560346666510480",
+    "source_image": "https://wx4.sinaimg.cn/large/006fnRbbgy1gjq5m7x6afj30zq0k3tc4.jpg",
+    "use": "RGB stripe and RGB-Delta topology reference; the chart's vendor equivalent-resolution claims are not used in this simulation."
+  },
+  "tianma-windmill.png": {
+    "author": "Tianma Microelectronics / 天马微电子",
+    "source_page": "https://www.aibangled.com/a/2255",
+    "source_image": "https://file.aibangled.com/112/uploads/2022/03/3-1648518111.png!a",
+    "use": "Windmill alternating cut-corner green shape reference. Black construction lines are excluded from the analytic geometry."
+  },
+  "rgb_delta_additional_basis": "https://patents.google.com/patent/CN110379370A/zh",
+  "copyright": "Original diagrams remain copyright of their respective authors. Retained for source attribution and reproducibility of this local research comparison.",
+  "calibration": "All new aperture proportions and the nominal logical-address pitch are explicit geometric assumptions, not measured panel dimensions or radiometric calibration."
+}

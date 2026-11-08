@@ -43,7 +43,10 @@ htmlcov/
 !/test-results/default-example-validation.json
 !/test-results/oled-sms-reference/
 !/test-results/oled-sms-current/
+!/test-results/oled-layout-comparison/
+!/test-results/oled-camera-comparison/
 # Large self-contained reports are rebuilt from the retained floating-point data.
+/test-results/oled-layout-comparison/*/*/report.html
 /test-results/oled-sms-reference/report.html
 /test-results/oled-sms-reference/sparkle-report.html
 /test-results/oled-sms-reference/overview.html
@@ -119,6 +122,10 @@ htmlcov/
 !/test-results/logs/sms-reference-report.log
 !/test-results/logs/sms-current-full.log
 !/test-results/logs/validation-sms-reference.log
+!/test-results/logs/validation-layouts.log
+!/test-results/logs/oled-layout-comparison.log
+!/test-results/logs/oled-camera-comparison.log
+!/test-results/logs/validation-camera.log
 !/test-results/logs/default-etched-ag.log
 !/test-results/logs/validation-periodic-input.log
 !/test-results/logs/oled-1mm-original-periodic-50um.log

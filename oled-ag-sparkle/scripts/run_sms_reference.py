@@ -10,6 +10,7 @@ import hashlib
 import json
 import math
 import subprocess
+import sys
 from datetime import datetime, timezone
 from uuid import uuid4
 
@@ -45,27 +46,171 @@ def prepare_green():
     return path
 
 
-def command_for(out, pitch=1., backend='all', na=None, dry=False, backend_workers=1):
-    return build_command(pitch_um=pitch, backend=backend, device='cuda', out=out, dry_run=dry,
+def command_for(out, pitch=1., backend='all', na=None, dry=False, backend_workers=1,
+                emission=None, emission_pitch_um=2., emission_scale=1., device='cuda',
+                emission_threshold=.001):
+    return build_command(pitch_um=pitch, backend=backend, device=device, out=out, dry_run=dry,
                          backend_workers=backend_workers,
                          solver_options={
-                             'emission': ROOT / 'assets/oled-1mm-periodic-green/emission.png',
+                             'emission': emission or ROOT / 'assets/oled-1mm-periodic-green/emission.png',
+                             'emission_pitch_um': emission_pitch_um, 'emission_scale': emission_scale,
+                             'emission_threshold': emission_threshold,
                              'emission_channel': 'green',
                              'na': CAMERA['object_NA'] if na is None else na,
                              'analysis_pitch_um': CAMERA['object_pitch_um'],
                              'roi_margin_um': 220, 'progress_every': 400})
 
 
+def run_layout_comparison(args):
+    """Use the same runner/solver with a frozen multi-layout measurement plan."""
+    from prepare_tiled_emission import prepare_layout
+    from sparkle_multibackend import ALL_BACKENDS
+    from sms_reference import common_mwa_plan, sampled_camera_plan
+    protocol_path = args.out/'protocol.json'
+    if args.stage == 'old-na':
+        raise ValueError('The layout comparison supports prepare/main/fine/all stages')
+    if args.stage in ('prepare', 'all'):
+        if protocol_path.exists():
+            raise ValueError('Comparison protocol already exists; use main/fine or a new --out directory')
+        if args.reuse_optics:
+            if args.measurement != 'sampled-camera':
+                raise ValueError('--reuse-optics requires --measurement sampled-camera')
+            source = args.reuse_optics.resolve()
+            if source == args.out:
+                raise ValueError('Use a separate camera result directory to preserve historical analysis')
+            original_path = source/'protocol.json'
+            spec = json.loads(original_path.read_text(encoding='utf-8'))
+            if (spec['kind'] != 'oled-layout-comparison' or set(args.layouts) != set(spec['layouts'])
+                    or spec['nominal_pixel_pitch_um'] != args.pixel_pitch_um
+                    or any(m['assigned_emission_texel_um'] != args.emission_texel_um for m in spec['layouts'].values())
+                    or spec['camera'] != {k: v for k, v in CAMERA.items()
+                                          if k not in ('geometric_green_pitch_um', 'green_pixel_ISR')}):
+                raise ValueError('Reused optics must match the requested layouts, pitch and camera')
+            if spec['execution']['solver_sha256'] != hashlib.sha256((ROOT/'scripts/sparkle_multibackend.py').read_bytes()).hexdigest():
+                raise ValueError('Reused optical solver differs from the current implementation')
+            periods = sorted({tuple(m['green_period_um_xy']) for m in spec['layouts'].values()})
+            spec['analysis'] = sampled_camera_plan(periods, spec['camera'])
+            spec['optical_root'] = str(source)
+            spec['optical_source_protocol_sha256'] = hashlib.sha256(original_path.read_bytes()).hexdigest()
+            spec['status'] = 'Camera capture and common spectral mask declared before applying them; previously computed ideal-pupil optical fields reused'
+            spec['measurement_execution'] = {'batch_id': uuid4().hex,
+                                             'declared_at_utc': datetime.now(timezone.utc).isoformat()}
+            spec['reused_files_sha256'] = {}
+            for run in spec['runs']:
+                for relative in ['run.json']+[f'{b}/{f}' for b in run['backends'] if b != 'mitsuba'
+                                               for f in ('brightness.npy', 'stats.json')]:
+                    path = source/run['output']/relative
+                    spec['reused_files_sha256'][str(path)] = hashlib.sha256(path.read_bytes()).hexdigest()
+            protocol_path.write_text(json.dumps(spec, ensure_ascii=False, indent=2), encoding='utf-8')
+            if args.stage == 'all':
+                from reporting import write_sms_report
+                print('HTML report:', write_sms_report(args.out))
+            else:
+                print('Camera protocol frozen; reprocess with generate_report.py --kind sms-reference')
+            return
+        layouts = {}
+        for layout in args.layouts:
+            folder = prepare_layout(layout, pixel_pitch_um=args.pixel_pitch_um, texel_um=args.emission_texel_um)
+            meta = json.loads((folder/'emission-green.source.json').read_text(encoding='utf-8'))
+            layouts[layout] = {**meta, 'emission_path': str(folder/'emission-green.png'),
+                               'rgb_path': str(folder/'emission.png')}
+        # A common rectangular ROI contains an integer number of ALL exact
+        # intensity periods. The union mask is identical for every layout.
+        period_texels = [round(v/args.emission_texel_um) for meta in layouts.values()
+                         for v in meta['green_period_um_xy']]
+        common_period_um = math.lcm(*period_texels)*args.emission_texel_um
+        roi_um = math.floor(560/common_period_um)*common_period_um
+        if roi_um <= 0:
+            raise ValueError('No common complete-period ROI fits within 560 um; reduce pixel pitch')
+        periods = sorted({tuple(meta['green_period_um_xy']) for meta in layouts.values()})
+        runs = []
+        for grid, pitch, backend in (('1um', 1., args.backend), ('0p5um', .5, 'torch')):
+            for layout, meta in layouts.items():
+                relative = f'{grid}/{layout}'
+                command = command_for(args.out/relative, pitch=pitch, backend=backend,
+                                      backend_workers=args.backend_workers, device=args.device,
+                                      emission=meta['emission_path'], emission_pitch_um=args.emission_texel_um,
+                                      emission_scale=meta['linear_emission_scale'], emission_threshold=0.)
+                runs.append({'grid': grid, 'layout': layout, 'pitch_um': pitch, 'output': relative,
+                             'backends': list(ALL_BACKENDS) if backend == 'all' else [backend], 'argv': command[2:]})
+        height_paths = {str(ROOT/'assets'/name/'heightfield.png') for name in
+                        ('oled-1mm-etched-ag', 'oled-1mm-etched-ag-pitch0p5')}
+        analysis = (sampled_camera_plan(periods, CAMERA) if args.measurement == 'sampled-camera' else
+                    {'roi_width_um': roi_um, 'camera_pitch_um': CAMERA['object_pitch_um'],
+                     'cutoff_um_inv': 1/args.pixel_pitch_um, 'notch_periods_um': periods,
+                     'mwa_passes': 1,
+                     'primary': 'Identical period-aware three-pass MWA for every layout',
+                     'common_mwa': common_mwa_plan(periods, args.pixel_pitch_um),
+                     'Fourier': 'Original common reciprocal-lattice mask retained as a diagnostic',
+                     'MWA': 'One exact rectangular green-period pass per layout; diagnostic only'})
+        spec = {'kind': 'oled-layout-comparison', 'includes_LDF': False,
+                'status': 'predeclared before any comparison optical computation',
+                'execution': {'batch_id': uuid4().hex, 'created_at_utc': datetime.now(timezone.utc).isoformat(),
+                              'backend_workers': args.backend_workers,
+                              'solver_sha256': hashlib.sha256((ROOT/'scripts/sparkle_multibackend.py').read_bytes()).hexdigest()},
+                'camera': {k: v for k, v in CAMERA.items() if k not in ('geometric_green_pitch_um', 'green_pixel_ISR')},
+                'nominal_pixel_pitch_um': args.pixel_pitch_um,
+                'target_linear_green_mean': 1., 'emission_channel': 'green',
+                'height_sha256': {p: hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in height_paths},
+                'layouts': layouts, 'runs': runs,
+                'analysis': analysis,
+                'limitations': ['Representative aperture polygons, not calibrated commercial panels',
+                                'P is nominal logical-address pitch, not equal nearest-neighbor emitter spacing',
+                                'One AG realization and one declared relative emitter phase; not a phone-quality ranking'],
+                'code_sha256': {name: hashlib.sha256((ROOT/'scripts'/name).read_bytes()).hexdigest() for name in
+                                ('prepare_tiled_emission.py', 'run_sms_reference.py', 'sms_reference.py', 'reporting.py')}}
+        protocol_path.write_text(json.dumps(spec, ensure_ascii=False, indent=2), encoding='utf-8')
+        if args.stage == 'prepare':
+            for run in runs:
+                if run['grid'] == '1um':
+                    subprocess.run([sys.executable, str(ROOT/'scripts/sparkle_multibackend.py'),
+                                    *run['argv'], '--dry-run'], check=True)
+            return
+    elif not protocol_path.is_file():
+        raise ValueError('Missing comparison protocol; run --stage prepare first')
+    spec = json.loads(protocol_path.read_text(encoding='utf-8'))
+    if 'optical_root' in spec:
+        raise ValueError('This protocol reuses frozen optics; use generate_report.py --kind sms-reference instead of rerunning optical stages')
+    if spec['kind'] != 'oled-layout-comparison' or set(args.layouts) != set(spec['layouts']):
+        raise ValueError('Requested layouts do not match the saved comparison protocol')
+    if spec['execution']['solver_sha256'] != hashlib.sha256((ROOT/'scripts/sparkle_multibackend.py').read_bytes()).hexdigest():
+        raise ValueError('Solver changed after the protocol was declared; use a new --out directory')
+    for run in spec['runs']:
+        if args.stage == 'all' or run['grid'] == {'main': '1um', 'fine': '0p5um'}[args.stage]:
+            subprocess.run([sys.executable, str(ROOT/'scripts/sparkle_multibackend.py'), *run['argv']], check=True)
+    if args.stage == 'all':
+        from reporting import write_sms_report
+        print('HTML report:', write_sms_report(args.out))
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--out', type=Path, default=ROOT / 'outputs/oled-sms-reference',
+    parser.add_argument('--out', type=Path,
                         help='Root for protocol, run directories and reports')
     parser.add_argument('--stage', choices=('prepare', 'main', 'fine', 'old-na', 'all'), required=True,
                         help='prepare: inputs/protocol/dry-run; main/fine/old-na: optical runs; all: complete workflow')
     parser.add_argument('--backend-workers', type=int, default=1,
                         help='Concurrent backend workers; default 1 for sequential timing on one GPU')
+    from prepare_tiled_emission import LAYOUTS
+    parser.add_argument('--layouts', nargs='+', choices=LAYOUTS,
+                        help='Compare equal-pitch layouts through the shared SMS runner; omitted preserves the existing six-run reference')
+    parser.add_argument('--pixel-pitch-um', type=float, default=70., help='Comparison nominal logical-address pitch P')
+    parser.add_argument('--emission-texel-um', type=float, default=2.)
+    parser.add_argument('--measurement', choices=('sampled-camera', 'optical-mwa'), default='sampled-camera',
+                        help='Layout comparison: capture camera pixels before documented spectral masking (default); optical-mwa reproduces the historical custom filter')
+    parser.add_argument('--reuse-optics', type=Path,
+                        help='Layout comparison: verified existing ideal-pupil optical runs; write the new camera analysis to a separate --out')
+    parser.add_argument('--backend', choices=('all', 'torch', 'torchoptics', 'chromatix', 'mitsuba'), default='all',
+                        help='Comparison main-grid backends; fine-grid check always uses Torch')
+    parser.add_argument('--device', choices=('cpu', 'cuda'), default='cuda', help='Comparison Torch device')
     args = parser.parse_args()
+    if args.reuse_optics and not args.layouts:
+        parser.error('--reuse-optics requires --layouts')
+    args.out = (args.out or ROOT/('outputs/oled-layout-comparison' if args.layouts else 'outputs/oled-sms-reference')).resolve()
     args.out.mkdir(parents=True, exist_ok=True)
+    if args.layouts:
+        run_layout_comparison(args)
+        return
     if args.stage in ('prepare', 'all'):
         from prepare_etched_ag import prepare
         from prepare_tiled_emission import prepare as prepare_emission

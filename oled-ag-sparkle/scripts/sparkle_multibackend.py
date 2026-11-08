@@ -84,6 +84,7 @@ def parse_args(argv=None):
     p.add_argument('--analysis-pitch-um', type=float, default=50., help='square collected-brightness pixel size for sparkle statistics [um]; area-average the optical grid')
     p.add_argument('--emission-channel', choices=('luma','red','green','blue'), default='luma')
     p.add_argument('--gamma-decode', action='store_true', help='convert sRGB colors to linear intensity first')
+    p.add_argument('--emission-scale', type=float, default=1., help='linear gain after channel selection and sRGB decoding')
     p.add_argument('--emission-offset-x-um', type=float, default=0.)
     p.add_argument('--emission-offset-y-um', type=float, default=0.)
     p.add_argument('--gap-um', type=float, default=500., help='OLED plane to mean AG interface [um]')
@@ -142,7 +143,7 @@ def read_emission(path, channel='luma', gamma_decode=False):
 
 def model_from_args(a):
     positive = ('height-pitch-um','height-range-um','emission-pitch-um','analysis-pitch-um',
-                'gap-um','wavelength-nm','n-stack','n-out','na')
+                'gap-um','wavelength-nm','n-stack','n-out','na','emission-scale')
     for k in positive:
         v=getattr(a,k.replace('-','_'))
         if not math.isfinite(v) or v<=0: raise ValueError(f'--{k} must be positive and finite')
@@ -154,6 +155,7 @@ def model_from_args(a):
         raise ValueError('negative ROI margin/padding is not allowed')
     h = read_height(a.height,a.height_range_um)
     em = read_emission(a.emission,a.emission_channel,a.gamma_decode)
+    em = em * a.emission_scale
     if h.shape[0]<8 or h.shape[1]<8: raise ValueError('heightfield too small (<8 pixels)')
     if max(em.shape)>100_000: raise ValueError('emission image too large')
     device=a.device

@@ -9,10 +9,40 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'scripts'))
-from prepare_tiled_emission import prepare, tile_to_field, crop_periodic_cell, boundary_statistics
+from prepare_tiled_emission import (prepare, tile_to_field, crop_periodic_cell, boundary_statistics,
+                                    LAYOUTS, layout_cell, prepare_layout)
 
 
 class TiledEmissionTest(unittest.TestCase):
+    def test_equal_address_pitch_preserves_different_exact_green_periods(self):
+        expected = ((140, 140), (70, 70), (210, 140), (140, 140))
+        for layout, period in zip(LAYOUTS, expected):
+            with self.subTest(layout=layout):
+                cell, meta = layout_cell(layout)
+                self.assertEqual(meta['green_period_um_xy'], list(period))
+                self.assertEqual(cell.shape[1]*2*cell.shape[0]*2/meta['nominal_addresses_per_cell'], 70**2)
+        cell, _ = layout_cell('diamond')
+        source = np.asarray(Image.open(ROOT/'assets/oled-diamond/emission.png'))
+        np.testing.assert_array_equal(cell, source[58:128, 26:96])
+        with self.assertRaises(ValueError):
+            layout_cell('windmill', pixel_pitch_um=70.1)
+
+    def test_linear_field_normalization_does_not_clip_or_discard_emitters(self):
+        from sparkle_multibackend import read_emission
+        with tempfile.TemporaryDirectory() as directory:
+            for layout in LAYOUTS:
+                folder = prepare_layout(layout, Path(directory)/layout)
+                meta = json.loads((folder/'emission-green.source.json').read_text(encoding='utf-8'))
+                linear = read_emission(folder/'emission-green.png', 'green', True)
+                normalized = linear*meta['linear_emission_scale']
+                self.assertAlmostEqual(float(normalized.mean(dtype=np.float64)), 1., places=7)
+                self.assertGreater(normalized.max(), 1.)
+                self.assertEqual(np.count_nonzero(normalized), np.count_nonzero(linear))
+                rgb = np.asarray(Image.open(folder/'emission.png'))
+                green = np.asarray(Image.open(folder/'emission-green.png'))
+                np.testing.assert_array_equal(rgb[..., 1], green[..., 1])
+                self.assertEqual(np.count_nonzero(green[..., (0, 2)]), 0)
+
     def test_partial_edge_tiles_preserve_all_source_texels(self):
         tile = np.arange(3*4*3, dtype=np.uint8).reshape(3, 4, 3)
         actual, repeats = tile_to_field(tile, field_um=20., pitch_um=2.)

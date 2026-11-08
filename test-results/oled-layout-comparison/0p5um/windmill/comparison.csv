@@ -1,0 +1,2 @@
+backend,physics,sparkle_cv_pct,roi_pixels,analysis_pixel_pitch_um,analysis_rows,analysis_columns,mean_brightness,std_brightness,elapsed_s
+torch,scalar_wave,61.14984925739006,441,26.249999999999996,21,21,1.0088985361759322e-05,6.169399340315975e-06,44.198621

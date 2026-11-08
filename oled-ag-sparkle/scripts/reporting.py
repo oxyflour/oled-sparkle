@@ -27,6 +27,7 @@ LABELS = {
     'height_range_um': '灰度黑至白的高度差 [µm]', 'emission': '发光强度图路径',
     'emission_pitch_um': '发光图采样 [µm/texel]', 'analysis_pitch_um': '闪点统计像素边长 [µm]',
     'emission_channel': '发光通道', 'gamma_decode': 'sRGB 解码开关',
+    'emission_scale': '线性发光强度倍率（通道选择及解码之后）',
     'emission_offset_x_um': '发光图 X 偏移 [µm]', 'emission_offset_y_um': '发光图 Y 偏移 [µm]',
     'gap_um': 'OLED 至平均 AG 距离 [µm]', 'wavelength_nm': '真空波长 [nm]',
     'n_stack': '层叠有效折射率', 'n_out': '外部介质折射率', 'na': '相机物侧 NA',
@@ -145,6 +146,7 @@ def model_metadata(model, source_count):
             'height_rms_about_mean_um': float(model.h_m.std() * 1e6),
             'linear_emission_min': float(model.emission.min()),
             'linear_emission_max': float(model.emission.max()),
+            'linear_emission_mean': float(model.emission.mean()),
             'active_emission_texels': int(np.sum(model.emission > model.threshold)),
             'resolved_torch_device_setting': model.device}
 
@@ -496,6 +498,8 @@ def write_sms_report(results, output=None):
     from sms_reference import analyze_saved_runs
 
     results = Path(results).expanduser().resolve()
+    if json.loads((results/'protocol.json').read_text(encoding='utf-8')).get('kind') == 'oled-layout-comparison':
+        return _write_layout_report(results, output)
     if output and Path(output).expanduser().resolve() == results / 'sparkle-report.html':
         raise ValueError('--out is the overview destination; the full report is sparkle-report.html')
     records, arrays = analyze_saved_runs(results)
@@ -513,6 +517,283 @@ def write_sms_report(results, output=None):
         return destination
     return entry
 
+
+
+def _write_layout_report(results, output=None):
+    """Same report CLI, dedicated equal-pitch/common-bandwidth comparison view."""
+    from sms_reference import analyze_layout_runs, measure_mwa
+    from sparkle_multibackend import read_emission
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+
+    protocol, records, arrays = analyze_layout_runs(results)
+    camera_mode = protocol['analysis'].get('primary_metric') == 'sampled_camera_common_notch'
+    optical_root = Path(protocol.get('optical_root', results))
+    names = list(protocol['layouts'])
+    labels = {'diamond': 'Diamond', 'rgb-stripe': 'RGB stripe', 'rgb-delta': 'RGB-Delta', 'windmill': 'Windmill'}
+    display_backend = 'torch' if any(r['backend'] == 'torch' and r['grid'] == '1um' for r in records) else records[0]['backend']
+    primary = [next(r for r in records if r['layout'] == name and r['grid'] == '1um' and r['backend'] == display_backend) for name in names]
+    fine = [next(r for r in records if r['layout'] == name and r['grid'] == '0p5um') for name in names]
+    measurement = records[0]['primary_filter']
+    if camera_mode:
+        method_title = 'Sampled camera | common aliased lattice notches'
+    else:
+        x_windows = '/'.join(f'{pair[0]:g}' for pair in measurement['windows_um_xy'])
+        y_windows = '/'.join(f'{pair[1]:g}' for pair in measurement['windows_um_xy'])
+        reference_window = measurement['reference_window_um']
+        method_title = f'Common three-pass MWA | X: {x_windows} um; Y: {y_windows} um'
+    peak = max(float(read_emission(protocol['layouts'][name]['emission_path'], 'green', True).max())*
+               protocol['layouts'][name]['linear_emission_scale'] for name in names)
+    fig, axes = plt.subplots(2, len(names), figsize=(3.9*len(names), 7.3), squeeze=False, layout='constrained')
+    for col, name in enumerate(names):
+        info = protocol['layouts'][name]
+        pitch = info['assigned_emission_texel_um']
+        rgb = np.asarray(Image.open(info['rgb_path']).convert('RGB'))
+        signal = read_emission(info['emission_path'], 'green', True)*info['linear_emission_scale']
+        size = round(4*protocol['nominal_pixel_pitch_um']/pitch)
+        start = (rgb.shape[0]-size)//2
+        end = start+size
+        half = size*pitch/2
+        extent = (-half, half, half, -half)
+        axes[0, col].imshow(rgb[start:end, start:end], extent=extent, interpolation='nearest')
+        axes[0, col].set_title(labels[name]+' | RGB geometry')
+        image = axes[1, col].imshow(signal[start:end, start:end], extent=extent, cmap='gray',
+                                    vmin=0, vmax=peak, interpolation='nearest')
+        axes[1, col].set_title('Full green | field mean = 1')
+        for ax in axes[:, col]:
+            ax.set(xlabel='x [um]', ylabel='y [um]')
+    fig.colorbar(image, ax=axes[1, :], shrink=.75, label='Linear green intensity (shared scale)')
+    fig.suptitle(f'Equal nominal address pitch P = {protocol["nominal_pixel_pitch_um"]:g} um | identical physical field of view')
+    inputs_plot = results/'layout-inputs.png'
+    fig.savefig(inputs_plot, dpi=150)
+    plt.close(fig)
+
+    values = [arrays[('1um', name, display_backend)]['primary_measurement_pixels'] for name in names]
+    deviations = [100*(a/a.mean()-1) for a in values]
+    limit = max(float(np.max(np.abs(a))) for a in deviations)
+    fig, axes = plt.subplots(1, len(names), figsize=(3.9*len(names), 4), squeeze=False, layout='constrained')
+    for ax, name, deviation, record in zip(axes[0], names, deviations, primary):
+        x0, y0, x1, y1 = record['primary']['analysis_extent_um_xyxy']
+        image = ax.imshow(deviation, extent=(x0, x1, y1, y0), cmap='RdBu_r', vmin=-limit, vmax=limit,
+                          interpolation='nearest')
+        ax.set(title=f'{labels[name]}\nSparkle = {record["primary"]["sparkle_contrast_percent"]:.3f}%',
+               xlabel='x [um]', ylabel='y [um]')
+    fig.colorbar(image, ax=axes[0], shrink=.8, label='Brightness deviation [%], shared scale')
+    fig.suptitle(f'Same AG + camera + ROI + common filter | {display_backend} | no LDF')
+    sparkle_plot = results/'layout-sparkle.png'
+    fig.savefig(sparkle_plot, dpi=150)
+    plt.close(fig)
+
+    backends = list(dict.fromkeys(r['backend'] for r in records if r['grid'] == '1um'))
+    fig, ax = plt.subplots(figsize=(11, 5), layout='constrained')
+    width = .8/(len(backends)+1)
+    centers = np.arange(len(names))
+    for index, backend in enumerate(backends):
+        heights = [next(r['primary']['sparkle_contrast_percent'] for r in records
+                        if r['layout'] == name and r['grid'] == '1um' and r['backend'] == backend) for name in names]
+        ax.bar(centers-.4+width*(index+.5), heights, width, label=backend+' (1 um)')
+    ax.bar(centers+.4-width/2, [r['primary']['sparkle_contrast_percent'] for r in fine], width, label='torch (0.5 um)')
+    ax.set(xticks=centers, xticklabels=[labels[name] for name in names], ylabel='Separated sparkle [%]',
+           title=method_title)
+    ax.legend(ncol=3, loc='upper center', bbox_to_anchor=(.5, -.12))
+    metrics_plot = results/'layout-metrics.png'
+    fig.savefig(metrics_plot, dpi=150)
+    plt.close(fig)
+
+    if camera_mode:
+        from sms_reference import circular_pupil_mtf
+        fig, axes = plt.subplots(2, len(names), figsize=(3.9*len(names), 7.3), squeeze=False, layout='constrained')
+        raw_pixels = [arrays[('1um', name, display_backend)]['camera_pixels'] for name in names]
+        raw_deviations = [100*(a/a.mean()-1) for a in raw_pixels]
+        bound = max(float(np.abs(a).max()) for a in raw_deviations+deviations)
+        for col, (name, raw, separated, record) in enumerate(zip(names, raw_deviations, deviations, primary)):
+            for row, data in enumerate((raw, separated)):
+                im = axes[row, col].imshow(data, cmap='RdBu_r', vmin=-bound, vmax=bound,
+                                           extent=(-420, 420, 420, -420), interpolation='nearest')
+                value = record['direct_unseparated_camera_CV_percent'] if row == 0 else record['primary']['sparkle_contrast_percent']
+                axes[row, col].set(title=f'{labels[name]} | {"Captured CV" if row == 0 else "Separated contrast"} = {value:.3f}%',
+                                   xlabel='Object x [um]', ylabel='Object y [um]')
+        fig.colorbar(im, ax=axes.ravel().tolist(), label='Relative signal deviation [%], one shared scale', shrink=.8)
+        fig.suptitle('Top: lens -> square pixel integration -> sampling | Bottom: same samples after common notch mask')
+        camera_plot = results/'camera-capture.png'
+        fig.savefig(camera_plot, dpi=150)
+        plt.close(fig)
+
+        fig, axes = plt.subplots(1, 2, figsize=(11, 4.4), layout='constrained')
+        cutoff = measurement['optical_intensity_cutoff_cycles_per_um']
+        f = np.linspace(0, cutoff*1.1, 600)
+        optical = circular_pupil_mtf(f, cutoff)
+        detector = np.sinc(f*measurement['camera_pitch_um'])
+        axes[0].plot(f*1000, optical, label='Ideal lens, incoherent circular pupil')
+        axes[0].plot(f*1000, detector, label='Square pixel, axial sinc')
+        axes[0].plot(f*1000, optical*detector, label='Pre-sampling camera MTF (axial)')
+        mtf = primary[0]['camera_mtf_audit']
+        axes[0].plot(np.array(mtf['frequency_cycles_per_um'])*1000, mtf['numerical_pupil_MTF'], '.',
+                     label='Actual FFT pupil audit', markersize=3)
+        axes[0].axvline(measurement['sensor_nyquist_cycles_per_um']*1000, color='gray', ls='--', label='Sensor Nyquist')
+        axes[0].set(xlabel='Object spatial frequency [cycles/mm]', ylabel='Modulation transfer', ylim=(0, 1.04))
+        axes[0].legend(fontsize=8)
+        mask = arrays[('1um', names[0], display_backend)]['transfer']
+        nyquist = measurement['sensor_nyquist_cycles_per_um']*1000
+        frequencies = np.fft.fftshift(np.fft.fftfreq(mask.shape[0], measurement['camera_pitch_um']))*1000
+        df = frequencies[1]-frequencies[0]
+        axes[1].imshow(np.fft.fftshift(mask), cmap='gray', vmin=0, vmax=1,
+                       extent=(frequencies[0]-df/2, frequencies[-1]+df/2,
+                               frequencies[-1]+df/2, frequencies[0]-df/2), interpolation='nearest')
+        axes[1].set(title=f'Common mask | {measurement["removed_non_DC_bins"]} removed bins\nWhite = retain; black = periodic lines and aliases',
+                    xlabel='fx [cycles/mm]', ylabel='fy [cycles/mm]')
+        transfer_plot = results/'camera-transfer.png'
+        fig.savefig(transfer_plot, dpi=150)
+        plt.close(fig)
+
+    errors = {}
+    for name in names:
+        reference = np.load(optical_root/'1um'/name/display_backend/'brightness.npy')
+        for backend in backends:
+            other = np.load(optical_root/'1um'/name/backend/'brightness.npy')
+            errors[name+'/'+backend] = float(np.linalg.norm(other-reference)/np.linalg.norm(reference))
+    reference_check = None
+    diamond = next((r for r in records if r['grid'] == '1um' and r['layout'] == 'diamond' and r['backend'] == 'torch'), None)
+    historical = Path(__file__).resolve().parents[2]/'test-results/oled-sms-current/1um/torch/brightness.npy'
+    if not camera_mode and diamond and historical.is_file() and measurement['reference_window_um'] == 140 and measurement['roi_width_um'] == 560:
+        _, _, historical_stats = measure_mwa(np.load(historical), 1.)
+        old_run = json.loads((historical.parent.parent/'run.json').read_text(encoding='utf-8'))
+        reference_check = {'historical_three_140_MWA_percent': historical_stats['sparkle_contrast_percent'],
+                           'current_diamond_same_three_140_MWA_percent': diamond['reference_mwa']['sparkle_contrast_percent'],
+                           'current_diamond_fourier_percent': diamond['fourier']['sparkle_contrast_percent'],
+                           'historical_raw_sha256': sha256(historical),
+                           'same_AG_hash': old_run['input_files']['height']['sha256'] == diamond['height_sha256'],
+                           'note': 'Old MWA definition and ROI reproduced directly from saved floats. Current optical run additionally normalizes input and includes all positive emission samples.'}
+    summary = {'status': 'passed', 'protocol': protocol, 'records': records,
+               'protocol_sha256': sha256(results/'protocol.json'),
+               'primary_metric': 'sampled_camera_common_notch' if camera_mode else 'common_three_pass_MWA', 'measurement': measurement,
+               'legacy_diamond_check': reference_check,
+               'postprocessing_revision': ('Camera pixels captured before spectral separation; no MWA and no extra low-pass. Historical optical fields reused only after identity checks.' if camera_mode else
+                                           'Restore three-pass MWA as headline; original Fourier protocol retained without modification as a diagnostic. Window schedule is derived only from periods and legacy support.'),
+               'shared_mask_verified': True,
+               'fine_minus_coarse_percentage_points': {name: b['primary']['sparkle_contrast_percent']-a['primary']['sparkle_contrast_percent']
+                                                       for name, a, b in zip(names, primary, fine)},
+               'relative_L2_vs_display_backend': errors,
+               'analysis_code_sha256': sha256(Path(__file__).with_name('sms_reference.py')),
+               'report_code_sha256': sha256(Path(__file__)), 'processing_software': environment_snapshot()}
+    if camera_mode:
+        summary['validation'] = {
+            'optical_reuse_manifest_verified': 'reused_files_sha256' in protocol,
+            'captured_wave_results': len(records),
+            'max_input_mean_absolute_error': max(abs(r['normalized_input_mean']-1.) for r in records),
+            'max_absolute_MTF_error': max(r['camera_mtf_audit']['max_absolute_MTF_error'] for r in records),
+            'max_mean_preservation_absolute_error': max(abs(r['primary']['mean_preservation_error']) for r in records),
+            'max_periodic_flat_null_percent': max(r['periodic_flat_null_percent'] for r in records),
+            'max_finite_flat_control_percent': max(r['flat_control_percent'] for r in records),
+            'max_wave_backend_relative_L2': max(errors.values()),
+            'identical_main_fine_masks': all(np.array_equal(arrays[('1um', name, display_backend)]['transfer'],
+                                                            arrays[('0p5um', name, 'torch')]['transfer']) for name in names),
+            'note': 'Numerical consistency and stated controls; this does not establish camera calibration or a commercial-panel ranking.'}
+    (results/'summary.json').write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding='utf-8')
+    input_rows = []
+    for name, info in protocol['layouts'].items():
+        input_rows.append(f'<tr><td>{escape(labels[name])}</td><td>{info["nominal_pixel_pitch_um"]:g}</td>'
+                          f'<td>{escape(str(info["full_rgb_period_um_xy"]))}</td><td>{escape(str(info["green_period_um_xy"]))}</td>'
+                          f'<td>{info["linear_emission_scale"]:.8f}</td><td>{info["unscaled_field_linear_green_mean"]*info["linear_emission_scale"]:.9f}</td></tr>')
+    result_rows = []
+    for r in records:
+        diagnostic = r['direct_unseparated_camera_CV_percent'] if camera_mode else r['reference_mwa']['sparkle_contrast_percent']
+        result_rows.append(f'<tr><td>{escape(labels[r["layout"]])}</td><td>{escape(r["grid"])}</td><td>{escape(r["backend"])}</td>'
+                           f'<td class="metric">{r["primary"]["sparkle_contrast_percent"]:.6f}</td>'
+                           f'<td>{r["flat_control_percent"]:.6f}</td><td>{diagnostic:.6f}</td>'
+                           f'<td>{r["solver_seconds"]:.3f}</td><td>{r["normalized_input_mean"]:.9f}</td></tr>')
+    plot_html = lambda path: '<figure class="comparison-figure">'+_preview(path, max_size=(2400, 1600))+'</figure>'
+    document = '<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
+    document += '<title>四种 OLED 排列 · 同 AG 闪点对比</title><style>'+CSS+'</style></head><body>'
+    document += '<header><h1>四种 OLED 排列 · 同 AG 闪点对比</h1><p>全绿、530 nm、无 LDF；同一 AG 高度图、相机、名义物理像素间距和输入平均线性亮度。'
+    document += ('先成像，再做方形像元积分与离散采样，最后用同一张含混叠频率的周期掩膜去周期。理想单色相机，无额外 MWA、低通或 LDF。</p></header><main>' if camera_mode else
+                 '主结果恢复为三次移动平均（MWA）。所有排列使用相同窗口序列，并保留旧三次 140 µm MWA 的对照核验。</p></header><main>')
+    if reference_check:
+        document += '<section><h2>先核对原来约 5% 的钻石基准</h2><p>'
+        document += f'旧报告原始浮点图按三次 140×140 µm MWA、560 µm ROI 重评：<strong>{reference_check["historical_three_140_MWA_percent"]:.6f}%</strong>；'
+        document += f'本批次钻石在完全相同的后处理下：<strong>{reference_check["current_diamond_same_three_140_MWA_percent"]:.6f}%</strong>。'
+        document += f'上一版展示的 {diamond["fourier"]["sparkle_contrast_percent"]:.6f}% 来自另一种频域滤波与 420 µm ROI，不能替代这个 MWA 基准。'
+        document += ('两批次 AG 哈希相同；' if reference_check['same_AG_hash'] else '两批次 AG 哈希不同，仅作方法对照；')
+        document += '本批次仍保留线性亮度归一化与全部正值发光样本。光学结果未重跑。</p></section>'
+    document += '<section><h2>输入与归一化</h2><p>新增三种排列为公开图示启发的几何近似；钻石保留仓库原有完整重复单元。'
+    document += 'P 表示名义逻辑像素间距，不表示各色子像素最近邻距离相同。按全 1 mm 输入场的线性 G 均值归一至 1；倍率在 sRGB 解码后应用，峰值不裁剪，全部正值发光样本参与求解。</p>'
+    document += '<div class="scroll"><table><thead><tr><th>排列</th><th>P [µm]</th><th>RGB 精确周期 X/Y [µm]</th><th>G 精确周期 X/Y [µm]</th><th>线性倍率</th><th>输入均值</th></tr></thead><tbody>'+''.join(input_rows)+'</tbody></table></div>'
+    document += plot_html(inputs_plot)+'</section>'
+    if camera_mode:
+        document += '<section><h2>相机采样后的随机闪点对比度</h2>'+plot_html(camera_plot)+plot_html(sparkle_plot)+plot_html(metrics_plot)
+        document += '<p>主列为同一频率掩膜后的 100×σ/μ，采用总体标准差 ddof=0；直接采样 CV 仍包含显示周期，不能作为闪点。分离后的有符号信号不截断、不再次积分。波动平面控制的残余单列，不从结果扣除。</p>'
+        document += '<div class="scroll"><table><thead><tr><th>排列</th><th>光学网格</th><th>后端</th><th>采样后去周期 [%]</th><th>有限视场平面控制 [%]</th><th>未去周期采样 CV [%]</th><th>原光学求解 [s]</th><th>输入均值</th></tr></thead><tbody>'+''.join(result_rows)+'</tbody></table></div></section>'
+        document += '<section><h2>相机模型与实际处理顺序</h2><p>沿用 50 mm、F/8、400 mm 物距与 3.75 µm 像元。薄透镜像距 57.142857 mm，放大率 1/7，物方像元边长 26.25 µm。理想无像差圆形光瞳对焦于发光平面，物方 NA=0.0078122616；该光瞳已在原波动求解中实施，不再叠加一次 Airy 模糊。</p>'
+        document += '<p>按同一模型的每个不相干点源，依次计算 OLED→AG 传播、薄相位屏、对焦与光瞳成像，再累加强度；在这个连续像面近似的 1/0.5 µm 物方网格上，对每个方形感光区做面积重叠积分，然后以相机节距取样。采用单色线性、100% 填充率、无噪声、无量化的传感器模型，未使用实测镜头 MTF，也未模拟 Bayer 或 ISP。</p>'
+        document += f'<p>530 nm 下光学强度截止约 {cutoff*1000:.6f} cycles/mm；传感器 Nyquist 为 {nyquist:.6f} cycles/mm，故高于 Nyquist 的光学分量可以折叠。方形像元的 sinc 响应会衰减这些分量，但不会使其全部消失。下图是平面输入时的系统 MTF；AG 的传播作用仍由逐源波动求解给出。</p>'+plot_html(transfer_plot)
+        document += '<h3>明确的去周期依据与参数</h3><p>采用 IEC 62977-3-9:2023 信息性附录 B 的频域掩膜方法；该标准没有规定本报告这张掩膜的具体参数。本实现先采样，再按每种排列精确 G 周期枚举光学带宽内的倒格矢，将其模传感器采样频率折回基带。取四种排列频点的并集，每个精确 DFT 频点剔除一个 bin，保留 DC。所有排列使用同一掩膜；不做峰值阈值搜索、保护带扩展、窗函数或额外低通。</p>'
+        document += f'<p>中心 840×840 µm ROI 对应 32×32 个传感器像元，且同时包含 70、140、210 µm 的整数周期。因此理论周期线恰落 DFT bin，无需拼接滤波窗口。共同掩膜剔除 {measurement["removed_non_DC_bins"]} 个非 DC bin，保留 {measurement["retained_non_DC_bins"]} 个非 DC bin。周期能量与随机能量在同一 bin 重叠时无法分辨，该 bin 的随机分量也会一起被去除；这就是本指标明示的频率选择。</p>'
+        document += '<p>Becker (2021) §3.1–3.4 讨论了相机 MTF、采样混叠和电子图像上的频域分离。其用于视觉评价的额外高频抑制未应用于本次相机域指标。因此这里的数值不能与历史三次 140 µm MWA 的约 5.29% 等同；没有将旧读数作为调参目标。本报告也不宣称是实测相机标定或完整 IEC 符合性试验。</p><ul>'
+        for ref in protocol['analysis']['references']:
+            document += '<li><a href="'+escape(ref['url'], quote=True)+'">'+escape(ref['title'])+'</a> — '+escape(ref['use'])+'</li>'
+        document += '</ul></section><section><h2>网格、采样相位与视场检查</h2>'
+        document += f'<p>实际 FFT 光瞳的轴向 MTF 与解析圆形光瞳 MTF 的最大绝对差为 {mtf["max_absolute_MTF_error"]:.6f}，反映有限光瞳频率采样误差。相位检查仅移动传感器采样网格，不移动 AG 或发光排列；物方偏移依次为 (0,0)、(7,0)、(0,7)、(7,7) µm，7 µm 约为 0.267 像元。</p>'
+        document += '<p>420 µm 中心区（16×16 像元）给出两种诊断：在完整 32×32 去周期结果上取中心区，检验空间变化；独立采集 16×16 并重新做频域分离，同时改变了 ROI 和 DFT bin 宽度。后者沿用相同物理频点规则，但单个 bin 变宽，不能把其变化全部归因于空间不均匀。</p>'
+        document += '<div class="scroll"><table><thead><tr><th>排列</th><th>1 µm 主值 [%]</th><th>0.5 µm [%]</th><th>网格差 [百分点]</th><th>四相位范围 [%]</th><th>同掩膜中心区 [%]</th><th>独立 420 µm ROI [%]</th><th>420 µm 平面残余 [%]</th><th>无限周期平面残余 [%]</th></tr></thead><tbody>'
+        for name, r, fine_r in zip(names, primary, fine):
+            phase_values = [c['sparkle_contrast_percent'] for c in r['phase_checks']]
+            document += f'<tr><td>{labels[name]}</td><td>{r["primary"]["sparkle_contrast_percent"]:.6f}</td><td>{fine_r["primary"]["sparkle_contrast_percent"]:.6f}</td><td>{summary["fine_minus_coarse_percentage_points"][name]:+.6f}</td><td>{min(phase_values):.6f}–{max(phase_values):.6f}</td><td>{r["nested_ROI_same_full_mask"]["sparkle_contrast_percent"]:.6f}</td><td>{r["nested_ROI"]["sparkle_contrast_percent"]:.6f}</td><td>{r["nested_ROI_flat_percent"]:.6f}</td><td>{r["periodic_flat_null_percent"]:.3g}</td></tr>'
+        document += '</tbody></table></div><p>有限 1 mm 发光场的衍射边缘及源离散化可能产生非周期残余；有限平面控制包含这些误差，无限周期平面控制用解析 Fourier 像元积分检查掩膜本身。0.5 µm 检查只细化光学/AG 网格，发光纹理与点源间距仍为 2 µm；单个 AG 实现、单个发光相位及小视场的统计差异不构成商用面板质量排名。</p>'
+        document += '<p>本报告比较 Torch、TorchOptics 和 Chromatix 的同一标量波动模型。历史 Mitsuba 几何光线结果缺少衍射，未并入这次理想衍射相机比较。所有原光学文件保持不变，来源、哈希和运行 ID 记录于 JSON。</p>'
+        document += '<p><a href="summary.json">完整统计与浮点结果索引</a> · <a href="protocol.json">采样与去周期前固定的方案</a></p></section>'
+        document += '<details class="group"><summary>完整掩膜、折叠频率与复现参数</summary><pre>'+escape(json.dumps(measurement, ensure_ascii=False, indent=2))+'</pre></details>'
+    else:
+        document += '<section><h2>三次共同 MWA 闪点主结果</h2>'+plot_html(sparkle_plot)+plot_html(metrics_plot)
+        document += f'<div class="scroll"><table><thead><tr><th>排列</th><th>光学网格</th><th>后端</th><th>共同三次 MWA 闪点 [%]</th><th>波动平面控制 [%]</th><th>三次 {reference_window:g} µm MWA [%] · 对照</th><th>求解 [s]</th><th>实际输入均值</th></tr></thead><tbody>'+''.join(result_rows)+'</tbody></table></div></section>'
+        document += '<section><h2>周期、测量与验证</h2><p>三次 MWA 的共同矩形窗口由精确 G 周期确定，所有排列逐次使用完全相同的窗口序列。'
+        document += f'当前 X 窗口为 {x_windows} µm，Y 为 {y_windows} µm。对每个已检测轴周期，至少一个窗口是其整数倍，确保所有周期谐波都有精确零点。'
+        document += f'两轴总支撑宽度均为 {measurement["total_support_width_um_xy"][0]:g} µm，与三次 {reference_window:g} µm MWA 相同。中心 ROI 为 {measurement["roi_width_um"]:g} µm，使用 {primary[0]["primary"]["analysis_grid"]} 个 26.25 µm 测量像素，无反射边界进入测量区。'
+        document += '每种输入的纯周期图均经过残余检查。窗口由几何和支撑范围决定，没有按目标闪点值调参；共同 MWA 与旧 140³ MWA 的传递函数仍有差别，故两者分列。'
+        document += 'Delta 的 210 µm 周期不能由旧 140 µm 窗口精确消除，旧口径列仅用于对照，不据此给四种排列排名。</p>'
+        document += '<p>每种布局均有同输入的波动平面控制与 0.5 µm Torch 网格复核。一个 AG 样本、一个发光相位，仅反映这些假设输入；不能外推为真实手机屏幕优劣。</p>'
+        document += '<p>Torch、TorchOptics、Chromatix 求解同一标量波动模型；Mitsuba 是不含衍射的几何光线近似，两类结果分列，不把它们之间的差异作为同一模型的数值误差。</p>'
+        document += '<pre>'+escape(json.dumps({'primary_measurement': measurement, 'camera': protocol['camera'],
+                                                'batch_id': protocol['execution']['batch_id'], 'height_sha256': protocol['height_sha256'],
+                                                'fine_minus_coarse_percentage_points': summary['fine_minus_coarse_percentage_points']}, ensure_ascii=False, indent=2))+'</pre>'
+        document += '<p><a href="summary.json">全部浮点统计与验证 JSON</a> · <a href="protocol.json">计算前固定方案</a></p></section>'
+        document += '<details class="group"><summary>原频域结果与后处理修订记录</summary><div class="content"><p>原光学 protocol.json 保持不变。'
+        document += '其中的频域主结果已改列为诊断，修订后的主指标与窗口记录在 summary.json 的 measurement 和 postprocessing_revision 中。</p>'
+        document += '<div class="scroll"><table><thead><tr><th>排列</th><th>网格</th><th>后端</th><th>原共同频域 [%]</th><th>频域平面控制 [%]</th></tr></thead><tbody>'
+        document += ''.join(f'<tr><td>{escape(labels[r["layout"]])}</td><td>{r["grid"]}</td><td>{r["backend"]}</td>'
+                            f'<td>{r["fourier"]["sparkle_contrast_percent"]:.6f}</td><td>{r["fourier_flat_percent"]:.6f}</td></tr>' for r in records)
+        document += '</tbody></table></div><pre>'+escape(json.dumps(protocol['analysis'], ensure_ascii=False, indent=2))+'</pre></div></details>'
+    document += '<details class="group"><summary>来源、几何定义与原始计算</summary><div class="content">'
+    for name, info in protocol['layouts'].items():
+        document += f'<h3>{escape(labels[name])}</h3><a href="{escape(info["source_page"], quote=True)}">公开参考来源</a><pre>'+escape(json.dumps(info['geometry'], ensure_ascii=False, indent=2))+'</pre>'
+    for plan in protocol['runs']:
+        for backend in plan['backends']:
+            if camera_mode and backend == 'mitsuba':
+                continue
+            base = plan['output']+'/'+backend+'/'
+            document += '<p>'+escape(plan['grid']+' / '+plan['layout']+' / '+backend)+' · '
+            filenames = (('camera_pixels.npy', 'camera_separated.npy', 'camera_frequency_mask.npy', 'camera_stats.json') if camera_mode else
+                         ('brightness.npy', 'sms_common_mwa_measurement_pixels.npy',
+                          'sms_reference_mwa_measurement_pixels.npy', 'sms_measurement_pixels.npy', 'sms_stats.json'))
+            if camera_mode:
+                raw_link = os.path.relpath(optical_root/base/'brightness.npy', results).replace(os.sep, '/')
+                document += '<a href="'+raw_link+'">原镜头成像 brightness.npy</a> · '
+            for filename in filenames:
+                document += f'<a href="{base+filename}">{filename}</a> · '
+            document += '</p>'
+    document += '</div></details></main></body></html>'
+    entry = results/'sparkle.html'
+    entry.write_text(document, encoding='utf-8')
+    if output:
+        destination = Path(output).resolve()
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        # Keep both JSON and floating-result links usable from an optional copy.
+        prefix = os.path.relpath(results, destination.parent).replace(os.sep, '/')+'/'
+        import re
+        document = re.sub(r'href="(?!https:|data:)([^"]+)"', lambda m: 'href="'+prefix+m[1]+'"', document)
+        destination.write_text(document, encoding='utf-8')
+        return destination
+    return entry
 
 
 def _sms_figures(results, records, arrays):

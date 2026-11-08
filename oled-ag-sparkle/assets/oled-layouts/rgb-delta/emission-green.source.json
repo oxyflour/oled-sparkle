@@ -1,0 +1,537 @@
+{
+  "layout": "rgb-delta",
+  "nominal_pixel_pitch_um": 70.0,
+  "nominal_pitch_definition": "square logical-address pitch P; cell area/P^2 addresses; not nearest-neighbor subpixel spacing",
+  "nominal_addresses_per_cell": 6,
+  "full_cell_um_xy": [
+    210.0,
+    140.0
+  ],
+  "full_rgb_period_um_xy": [
+    210.0,
+    140.0
+  ],
+  "green_period_um_xy": [
+    210.0,
+    140.0
+  ],
+  "geometry": {
+    "method": "Idealized polygons inspired by public diagrams; proportions are model assumptions",
+    "area_samples_per_axis": 8,
+    "sites_in_nominal_pitch_units": [
+      {
+        "channel": "R",
+        "center_xy": [
+          0.25,
+          0.25
+        ],
+        "vertices_relative_xy": [
+          [
+            -0.18,
+            -0.06
+          ],
+          [
+            -0.12,
+            -0.12
+          ],
+          [
+            0.12,
+            -0.12
+          ],
+          [
+            0.18,
+            -0.06
+          ],
+          [
+            0.18,
+            0.06
+          ],
+          [
+            0.12,
+            0.12
+          ],
+          [
+            -0.12,
+            0.12
+          ],
+          [
+            -0.18,
+            0.06
+          ]
+        ]
+      },
+      {
+        "channel": "B",
+        "center_xy": [
+          0.75,
+          0.75
+        ],
+        "vertices_relative_xy": [
+          [
+            -0.18,
+            -0.06
+          ],
+          [
+            -0.12,
+            -0.12
+          ],
+          [
+            0.12,
+            -0.12
+          ],
+          [
+            0.18,
+            -0.06
+          ],
+          [
+            0.18,
+            0.06
+          ],
+          [
+            0.12,
+            0.12
+          ],
+          [
+            -0.12,
+            0.12
+          ],
+          [
+            -0.18,
+            0.06
+          ]
+        ]
+      },
+      {
+        "channel": "G",
+        "center_xy": [
+          1.25,
+          0.25
+        ],
+        "vertices_relative_xy": [
+          [
+            -0.18,
+            -0.06
+          ],
+          [
+            -0.12,
+            -0.12
+          ],
+          [
+            0.12,
+            -0.12
+          ],
+          [
+            0.18,
+            -0.06
+          ],
+          [
+            0.18,
+            0.06
+          ],
+          [
+            0.12,
+            0.12
+          ],
+          [
+            -0.12,
+            0.12
+          ],
+          [
+            -0.18,
+            0.06
+          ]
+        ]
+      },
+      {
+        "channel": "R",
+        "center_xy": [
+          1.75,
+          0.75
+        ],
+        "vertices_relative_xy": [
+          [
+            -0.18,
+            -0.06
+          ],
+          [
+            -0.12,
+            -0.12
+          ],
+          [
+            0.12,
+            -0.12
+          ],
+          [
+            0.18,
+            -0.06
+          ],
+          [
+            0.18,
+            0.06
+          ],
+          [
+            0.12,
+            0.12
+          ],
+          [
+            -0.12,
+            0.12
+          ],
+          [
+            -0.18,
+            0.06
+          ]
+        ]
+      },
+      {
+        "channel": "B",
+        "center_xy": [
+          2.25,
+          0.25
+        ],
+        "vertices_relative_xy": [
+          [
+            -0.18,
+            -0.06
+          ],
+          [
+            -0.12,
+            -0.12
+          ],
+          [
+            0.12,
+            -0.12
+          ],
+          [
+            0.18,
+            -0.06
+          ],
+          [
+            0.18,
+            0.06
+          ],
+          [
+            0.12,
+            0.12
+          ],
+          [
+            -0.12,
+            0.12
+          ],
+          [
+            -0.18,
+            0.06
+          ]
+        ]
+      },
+      {
+        "channel": "G",
+        "center_xy": [
+          2.75,
+          0.75
+        ],
+        "vertices_relative_xy": [
+          [
+            -0.18,
+            -0.06
+          ],
+          [
+            -0.12,
+            -0.12
+          ],
+          [
+            0.12,
+            -0.12
+          ],
+          [
+            0.18,
+            -0.06
+          ],
+          [
+            0.18,
+            0.06
+          ],
+          [
+            0.12,
+            0.12
+          ],
+          [
+            -0.12,
+            0.12
+          ],
+          [
+            -0.18,
+            0.06
+          ]
+        ]
+      },
+      {
+        "channel": "G",
+        "center_xy": [
+          0.25,
+          1.25
+        ],
+        "vertices_relative_xy": [
+          [
+            -0.18,
+            -0.06
+          ],
+          [
+            -0.12,
+            -0.12
+          ],
+          [
+            0.12,
+            -0.12
+          ],
+          [
+            0.18,
+            -0.06
+          ],
+          [
+            0.18,
+            0.06
+          ],
+          [
+            0.12,
+            0.12
+          ],
+          [
+            -0.12,
+            0.12
+          ],
+          [
+            -0.18,
+            0.06
+          ]
+        ]
+      },
+      {
+        "channel": "B",
+        "center_xy": [
+          0.75,
+          1.75
+        ],
+        "vertices_relative_xy": [
+          [
+            -0.18,
+            -0.06
+          ],
+          [
+            -0.12,
+            -0.12
+          ],
+          [
+            0.12,
+            -0.12
+          ],
+          [
+            0.18,
+            -0.06
+          ],
+          [
+            0.18,
+            0.06
+          ],
+          [
+            0.12,
+            0.12
+          ],
+          [
+            -0.12,
+            0.12
+          ],
+          [
+            -0.18,
+            0.06
+          ]
+        ]
+      },
+      {
+        "channel": "R",
+        "center_xy": [
+          1.25,
+          1.25
+        ],
+        "vertices_relative_xy": [
+          [
+            -0.18,
+            -0.06
+          ],
+          [
+            -0.12,
+            -0.12
+          ],
+          [
+            0.12,
+            -0.12
+          ],
+          [
+            0.18,
+            -0.06
+          ],
+          [
+            0.18,
+            0.06
+          ],
+          [
+            0.12,
+            0.12
+          ],
+          [
+            -0.12,
+            0.12
+          ],
+          [
+            -0.18,
+            0.06
+          ]
+        ]
+      },
+      {
+        "channel": "G",
+        "center_xy": [
+          1.75,
+          1.75
+        ],
+        "vertices_relative_xy": [
+          [
+            -0.18,
+            -0.06
+          ],
+          [
+            -0.12,
+            -0.12
+          ],
+          [
+            0.12,
+            -0.12
+          ],
+          [
+            0.18,
+            -0.06
+          ],
+          [
+            0.18,
+            0.06
+          ],
+          [
+            0.12,
+            0.12
+          ],
+          [
+            -0.12,
+            0.12
+          ],
+          [
+            -0.18,
+            0.06
+          ]
+        ]
+      },
+      {
+        "channel": "B",
+        "center_xy": [
+          2.25,
+          1.25
+        ],
+        "vertices_relative_xy": [
+          [
+            -0.18,
+            -0.06
+          ],
+          [
+            -0.12,
+            -0.12
+          ],
+          [
+            0.12,
+            -0.12
+          ],
+          [
+            0.18,
+            -0.06
+          ],
+          [
+            0.18,
+            0.06
+          ],
+          [
+            0.12,
+            0.12
+          ],
+          [
+            -0.12,
+            0.12
+          ],
+          [
+            -0.18,
+            0.06
+          ]
+        ]
+      },
+      {
+        "channel": "R",
+        "center_xy": [
+          2.75,
+          1.75
+        ],
+        "vertices_relative_xy": [
+          [
+            -0.18,
+            -0.06
+          ],
+          [
+            -0.12,
+            -0.12
+          ],
+          [
+            0.12,
+            -0.12
+          ],
+          [
+            0.18,
+            -0.06
+          ],
+          [
+            0.18,
+            0.06
+          ],
+          [
+            0.12,
+            0.12
+          ],
+          [
+            -0.12,
+            0.12
+          ],
+          [
+            -0.18,
+            0.06
+          ]
+        ]
+      }
+    ]
+  },
+  "title": "rgb-delta: equal nominal pitch / full-green comparison input",
+  "source_page": "https://patents.google.com/patent/CN110379370A/zh",
+  "reference_image": "assets/oled-layout-reference/tcl-layouts.jpg",
+  "reference_image_sha256": "6e911bce6d48faa1aadfd0d70d5a962e8fe76d7440cee8927ce8868018afd738",
+  "assigned_field_um": [
+    1000.0,
+    1000.0
+  ],
+  "assigned_emission_texel_um": 2.0,
+  "tile_repeats_yx": [
+    8,
+    5
+  ],
+  "phase": "repeat-cell origin at top-left of the common field",
+  "intensity_model": "Full green, sRGB-decoded at 530 nm; linear gain applied by solver, without PNG clipping",
+  "unscaled_field_linear_green_mean": 0.05331879586070776,
+  "target_field_linear_green_mean": 1.0,
+  "linear_emission_scale": 18.755112223697655,
+  "normalization_domain": "entire finite emission field, including partial edge cells",
+  "scale_note": "Nominal P and aperture proportions are explicit model assumptions, not measured phone calibration.",
+  "sha256": "e5f16a28971630b26c3c1803e76b3cf8b6828d0e8f415a3d1448dd11e83dc305"
+}

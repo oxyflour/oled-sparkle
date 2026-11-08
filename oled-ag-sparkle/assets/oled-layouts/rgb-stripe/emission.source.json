@@ -1,0 +1,120 @@
+{
+  "layout": "rgb-stripe",
+  "nominal_pixel_pitch_um": 70.0,
+  "nominal_pitch_definition": "square logical-address pitch P; cell area/P^2 addresses; not nearest-neighbor subpixel spacing",
+  "nominal_addresses_per_cell": 1,
+  "full_cell_um_xy": [
+    70.0,
+    70.0
+  ],
+  "full_rgb_period_um_xy": [
+    70.0,
+    70.0
+  ],
+  "green_period_um_xy": [
+    70.0,
+    70.0
+  ],
+  "geometry": {
+    "method": "Idealized polygons inspired by public diagrams; proportions are model assumptions",
+    "area_samples_per_axis": 8,
+    "sites_in_nominal_pitch_units": [
+      {
+        "channel": "R",
+        "center_xy": [
+          0.16666666666666666,
+          0.5
+        ],
+        "vertices_relative_xy": [
+          [
+            -0.145,
+            -0.44
+          ],
+          [
+            0.145,
+            -0.44
+          ],
+          [
+            0.145,
+            0.44
+          ],
+          [
+            -0.145,
+            0.44
+          ]
+        ]
+      },
+      {
+        "channel": "G",
+        "center_xy": [
+          0.5,
+          0.5
+        ],
+        "vertices_relative_xy": [
+          [
+            -0.145,
+            -0.44
+          ],
+          [
+            0.145,
+            -0.44
+          ],
+          [
+            0.145,
+            0.44
+          ],
+          [
+            -0.145,
+            0.44
+          ]
+        ]
+      },
+      {
+        "channel": "B",
+        "center_xy": [
+          0.8333333333333334,
+          0.5
+        ],
+        "vertices_relative_xy": [
+          [
+            -0.145,
+            -0.44
+          ],
+          [
+            0.145,
+            -0.44
+          ],
+          [
+            0.145,
+            0.44
+          ],
+          [
+            -0.145,
+            0.44
+          ]
+        ]
+      }
+    ]
+  },
+  "title": "rgb-stripe: equal nominal pitch / full-green comparison input",
+  "source_page": "https://wx4.sinaimg.cn/large/006fnRbbgy1gjq5m7x6afj30zq0k3tc4.jpg",
+  "reference_image": "assets/oled-layout-reference/tcl-layouts.jpg",
+  "reference_image_sha256": "6e911bce6d48faa1aadfd0d70d5a962e8fe76d7440cee8927ce8868018afd738",
+  "assigned_field_um": [
+    1000.0,
+    1000.0
+  ],
+  "assigned_emission_texel_um": 2.0,
+  "tile_repeats_yx": [
+    15,
+    15
+  ],
+  "phase": "repeat-cell origin at top-left of the common field",
+  "intensity_model": "Full green, sRGB-decoded at 530 nm; linear gain applied by solver, without PNG clipping",
+  "unscaled_field_linear_green_mean": 0.2515223305358887,
+  "target_field_linear_green_mean": 1.0,
+  "linear_emission_scale": 3.9757901331043612,
+  "normalization_domain": "entire finite emission field, including partial edge cells",
+  "scale_note": "Nominal P and aperture proportions are explicit model assumptions, not measured phone calibration.",
+  "sha256": "71baab5b6b69c1a834d80f21d953cea992cd68cc77c2f33b2534383c461fbdf8"
+}

@@ -31,7 +31,7 @@ The supported script entrypoints are:
 | Script in `scripts/` | Responsibility |
 |---|---|
 | `run_oled_demo.py` | Current default OLED example, all four backends. Select `--height-surface` and `--pitch-um`; computes raw brightness CV. |
-| `run_sms_reference.py` | Full-green, no-LDF separated sparkle. `--stage all` prepares inputs/protocol, runs six optical cases and writes the SMS-reference report. |
+| `run_sms_reference.py` | Full-green, no-LDF separated sparkle. Default `--stage all` runs six reference cases; `--layouts` selects equal-pitch camera sampling followed by common spectral separation. |
 | `generate_report.py` | Rebuild saved reports without optics. Default `--kind brightness`; choose `--kind sms-reference` explicitly for separated sparkle. |
 | `sparkle_multibackend.py` | General solver CLI for custom inputs and physical/numerical parameters. |
 | `run_legacy_demo.py` | Historical test fixtures only; requires `--example quick` or `--example 1mm`, defaults to Torch. |
@@ -97,6 +97,88 @@ For a 0.5um grid of the same default surface, use
 The geometry and height calibration remain fixed; emission remains at 2um and
 measurement pixels remain at 50um. The old circular-pit sensitivity workflow
 `test-results/check-pit-sampling.py` remains a historical comparison.
+
+## Equal-pitch layout comparison with sampled camera
+
+From this directory, reuse the verified ideal-pupil optical fields and write a
+new, separately frozen camera analysis:
+
+```bash
+python scripts/run_sms_reference.py --layouts diamond rgb-stripe rgb-delta windmill --measurement sampled-camera --reuse-optics ../test-results/oled-layout-comparison --stage all --out ../test-results/oled-camera-new
+python scripts/generate_report.py --kind sms-reference --results ../test-results/oled-camera-comparison
+```
+
+The second command rebuilds the retained report without optics. Omit
+`--reuse-optics` to compute a new optical batch through the same runner.
+Default `--backend all` runs four backends at 1um plus Torch at 0.5um per layout
+(20 runs); camera comparison uses only the three scalar-wave backends because
+Mitsuba geometric rays omit diffraction. `--backend torch` narrows the coarse
+runs. New batches support prepare/main/fine stages; reused prepare freezes the
+capture plan and hashes, and is followed by the report CLI. Existing protocols
+refuse another prepare/all. Reused optical stages cannot be rerun accidentally.
+
+Inputs retain the same etched AG, 500um gap, 530nm green and no LDF. Nominal
+logical address pitch P=70um means area/address=P squared, not equal nearest
+neighbor subpixel spacing. Full 1mm input mean linear green is 1 after decoding,
+with unclipped solver gain and threshold=0. Emission texels/source spacing remain
+2um. Exact G periods X/Y are Diamond 140/140, stripe 70/70, Delta 210/140,
+Windmill 140/140um. The original Diamond cell is retained; the other three are
+representative analytic polygons, not measured commercial apertures.
+
+Camera parameters are 50mm, F/8, 400mm object distance, 3.75um square sensor
+pixels, magnification 1/7 and object sampling pitch 26.25um. The ideal circular
+pupil is already in the wave solver; do not convolve with another Airy PSF.
+Order: incoherent source propagation -> AG phase screen -> focused pupil imaging
+-> square pixel area integration -> discrete samples -> common Fourier mask
+-> inverse transform -> 100*std(ddof=0)/mean. Pixels are integrated only once.
+This is an explicit aberration-free, linear monochrome, 100% fill, noiseless,
+unquantized camera model, not a measured lens/sensor calibration.
+
+Frequency masking follows the method family in IEC 62977-3-9:2023 informative
+Annex B and Table B.1, with camera sampling/aliasing discussed in Becker (2021)
+sections 3.1-3.4. These sources do not prescribe our exact mask:
+- [IEC publication](https://webstore.iec.ch/en/publication/64780)
+- [Author's 2021 paper](https://www.display-messtechnik.de/fileadmin/template/main/docs/10-Years-SparkleMeasurement--edC-2021-V2.pdf)
+
+The 840um ROI is 32x32 camera pixels and an integer multiple of every full G
+period. Enumerate reciprocal vectors within the optical intensity bandwidth
+(2*NA/lambda = 29.480 cycles/mm), fold modulo sensor sampling frequency
+(Nyquist 19.048 cycles/mm), and remove their union for all layouts. This fixed
+common mask removes 89 non-DC bins and retains 934, with DC preserved. There are
+no hand-built MWA windows, guard bands, amplitude thresholds, apodization or
+extra low-pass. Overlapping periodic/random energy in a removed bin is
+unidentifiable and both are removed. This metric measures camera-domain
+stochastic contrast; it does not implement the additional visual weighting or
+high-frequency suppression discussed by Becker, and is not a calibrated SMS or
+full IEC conformity test.
+
+Retained Torch results (1um / 0.5um) are Diamond 24.016988 / 23.977983%,
+stripe 8.880589 / 8.715334%, Delta 26.721904 / 26.486939%, Windmill
+24.147108 / 24.082596%. Maximum grid shift is 0.235 percentage points. Actual
+FFT pupil MTF differs from the analytic circular-pupil MTF by at most 0.00333.
+Finite-field flat control is at most 0.642%, while infinite periodic flat control
+is below 3e-13%; neither is subtracted. Four sensor phases, a center subregion
+of the full filtered image and an independently processed 420um ROI are reported.
+The last check also doubles DFT bin width. One AG realization, source phase and
+small field do not establish commercial-panel rankings; Diamond/Windmill are
+closer than the reported phase/ROI sensitivities.
+
+`test-results/oled-camera-comparison/` contains only protocol/source hashes,
+summary/per-run camera statistics, captured pixels (`camera_pixels.npy`),
+separated pixels (`camera_separated.npy`), the common mask, flat controls and
+plots/HTML generated by the existing report CLI. Source optical arrays are
+read-only and linked with hashes. No new scripts or execution entrypoints were
+added. The old `oled-layout-comparison` custom MWA report is preserved, selected
+explicitly for new historical reproductions with `--measurement optical-mwa`.
+Its three-window result and historical 5.291803% Diamond baseline use another
+frequency response and cannot substitute for the sampled-camera metric.
+
+Input assets remain under `assets/oled-layouts/<layout>/`: RGB cell, 1mm RGB and
+full-green solver input, plus source/normalization/period/hash metadata. Reference
+pictures in `assets/oled-layout-reference/` are review material. The existing
+`prepare_tiled_emission.py --layout rgb-delta` generates individual inputs.
+`--pixel-pitch-um` and `--emission-texel-um` change inputs; the fixed 840um camera
+ROI requires compatible full periods.
 
 ## Outputs
 
