@@ -5,6 +5,8 @@ import unittest
 import hashlib
 import json
 import tempfile
+from argparse import Namespace
+from unittest.mock import patch
 
 import numpy as np
 from PIL import Image
@@ -17,7 +19,7 @@ from sms_reference import (analyze, box_kernel, flat_wave_control, fourier_separ
                            sample_camera, sampled_periodic_mask, analyze_sampled_camera,
                            sampled_statistics, circular_pupil_mtf, periodic_camera_control)
 from sparkle_multibackend import model_from_args, parse_args, simulate_torch_wave
-from run_sms_reference import CAMERA, command_for
+from run_sms_reference import CAMERA, command_for, surface_cases, run_surface_study
 from run_oled_demo import build_command
 
 
@@ -245,6 +247,82 @@ class SMSReferenceTests(unittest.TestCase):
         control = flat_wave_control(model)
         error = np.linalg.norm(computed-control) / np.linalg.norm(control)
         self.assertLess(error, 3e-5)
+
+
+class SurfaceStudyTests(unittest.TestCase):
+    def arguments(self, **options):
+        return Namespace(**{'surface_study': 'width', 'widths_um': None,
+                            'min_separation_ratios': None, 'study_seeds': None,
+                            'stage': 'prepare', 'out': None, 'backend': 'torch',
+                            'device': 'cpu', 'backend_workers': 1, 'measurement': 'sampled-camera',
+                            'pixel_pitch_um': 70., 'emission_texel_um': 2.,
+                            'layouts': None, 'reuse_optics': None, **options})
+
+    def test_default_studies_preserve_the_experiment_matrix(self):
+        widths = surface_cases(self.arguments())
+        self.assertEqual([c['spacing_um'] for c in widths], [4.8, 6.9, 10, 15, 25, 40])
+        self.assertTrue(all(c['fine'] and c['min_separation_ratio'] == .3 for c in widths))
+        close = surface_cases(self.arguments(widths_um=[6.900001, 6.900002]))
+        self.assertEqual(len({c['output'] for c in close}), 2)
+        distribution = surface_cases(self.arguments(surface_study='spacing-distribution'))
+        self.assertEqual(len(distribution), 12)
+        self.assertEqual(sum(2 if c['fine'] else 1 for c in distribution), 16)
+        self.assertTrue(all(c['spacing_um'] == 6.9 for c in distribution))
+        for options in ({'widths_um': [0.]}, {'widths_um': [6.9, 6.9]},
+                        {'study_seeds': [1, 1]}, {'surface_study': 'spacing-distribution',
+                                                 'min_separation_ratios': [float('nan')]}):
+            with self.assertRaises(ValueError):
+                surface_cases(self.arguments(**options))
+
+    def test_prepare_and_resume_use_custom_heights_and_frozen_common_mask(self):
+        from prepare_etched_ag import DEFAULT_INPUTS
+        import shutil
+        def existing_height(output, *, pitch_um, **options):
+            output.mkdir(parents=True)
+            for name in ('heightfield.png', 'heightfield.source.json'):
+                shutil.copyfile(DEFAULT_INPUTS[pitch_um]/name, output/name)
+            return output
+        with tempfile.TemporaryDirectory() as temp:
+            args = self.arguments(out=Path(temp), widths_um=[6.9], study_seeds=[20261107, 20261108])
+            with patch('prepare_etched_ag.prepare', side_effect=existing_height) as prepare, \
+                 patch('prepare_tiled_emission.prepare_layout',
+                       side_effect=lambda name, **kw: ROOT/'assets/oled-layouts'/name), \
+                 patch('run_sms_reference.subprocess.run') as execute:
+                run_surface_study(args)
+                self.assertEqual(prepare.call_count, 3)
+                root = json.loads((args.out/'protocol.json').read_text())
+                case = root['cases'][0]
+                child_path = args.out/case['output']/'protocol.json'
+                child = json.loads(child_path.read_text())
+                self.assertEqual(len(child['layouts']), 4)
+                self.assertEqual({r['layout'] for r in child['runs']}, {'diamond'})
+                for run in child['runs']:
+                    parsed = parse_args(run['argv'])
+                    self.assertTrue(Path(parsed.height).is_relative_to(args.out))
+                    self.assertEqual(parsed.height_range_um, 1.04)
+                    self.assertEqual(parsed.emission_threshold, 0.)
+                mask, _ = sampled_periodic_mask((32, 32), 26.25,
+                    child['analysis']['notch_periods_um_xy'],
+                    child['analysis']['optical_intensity_cutoff_cycles_per_um'])
+                self.assertEqual(np.count_nonzero(~mask), 89)
+                execute.reset_mock()
+                args.stage = 'fine'
+                run_surface_study(args)
+                self.assertEqual(execute.call_count, 1)
+                self.assertEqual(parse_args(execute.call_args.args[0][2:]).height_pitch_um, .5)
+                self.assertEqual(prepare.call_count, 3)
+                child_path.write_text(child_path.read_text()+'\n')
+                with self.assertRaisesRegex(ValueError, 'protocol changed'):
+                    run_surface_study(args)
+                args.out = Path(temp)/'all'
+                args.stage = 'all'
+                execute.reset_mock()
+                with patch('reporting.write_sms_report', return_value=args.out/'sparkle.html') as report:
+                    run_surface_study(args)
+                optical = [call.args[0] for call in execute.call_args_list
+                           if '--dry-run' not in call.args[0]]
+                self.assertEqual(sorted(parse_args(cmd[2:]).height_pitch_um for cmd in optical), [.5, 1., 1.])
+                report.assert_called_once_with(args.out)
 
 
 if __name__ == '__main__':

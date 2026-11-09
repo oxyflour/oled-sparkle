@@ -31,7 +31,7 @@ The supported script entrypoints are:
 | Script in `scripts/` | Responsibility |
 |---|---|
 | `run_oled_demo.py` | Current default OLED example, all four backends. Select `--height-surface` and `--pitch-um`; computes raw brightness CV. |
-| `run_sms_reference.py` | Full-green, no-LDF separated sparkle. Default `--stage all` runs six reference cases; `--layouts` selects equal-pitch camera sampling followed by common spectral separation. |
+| `run_sms_reference.py` | Full-green, no-LDF separated sparkle. Default `--stage all` runs six reference cases; `--layouts` compares layouts; `--surface-study width/spacing-distribution` runs the two AG surface comparisons. |
 | `generate_report.py` | Rebuild saved reports without optics. Default `--kind brightness`; choose `--kind sms-reference` explicitly for separated sparkle. |
 | `calculate_haze.py` | Monochromatic heightfield haze: NumPy estimate or `--backend all` for actual four native backends, with uniform illumination and saved angular-power data. |
 | `sparkle_multibackend.py` | General solver CLI for custom inputs and physical/numerical parameters. |
@@ -64,6 +64,23 @@ spacing**, variable depths, **1.2um rounding**, and seed **20261107**. The share
 range is **1.04um**, read from its sidecar without per-grid
 renormalization. This surface is a synthetic etched-glass proxy, not a measured
 sample. `run_oled_demo.py` is the sole current default-example entrypoint.
+For a spacing-distribution study at fixed site density, the existing generator
+accepts `--min-separation-ratio` (default `0.3`). It sets the minimum periodic
+site distance divided by nominal spacing: `0` gives unrestricted random sites;
+larger values exclude close neighbors and produce a more uniform distribution.
+For example, from this directory:
+
+```bash
+python scripts/prepare_etched_ag.py --out outputs/ag-exclusion-0p7 --spacing-um 6.9 --sz-um 1 --min-separation-ratio 0.7 --pitch-um 0.5
+```
+
+The sidecar records actual nearest-neighbor mean, standard deviation and CV,
+plus equivalent-cell-diameter statistics. Nominal spacing is a density scale,
+not mean nearest-neighbor distance. Changing exclusion changes spatial
+correlations and actual neighbor means as well as dispersion; it is not an
+isolated variance adjustment. Sz is fixed after rounding, while Sa/Sq and the
+individual random depths can vary. Use separate outputs for each case.
+
 The former 25um / Sa0.1um maps remain at `assets/oled-1mm-etched-ag/` and
 `assets/oled-1mm-etched-ag-pitch0p5/`; historical results still reference them.
 The emission input remains 500x500
@@ -691,6 +708,67 @@ The switch audit is in `../test-results/default-heightfield-spacing6p9-sz1um-202
 `tests-default.log`, `tests.log` and `skills-validation.log` contain actual
 entrypoint/regression/skill checks; `validation.json` records input/history
 preservation and the selected default commands. No new runner was added.
+
+### Spacing-distribution sensitivity at fixed density
+
+`../test-results/ag-spacing-distribution-sz1um-20261108/` compares minimum
+site-distance ratios `0`, `0.3` (current default), `0.5` and `0.7`. All cases
+retain 21,004 sites in 1mm square, nominal density spacing 6.9um, reference
+post-rounding Sz=1um, Gaussian sigma=1.2um, profile power 2 and uniform
+relative-depth law [0.7,1.3]. They use the same full-green Diamond input,
+camera, 840um ROI and 89-bin common periodic mask as the retained baseline.
+There is no extra low-pass, MWA or LDF.
+
+Seeds 20261107/20261108/20261109 are evaluated at 1um; the first seed also
+has a 0.5um check. Its default case reuses verified saved optics, giving
+14 new native CUDA Torch runs and 16 analyzed float arrays in total.
+
+| Minimum distance / nominal spacing | Nearest-neighbor mean [um], 3-seed average | Nearest-neighbor CV, 3-seed average | 1um sparkle mean [percent] | 1um sample min–max [percent] | First-seed 0.5um [percent] |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 0 | 3.457990 | 0.522007 | 15.186055 | 14.523279–15.917458 | 15.950665 |
+| 0.3 (default) | 3.974195 | 0.351438 | 13.147987 | 12.430875–13.964710 | 13.789377 |
+| 0.5 | 4.680790 | 0.209192 | 11.132372 | 10.247746–12.209046 | 10.945824 |
+| 0.7 | 5.527268 | 0.109525 | 10.037931 | 9.850287–10.143245 | 10.079975 |
+
+Every seed gives the same descending order. The 0.5/0.7 coarse-grid means
+are 15.33%/23.65% below the current-distribution mean; unrestricted random
+sites are 15.50% higher. The maximum first-seed optical-grid shift is
+0.175333 percentage points. These are three sample realizations, not
+confidence intervals or a universal optimum. Exclusion also changes actual
+neighbor means and spatial correlations; Sa/Sq and individual random depth
+draws are not fixed, so this is not an isolated spacing-variance experiment.
+The metric retains the same uncalibrated camera-domain scope as the baseline.
+
+`distribution-sparkle.png` shows actual neighbor CDFs and sparkle with seed
+ranges; `height-distributions.png` compares the four physical height crops.
+`distribution-sparkle.csv` and `summary.json` contain per-seed metrics,
+distribution/roughness statistics and limitations. The root and per-case
+`protocol.json` files record exact generation/solver arguments, hashes and
+read-only baseline provenance. Primary cases retain the existing SMS report;
+secondary coarse checks use `sms_reference.analyze_layout_runs`, saving its
+camera floats, masks and stats without adding another report generator.
+`validation.json` records the float/mask/site checks, 14 passing tests and
+574 unchanged historical/input files. `default-regeneration.json` verifies
+that both default height PNGs and site CSVs still regenerate byte-for-byte.
+The two experiments now have reusable commands in the existing SMS runner;
+see the [two comparison commands](../README.md#ag-表面对比命令). From this
+directory, the equivalent commands are:
+
+```bash
+python scripts/run_sms_reference.py --surface-study width --backend torch --stage all --out ../test-results/ag-width-sweep-new
+python scripts/run_sms_reference.py --surface-study spacing-distribution --backend torch --stage all --out ../test-results/ag-spacing-distribution-new
+```
+
+These compute all cases afresh (12/16 native Torch solves respectively).
+`--widths-um`, `--min-separation-ratios` and `--study-seeds` override the study
+matrix. `--stage prepare/main/fine` can split a new batch. Prepared protocols
+are immutable; resume with the same study and output root. Rebuild the new
+root's plots and `sparkle.html` with `generate_report.py --kind sms-reference
+--results ROOT`, without optics. Root outputs also include `surface-study.png`,
+`surface-inputs.png`, `comparison.csv`, `summary.json` and `validation.json`;
+each case retains its generated inputs, frozen commands, solver and camera
+float arrays/stats. The existing runner and report implementation own these
+operations; no separate experiment or plotting entrypoint is needed.
 
 ### Default etched-AG brightness outputs
 

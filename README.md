@@ -7,7 +7,7 @@
 | 入口（位于 `oled-ag-sparkle/scripts/`） | 职责与用法 |
 |---|---|
 | `run_oled_demo.py` | 当前默认 OLED 用例。默认蚀刻 AG、1 µm 网格、四后端；`--height-surface` 选择表面，`--pitch-um .5` 作网格复核。输出原始亮度 CV。 |
-| `run_sms_reference.py` | 全绿、无 LDF 的分离闪点流程。默认 `--stage all` 运行六个参考工况；加 `--layouts` 进行统一间距、亮度与测量带宽的多排列比较。 |
+| `run_sms_reference.py` | 全绿、无 LDF 的分离闪点流程。默认 `--stage all` 运行六个参考工况；`--layouts` 比较排列，`--surface-study` 比较 AG 宽度或间距分布。 |
 | `generate_report.py` | 唯一报告 CLI。默认原始亮度报告；`--kind sms-reference` 重建分离闪点，`--kind haze` 审计并绘制原生后端雾度，不重跑光学。 |
 | `sparkle_multibackend.py` | 自定义输入的通用四后端求解 CLI，支持 `--help` 查看所有物理与数值参数。 |
 | `calculate_haze.py` | 校准高度图的单色雾度：默认 NumPy 近似；`--backend all` 实际调用四原生后端，均匀正入射、2.5° 半角，保存角散射与统计。 |
@@ -17,6 +17,28 @@
 `reporting.py` 是离线报告实现，`sms_reference.py` 是周期分离与统计实现，`chromatix_wsl.py` 是 WSL 适配模块。它们由上述入口导入，不是额外的用户运行入口。蚀刻 AG 专用执行器已并入 `run_oled_demo.py`，SMS 报告也统一由 `generate_report.py` 生成。
 
 `run_legacy_demo.py` 中的 `quick` 是 128×128、2 µm 采样的合成小网格，用于 CLI、报告及后端回归测试；`1mm` 是 2000×2000、0.5 µm 采样的旧合成粗糙面，搭配普通像素或合成绿色子像素光源，用于旧参数检查和历史复现。两者保留原始测试参数。
+
+## AG 表面对比命令
+
+以下两条命令从仓库根目录执行；先按后文配置 CUDA Python 环境。两种比较都固定参考 **Sz=1 µm**、圆角 **1.2 µm**，使用 Diamond 全绿、相同相机、840 µm ROI 和四排列共同周期掩膜，统计相机采样后去周期的闪点对比度。
+
+**宽度比较**：扫描名义间距 4.8、6.9、10、15、25、40 µm；种子 20261107，每档运行 1 µm 和 0.5 µm 网格，共 12 次 Torch 求解。
+
+```powershell
+.venv\Scripts\python.exe oled-ag-sparkle\scripts\run_sms_reference.py --surface-study width --backend torch --stage all --out test-results\ag-width-sweep-new
+```
+
+**间距分布比较**：固定 21,004 个坑和名义间距 6.9 µm，最小坑距比取 0、0.3（当前默认）、0.5、0.7；三个种子 20261107/20261108/20261109 运行 1 µm 网格，第一个种子再作 0.5 µm 复核，共 16 次 Torch 求解。
+
+```powershell
+.venv\Scripts\python.exe oled-ag-sparkle\scripts\run_sms_reference.py --surface-study spacing-distribution --backend torch --stage all --out test-results\ag-spacing-distribution-new
+```
+
+`--widths-um`、`--min-separation-ratios` 和 `--study-seeds` 可缩小或调整对应实验。名义间距是密度尺度；改变最小坑距也改变实际最近邻均值与空间相关性，不能解释为只改变方差；固定 Sz 也不固定 Sa/Sq。
+
+每个比较根目录输出 `sparkle.html`、`surface-study.png`、`surface-inputs.png`、`comparison.csv`、`summary.json` 和 `validation.json`。输入、各工况求解参数与哈希固定在根目录及逐工况的 `protocol.json`，光学与相机浮点结果保存在对应工况目录。两条命令从头计算，不依赖本机历史结果。
+
+重复新实验请换一个 `--out` 目录。分阶段可依次执行 `--stage prepare/main/fine`；继续时保留同一 `--surface-study` 与 `--out`。只重建图表和报告，使用现有 `generate_report.py --kind sms-reference --results <比较根目录>`，不重跑光学求解。
 
 ## 四种 OLED 排列：先相机采样，再去周期
 

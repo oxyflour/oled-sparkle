@@ -25,14 +25,16 @@ DEFAULT_INPUTS = {pitch: ROOT/'assets'/(DEFAULT_CASE+suffix)
                   for pitch, suffix in ((1., ''), (.5, '-pitch0p5'))}
 
 
-def geometry(field_um, spacing_um, seed):
+def geometry(field_um, spacing_um, seed, min_separation_ratio=.3):
     if not (math.isfinite(field_um) and math.isfinite(spacing_um)
             and 0 < spacing_um <= field_um / 4):
         raise ValueError('Require finite 0 < cell spacing <= field / 4')
+    if not math.isfinite(min_separation_ratio) or not 0 <= min_separation_ratio < 1:
+        raise ValueError('Minimum separation ratio must be finite and in [0, 1)')
     count = round((field_um / spacing_um)**2)
     rng = np.random.default_rng(seed)
     sites = np.empty((count, 2), dtype=np.float64)
-    minimum_distance = .3 * spacing_um
+    minimum_distance = min_separation_ratio * spacing_um
     for index in range(count):
         for _ in range(100_000):
             candidate = rng.uniform(0, field_um, 2)
@@ -90,7 +92,8 @@ def roughness(height_um, pitch_um):
 
 def prepare(output=None, pitch_um=1., field_um=1000., spacing_um=DEFAULT_SPACING_UM,
             target_sa_um=None, rounding_um=1.2, seed=20261107,
-            reference_pitch_um=.5, profile_power=2, target_sz_um=None):
+            reference_pitch_um=.5, profile_power=2, target_sz_um=None,
+            min_separation_ratio=.3):
     """Default to reference-grid post-rounding Sz=1um; explicit Sa selects Sa."""
     if target_sa_um is not None and target_sz_um is not None:
         raise ValueError('Select only one of target Sa and Sz')
@@ -103,7 +106,7 @@ def prepare(output=None, pitch_um=1., field_um=1000., spacing_um=DEFAULT_SPACING
     if output is None and pitch_um not in DEFAULT_INPUTS:
         raise ValueError('Specify output for a pitch other than the default 1 or 0.5 um')
     output = Path(output) if output else DEFAULT_INPUTS[pitch_um]
-    sites, depths = geometry(field_um, spacing_um, seed)
+    sites, depths = geometry(field_um, spacing_um, seed, min_separation_ratio)
     reference, counts = raw_surface(sites, depths, field_um, reference_pitch_um, rounding_um, profile_power)
     reference_sa = np.abs(reference - reference.mean()).mean()
     raw_span = np.ptp(reference)
@@ -129,6 +132,7 @@ def prepare(output=None, pitch_um=1., field_um=1000., spacing_um=DEFAULT_SPACING
         writer.writerow(['x_um', 'y_um', 'relative_bowl_depth'])
         writer.writerows(np.column_stack((sites, depths)))
     diameters = 2 * np.sqrt(counts * reference_pitch_um**2 / np.pi)
+    nearest = cKDTree(sites, boxsize=field_um).query(sites, k=2)[0][:, 1]
     meta = {
         'source': 'Synthetic rounded Voronoi-bowl proxy; scripts/prepare_etched_ag.py',
         'model_status': 'Illustrative morphology, not measured glass or a calibrated commercial product.',
@@ -139,7 +143,19 @@ def prepare(output=None, pitch_um=1., field_um=1000., spacing_um=DEFAULT_SPACING
         'height_range_um': encoding_range_um, 'png_bits_per_channel': 16,
         'sha256': hashlib.sha256(path.read_bytes()).hexdigest(),
         'seed': seed, 'cell_count': len(sites), 'nominal_site_spacing_um': spacing_um,
-        'minimum_site_separation_um': .3 * spacing_um,
+        'minimum_site_separation_um': min_separation_ratio * spacing_um,
+        'minimum_site_separation_ratio': min_separation_ratio,
+        'site_distribution': 'Uniform sequential rejection on a periodic square; the exclusion radius controls spatial order, not only spacing variance.',
+        'density_equivalent_spacing_um': field_um / math.sqrt(len(sites)),
+        'nearest_neighbor_spacing_um': {
+            'definition': 'Periodic Euclidean distance from each site to its nearest other site; not the density-equivalent nominal spacing.',
+            'mean': float(nearest.mean()), 'std': float(nearest.std()),
+            'coefficient_of_variation': float(nearest.std() / nearest.mean()),
+            'minimum': float(nearest.min()), 'maximum': float(nearest.max()),
+            'p10': float(np.percentile(nearest, 10)),
+            'p50': float(np.median(nearest)),
+            'p90': float(np.percentile(nearest, 90)),
+        },
         'relative_depth_distribution': 'Uniform [0.7, 1.3], assigned independently to each cell',
         'raw_profile': f'-depth_i * (1 - (d_nearest / d_second_nearest)^2)^{profile_power:g}',
         'profile_power': profile_power,
@@ -154,6 +170,8 @@ def prepare(output=None, pitch_um=1., field_um=1000., spacing_um=DEFAULT_SPACING
                         'no_per_output_grid_rescaling': True},
         'equivalent_cell_diameter_um': {'definition': '2*sqrt(Voronoi cell area/pi), not Rsm or nearest-neighbor spacing',
                                        'mean': float(diameters.mean()),
+                                       'std': float(diameters.std()),
+                                       'coefficient_of_variation': float(diameters.std() / diameters.mean()),
                                        'p10': float(np.percentile(diameters, 10)),
                                        'p50': float(np.median(diameters)),
                                        'p90': float(np.percentile(diameters, 90))},
@@ -171,6 +189,8 @@ def main():
     parser.add_argument('--pitch-um', type=float, default=1.)
     parser.add_argument('--field-um', type=float, default=1000.)
     parser.add_argument('--spacing-um', type=float, default=DEFAULT_SPACING_UM)
+    parser.add_argument('--min-separation-ratio', type=float, default=.3,
+                        help='Minimum periodic site distance / nominal spacing; 0 is unrestricted random, 0.3 preserves the default. Larger values narrow the spacing distribution; dense exclusion can fail to place all sites.')
     amplitude = parser.add_mutually_exclusive_group()
     amplitude.add_argument('--sa-um', type=float, help='Use reference-grid Sa normalization instead of the default Sz=1um')
     amplitude.add_argument('--sz-um', type=float,
@@ -182,7 +202,7 @@ def main():
     args = parser.parse_args()
     output = prepare(args.out, args.pitch_um, args.field_um, args.spacing_um,
                      args.sa_um, args.rounding_um, args.seed, profile_power=args.profile_power,
-                     target_sz_um=args.sz_um)
+                     target_sz_um=args.sz_um, min_separation_ratio=args.min_separation_ratio)
     print((output / 'heightfield.source.json').read_text(encoding='utf-8'))
 
 

@@ -49,7 +49,15 @@ def prepare_green():
 
 def command_for(out, pitch=1., backend='all', na=None, dry=False, backend_workers=1,
                 emission=None, emission_pitch_um=2., emission_scale=1., device='cuda',
-                emission_threshold=.001):
+                emission_threshold=.001, height=None):
+    height_options = {}
+    if height is not None:
+        height = Path(height).resolve()
+        meta = json.loads(height.with_suffix('.source.json').read_text(encoding='utf-8'))
+        if meta['assigned_texel_um'] != pitch:
+            raise ValueError('Custom height pitch does not match the optical grid')
+        height_options = {'height': height, 'height_pitch_um': pitch,
+                          'height_range_um': meta['height_range_um']}
     return build_command(pitch_um=pitch, backend=backend, device=device, out=out, dry_run=dry,
                          backend_workers=backend_workers,
                          solver_options={
@@ -59,10 +67,10 @@ def command_for(out, pitch=1., backend='all', na=None, dry=False, backend_worker
                              'emission_channel': 'green',
                              'na': CAMERA['object_NA'] if na is None else na,
                              'analysis_pitch_um': CAMERA['object_pitch_um'],
-                             'roi_margin_um': 220, 'progress_every': 400})
+                             'roi_margin_um': 220, 'progress_every': 400, **height_options})
 
 
-def run_layout_comparison(args):
+def run_layout_comparison(args, *, heights=None, computed_layouts=None, coarse_only=False):
     """Use the same runner/solver with a frozen multi-layout measurement plan."""
     from prepare_tiled_emission import prepare_layout
     from sparkle_multibackend import ALL_BACKENDS
@@ -126,15 +134,21 @@ def run_layout_comparison(args):
         periods = sorted({tuple(meta['green_period_um_xy']) for meta in layouts.values()})
         runs = []
         for grid, pitch, backend in (('1um', 1., args.backend), ('0p5um', .5, 'torch')):
+            if coarse_only and grid == '0p5um':
+                continue
             for layout, meta in layouts.items():
+                if computed_layouts is not None and layout not in computed_layouts:
+                    continue
                 relative = f'{grid}/{layout}'
                 command = command_for(args.out/relative, pitch=pitch, backend=backend,
                                       backend_workers=args.backend_workers, device=args.device,
                                       emission=meta['emission_path'], emission_pitch_um=args.emission_texel_um,
-                                      emission_scale=meta['linear_emission_scale'], emission_threshold=0.)
+                                      emission_scale=meta['linear_emission_scale'], emission_threshold=0.,
+                                      height=heights[pitch] if heights else None)
                 runs.append({'grid': grid, 'layout': layout, 'pitch_um': pitch, 'output': relative,
                              'backends': list(ALL_BACKENDS) if backend == 'all' else [backend], 'argv': command[2:]})
-        height_paths = {str(folder/'heightfield.png') for folder in DEFAULT_INPUTS.values()}
+        height_paths = ({str(path) for path in heights.values()} if heights else
+                        {str(folder/'heightfield.png') for folder in DEFAULT_INPUTS.values()})
         analysis = (sampled_camera_plan(periods, CAMERA) if args.measurement == 'sampled-camera' else
                     {'roi_width_um': roi_um, 'camera_pitch_um': CAMERA['object_pitch_um'],
                      'cutoff_um_inv': 1/args.pixel_pitch_um, 'notch_periods_um': periods,
@@ -183,6 +197,84 @@ def run_layout_comparison(args):
         print('HTML report:', write_sms_report(args.out))
 
 
+def surface_cases(args):
+    """Declare the two surface experiments without changing their camera metric."""
+    seeds = args.study_seeds or ([20261107] if args.surface_study == 'width' else
+                                 [20261107, 20261108, 20261109])
+    values = ((args.widths_um or [4.8, 6.9, 10., 15., 25., 40.]) if args.surface_study == 'width'
+              else (args.min_separation_ratios or [0., .3, .5, .7]))
+    if len(set(seeds)) != len(seeds) or any(seed < 0 for seed in seeds):
+        raise ValueError('Study seeds must be distinct nonnegative integers')
+    if len(set(values)) != len(values) or any(not math.isfinite(v) or
+            not (0 < v <= 250 if args.surface_study == 'width' else 0 <= v < 1) for v in values):
+        raise ValueError('Study values must be distinct; widths in (0,250] um, exclusion ratios in [0,1)')
+    return [{'output': f'{args.surface_study}-{value}-seed{seed}'.replace('.', 'p'),
+             'spacing_um': value if args.surface_study == 'width' else 6.9,
+             'min_separation_ratio': .3 if args.surface_study == 'width' else value,
+             'seed': seed, 'fine': seed == seeds[0]}
+            for seed in seeds for value in values]
+
+
+def run_surface_study(args):
+    """Reuse height preparation, layout protocols, native solves and SMS reporting."""
+    from argparse import Namespace
+    from prepare_etched_ag import prepare
+    from prepare_tiled_emission import LAYOUTS
+    protocol_path = args.out/'protocol.json'
+    if args.stage in ('prepare', 'all'):
+        if protocol_path.exists():
+            raise ValueError('Study protocol already exists; use main/fine or a new --out directory')
+        cases = surface_cases(args)
+        for case in cases:
+            folder = args.out/case['output']
+            if folder.exists():
+                raise ValueError(f'Study case already exists: {folder}')
+        for case in cases:
+            folder = args.out/case['output']
+            folder.mkdir(parents=True)
+            heights = {}
+            for pitch, grid in ((1., '1um'), (.5, '0p5um')):
+                if pitch == .5 and not case['fine']:
+                    continue
+                inputs = prepare(folder/'inputs'/grid, pitch_um=pitch,
+                                 spacing_um=case['spacing_um'], target_sz_um=1.,
+                                 min_separation_ratio=case['min_separation_ratio'], seed=case['seed'])
+                heights[pitch] = inputs/'heightfield.png'
+            child = Namespace(**{**vars(args), 'out': folder, 'stage': 'prepare',
+                                 'layouts': list(LAYOUTS), 'reuse_optics': None})
+            run_layout_comparison(child, heights=heights, computed_layouts=['diamond'],
+                                  coarse_only=not case['fine'])
+            case['protocol_sha256'] = hashlib.sha256((folder/'protocol.json').read_bytes()).hexdigest()
+        spec = {'kind': 'oled-surface-study', 'study': args.surface_study,
+                'declared_at_utc': datetime.now(timezone.utc).isoformat(), 'cases': cases,
+                'generator_sha256': hashlib.sha256((ROOT/'scripts/prepare_etched_ag.py').read_bytes()).hexdigest(),
+                'runner_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+                'fixed': '1mm square, reference Sz=1um, rounding sigma=1.2um, profile power=2; full-green Diamond; same camera and four-layout common notch mask',
+                'limitations': ['Nominal spacing is a density scale, not actual nearest-neighbor mean',
+                                'Sa/Sq, spatial correlations and individual random depths can vary',
+                                'Fine grid checks the first seed; source quadrature stays at 2um',
+                                'Seed ranges are sample ranges, not confidence intervals or calibrated SMS1000 readings']}
+        protocol_path.write_text(json.dumps(spec, indent=2), encoding='utf-8')
+        if args.stage == 'prepare':
+            return
+    spec = json.loads(protocol_path.read_text(encoding='utf-8'))
+    if spec['kind'] != 'oled-surface-study' or spec['study'] != args.surface_study:
+        raise ValueError('Requested surface study does not match the saved protocol')
+    for case in spec['cases']:
+        folder = args.out/case['output']
+        if hashlib.sha256((folder/'protocol.json').read_bytes()).hexdigest() != case['protocol_sha256']:
+            raise ValueError('Case protocol changed after study preparation')
+        child = Namespace(**{**vars(args), 'out': folder, 'layouts': list(LAYOUTS)})
+        for stage in (('main', 'fine') if args.stage == 'all' else (args.stage,)):
+            if stage == 'fine' and not case['fine']:
+                continue
+            child.stage = stage
+            run_layout_comparison(child)
+    if args.stage == 'all':
+        from reporting import write_sms_report
+        print('HTML report:', write_sms_report(args.out))
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--out', type=Path,
@@ -203,11 +295,27 @@ def main():
     parser.add_argument('--backend', choices=('all', 'torch', 'torchoptics', 'chromatix', 'mitsuba'), default='all',
                         help='Comparison main-grid backends; fine-grid check always uses Torch')
     parser.add_argument('--device', choices=('cpu', 'cuda'), default='cuda', help='Comparison Torch device')
+    parser.add_argument('--surface-study', choices=('width', 'spacing-distribution'),
+                        help='Compare AG widths or spacing distributions through the existing sampled-camera workflow')
+    parser.add_argument('--widths-um', type=float, nargs='+', help='Width study nominal spacings (default 4.8 6.9 10 15 25 40)')
+    parser.add_argument('--min-separation-ratios', type=float, nargs='+', help='Distribution study exclusions (default 0 .3 .5 .7)')
+    parser.add_argument('--study-seeds', type=int, nargs='+', help='Width default: 20261107; distribution: 20261107 20261108 20261109')
     args = parser.parse_args()
+    if ((args.widths_um and args.surface_study != 'width') or
+            (args.min_separation_ratios and args.surface_study != 'spacing-distribution') or
+            (args.study_seeds and not args.surface_study)):
+        parser.error('Study value/seed options require their corresponding --surface-study')
+    if args.surface_study and (args.layouts or args.reuse_optics or args.stage == 'old-na' or
+                               args.measurement != 'sampled-camera' or args.backend == 'mitsuba'):
+        parser.error('Surface studies require sampled-camera, a wave backend and prepare/main/fine/all; omit --layouts and --reuse-optics')
     if args.reuse_optics and not args.layouts:
         parser.error('--reuse-optics requires --layouts')
-    args.out = (args.out or ROOT/'outputs'/(DEFAULT_CASE+('-sms-layouts' if args.layouts else '-sms-reference'))).resolve()
+    args.out = (args.out or ROOT/'outputs'/('ag-'+args.surface_study if args.surface_study else
+                 DEFAULT_CASE+('-sms-layouts' if args.layouts else '-sms-reference'))).resolve()
     args.out.mkdir(parents=True, exist_ok=True)
+    if args.surface_study:
+        run_surface_study(args)
+        return
     if args.layouts:
         run_layout_comparison(args)
         return

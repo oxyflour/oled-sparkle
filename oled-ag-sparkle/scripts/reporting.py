@@ -498,7 +498,10 @@ def write_sms_report(results, output=None):
     from sms_reference import analyze_saved_runs
 
     results = Path(results).expanduser().resolve()
-    if json.loads((results/'protocol.json').read_text(encoding='utf-8')).get('kind') == 'oled-layout-comparison':
+    kind = json.loads((results/'protocol.json').read_text(encoding='utf-8')).get('kind')
+    if kind == 'oled-surface-study':
+        return _write_surface_study_report(results, output)
+    if kind == 'oled-layout-comparison':
         return _write_layout_report(results, output)
     if output and Path(output).expanduser().resolve() == results / 'sparkle-report.html':
         raise ValueError('--out is the overview destination; the full report is sparkle-report.html')
@@ -517,6 +520,156 @@ def write_sms_report(results, output=None):
         return destination
     return entry
 
+
+
+def _write_surface_study_report(results, output=None):
+    """Aggregate the two surface sweeps through the existing camera analyzer."""
+    import csv
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    from matplotlib.ticker import NullLocator
+    from scipy.spatial import cKDTree
+    from sms_reference import analyze_layout_runs
+
+    study = json.loads((results/'protocol.json').read_text(encoding='utf-8'))
+    rows, distributions = [], {}
+    reference_mask = reference_plan = None
+    float_error, arrays_checked = 0., 0
+    for case in study['cases']:
+        folder = results/case['output']
+        digest = hashlib.sha256((folder/'protocol.json').read_bytes()).hexdigest()
+        if digest != case['protocol_sha256']:
+            raise ValueError('Case protocol changed after study preparation')
+        spec, records, arrays = analyze_layout_runs(folder)
+        if reference_plan is None:
+            reference_plan = spec['analysis']
+        assert spec['analysis'] == reference_plan
+        for record in records:
+            capture = arrays[(record['grid'], record['layout'], record['backend'])]
+            mask = capture['transfer']
+            if reference_mask is None:
+                reference_mask = mask
+            assert np.array_equal(mask, reference_mask)
+            pixels = capture['primary_measurement_pixels']
+            error = abs(float(100*pixels.std(ddof=0)/pixels.mean())-
+                        record['primary']['sparkle_contrast_percent'])
+            float_error = max(float_error, error)
+            assert error < 1e-10
+            arrays_checked += 1
+        coarse = [r for r in records if r['grid'] == '1um']
+        chosen = next((r for r in coarse if r['backend'] == 'torch'), coarse[0])
+        fine = next((r for r in records if r['grid'] == '0p5um'), None)
+        plan = next(r for r in spec['runs'] if r['grid'] == ('0p5um' if fine else '1um'))
+        height = Path(plan['argv'][plan['argv'].index('--height')+1])
+        meta = json.loads(height.with_suffix('.source.json').read_text(encoding='utf-8'))
+        assert meta['seed'] == case['seed']
+        assert np.isclose(meta['nominal_site_spacing_um'], case['spacing_um'])
+        assert np.isclose(meta['minimum_site_separation_um'],
+                          case['min_separation_ratio']*case['spacing_um'])
+        sites = np.loadtxt(height.parent/'sites.csv', delimiter=',', skiprows=1)
+        distances = cKDTree(sites[:, :2], boxsize=meta['periodic_domain_um']).query(sites[:, :2], k=2)[0][:, 1]
+        distributions[case['output']] = distances
+        rows.append({'case': case['output'], 'seed': case['seed'],
+                     'spacing_um': case['spacing_um'], 'min_separation_ratio': case['min_separation_ratio'],
+                     'nearest_neighbor_mean_um': float(distances.mean()),
+                     'nearest_neighbor_CV': float(distances.std()/distances.mean()),
+                     **{k: meta['measured_surface'][k] for k in ('Sa_um', 'Sq_um', 'Sz_um')},
+                     'backend': chosen['backend'], 'sparkle_1um_percent': chosen['primary']['sparkle_contrast_percent'],
+                     'sparkle_0p5um_percent': fine['primary']['sparkle_contrast_percent'] if fine else None,
+                     'height_file': str(height)})
+        (folder/'summary.json').write_text(json.dumps({'status': 'complete', 'protocol_sha256': digest,
+                                                      'records': records}, indent=2), encoding='utf-8')
+    parameter = 'spacing_um' if study['study'] == 'width' else 'min_separation_ratio'
+    values = list(dict.fromkeys(row[parameter] for row in rows))
+    groups = []
+    for value in values:
+        samples = [r for r in rows if r[parameter] == value]
+        coarse = np.array([r['sparkle_1um_percent'] for r in samples])
+        fine = next(r['sparkle_0p5um_percent'] for r in samples if r['sparkle_0p5um_percent'] is not None)
+        groups.append({'value': value, 'sample_count': len(samples), 'mean_percent': float(coarse.mean()),
+                       'minimum_percent': float(coarse.min()), 'maximum_percent': float(coarse.max()),
+                       'first_seed_fine_percent': fine})
+    validation = {'status': 'passed', 'float_arrays_checked': arrays_checked,
+                  'identical_masks': True, 'removed_non_DC_bins': int(np.count_nonzero(~reference_mask)),
+                  'max_float_metric_error_percentage_points': float_error,
+                  'max_first_seed_grid_difference_percentage_points': max(abs(r['sparkle_0p5um_percent']-
+                      r['sparkle_1um_percent']) for r in rows if r['sparkle_0p5um_percent'] is not None)}
+    summary = {'study': study, 'rows': rows, 'groups': groups, 'validation': validation}
+    (results/'summary.json').write_text(json.dumps(summary, indent=2), encoding='utf-8')
+    (results/'validation.json').write_text(json.dumps(validation, indent=2), encoding='utf-8')
+    with (results/'comparison.csv').open('w', encoding='utf-8-sig', newline='') as stream:
+        writer = csv.DictWriter(stream, fieldnames=list(rows[0]))
+        writer.writeheader()
+        writer.writerows(rows)
+    fig, axes = plt.subplots(1, 1 if study['study'] == 'width' else 2,
+                             figsize=(11, 5.5) if study['study'] == 'width' else (14, 5.5),
+                             squeeze=False, layout='constrained')
+    ax = axes[0, -1]
+    means = np.array([g['mean_percent'] for g in groups])
+    fine_values = [g['first_seed_fine_percent'] for g in groups]
+    if study['study'] == 'width':
+        ax.set_xscale('log')
+        ax.xaxis.set_minor_locator(NullLocator())
+        ax.plot(values, means, 'o--', label='1 um: seed mean')
+        ax.plot(values, fine_values, 'o-', label='0.5 um: first seed')
+        ax.set(xticks=values, xticklabels=[f'{v:g}' for v in values], xlabel='Nominal site spacing [um]')
+    else:
+        first_seed = rows[0]['seed']
+        for row in rows:
+            if row['seed'] == first_seed:
+                d = np.sort(distributions[row['case']])
+                axes[0, 0].plot(d, np.arange(1, len(d)+1)/len(d), label=f'r={row[parameter]:g}')
+        axes[0, 0].set(xlabel='Actual nearest-neighbor distance [um]', ylabel='Cumulative fraction',
+                        title='Spacing distribution: first seed')
+        axes[0, 0].legend()
+        for index, value in enumerate(values):
+            points = [r['sparkle_1um_percent'] for r in rows if r[parameter] == value]
+            ax.scatter(index+np.linspace(-.08, .08, len(points)), points, color='gray', s=25)
+        ax.plot(range(len(values)), fine_values, 'D', mfc='none', label='0.5 um: first seed')
+        ax.set(xticks=range(len(values)), xticklabels=[f'{v:g}' for v in values],
+               xlabel='Minimum distance / nominal spacing')
+    x = values if study['study'] == 'width' else list(range(len(values)))
+    ax.errorbar(x, means, yerr=[means-np.array([g['minimum_percent'] for g in groups]),
+                               np.array([g['maximum_percent'] for g in groups])-means],
+                fmt='_', color='black', capsize=4, label='1 um: mean and sample range')
+    ax.set(ylabel='Separated camera contrast [%]', title='Fixed reference Sz=1 um; no extra low-pass/MWA', ylim=(0, None))
+    ax.grid(axis='y', alpha=.2)
+    ax.legend()
+    curve = results/'surface-study.png'
+    fig.savefig(curve, dpi=150)
+    plt.close(fig)
+    primary = [r for r in rows if r['seed'] == rows[0]['seed']]
+    fig, axes = plt.subplots(1, len(primary), figsize=(max(7, 2.7*len(primary)), 4),
+                             squeeze=False, layout='constrained')
+    for ax, row in zip(axes[0], primary):
+        height = Path(row['height_file'])
+        meta = json.loads(height.with_suffix('.source.json').read_text(encoding='utf-8'))
+        field = np.asarray(Image.open(height), dtype=float)*meta['height_range_um']/65535
+        n = round(100/meta['assigned_texel_um'])
+        start = (len(field)-n)//2
+        im = ax.imshow(field[start:start+n, start:start+n], extent=(-50, 50, 50, -50),
+                       vmin=0, vmax=1.04, cmap='viridis', interpolation='nearest')
+        ax.set(title=f'{parameter}={row[parameter]:g}', xlabel='x [um]', ylabel='y [um]')
+    fig.colorbar(im, ax=axes.ravel().tolist(), shrink=.7, label='Height [um], common scale')
+    inputs = results/'surface-inputs.png'
+    fig.savefig(inputs, dpi=150)
+    plt.close(fig)
+    destination = Path(output).expanduser().resolve() if output else results/'sparkle.html'
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    link = lambda name: escape(os.path.relpath(results/name, destination.parent).replace(os.sep, '/'), quote=True)
+    document = '<!doctype html><html><head><meta charset="utf-8"><title>AG surface study</title><style>'+CSS+'</style></head><body><main>'
+    document += '<h1>AG surface study: '+escape(study['study'])+'</h1><p>'+escape(study['fixed'])+'</p>'
+    document += '<p>Camera sampling before the common periodic mask; contrast = 100*std(ddof=0)/mean. No SMS1000 calibration. Sample ranges are not confidence intervals.</p>'
+    document += _preview(curve, max_size=(2400, 1600))+_preview(inputs, max_size=(2400, 1600))
+    document += '<table><tr><th>Parameter</th><th>Seeds</th><th>1um mean [%]</th><th>1um min–max [%]</th><th>First-seed 0.5um [%]</th></tr>'
+    for g in groups:
+        document += f'<tr><td>{g["value"]:g}</td><td>{g["sample_count"]}</td><td>{g["mean_percent"]:.6f}</td><td>{g["minimum_percent"]:.6f}–{g["maximum_percent"]:.6f}</td><td>{g["first_seed_fine_percent"]:.6f}</td></tr>'
+    document += '</table><ul>'+''.join('<li>'+escape(item)+'</li>' for item in study['limitations'])+'</ul>'
+    for name in ('comparison.csv', 'summary.json', 'validation.json', 'protocol.json'):
+        document += '<p><a href="'+link(name)+'">'+name+'</a></p>'
+    destination.write_text(document+'</main></body></html>', encoding='utf-8')
+    return destination
 
 
 def _write_layout_report(results, output=None):

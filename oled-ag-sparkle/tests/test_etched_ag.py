@@ -43,6 +43,29 @@ class EtchedAGTests(unittest.TestCase):
         for field, spacing in ((100., 0.), (100., 30.), (float('nan'), 20.)):
             with self.assertRaises(ValueError):
                 geometry(field, spacing, 1)
+        for ratio in (-.1, 1., float('nan')):
+            with self.assertRaises(ValueError):
+                geometry(100., 20., 1, ratio)
+
+    def test_exclusion_changes_distribution_without_changing_density(self):
+        for ratio in (0., .3, .7):
+            sites, depths = geometry(100., 20., 20261107, ratio)
+            self.assertEqual(len(sites), 25)
+            self.assertTrue(np.all((depths >= .7) & (depths <= 1.3)))
+            delta = np.abs(sites[:, None] - sites[None, :])
+            delta = np.minimum(delta, 100. - delta)
+            distance = np.sqrt(np.sum(delta**2, axis=-1))
+            np.fill_diagonal(distance, np.inf)
+            self.assertGreaterEqual(distance.min(), ratio * 20.)
+        with tempfile.TemporaryDirectory() as folder:
+            outputs = [prepare(Path(folder)/str(p), pitch_um=p, field_um=100.,
+                               spacing_um=20., min_separation_ratio=.7) for p in (1., .5)]
+            self.assertEqual((outputs[0]/'sites.csv').read_bytes(), (outputs[1]/'sites.csv').read_bytes())
+            meta = json.loads((outputs[1]/'heightfield.source.json').read_text())
+            self.assertEqual(meta['minimum_site_separation_um'], 14.)
+            self.assertEqual(meta['density_equivalent_spacing_um'], 20.)
+            self.assertGreaterEqual(meta['nearest_neighbor_spacing_um']['minimum'], 14.)
+            self.assertAlmostEqual(meta['measured_surface']['Sz_um'], 1., places=4)
 
     def test_sz_normalization_uses_one_post_rounding_reference_for_both_grids(self):
         with tempfile.TemporaryDirectory() as folder:
